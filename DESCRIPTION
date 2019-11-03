@@ -1,0 +1,10 @@
+Package: TextMiningCrisis
+Type: Package
+Title: Set of functions to perform a text analysis using a lexicon of economic crisis to observe the profile of crisis that the document mention.
+Version: 1.1
+Date: 2019-11-03
+Author: Betin Manuel
+Maintainer: Who to complain to <manubetin@gmail.com>
+Description: 
+License: What license is it under?
+RoxygenNote: 6.1.1
