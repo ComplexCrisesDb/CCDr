@@ -1,10 +1,24 @@
 Package: TextMiningCrisis
 Type: Package
-Title: Set of functions to perform a text analysis using a lexicon of economic crisis to observe the profile of crisis that the document mention.
-Version: 1.1
+Title: Natural Language Processing (NPL) for economic crisis
+Version: 1.0.0.9000
 Date: 2019-11-03
 Author: Betin Manuel
-Maintainer: Who to complain to <manubetin@gmail.com>
-Description: 
+Maintainer: <manubetin@gmail.com>
+Description: Set of functions to perform a text analysis using a lexicon of economic crisis to observe the profile and intensity of economic crisis in a text document.
 License: What license is it under?
 RoxygenNote: 6.1.1
+Imports: 
+    dplyr (>= 0.8.3),
+    pdftools (>= 2.2),
+    xml2,
+    rvest,
+    tidytext,
+    tidyr,
+    stringr,
+    stringi,
+    plotly,
+    ggplot2,
+    rio,
+    tictoc,
+    lubridate

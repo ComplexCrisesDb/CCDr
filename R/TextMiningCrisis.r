@@ -19,22 +19,9 @@ key_words_crisis=function(){
   #key words by type of crisis/distress, capital letter do not matter
   key_words=list()
   
-  key_words[["Official_support"]]=c(
-    "ESFS",
-    "European system of financial supervision",
-    #"IMF",
-    #"International monetary fund",
-    "ESM",
-    "IRDB",
-    "development banks",
-    "official lending",
-    "official support",
-    "World Bank",
-    "Official bilateral creditors",
-    "Inter-American Development Bank",
-    "Inter American Development Bank",
-    "European stability mechanism",
-    "Fed swap lines")
+  #--------
+  ## REFORMS AND CONDITIONALITY
+  #--------
   
   key_words[["Deregulation"]]=c(
     "privatization",
@@ -52,40 +39,6 @@ key_words_crisis=function(){
     "structural adjustments",
     "packages",
     "structural program"
-    # "structural adjustement",
-    # "reforms to the pension system",
-    # "reform of pension funds",
-    # "policy reforms",
-    # "economic reforms",
-    # "financial reform",
-    # "financial sector reform",
-    # "income policies",
-    # "minimum wages",
-    # "labor market reforms",
-    # "tax reform program",
-    # "trade and tariff programme",
-    # "trade and tariff reform",
-    # "trade liberalization",
-    # "structural changes",
-    # "strengthening creditor-debtor relations",
-    # "privatization program",
-    # "deregulation",
-    # "privatization",
-    # "structural reforms",
-    # "increase private sector participation",
-    # "reform",
-    # "reforms",
-    # "the autorities ruled out a gradual approach to stabilization",
-    # "structural reforms",
-    # "liberalize the exchange system",
-    # "major tax reform",
-    # "privatization of public entreprise",
-    # "privatization program",
-    # "tightening of fiscal policy",
-    # "statistical issues",
-    # "deregulation",
-    # "trade liberalization",
-    # "privatization of state enterprise"
   )
   
   key_words[["Trade_reforms"]]=c(
@@ -117,6 +70,310 @@ key_words_crisis=function(){
     "regulating the financial sector"
   )
   
+  
+  #--------
+  ## OFFICIAL CREDITORS INTERVENTION
+  #--------
+  
+  key_words[["Official_support"]]=c(
+    "ESFS",
+    "European system of financial supervision",
+    "ESM",
+    "IRDB",
+    "development banks",
+    "official lending",
+    "official support",
+    "World Bank",
+    "Official bilateral creditors",
+    "Inter-American Development Bank",
+    "Inter American Development Bank",
+    "European stability mechanism",
+    "Fed swap lines")
+  
+  key_words[["Precautionary_programs"]]=c(
+    #"precaution",
+    "make purchases under the requested stand-by arrangement as needed",
+    "make purchases under the requested stand-by arrangement only as needed",
+    "intent to make any purchases",
+    "do not intent to make purchases",
+    "make no purchases",
+    "not to make purchases",
+    "no purchases are intended",
+    "requested stand-by arrangement only as a last resort",
+    "only as a last resort",
+    "arrangement as precautionary",
+    "treat the proposed arrangement as a precautionary",
+    "to treat as precautionary",
+    "to treat the arrangement as precautionary",
+    "treated the arrangement as a precautionary",
+    "arrangement as a precautionary",
+    "arrangement as precautionary",
+    "the arrangement will be precautionary",
+    "no purchases are expected",
+    "intent to make no purchases",
+    "intentions not to make purchases",
+    "do not intent to make purchases under the arrangement",
+    "do not intent to make any purchases under this stand",
+    "intention not to make purchases under the arrangement",
+    "they intent to make no purchase  under the arrangement",
+    "arrangementas precautionary",
+    "arrangement is precautionary",
+    "precautionary arrangement",
+    "the program is precautionary",
+    "precautionary 13 month stand",
+    "14 month precautionary stand by arrangement",
+    "arrangement remained precautionary",
+    "approved a precautionary",
+    "precautionary support",
+    "precautionary nature",
+    "arrangement was precautionary",
+    "approved a precautionary",
+    "treat the sba as precautionary",
+    "arrangement will be precautionary",
+    "request for a precautionary",
+    "precautionary arrangement",
+    "precautionary sba",
+    "month precautionary",
+    "precautionary stand by",
+    "precautonary program",
+    "approved a precautionary",
+    "treated as precautionary",
+    "precautionary stand by arrangement",
+    "precautionary stand",
+    "the program is precautionary",
+    "is intented to be precautionary",
+    "would treat the arrangementas precautionary",
+    "does not propose to make any purchase",
+    "do not intend at this time to make a drawing",
+    "do not intend to make any purcharse under this stand",
+    "do not intend to make purchase under the arrangement",
+    "do not intend to draw on the resources")
+  
+  
+  
+  #--------
+  ## EXOGENEOUS SHOCKS: NON ECONOMIC
+  #--------
+  
+  key_words[["Wars"]]=c(
+    "war damage",
+    "insurgency crisis",
+    "security crisis",
+    "civil war",
+    "war claims",
+    "war reconstruction",
+    "war recovery",
+    "war strategy",
+    "post conflict assistance",
+    "armed conflict",
+    "oingoing conflict",
+    "atlantic conflict",
+    "military conflict",
+    "armed internal conflict",
+    "internal conflict",
+    "armed domestic conflict",
+    "israeli conflict",
+    "sahara conflict",
+    "violent conflict",
+    "military conflict",
+    "conflict regions",
+    "conflict zone",
+    "civil conflict",
+    "armed conflicts",
+    "guerilla offensive",
+    "military take-over"
+  )
+  
+  key_words[["Natural_disaster"]]=c(
+    "flooding",
+    "drought",
+    "record-low levels of rainfall",
+    "natural calamities",
+    "natural disaster",
+    "earthquake",
+    "hurricane")
+  
+  key_words[["Commodity_crisis"]]=c(
+    "oil crisis",
+    "rice crisis",
+    "food crisis",
+    "deterioration in the terms of trade",
+    "decline in terms of trade",
+    "adverse terms of trade",
+    "terms of trade loss",
+    "unfavorable terms of trade",
+    "severe drop in terms of trade",
+    "severe terms of trade shocks",
+    "vulnerability to terms of trade shocks",
+    "collapse in international prices",
+    "significant terms of trade loss",
+    "terms of trade declined",
+    "dependenceon oil-related revenue",
+    "budgetary dependency on oil revenue",
+    "negative terms of trade",
+    "terms of trade worsen",
+    "crisis in the cotton",
+    "sharp fall in its terms of trade",
+    "increase in world oil prices",
+    "decline in international coffee prices",
+    "terms of trade were adversely affected",
+    "drop in world coffee price",
+    "oil price increase",
+    "decline in coffee prices",
+    "decline in the terms of trade",
+    "increase in petroleum price",
+    "Terms of trade shock",
+    "adverse movement in the terms of trade",
+    "adverse movement in the price of copper",
+    "weakness in the copper price",
+    "decline in the copper price",
+    "swing in copper price",
+    "price of copper continue to drop",
+    "fluctuations in the terms of trade",
+    "deteriorating terms of trade",
+    "commodity crisis",
+    "movements in commodity prices",
+    "domestic energy crisis",
+    "fall in prices of raw materials",
+    "energy crisis",
+    "fell of agricultural prices"
+  )
+  
+  key_words[["Political_crisis"]]=c(
+    "political turmoil",
+    "internal security situation",
+    "political atmosphere",
+    "political crisis",
+    "political uncertainty",
+    "Political instability",
+    "political transition spillovers ",
+    "political turn-over",
+    "policies risks",
+    "political turmoil",
+    "political risk",
+    "unstable political",
+    "political instability",
+    "disturbed political conditions",
+    "political and economic developments",
+    "political and security situation",
+    "economic and political situation",
+    "political crisis",
+    "unsettled political  situation",
+    "political tensions",
+    "geopolitical events",
+    "geopolitical risk",
+    "complex geopolitical situation",
+    "geopolitical tensions",
+    "geopolitical turmoil",
+    "adverse geopolitical events",
+    "adverse geopolitical",
+    "unexpected political events",
+    "revolution",
+    "uncertain policies",
+    "uncertainty about policy",
+    "political contagion",
+    "euro exit",
+    "exit of the eurozone",
+    "uncertain national election",
+    "political transition",
+    "political pressures",
+    "change of administration",
+    "risks linked to the electoral calendar ",
+    "uncertainty surrounding the outcome of the presidential election",
+    "uncertainty regarding the political transition",
+    "domestic political developments",
+    "politial risk",
+    "facilitate an orderly transition to a new administration",
+    "uncertainty about the continuity of policies",
+    "uncertainty regarding future policies")
+  
+  
+  #--------
+  ## EXOGENEOUS SHOCKS; ECONOMIC
+  #--------
+  
+  key_words[["Banking_crisis"]]=c(
+    "bank resolution",
+    "bank crisis",
+    "Banking sector restructuring",
+    "restructuringof nonperforming loans",
+    "undercapitalized banking system",
+    "weak bank capitalization",
+    "reorganization of the banking sector",
+    "restructuring of the banking",
+    "fragility of the banking sector",
+    "fragile banking sector",
+    "banking crisis",
+    "bailout",
+    "crisis in the banking sector",
+    "collapse of the banking sector",
+    "increase in nonperforming loans",
+    "recapitalization of the banks",
+    "recapitalizing the banking system",
+    "recapitalizing the banking sector",
+    "banking system collapsed",
+    "collapsed in the banking system",
+    "banking system stability",
+    "pressure on the banking",
+    "bankrun",
+    "bank recapitalization",
+    "recapitalization",
+    "bank restructuring",
+    "recapitalize private financial institutions",
+    "confidence in the domestic banking system",
+    "strengthen bank supervision",
+    "financial support package")
+  
+  key_words[["Financial_crisis"]]=c(
+    "financial stability crisis",
+    "international monetary crisis",
+    "crisis in financial market",
+    "financial risks",
+    "turmoil in financial markets",
+    "turmoil in international financial markets",
+    "volatility in financial markets",
+    "restore the strength of the financial sector",
+    "unfolding financial crisis",
+    "global market sell-off",
+    "financial shock",
+    "financial contagion",
+    "financial crisis",
+    "collapse of financial markets",
+    "fire sells",
+    "collapse of equity prices",
+    "financial market panic",
+    "global financial turbulence",
+    "viability and health of the financial sector"
+  )
+  
+  key_words[["Inflation_crisis"]]=c(
+    "inflation pressure",
+    "hyperinflation",
+    "high rate of inflation",
+    "contain inflationary pressure",
+    "the rate of inflation accelerate",
+    "halting inflation",
+    "inflationary pressures",
+    "halt to inflation",
+    "limit inflationary pressures",
+    "efforts against inflation",
+    "reduction of inflation",
+    "issuing paper money",
+    "inflation has now reached a critical",
+    "infaltion has reached",
+    "inflation at unprecedented levels",
+    "large monetary creation",
+    "lowering the rate of inflation",
+    "pressure on prices",
+    "high inflation",
+    "severe inflation",
+    "combat inflation",
+    "cronic inflation",
+    "sharpe increase in domestic prices",
+    "large increase in domestic prices",
+    "inflationary pressures",
+    "inflationary pressure",
+    "inflation_crisis")
   
   key_words[["Crisis_contagion"]]=c(
     "Russian debt crisis",
@@ -166,167 +423,10 @@ key_words_crisis=function(){
     "crisis in Brazil",
     "linkage with the US")
   
-  key_words[["Wars"]]=c(
-    "war damage",
-    "insurgency crisis",
-    "security crisis",
-    "civil war",
-    "war claims",
-    "war reconstruction",
-    "war recovery",
-    "war strategy",
-    "post conflict assistance",
-    "armed conflict",
-    "oingoing conflict",
-    "atlantic conflict",
-    "military conflict",
-    "armed internal conflict",
-    "internal conflict",
-    "armed domestic conflict",
-    "israeli conflict",
-    "sahara conflict",
-    "violent conflict",
-    "military conflict",
-    "conflict regions",
-    "conflict zone",
-    "civil conflict",
-    "armed conflicts",
-    "guerilla offensive",
-    "military take-over"
-  )
-  
-  key_words[["Political_crisis"]]=c(
-    #"presidential",
-    "political turmoil",
-    "internal security situation",
-    "political atmosphere",
-    "political crisis",
-    "political uncertainty",
-    "Political instability",
-    "political transition spillovers ",
-    "political turn-over",
-    "policies risks",
-    "political turmoil",
-    "political risk",
-    "unstable political",
-    "political instability",
-    "disturbed political conditions",
-    "political and economic developments",
-    "political and security situation",
-    "economic and political situation",
-    "political crisis",
-    "unsettled political  situation",
-    "political tensions",
-    "geopolitical events",
-    "geopolitical risk",
-    "complex geopolitical situation",
-    "geopolitical tensions",
-    "geopolitical turmoil",
-    "adverse geopolitical events",
-    "adverse geopolitical",
-    "unexpected political events",
-    "revolution",
-    "uncertain policies",
-    "uncertainty about policy",
-    "political contagion",
-    "euro exit",
-    "exit of the eurozone",
-    "uncertain national election",
-    "political transition",
-    "political pressures",
-    #"general election",
-    "change of administration",
-    "risks linked to the electoral calendar ",
-    "uncertainty surrounding the outcome of the presidential election",
-    "uncertainty regarding the political transition",
-    "domestic political developments",
-    "politial risk",
-    "facilitate an orderly transition to a new administration",
-    "uncertainty about the continuity of policies",
-    "uncertainty regarding future policies")
-  
-  key_words[["Reduction_reserves"]]=c(
-    "decline in net international reserves",
-    "shortage of international reserves",
-    "shortage of international reserves",
-    "shortfall of international reserves",
-    "sharp reduction in international reserves",
-    "strong decline in international reserves",
-    "international reserves exhaused",
-    "decline in reserves",
-    "drop in reserves",
-    "drop in official reserves",
-    "decline in official reserves",
-    "loss of official reserves",
-    "loss of international reserves",
-    "decline in international reserves",
-    "loss of official international reserves",
-    "decline in official international reserves",
-    "exhaustion of the disposable official international reserves",
-    "depleted international reserves",
-    "exhausted official international reserves"
-  )
-  key_words[["Balance_payment_crisis"]]=c(
-    "Shortage of foreign exchange",
-    "bop crisis",
-    "balance of payment crisis",
-    "capital account crisis",
-    "balance of payment crisis",
-    "balance of payment problem",
-    "balance of payment difficulties",
-    "cessation of official foreign capital inflows",
-    "decline in net international reserves",
-    "pressures in the official foreign exchange market",
-    "external account came under pressure",
-    "external account came under severe pressure",
-    "external account came under serious pressure",
-    "balance of payments problems",
-    "shortage of international reserves",
-    "sharp reduction in international reserves",
-    "strong decline in international reserves",
-    "international reserves exhaused",
-    "decline in reserves",
-    "drop in reserves",
-    "loss of official reserves",
-    "decline in net capital inflows",
-    "decline in international reserves",
-    "decline in official reserves",
-    "official international reserves exhausted",
-    "major loss in net international reserves",
-    "foreign exchange scarcity",
-    "decline in receipts of official foreign loans",
-    "exhaustion of the disposable official international reserves",
-    "capital flight",
-    "flight of capital",
-    "pull-back of capital",
-    "capital flow reverse",
-    "capital flow reversal",
-    "pressure on capital flows",
-    "large capital outflows",
-    "strong balance of payment pressures",
-    "balance of payment assistance",
-    "depleted international reserves",
-    "large external financing needs",
-    "substantial capital outflows",
-    "unforseen balance of payments contingencies",
-    "tail risks to the balance of payments",
-    "large balance of payments imbalances",
-    "exhausted official international reserves",
-    "pressure on the capital account",
-    "exceptional balance of payments need",
-    "balance of payment sustainability",
-    "reversal in the flow of private capital",
-    "sharpe reduction in access to international capital markets",
-    "sharp fall in private inflows",
-    "decline in net inflow",
-    "severe external imbalances",
-    "severe internal and external imbalances"
-  )
   
   key_words[["World_outcomes"]]=c(
     "world-wide recession",
     "global economic crisis",
-    #"systemic crisis",
     "global crisis",
     "world recession",
     "worldwide recession",
@@ -350,8 +450,7 @@ key_words_crisis=function(){
     "downside risks in the international environment",
     "further deterioration in the international environment",
     "uncertain external environment",
-    "slowdown in international economy"#,
-    #"downside risk to growth"
+    "slowdown in international economy"
   )
   
   key_words[["Contagion"]]=c(
@@ -414,7 +513,6 @@ key_words_crisis=function(){
     "reassure the markets",
     "extreme global risk aversion",
     "provide assurances to financial markets",
-    #"market perception",
     "restore market confidence",
     "reduce market uncertainty",
     "bolster confidence",
@@ -426,23 +524,97 @@ key_words_crisis=function(){
     "market confidence sagged",
     "vulnerable to abrupt swings in market sentiment",
     "heightened risk aversion",
-    #"financial market pressures",
     "increase in global risk aversion",
     "weakening of market confidence",
     "vulnerable to changes in the international investment climate",
     "confidence in the liquidity of the foreign exchange market",
     "increase uncertainty in the international environment",
     "pressures on confidence",
-    #"market sentiment",
-    #"expectations",
     "self-fulfilling",
-    #"precautionnary",
     "shifts in investor sentiment",
-    #"pressure on foreign reserves",
-    #"crisis prevention",
-    #"fortify confidence",
     "bolstering market confidence"
-    #"calm expectations"
+  )
+  #------------  
+  ## CURRENCY AND EXCHANGE RATE ISSUES
+  #------------
+  
+  key_words[["Balance_payment_crisis"]]=c(
+    "Shortage of foreign exchange",
+    "bop crisis",
+    "balance of payment crisis",
+    "capital account crisis",
+    "balance of payment crisis",
+    "balance of payment problem",
+    "balance of payment difficulties",
+    "cessation of official foreign capital inflows",
+    "decline in net international reserves",
+    "pressures in the official foreign exchange market",
+    "external account came under pressure",
+    "external account came under severe pressure",
+    "external account came under serious pressure",
+    "balance of payments problems",
+    "shortage of international reserves",
+    "sharp reduction in international reserves",
+    "strong decline in international reserves",
+    "international reserves exhaused",
+    "decline in reserves",
+    "drop in reserves",
+    "loss of official reserves",
+    "decline in net capital inflows",
+    "decline in international reserves",
+    "decline in official reserves",
+    "official international reserves exhausted",
+    "major loss in net international reserves",
+    "foreign exchange scarcity",
+    "decline in receipts of official foreign loans",
+    "exhaustion of the disposable official international reserves",
+    "capital flight",
+    "flight of capital",
+    "pull-back of capital",
+    "capital flow reverse",
+    "capital flow reversal",
+    "pressure on capital flows",
+    "large capital outflows",
+    "strong balance of payment pressures",
+    "balance of payment assistance",
+    "depleted international reserves",
+    "large external financing needs",
+    "substantial capital outflows",
+    "unforseen balance of payments contingencies",
+    "tail risks to the balance of payments",
+    "large balance of payments imbalances",
+    "exhausted official international reserves",
+    "pressure on the capital account",
+    "exceptional balance of payments need",
+    "balance of payment sustainability",
+    "reversal in the flow of private capital",
+    "sharpe reduction in access to international capital markets",
+    "sharp fall in private inflows",
+    "decline in net inflow",
+    "severe external imbalances",
+    "severe internal and external imbalances"
+  )
+  
+  key_words[["Reduction_reserves"]]=c(
+    "decline in net international reserves",
+    "shortage of international reserves",
+    "shortage of international reserves",
+    "shortfall of international reserves",
+    "sharp reduction in international reserves",
+    "strong decline in international reserves",
+    "international reserves exhaused",
+    "decline in reserves",
+    "drop in reserves",
+    "drop in official reserves",
+    "decline in official reserves",
+    "loss of official reserves",
+    "loss of international reserves",
+    "decline in international reserves",
+    "loss of official international reserves",
+    "decline in official international reserves",
+    "exhaustion of the disposable official international reserves",
+    "depleted international reserves",
+    "exhausted official international reserves"
   )
   
   key_words[["Currency_crisis"]]=c(
@@ -450,28 +622,24 @@ key_words_crisis=function(){
     "exchange rate crisis",
     "large real depreciation",
     "foreign exchange crisis",
-    #"extreme foreign exchange crisis",
     "disruption of exchange  markets",
     "major devaluation",
     "Currency crisis",
     "Currency crash",
     "pressure on the exchange system",
-    #"devaluation",
     "large devaluation",
     "large depreciation",
     "cumulative depreciation",
     "sharpe depreciation",
     "sharp depreciation of the exchange rate",
     "magnitude of the depreciation",
-    #"critical foreign exchange situation",
     "pressure in the foreign exchange markets")
   
   key_words[["Floating_exchange_rate"]]=c(
     "floating exchange rate regime",
-    #"floating",
+    "floating currency",
     "flexible exchange rate",
     "dual exchange market"
-    #"adjustable exchange rate bands"
   )
   
   key_words[["Fixed_exchange_rate"]]=c(
@@ -485,35 +653,11 @@ key_words_crisis=function(){
     "exchange rate peg  within a band",
     "adjustable exchange rate band system")
   
-  key_words[["Financial_crisis"]]=c(
-    "financial stability crisis",
-    "international monetary crisis",
-    "crisis in financial market",
-    #"promote financial stability",
-    #"weak financial sector",
-    "financial risks",
-    "turmoil in financial markets",
-    #"financial market variables came under increasing pressure",
-    "turmoil in international financial markets",
-    "volatility in financial markets",
-    "restore the strength of the financial sector",
-    "unfolding financial crisis",
-    "global market sell-off",
-    "financial shock",
-    #"financial markets",
-    "financial contagion",
-    "financial crisis",
-    "collapse of financial markets",
-    "fire sells",
-    "collapse of equity prices",
-    "financial market panic",
-    #"financial imbalances",
-    "global financial turbulence",
-    "viability and health of the financial sector"
-  )
+  #----------
+  ## OUTPUT SHOCKS
+  #-----------
   
   key_words[["Severe_recession"]]=c(
-    #"gravity of the current situation",
     "severe economic crisis",
     "very difficult economic circumstances",
     "Severe recession",
@@ -540,17 +684,13 @@ key_words_crisis=function(){
     "severe recession",
     "profond recession",
     "deep recession",
-    #"recession",
     "severe contraction",
     "deep contraction",
     "profond contraction",
-    #"contraction",
-    #"economic crisis",
     "large decline in income per capita",
     "deep economic downturn",
     "severe economic downturn",
-    "deep economic downturn"#,
-    #"output is estimated to have contracted"
+    "deep economic downturn"
   )
   
   key_words[["Soft_recession"]]=c(
@@ -586,6 +726,10 @@ key_words_crisis=function(){
     "expansion of economic activity",
     "The economy continued to perform strongly",
     "strong economic performance")
+  
+  #---------
+  ## PUBLIC DEBT ISSUES
+  #---------
   
   key_words[["Fiscal_outcomes"]]=c(
     "large debt servicing burden",
@@ -723,165 +867,17 @@ key_words_crisis=function(){
     "primary fiscal balance"
   )
   
-  
   key_words[["Concessional_lending"]]=c(
     "concessional terms"
   )
   key_words[["Short_term_debt"]]=c(
-    #"floating interest rates",
     "short term borrowing",
     "short-term maturities",
-    #"floating rate",
-    #"foreign exchange-indexed",
-    #"exchange rate-indexed bonds",
-    #"exchange-indexed securities",
     "short term public debt",
-    #"foreign exchange swaps",
-    #"dollar-indexed securities",
     "debt maturing in less than 12 months",
     "shortening of public debt maturity",
     "maturity shortening")
   
-  key_words[["Banking_crisis"]]=c(
-    "bank resolution",
-    "bank crisis",
-    "Banking sector restructuring",
-    "restructuringof nonperforming loans",
-    "undercapitalized banking system",
-    "weak bank capitalization",
-    "reorganization of the banking sector",
-    "restructuring of the banking",
-    "fragility of the banking sector",
-    "fragile banking sector",
-    "banking crisis",
-    "bailout",
-    "crisis in the banking sector",
-    "collapse of the banking sector",
-    "increase in nonperforming loans",
-    "recapitalization of the banks",
-    "recapitalizing the banking system",
-    "recapitalizing the banking sector",
-    "banking system collapsed",
-    "collapsed in the banking system",
-    "banking system stability",
-    "pressure on the banking",
-    "bankrun",
-    "bank recapitalization",
-    "recapitalization",
-    "bank restructuring",
-    "recapitalize private financial institutions",
-    "confidence in the domestic banking system",
-    "strengthen bank supervision",
-    "financial support package")
-  
-  key_words[["Natural_disaster"]]=c(
-    "flooding",
-    "drought",
-    "record-low levels of rainfall",
-    "natural calamities",
-    "natural disaster",
-    "earthquake",
-    "hurricane")
-  
-  key_words[["Commodity_crisis"]]=c(
-    #"world market prices",
-    "oil crisis",
-    "rice crisis",
-    "food crisis",
-    #"crude petroleum",
-    "deterioration in the terms of trade",
-    "decline in terms of trade",
-    "adverse terms of trade",
-    "terms of trade loss",
-    "unfavorable terms of trade",
-    "severe drop in terms of trade",
-    "severe terms of trade shocks",
-    "vulnerability to terms of trade shocks",
-    "collapse in international prices",
-    "significant terms of trade loss",
-    "terms of trade declined",
-    "dependenceon oil-related revenue",
-    "budgetary dependency on oil revenue",
-    "negative terms of trade",
-    "terms of trade worsen",
-    "crisis in the cotton",
-    "sharp fall in its terms of trade",
-    "increase in world oil prices",
-    "decline in international coffee prices",
-    "terms of trade were adversely affected",
-    "drop in world coffee price",
-    "oil price increase",
-    "decline in coffee prices",
-    "decline in the terms of trade",
-    "increase in petroleum price",
-    "Terms of trade shock",
-    "adverse movement in the terms of trade",
-    "adverse movement in the price of copper",
-    "weakness in the copper price",
-    "decline in the copper price",
-    "swing in copper price",
-    "price of copper continue to drop",
-    "fluctuations in the terms of trade",
-    "deteriorating terms of trade",
-    #"commodity crisis",
-    #"commodities",
-    "movements in commodity prices",
-    "domestic energy crisis",
-    "fall in prices of raw materials",
-    "energy crisis",
-    #"petroleum",
-    #"oil",
-    #"oil-related",
-    #"drought",
-    #"severe drought",
-    #"agriculture",
-    #"agricultural production",
-    #"agricultural products",
-    "fell of agricultural prices"
-    #"grain exports",
-    #"cotton",
-    #"banana",
-    #"legumes",
-    #"sugar",
-    #"cereals",
-    #"coffee",
-    #"livestock",
-    #"crop",
-    #"millet",
-    #"groundnut",
-    #"mining",
-    #"coal",
-    #"steel",
-    #"copper",
-  )
-  key_words[["Inflation_crisis"]]=c(
-    "inflation pressure",
-    "hyperinflation",
-    "high rate of inflation",
-    "contain inflationary pressure",
-    "the rate of inflation accelerate",
-    "halting inflation",
-    "inflationary pressures",
-    "halt to inflation",
-    "limit inflationary pressures",
-    "efforts against inflation",
-    "reduction of inflation",
-    "issuing paper money",
-    "inflation has now reached a critical",
-    "infaltion has reached",
-    "inflation at unprecedented levels",
-    "large monetary creation",
-    "lowering the rate of inflation",
-    "pressure on prices",
-    "high inflation",
-    "severe inflation",
-    "combat inflation",
-    "cronic inflation",
-    "sharpe increase in domestic prices",
-    "large increase in domestic prices",
-    "inflationary pressures",
-    "inflationary pressure",
-    "inflation_crisis")
   
   key_words[["Sovereign_default"]]=c(
     "rescheduled debt",
@@ -921,7 +917,6 @@ key_words_crisis=function(){
     "arrears on payments",
     "arrears on debt service",
     "external payment arrears",
-    #"working with its creditor banks",
     "debt service reduction",
     "no debt service payments",
     "restructure these arrears",
@@ -931,64 +926,6 @@ key_words_crisis=function(){
     "debt relief",
     "debt exchange"
   )
-  key_words[["Precautionary_programs"]]=c(
-    #"precaution",
-    "make purchases under the requested stand-by arrangement as needed",
-    "make purchases under the requested stand-by arrangement only as needed",
-    "intent to make any purchases",
-    "do not intent to make purchases",
-    "make no purchases",
-    "not to make purchases",
-    "no purchases are intended",
-    "requested stand-by arrangement only as a last resort",
-    "only as a last resort",
-    "arrangement as precautionary",
-    "treat the proposed arrangement as a precautionary",
-    "to treat as precautionary",
-    "to treat the arrangement as precautionary",
-    "treated the arrangement as a precautionary",
-    "arrangement as a precautionary",
-    "arrangement as precautionary",
-    "the arrangement will be precautionary",
-    "no purchases are expected",
-    "intent to make no purchases",
-    "intentions not to make purchases",
-    "do not intent to make purchases under the arrangement",
-    "do not intent to make any purchases under this stand",
-    "intention not to make purchases under the arrangement",
-    "they intent to make no purchase  under the arrangement",
-    "arrangementas precautionary",
-    "arrangement is precautionary",
-    "precautionary arrangement",
-    "the program is precautionary",
-    "precautionary 13 month stand",
-    "14 month precautionary stand by arrangement",
-    "arrangement remained precautionary",
-    "approved a precautionary",
-    "precautionary support",
-    "precautionary nature",
-    "arrangement was precautionary",
-    "approved a precautionary",
-    "treat the sba as precautionary",
-    "arrangement will be precautionary",
-    "request for a precautionary",
-    "precautionary arrangement",
-    "precautionary sba",
-    "month precautionary",
-    "precautionary stand by",
-    "precautonary program",
-    "approved a precautionary",
-    "treated as precautionary",
-    "precautionary stand by arrangement",
-    "precautionary stand",
-    "the program is precautionary",
-    "is intented to be precautionary",
-    "would treat the arrangementas precautionary",
-    "does not propose to make any purchase",
-    "do not intend at this time to make a drawing",
-    "do not intend to make any purcharse under this stand",
-    "do not intend to make purchase under the arrangement",
-    "do not intend to draw on the resources")
   
   
   key_words[["Track_record"]]=c(
@@ -1001,194 +938,17 @@ key_words_crisis=function(){
     "high level of policy credibility",
     "solid track record"
   )
-  #from Loughran McDonald lexicon on intensity of contraint
-  key_words[["Constraining"]]=c(
-    'abiding',
-    'bound',
-    'bounded',
-    'commit',
-    'commitment',
-    'commitments',
-    'commits',
-    'committed',
-    'committing',
-    'compel',
-    'compelled',
-    'compelling',
-    'compels',
-    'comply',
-    'compulsion',
-    'compulsory',
-    'confine',
-    'confined',
-    'confinement',
-    'confines',
-    'confining',
-    'constrain',
-    'constrained',
-    'constraining',
-    'constrains',
-    'constraint',
-    'constraints',
-    'covenant',
-    'covenanted',
-    'covenanting',
-    'covenants',
-    'depend',
-    'dependance',
-    'dependances',
-    'dependant',
-    'dependencies',
-    'dependent',
-    'depending',
-    'depends',
-    'dictate',
-    'dictated',
-    'dictates',
-    'dictating',
-    'directive',
-    'directives',
-    'earmark',
-    'earmarked',
-    'earmarking',
-    'earmarks',
-    'encumber',
-    'encumbered',
-    'encumbering',
-    'encumbers',
-    'encumbrance',
-    'encumbrances',
-    'entail',
-    'entailed',
-    'entailing',
-    'entails',
-    'entrench',
-    'entrenched',
-    'escrow',
-    'escrowed',
-    'escrows',
-    'forbade',
-    'forbid',
-    'forbidden',
-    'forbidding',
-    'forbids',
-    'impair',
-    'impaired',
-    'impairing',
-    'impairment',
-    'impairments',
-    'impairs',
-    'impose',
-    'imposed',
-    'imposes',
-    'imposing',
-    'imposition',
-    'impositions',
-    'indebted',
-    'inhibit',
-    'inhibited',
-    'inhibiting',
-    'inhibits',
-    'insist',
-    'insisted',
-    'insistence',
-    'insisting',
-    'insists',
-    'irrevocable',
-    'irrevocably',
-    'limit',
-    'limiting',
-    'limits',
-    'mandate',
-    'mandated',
-    'mandates',
-    'mandating',
-    'mandatory',
-    'manditorily',
-    'necessitate',
-    'necessitated',
-    'necessitates',
-    'necessitating',
-    'noncancelable',
-    'noncancellable',
-    'obligate',
-    'obligated',
-    'obligates',
-    'obligating',
-    'obligation',
-    'obligations',
-    'obligatory',
-    'oblige',
-    'obliged',
-    'obliges',
-    'permissible',
-    'permission',
-    'permissions',
-    'permitted',
-    'permitting',
-    'pledge',
-    'pledged',
-    'pledges',
-    'pledging',
-    'preclude',
-    'precluded',
-    'precludes',
-    'precluding',
-    'precondition',
-    'preconditions',
-    'preset',
-    'prevent',
-    'prevented',
-    'preventing',
-    'prevents',
-    'prohibit',
-    'prohibited',
-    'prohibiting',
-    'prohibition',
-    'prohibitions',
-    'prohibitive',
-    'prohibitively',
-    'prohibitory',
-    'prohibits',
-    'refrain',
-    'refraining',
-    'refrains',
-    'require',
-    'required',
-    'requirement',
-    'requirements',
-    'requires',
-    'requiring',
-    'restrain',
-    'restrained',
-    'restraining',
-    'restrains',
-    'restraint',
-    'restraints',
-    'restrict',
-    'restricted',
-    'restricting',
-    'restriction',
-    'restrictions',
-    'restrictive',
-    'restrictively',
-    'restrictiveness',
-    'restricts',
-    'stipulate',
-    'stipulated',
-    'stipulates',
-    'stipulating',
-    'stipulation',
-    'stipulations',
-    'strict',
-    'stricter',
-    'strictest',
-    'strictly',
-    'unavailability',
-    'unavailable'
-  )
+  
+  #"floating interest rates",
+  #"floating rate",
+  #"foreign exchange-indexed",
+  #"exchange rate-indexed bonds",
+  #"exchange-indexed securities",
+  #"foreign exchange swaps",
+  #"dollar-indexed securities",
   
   
+  #----
   key_words
 }
 
@@ -1442,6 +1202,24 @@ Eval_targeted_pages=function(files,targetword,brute_freq=F,parrallel=T){
   #                            path_file=substr(rownames(a),16,80),
   #                            Occurence=as.numeric(as.character(Occurence)))
   return(N.Occurence)
+}
+
+pdf_page_count=function(files){
+  #count the number of pages in the pdf
+  #parameters:
+  # files: a list of character strings
+  
+  table_count=lapply(files,function(x){
+    #n.words=count_words(x$file)# %>% arrange(n) #%>% summarize(word=paste(paste(word,'(',n,')',sep=""),collapse=", "))
+    n.pages=x$info$pages
+    n.pages
+    #list(n.words=n.words,n.pages=n.pages)
+  })
+  names(table_count)=names(files)
+  table_count=do.call(rbind,table_count)
+  table_count=data.frame(table_count)
+  table_count$File=names(files)
+  table_count %>% dplyr::select(File,N.pages=table_count)
 }
 
 #--------------------------------------------------------------
@@ -1784,6 +1562,38 @@ aggregate_corpus=function(path_files){
   return(corpus)
 }
 
+
+#function to download pdf files from urls
+
+download_pdf_from_url=function(urls,export_path){
+  #download from a a dataframe containing the url of the files
+  ref_colnames=c("title","reference","hierarchy","date","keywords" ,"pdf") 
+  
+  if(!dir.exists(export_path)){
+    dir.create(export_path,recursive = T)
+  }
+  
+  if(any(names(urls) %in% ref_colnames)){
+    count=0
+    lapply(1:dim(urls)[1],function(i){
+      count<<-count+1
+      filename=urls[i,"hierarchy"]
+      tic(paste0(urls[i,"hierarchy"]," : ",count,"/",dim(urls)[1]))
+      file <- try(download.file(urls[i,"pdf"], destfile=paste0(export_path,"/",str_replace_all(urls[i,"hierarchy"],"/","_"),".pdf")), silent=T)
+      if("try-error" %in% class(file)) {
+        cat(red(paste(urls[i,"hierarchy"],": Error in path file: ",urls[i,"pdf"],sep="")))
+        file=NA
+      }
+      toc()
+    })
+    cat(green(paste0("urls succesfully downloaded in '",export_path,"'")))
+    #print("urls succesfully downloaded")
+  }else{cat(green("Please provide a valid data.frame of url"))}
+  
+}
+
+
+
 # ----------------------------------------------------------------
 
 #formula for the cosinus similiarity that provides the distance between two vectors here
@@ -1925,11 +1735,12 @@ country_radar_fig=function(country_radar_dt){
     name="Profile of crisis",
     line=list(color="#709Bff"),
     fill = 'toself',fillcolor = '#709Bff',alpha_endo) %>%
-    layout(annotations = "test", xaxis = 3, yaxis = median(Weights,na.rm=T)) %>%
+    layout(xaxis = 3, yaxis = median(Weights,na.rm=T)) %>%
     
-    layout(xaxis = list(title = "", showgrid = T, zeroline = F, showticklabels = T,
-                        domain = c(0, 3)
-    ),
+    layout(
+   xaxis = list(title = "", showgrid = T, zeroline = F, showticklabels = T,
+                       domain = c(0, 3)
+   ),
     yaxis = list(title = country_radar_dt$ISO3_Code %>% unique(), showgrid = F, zeroline = F, showticklabels = F#,
                  #domain = c(0, 0.92)
     ),

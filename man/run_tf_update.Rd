@@ -5,7 +5,7 @@
 function that update the tf  output of run_tf with the new variables, avoiding recomputing all the categories
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+function that update the tf  output of run_tf with the new variables, avoiding recomputing all the categories
 }
 \usage{
 run_tf_update(path_tf_to_update = paste0(root_path, "/3. Data/IMF Letters of Intents/data_LoI_N_Occ_crisis_words.RData"), corpus_path = paste0(root_path, "/3. Data/IMF Letters of Intents/IMF_letofIntent_1960_2014_clean.RData"), type_lexicon = "words", keyword_list = NULL, export_path = paste0(root_path, "/3. Data/IMF Letters of Intents/data_LoI_N_Occ_crisis_words.RData"), parrallel = T)

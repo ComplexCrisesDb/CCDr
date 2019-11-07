@@ -14,24 +14,6 @@ The DESCRIPTION file:
 \packageDESCRIPTION{TextMiningCrisis}
 \packageIndices{TextMiningCrisis}
  
- Dependencies
- 
-- pdftools
-- xml2
-- rvest
-- tidytext
-- tidyr
-- stringr
-- stringi
-- tidytext
-- dplyr
-- tidyr
-- plotly
-- ggplot2
-- rio
-- tictoc
-- lubridate
-
 Functions documented:
 
  1. key_words_crisis 

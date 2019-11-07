@@ -1,27 +1,30 @@
-\name{binary_frequency_trans}
-\alias{binary_frequency_trans}
+\name{pdf_page_count}
+\alias{pdf_page_count}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
- transform table from Number of occurence to binary variables
+count the number of pages in the pdf
 }
 \description{
- transform table from Number of occurence to binary variables
+count the number of pages in the pdf
 }
 \usage{
-binary_frequency_trans(table_N_occurence)
+pdf_page_count(file)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{table_N_occurence}{
- output of table_brute_frequency_vector()
+  \item{file}{
+files: a list of character strings
 }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-the function returns the binary frequency transformation of the dataframe.
-
+%%  ~Describe the value returned
+%%  If it is a LIST, use
+%%  \item{comp1 }{Description of 'comp1'}
+%%  \item{comp2 }{Description of 'comp2'}
+%% ...
 }
 \references{
 %% ~put references to the literature/web site here ~
@@ -39,11 +42,8 @@ the function returns the binary frequency transformation of the dataframe.
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-function (x) 
-{
-  }
-}
+
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{  }% use one of  RShowDoc("KEYWORDS")
+\keyword{ }% use one of  RShowDoc("KEYWORDS")
 \keyword{ }% __ONLY ONE__ keyword per line
