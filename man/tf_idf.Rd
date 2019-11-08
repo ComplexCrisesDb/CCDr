@@ -1,5 +1,5 @@
-\name{table_word_weight}
-\alias{table_word_weight}
+\name{tf_idf}
+\alias{tf_idf}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 function to compute the weights of each word by doing the product of the index of frequency and the inverse
@@ -10,7 +10,7 @@ function to compute the weights of each word by doing the product of the index o
   document frequency
 }
 \usage{
-table_word_weight(table_N_occurence, weight_method = "brut_frequency")
+tf_idf(table_N_occurence, weight_method = "brut_frequency")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -47,7 +47,7 @@ the function returns a dataframe with categories in rows and a column with the t
 ## The function is currently defined as
 function (table_N_occurence, weight_method = "brut_frequency") 
 {
-    dt_inv_doc_freq = try(invers_doc_frequency(table_N_occurence))
+    dt_inv_doc_freq = try(idf(table_N_occurence))
     if ("try_error" \%in\% dt_inv_doc_freq) {
         print(paste0("Warning: error when using function dt_inv_doc_freq"))
         return(NULL)

@@ -12,4 +12,3 @@ Package containing a set of functions to perform a text analysis using a lexicon
 - Manuel Bétin
 
 
-

@@ -5,10 +5,11 @@
 # library(xml2)
 # library(rvest)
 # library(stringr)
-# library(stringi)
 # library(tidytext)
 # library(dplyr)
 # library(tidyr)
+# library(tictoc)
+# library(crayon)
 
 #-----------------------------------------------------------------------
 # lexicon of economic crisis
@@ -988,6 +989,31 @@ key_words_categories=function(){
   )
 }
 
+key_words_countries=function(){
+  #table of adjectival and names of countries 
+  if(curl::has_internet()){
+    path="https://en.wikipedia.org/wiki/List_of_adjectival_and_demonymic_forms_for_countries_and_nations"
+    html_file <- try(xml2::read_html(path), silent=T)
+    ctry_table=html_file %>% rvest::html_nodes(xpath='//*[@id="mw-content-text"]/div/table[1]') %>% rvest::html_table(fill=T)
+    ctry_table=ctry_table[[1]] 
+    
+    ctry_table=data.frame(ctry_table)[-1,]
+    colnames(ctry_table)=c("ctries","adjectival","Demonyms","Demonyms_2","X")
+    
+    #currencies 
+    path="https://en.wikipedia.org/wiki/List_of_circulating_currencies"
+    html_file <- try(xml2::read_html(path), silent=T)
+    currency_table=html_file %>% rvest::html_nodes(xpath='//*[@id="mw-content-text"]/div/table[1]') %>% rvest::html_table(fill=T)
+    currency_table=currency_table[[1]]
+    names(currency_table)=c("ctries","Currency","Symbol","ISO2_Code","fractional_unit","basis")
+    table=dplyr::left_join(x=ctry_table,y=currency_table,by="ctries")
+    
+  }else{
+    ctry_table=rio::import("../3. Data/List countries/wikipedia_country_names.RData")
+  }
+  return(table)
+}
+
 # unsupervised lexicon
 
 remove_stop=function(word){
@@ -995,7 +1021,7 @@ remove_stop=function(word){
   ifelse(word %in% stop_words$word,"",word)
 }
 
-ngram_clean=function(text,length_ngram=4){
+clean_ngram=function(text,length_ngram=4){
   #generate tibble with ngrams of specified length in rows and dummies 
   #for  a set of typologies, the function clean the text by removing 
   #unnecessary characters and removing common stop words.
@@ -1014,55 +1040,55 @@ ngram_clean=function(text,length_ngram=4){
   list_nwords=paste("word",1:length_ngram,sep="")
   ngrams_sep=text %>% 
     dplyr::select(ngram) %>% 
-    separate(ngram, list_nwords, sep = " ")
-  
-  ngrams_sep=ngrams_sep %>% mutate_at(vars(matches("word")),remove_stop) %>%
-    unite("word",list_nwords,sep=" ") %>%
+    tidyr::separate(ngram, list_nwords, sep = " ")
+  ngrams_sep=ngrams_sep %>% dplyr::mutate_at(vars(matches("word")),remove_stop) %>%
+    tidyr::unite("word",list_nwords,sep=" ") %>%
     dplyr::select(word) %>%
-    mutate(word=str_trim(word),
-           word=str_replace(word,"  "," ")) %>% filter(word!="")
-  
-  #remove figures and numeric variables
-  ngrams_sep=ngrams_sep %>% filter(!str_detect(word,"\\d") | !str_detect(word,"perce") )
+    dplyr::mutate(word=stringr::str_trim(word),
+           word=stringr::str_replace(word,"  "," ")) %>% dplyr::filter(word!="")
+
+
+  #remove figures and numeric variables 
+  ngrams_sep=ngrams_sep %>% dplyr::filter(!stringr::str_detect(word,"\\d") | !stringr::str_detect(word,"perce") )
   
   ngrams_sep=ngrams_sep %>%
-    count(word,sort=T)
+    dplyr::count(word,sort=T)
   
   #filter type of words
-  ngrams_sep=ngrams_sep %>% mutate(crisis=ifelse(str_detect(word,"crisis") | 
-                                                   str_detect(word,"distress") |
-                                                   str_detect(word,"downturn"),1,0),
-                                   law=ifelse(str_detect(word,"law") | 
-                                                str_detect(word,"legal") |
-                                                str_detect(word,"regulation")|
-                                                str_detect(word,"supervision"),1,0),
-                                   finance=ifelse(str_detect(word,"finance"),1,0),
-                                   supervision=ifelse(str_detect(word,"supervis"),1,0),
-                                   solvency=ifelse(str_detect(word,"solven"),1,0),
-                                   liquidity=ifelse(str_detect(word,"liquid"),1,0),
-                                   budget=ifelse(str_detect(word,"budget"),1,0),
-                                   guarantee=ifelse(str_detect(word,"guarantee"),1,0),
-                                   nationalization=ifelse(str_detect(word,"nationalization"),1,0),
-                                   overdue=ifelse(str_detect(word,"overdue"),1,0),
-                                   accomodative=ifelse(str_detect(word,"accomodative"),1,0),
-                                   administrative=ifelse(str_detect(word,"administrative"),1,0),
-                                   economic=ifelse(str_detect(word,"economic"),1,0),
-                                   money=ifelse(str_detect(word,"money"),1,0),
-                                   arrears=ifelse(str_detect(word,"arrears"),1,0),
-                                   exchange=ifelse(str_detect(word,"exchange"),1,0),
-                                   depreciation=ifelse(str_detect(word,"depreciation"),1,0),
-                                   banks=ifelse(str_detect(word,"bank"),1,0),
-                                   capital=ifelse(str_detect(word,"capital"),1,0),
-                                   asset=ifelse(str_detect(word,"asset"),1,0),
-                                   reform=ifelse(str_detect(word,"reform"),1,0),
-                                   debt=ifelse(str_detect(word,"debt"),1,0),
-                                   loans=ifelse(str_detect(word,"loan")|
-                                                  str_detect(word,"portfolio")|
-                                                  str_detect(word,"lend"),1,0)) 
+  ngrams_sep=ngrams_sep %>% dplyr::mutate(crisis=ifelse(str_detect(word,"crisis") | 
+                                                   stringr::str_detect(word,"distress") |
+                                                   stringr::str_detect(word,"downturn"),1,0),
+                                   law=ifelse(stringr::str_detect(word,"law") | 
+                                                stringr::str_detect(word,"legal") |
+                                                stringr::str_detect(word,"regulation")|
+                                                stringr::str_detect(word,"supervision"),1,0),
+                                   finance=ifelse(stringr::str_detect(word,"finance"),1,0),
+                                   supervision=ifelse(stringr::str_detect(word,"supervis"),1,0),
+                                   solvency=ifelse(stringr::str_detect(word,"solven"),1,0),
+                                   liquidity=ifelse(stringr::str_detect(word,"liquid"),1,0),
+                                   budget=ifelse(stringr::str_detect(word,"budget"),1,0),
+                                   guarantee=ifelse(stringr::str_detect(word,"guarantee"),1,0),
+                                   nationalization=ifelse(stringr::str_detect(word,"nationalization"),1,0),
+                                   overdue=ifelse(stringr::str_detect(word,"overdue"),1,0),
+                                   accomodative=ifelse(stringr::str_detect(word,"accomodative"),1,0),
+                                   administrative=ifelse(stringr::str_detect(word,"administrative"),1,0),
+                                   economic=ifelse(stringr::str_detect(word,"economic"),1,0),
+                                   money=ifelse(stringr::str_detect(word,"money"),1,0),
+                                   arrears=ifelse(stringr::str_detect(word,"arrears"),1,0),
+                                   exchange=ifelse(stringr::str_detect(word,"exchange"),1,0),
+                                   depreciation=ifelse(stringr::str_detect(word,"depreciation"),1,0),
+                                   banks=ifelse(stringr::str_detect(word,"bank"),1,0),
+                                   capital=ifelse(stringr::str_detect(word,"capital"),1,0),
+                                   asset=ifelse(stringr::str_detect(word,"asset"),1,0),
+                                   reform=ifelse(stringr::str_detect(word,"reform"),1,0),
+                                   debt=ifelse(stringr::str_detect(word,"debt"),1,0),
+                                   loans=ifelse(stringr::str_detect(word,"loan")|
+                                                  stringr::str_detect(word,"portfolio")|
+                                                  stringr::str_detect(word,"lend"),1,0)) 
   
   
   #filter according to 
-  ngrams_sep=ngrams_sep %>% filter(crisis==1 | law==1 |finance==1 |
+  ngrams_sep=ngrams_sep %>% dplyr::filter(crisis==1 | law==1 |finance==1 |
                                      supervision==1 |solvency==1 |liquidity==1 |
                                      budget==1 |guarantee==1 |nationalization==1 |
                                      overdue==1 |accomodative==1 |administrative==1 |
@@ -1073,42 +1099,42 @@ ngram_clean=function(text,length_ngram=4){
   return(ngrams_sep)
 }
 
-associated_words=function(clean_ngram,type_word,min_occurence=5){
-  # from the table of ngrams generated by ngram_clean() find the most common associated words by 
+assoc_words=function(cleaned_ngram,type_word,min_occurence=5){
+  # from the table of ngrams generated by clean_ngram() find the most common associated words by 
   # typology:
   
   #parameters:
-  # clean_ngram: output from ngram_clean()
-  # type_word: the name of the category to analyse (check outptu of ngram_clean() to see the available list)
+  # clean_ngram: output from clean_ngram()
+  # type_word: the name of the category to analyse (check outptu of clean_ngram() to see the available list)
   # min_occurence: only display the words with at least this specified number of occurence
-  dt= clean_ngram %>% 
-    filter(get(type_word)==1) %>%
-    separate(word, "list_nwords", sep = " ") %>% gather() %>% filter(value!="") %>% group_by(value) %>% 
-    summarize(n=n()) %>% filter(!str_detect(value,"\\d"))%>% arrange(-n) %>% rename(word=value)
+  dt= cleaned_ngram %>% 
+    dplyr::filter(get(type_word)==1) %>% grou
+    tidyr::separate(word, "list_nwords", sep = " ") %>% tidyr::gather() %>% dplyr::filter(value!="") %>% dplyr::group_by(value) %>% 
+    dplyr::summarize(n=n()) %>% dplyr::filter(!stringr::str_detect(value,"\\d"))%>% dplyr::arrange(-n) %>% dplyr::rename(word=value)
   
-  dt=dt %>% filter(!is.na(word) & word!="" & n>min_occurence)
+  dt=dt %>% dplyr::filter(!is.na(word) & word!="" & n>min_occurence)
   return(dt)
 }
 
-Unsupervized_corpus=function(corpus,length_ngram=2,min_occurence=10){
+unsupervized_corpus=function(corpus,length_ngram=2,min_occurence=10){
   mycorpus=lapply(1:length(corpus),function(x){
     text=corpus[[x]]
-    tic()
-    clean_ngram=ngram_clean(text,length_ngram = length_ngram)  
-    clean_ngram=clean_ngram %>% mutate(file=names(corpus)[x])
-    clean_ngram=clean_ngram %>% dplyr::select(word,file,n,everything())
-    toc()
-    clean_ngram
+    tictoc::tic()
+    cleaned_ngram=clean_ngram(text,length_ngram = length_ngram)  
+    cleaned_ngram=cleaned_ngram %>% dplyr::mutate(file=names(corpus)[x])
+    cleaned_ngram=cleaned_ngram %>% dplyr::select(word,file,n,everything())
+    tictoc::toc()
+    cleaned_ngram
   })
   mycorpus=do.call(rbind,mycorpus)
-  mycorpus=mycorpus %>% filter(!grepl("\\d",word))
+  mycorpus=mycorpus %>% dplyr::filter(!grepl("\\d",word))
   assoc_words=list()
-  assoc_words[["crisis"]]=associated_words(mycorpus,"crisis",min_occurence = min_occurence)
-  assoc_words[["banks"]]=associated_words(mycorpus,"banks",min_occurence = min_occurence)
-  assoc_words[["debt"]]=associated_words(mycorpus,"debt",min_occurence = min_occurence)
-  assoc_words[["reform"]]=associated_words(mycorpus,"reform",min_occurence = min_occurence)
-  assoc_words[["budget"]]=associated_words(mycorpus,"budget",min_occurence =min_occurence )
-  return(list(corpus=mycorpus,assoc_words=assoc_words))
+  assoc_words[["crisis"]]=assoc_words(mycorpus,"crisis",min_occurence = min_occurence)
+  assoc_words[["banks"]]=assoc_words(mycorpus,"banks",min_occurence = min_occurence)
+  assoc_words[["debt"]]=assoc_words(mycorpus,"debt",min_occurence = min_occurence)
+  assoc_words[["reform"]]=assoc_words(mycorpus,"reform",min_occurence = min_occurence)
+  assoc_words[["budget"]]=assoc_words(mycorpus,"budget",min_occurence =min_occurence )
+  return(list(corpus=mycorpus,associated_words=associated_words))
 }
 
 #--------------------------------------------------------------
@@ -1116,18 +1142,18 @@ Unsupervized_corpus=function(corpus,length_ngram=2,min_occurence=10){
 
 clean_text=function(file){
   #first step cleaning of the file by removing preselected character
-  #file=str_replace_all(file,"[^a-zA-Z\\s]", " ")
-  file=str_replace_all(file,"[\\s]+", " ")
+  #file=stringr::str_replace_all(file,"[^a-zA-Z\\s]", " ")
+  file=stringr::str_replace_all(file,"[\\s]+", " ")
   file=gsub("\r","",file)
   file=gsub('\"',"",file)
   file=gsub("\n","",file)
-  file=file[str_count(file)>50]
+  file=file[stringr::str_count(file)>50]
   file=gsub("<U+23AF>","",file)
   file=tolower(file)
   file
 }
 
-Find_targeted_pages=function(file,targetword){
+find_pages=function(file,targetword){
   #provide files either pdf of html and return the paragraphs matching the targetted word
   #parameters
   #file:a character string correspond to the text to analysis
@@ -1144,9 +1170,9 @@ Find_targeted_pages=function(file,targetword){
   file=clean_text(file)
   n.chars=sum(nchar(file)) #total number of characters in the file after cleaning
   page_location=sapply(1:length(file),function(x){
-    page=file[[x]]
-    page=tibble(page) %>%  unnest_tokens(word,page,token="ngrams",n=3) %>% mutate(word=tolower(word))
-    n.occurence=(page %>% filter(grepl(paste(tolower(targetword),collapse="|"),word)) %>% summarize(count=n()))$count
+    page=file[[x]] 
+    page=tibble(page) %>%  tidytext::unnest_tokens(word,page,token="ngrams",n=3) %>% dplyr::mutate(word=tolower(word))
+    n.occurence=(page %>% dplyr::filter(grepl(paste(tolower(targetword),collapse="|"),word)) %>% dplyr::summarize(count=n()))$count
     condition= n.occurence>0
     if(any(condition)){
       i<<-i+1
@@ -1161,7 +1187,7 @@ Find_targeted_pages=function(file,targetword){
   return(list(target=targetword,N.chars=n.chars,N.Occurence=page_locations,Tot.occurence=Tot.occurence,pages=target_pages))
 }
 
-Eval_targeted_pages=function(files,targetword,brute_freq=F,parrallel=T){
+eval_pages=function(files,targetword,brute_freq=F,parrallel=T){
   #provide list of files and return summary of counts of occurence of the target world 
   #parameters:
   #file:a character string correspond to the text to analysis
@@ -1174,7 +1200,7 @@ Eval_targeted_pages=function(files,targetword,brute_freq=F,parrallel=T){
   
   if(parrallel){
     metric=parallel::mclapply(files,function(x){
-      file=Find_targeted_pages(x,targetword)
+      file=find_pages(x,targetword)
       if(brute_freq){
         file$Tot.occurence
       }else{file$Tot.occurence/file$N.chars}
@@ -1186,7 +1212,7 @@ Eval_targeted_pages=function(files,targetword,brute_freq=F,parrallel=T){
     }else colnames(N.Occurence)="Occurence"
   }else{
     metric=lapply(files,function(x){
-      file=Find_targeted_pages(x,targetword)
+      file=find_pages(x,targetword)
       if(brute_freq){
         file$Tot.occurence
       }else{file$Tot.occurence/file$N.chars}
@@ -1197,7 +1223,7 @@ Eval_targeted_pages=function(files,targetword,brute_freq=F,parrallel=T){
       colnames(N.Occurence)=targetword
     }else colnames(N.Occurence)="Occurence"
   }
-  # N.Occurence=data.frame(N.Occurence) %>% mutate(ISO3_Code=substr(rownames(a),4,6),
+  # N.Occurence=data.frame(N.Occurence) %>% dplyr::mutate(ISO3_Code=substr(rownames(a),4,6),
   #                            year=substr(rownames(a),str_locate(rownames(a), "_2")+1,str_locate(rownames(a), "_2")+4),
   #                            path_file=substr(rownames(a),16,80),
   #                            Occurence=as.numeric(as.character(Occurence)))
@@ -1209,22 +1235,29 @@ pdf_page_count=function(files){
   #parameters:
   # files: a list of character strings
   
+  error_no_metadata=try({files[[1]]$info},silent = T)
+  if("try-error" %in% class(error_no_metadata)){
+    cat(crayon::red("No metadata of document available, please run aggregate_corpus() setting the argument only_files=F \n"))
+    #return(NULL)
+  }else{
   table_count=lapply(files,function(x){
-    #n.words=count_words(x$file)# %>% arrange(n) #%>% summarize(word=paste(paste(word,'(',n,')',sep=""),collapse=", "))
+    #n.words=count_words(x$file)# %>% arrange(n) #%>% dplyr::summarize(word=paste(paste(word,'(',n,')',sep=""),collapse=", "))
     n.pages=x$info$pages
     n.pages
     #list(n.words=n.words,n.pages=n.pages)
   })
+  
   names(table_count)=names(files)
   table_count=do.call(rbind,table_count)
   table_count=data.frame(table_count)
   table_count$File=names(files)
   table_count %>% dplyr::select(File,N.pages=table_count)
+  }
 }
 
 #--------------------------------------------------------------
 #Compute frequencies for a corpus of texts and the lexicon of words for crisis 
-table_brute_frequency=function(corpus,keywords,brute_freq=F,parrallel=T){
+tf=function(corpus,keywords,brute_freq=F,parrallel=T){
   #for each document in the corpus the function creates a table counting the occurence of
   #the words in the vector of keywords and provide a table with the number of occurence,
   #name of the file that is the name of each document in the corpus (from which we can extract: the country code,
@@ -1234,13 +1267,9 @@ table_brute_frequency=function(corpus,keywords,brute_freq=F,parrallel=T){
   # corpus: a list of texts from pdf_text() with different names for each element
   # keywords: a vector of strings containing the targeted words to look for
   
-  require(tidytext)
-  require(stringi)
-  require(stringr)
-  
   if(is.vector(keywords) & !is.null(keywords)){
     table=lapply(corpus,function(x){
-      output=try(sum(Eval_targeted_pages(x,keywords,brute_freq=brute_freq,parrallel = parrallel)[,1]))
+      output=try(sum(eval_pages(x,keywords,brute_freq=brute_freq,parrallel = parrallel)[,1]))
       if("try-error" %in% class(output)){
         print(paste0("Warning: error when mining ",keywords))
         output=0
@@ -1249,10 +1278,10 @@ table_brute_frequency=function(corpus,keywords,brute_freq=F,parrallel=T){
     })
     names(table)=names(corpus)
     table=do.call(rbind,table)
-    table=tibble(table)
+    table=dplyr::tibble(table)
     table$file=names(corpus)
     names(table)=c("var","file")
-    #table=table %>% mutate(#Recession=ifelse(Recession>0,1,0),
+    #table=table %>% dplyr::mutate(#Recession=ifelse(Recession>0,1,0),
     #   ISO3_Code=substr(file,1,3),
     #   Period=as.Date(substr(file,5,14)),
     #   type_prog=substr(file,16,23),
@@ -1262,8 +1291,8 @@ table_brute_frequency=function(corpus,keywords,brute_freq=F,parrallel=T){
   }else{print('please provide a vector of strings as argument for keywords')}
 }
 
-table_brute_frequency_vector=function(corpus,keyword_list,brute_freq=F,parrallel=T){
-  #vectorize the function table_brute_frequency() to be able to pass a list of names of keywords
+tf_vector=function(corpus,keyword_list,brute_freq=F,parrallel=T){
+  #vectorize the function tf() to be able to pass a list of names of keywords
   #keyword_list is a list containing the names of different groups of keywords that have a vector
   #of words to look into.
   
@@ -1278,22 +1307,22 @@ table_brute_frequency_vector=function(corpus,keyword_list,brute_freq=F,parrallel
   #my_keywords=key_words_crisis()
   list_table_keyword_occurence=lapply(1:length(keyword_list),function(x){
     print(paste0("running: ",names(keyword_list)[x]))
-    tic()
+    tictoc::tic()
     if(!"character" %in% class(keyword_list[[x]])){
       warning("please provide a valid vector of characters")
       dt=NULL
-      toc()
+      tictoc::toc()
       dt
     }else{
       res=try({
-        dt=table_brute_frequency(corpus,keyword_list[[x]],brute_freq=brute_freq,parrallel=parrallel)
-        dt=dt%>% rename(!!paste0(names(keyword_list)[x]):=var)
+        dt=tf(corpus,keyword_list[[x]],brute_freq=brute_freq,parrallel=parrallel)
+        dt=dt%>% dplyr::rename(!!paste0(names(keyword_list)[x]):=var)
         dt
       })
       if("try-error" %in% class(dt)){
         res=NULL
       }
-      toc()
+      tictoc::toc()
       res
     }
   })
@@ -1302,39 +1331,39 @@ table_brute_frequency_vector=function(corpus,keyword_list,brute_freq=F,parrallel
   dt=list_table_keyword_occurence[[1]]
   for(i in 2:length(list_table_keyword_occurence)){
     res=try({
-      dt=dt %>% left_join(list_table_keyword_occurence[[i]],by=c("file")) #"ISO3_Code","Period","type_prog","year",  
+      dt=dt %>% dplyr::left_join(list_table_keyword_occurence[[i]],by=c("file")) #"ISO3_Code","Period","type_prog","year",  
       dt    
     })
     if("try-error" %in% class(res)){
       dt=dt
     }else{
       dt=res
-      dt=dt %>% dplyr::select(file,everything()) %>% distinct() #ISO3_Code,Period,year,type_prog,
+      dt=dt %>% dplyr::select(file,everything()) %>% dplyr::distinct() #ISO3_Code,Period,year,type_prog,
     }
   }
-  
+
   return(dt)
 }
 
 #----------------------------------------------------------------
 #functions to transform brut frequency into alternative metrics
-binary_frequency_trans=function(table_N_occurence){
+binary_freq_trans=function(table_N_occurence){
   #transform table from Number of occurence to binary variables
   binary_trans=function(x){ifelse(x>0,1,0)}
-  table_brut_frequency=table_N_occurence %>% mutate_if(is.numeric,binary_trans)
+  table_brut_frequency=table_N_occurence %>% dplyr::mutate_if(is.numeric,binary_trans)
   return(table_brut_frequency)
 }
 
 log_norm_trans=function(table_N_occurence){
   #log normal transformation of the table
   log_norm_trans=function(x){ifelse(x>0,1+log(x),0)}
-  table_log_norm_trans=table_N_occurence %>% mutate_if(is.numeric,log_norm_trans)
+  table_log_norm_trans=table_N_occurence %>% dplyr::mutate_if(is.numeric,log_norm_trans)
   return(table_log_norm_trans)
 }
 
 #function to finds the relative importance of words in a corpus
 #THE FUNCTION IS NOT WORKING PROPERLY WHEN USING GROUP
-invers_doc_frequency=function(table_N_occurence,group=NULL){
+idf=function(table_N_occurence,group=NULL){
   #compute the inverse document frequency as the logarithm of the inverse of the proportion. it
   #allows to give reduce weight of words with high frequency in the corpus
   
@@ -1345,18 +1374,18 @@ invers_doc_frequency=function(table_N_occurence,group=NULL){
     }else{log(N.doc.corpus/sum(x))}
   }
   
-  table_N_binary=binary_frequency_trans(table_N_occurence)
+  table_N_binary=binary_freq_trans(table_N_occurence)
   
   if(!is.null(group)){
-    inverse_doc_freq=table_N_binary %>% group_by(get(group)) %>%
-      summarize_if(is.numeric,sum) %>%
-      mutate_if(is.numeric,idf_trans) %>%
-      gather("Crisis",value="idf",-"get(group)") #%>% rename(get(group):="get(group)")
+    inverse_doc_freq=table_N_binary %>% dplyr::group_by(get(group)) %>%
+      dplyr::summarize_if(is.numeric,sum) %>%
+      dplyr::mutate_if(is.numeric,idf_trans) %>%
+      gather("Crisis",value="idf",-"get(group)") #%>% dplyr::rename(get(group):="get(group)")
     colnames(inverse_doc_freq)[1]=group
   }else{
     inverse_doc_freq=table_N_binary %>%
-      summarize_if(is.numeric,sum) %>%
-      mutate_if(is.numeric,idf_trans)%>%
+      dplyr::summarize_if(is.numeric,sum) %>%
+      dplyr::mutate_if(is.numeric,idf_trans)%>%
       gather("Crisis",value="idf")
   }
   return(inverse_doc_freq)
@@ -1364,10 +1393,10 @@ invers_doc_frequency=function(table_N_occurence,group=NULL){
 
 #function to compute the weights of each word by doing the product of the index of frequency and the inverse
 #document frequency
-table_word_weight=function(table_N_occurence,weight_method="brut_frequency"){
+tf_idf=function(table_N_occurence,weight_method="brut_frequency"){
   #function to compute the weights of each word by doing the product of the index of frequency and the inverse
   #document frequency
-  dt_inv_doc_freq=try(invers_doc_frequency(table_N_occurence))
+  dt_inv_doc_freq=try(idf(table_N_occurence))
   if("try_error" %in% dt_inv_doc_freq){
     print(paste0("Warning: error when using function dt_inv_doc_freq"))
     return(NULL)
@@ -1378,19 +1407,19 @@ table_word_weight=function(table_N_occurence,weight_method="brut_frequency"){
   if(weight_method=="brut_frequency"){
     dt_words_weight=table_N_occurence
     for(var in select_cols ){
-      dt_words_weight[,var]=dt_words_weight[,var]*(dt_inv_doc_freq %>% filter(Crisis==var) %>% dplyr::select(idf))[[1]]
+      dt_words_weight[,var]=dt_words_weight[,var]*(dt_inv_doc_freq %>% dplyr::filter(Crisis==var) %>% dplyr::select(idf))[[1]]
     }
     return(dt_words_weight)
   }else if(weight_method=="binary_frequency"){
-    dt_words_weight=binary_frequency_trans(table_N_occurence)
+    dt_words_weight=binary_freq_trans(table_N_occurence)
     for(var in select_cols ){
-      dt_words_weight[,var]=dt_words_weight[,var]*(dt_inv_doc_freq %>% filter(Crisis==var) %>% dplyr::select(idf))[[1]]
+      dt_words_weight[,var]=dt_words_weight[,var]*(dt_inv_doc_freq %>% dplyr::filter(Crisis==var) %>% dplyr::select(idf))[[1]]
     }
     return(dt_words_weight)
   }else if(weight_method=="log_norm_frequency"){
     dt_words_weight=log_norm_trans(table_N_occurence)
     for(var in select_cols ){
-      dt_words_weight[,var]=dt_words_weight[,var]*(dt_inv_doc_freq %>% filter(Crisis==var) %>% dplyr::select(idf))[[1]]
+      dt_words_weight[,var]=dt_words_weight[,var]*(dt_inv_doc_freq %>% dplyr::filter(Crisis==var) %>% dplyr::select(idf))[[1]]
     }
     return(dt_words_weight)
   }else warning("please choose a proper method: brut_frequency,binary_frequency,log_norm_frequency")
@@ -1461,9 +1490,9 @@ run_tf=function(corpus_path=paste0(root_path,"/3. Data/IMF Letters of Intents/IM
     return(NULL)
   }
   
-  tic()
-  dt=table_brute_frequency_vector(corpus,keyword_list,parrallel = parrallel)
-  toc()
+  tictoc::tic()
+  dt=tf_vector(corpus,keyword_list,parrallel = parrallel)
+  tictoc::toc()
   destination=paste0(export_path,"/data_LoI_N_Occ_crisis_",type_lexicon,".RData")
   print(paste0("export table in ",corpus_path))
   if(!is.null(export_path)){
@@ -1505,7 +1534,7 @@ run_tf_update=function(path_tf_to_update=paste0(root_path,"/3. Data/IMF Letters 
     
     new_tf=run_tf(corpus_path=corpus_path,type_lexicon=type_lexicon,keyword_list=keyword_list,parrallel=parrallel)
     
-    tf_to_update=left_join(x=tf_to_update,y=new_tf,by="file")
+    tf_to_update=dplyr::left_join(x=tf_to_update,y=new_tf,by="file")
     
     print(paste0("Non updated columns:\n
                  ",paste0(existing_cols,collapse=", ")))
@@ -1521,7 +1550,7 @@ run_tf_update=function(path_tf_to_update=paste0(root_path,"/3. Data/IMF Letters 
 }
 
 #function to aggregate corpus
-aggregate_corpus=function(path_files){
+aggregate_corpus=function(path_files,only_files=F){
   #Description:
   # function that takes the path of the directory and load all the pdfs of the directory 
   # into a list in order to further perform the text mining
@@ -1532,15 +1561,14 @@ aggregate_corpus=function(path_files){
   #output:
   # a list containing the content of each document
   
-  library(pdftools)
   docs=list.files(path_files,pattern=".pdf")
-  docs=str_remove(docs,".PDF")
-  docs=str_remove(docs,".pdf")
+  docs=stringr::str_remove(docs,".PDF") 
+  docs=stringr::str_remove(docs,".pdf")
   count=0
   start=1
-  x=1
+  x=1 
   corpus=lapply(start:length(docs),function(x){
-    tic(docs[x])
+    tictoc::tic(docs[x])
     path=paste0(path_files,"/",docs[x],".PDF")
     file <- try({
       pdfinfo=pdf_info(path)
@@ -1555,50 +1583,51 @@ aggregate_corpus=function(path_files){
     count<-count+1
     print(path)
     print(count)
-    toc()
+    tictoc::toc()
+    if(only_files==T){
+      file
+    }else{
     list(info=pdfinfo,file=file)
+    }
   })
   names(corpus)=docs
   return(corpus)
 }
 
-
 #function to download pdf files from urls
 
-download_pdf_from_url=function(urls,export_path){
+pdf_from_url=function(urls,export_path){
   #download from a a dataframe containing the url of the files
   ref_colnames=c("title","reference","hierarchy","date","keywords" ,"pdf") 
   
   if(!dir.exists(export_path)){
     dir.create(export_path,recursive = T)
   }
-  
+
   if(any(names(urls) %in% ref_colnames)){
     count=0
     lapply(1:dim(urls)[1],function(i){
       count<<-count+1
       filename=urls[i,"hierarchy"]
-      tic(paste0(urls[i,"hierarchy"]," : ",count,"/",dim(urls)[1]))
-      file <- try(download.file(urls[i,"pdf"], destfile=paste0(export_path,"/",str_replace_all(urls[i,"hierarchy"],"/","_"),".pdf")), silent=T)
+      tictoc::tic(paste0(urls[i,"hierarchy"]," : ",count,"/",dim(urls)[1]))
+      file <- try(download.file(urls[i,"pdf"], destfile=paste0(export_path,"/",stringr::str_replace_all(urls[i,"hierarchy"],"/","_"),".pdf")), silent=T)
       if("try-error" %in% class(file)) {
-        cat(red(paste(urls[i,"hierarchy"],": Error in path file: ",urls[i,"pdf"],sep="")))
+        cat(crayon::red(paste(urls[i,"hierarchy"],": Error in path file: ",urls[i,"pdf"],sep="")))
         file=NA
       }
-      toc()
+      tictoc::toc()
     })
-    cat(green(paste0("urls succesfully downloaded in '",export_path,"'")))
+    cat(crayon::green(paste0("urls succesfully downloaded in '",export_path,"'")))
     #print("urls succesfully downloaded")
-  }else{cat(green("Please provide a valid data.frame of url"))}
+  }else{cat(crayon::green("Please provide a valid data.frame of url"))}
   
 }
-
-
 
 # ----------------------------------------------------------------
 
 #formula for the cosinus similiarity that provides the distance between two vectors here
 #two crisis
-cosinus_similarity=function(table_N_occurence,vec1,vec2){
+cosim=function(table_N_occurence,vec1,vec2){
   #formula for the cosinus similiarity that provides the distance/similarity between two vectors here
   #two crisis
   #pararmeters:
@@ -1609,13 +1638,13 @@ cosinus_similarity=function(table_N_occurence,vec1,vec2){
   #output:
   # a number providing the similarity between the two vectors
   res=table_N_occurence %>% dplyr::select(vec1,vec2) %>%
-    mutate(scalar_prod=get(vec1)*get(vec2),
+    dplyr::mutate(scalar_prod=get(vec1)*get(vec2),
            norm_1=(get(vec1))^2,
            norm_2=(get(vec2))^2) %>%
-    summarize(scalar_prod=sum(scalar_prod),
+    dplyr::summarize(scalar_prod=sum(scalar_prod),
               norm_1=sum(norm_1),
               norm_2=sum(norm_2)) %>%
-    mutate(cosinus_similarity=scalar_prod/(sqrt(norm_1)*sqrt(norm_2))) %>%
+    dplyr::mutate(cosinus_similarity=scalar_prod/(sqrt(norm_1)*sqrt(norm_2))) %>%
     dplyr::select(cosinus_similarity)
   
   return(res$cosinus_similarity)
@@ -1623,7 +1652,7 @@ cosinus_similarity=function(table_N_occurence,vec1,vec2){
 
 #compute the cosinus similarity matrix to how different crisis cluster each others
 
-matrix_cosinus_similarity=function(table_weights){
+cosim_matrix=function(table_weights){
   #compute the matrix of cosinus simularity between all the type of crisis 
   #parameters:
   #table_weights: a table of tf-idf with documents in rows and type of crisis in 
@@ -1635,7 +1664,7 @@ matrix_cosinus_similarity=function(table_weights){
   for(j in 1:length(vects)){
     #ind=c(1:(j-1),(j+1):length(vects))
     for(i in 1:length(vects)){#j
-      res[i,j]=cosinus_similarity(table_weights,vects[j],vects[i])
+      res[i,j]=cosim(table_weights,vects[j],vects[i])
       #print(res)
     }
   }
@@ -1650,14 +1679,14 @@ matrix_cosinus_similarity=function(table_weights){
 plot_cos_sim=function(cos_sim,var){
   dt= cos_sim %>% dplyr::select(myvar=var) 
   dt$xaxis=rownames(dt)
-  dt=dt%>% mutate(xaxis=str_replace(xaxis,"_"," "))
+  dt=dt%>% dplyr::mutate(xaxis=str_replace(xaxis,"_"," "))
   
-  ggplot(data=dt)+
-    geom_bar(stat="identity",aes(x=reorder(xaxis,-myvar),y=myvar))+
-    theme_bw()+
-    ylab("Cosinus similarity")+
-    xlab("")+
-    theme(legend.position="bottom",axis.text.x=element_text(angle=90,hjust=1),axis.text=element_text(size=8))
+  ggplot2::ggplot(data=dt)+
+    ggplot2::geom_bar(stat="identity",aes(x=reorder(xaxis,-myvar),y=myvar))+
+    ggplot2::theme_bw()+
+    ggplot2::ylab("Cosinus similarity")+
+    ggplot2::xlab("")+
+    ggplot2::theme(legend.position="bottom",axis.text.x=ggplot2::element_text(angle=90,hjust=1),axis.text=ggplot2::element_text(size=8))
   
 }
 
@@ -1665,15 +1694,15 @@ plot_cos_sim=function(cos_sim,var){
 
 #compute the average importance of each crisis by groups
 
-evol_weight_by_group=function(table_N_occurence,weight_method="brut_frequency",group=NULL){
+tf_by_group=function(table_N_occurence,weight_method="brut_frequency",group=NULL){
   if(is.null(group)){
-    dt_weights_years=table_word_weight(table_N_occurence,weight_method) %>% ungroup() #summarize_if(is.numeric,mean)
-    dt_weights_years=dt_weights_years %>% gather("Crisis",value="word_weight")
+    dt_weights_years=tf_idf(table_N_occurence,weight_method) %>% ungroup() #dplyr::summarize_if(is.numeric,mean)
+    dt_weights_years=dt_weights_years %>% tidyr::gather("Crisis",value="word_weight")
     dt_weights_years=dt_weights_years[-1,]
-    dt_weights_years=dt_weights_years %>% mutate(word_weight=as.numeric(word_weight))
-  }else{
-    dt_weights_years=table_word_weight(table_N_occurence,weight_method) %>% ungroup() %>% group_by(get(group)) %>% summarize_if(is.numeric,mean)
-    dt_weights_years=dt_weights_years %>% gather("Crisis",value="word_weight",-'get(group)')
+    dt_weights_years=dt_weights_years %>% dplyr::mutate(word_weight=as.numeric(word_weight))
+  }else{  
+    dt_weights_years=tf_idf(table_N_occurence,weight_method) %>% dplyr::ungroup() %>% dplyr::group_by(get(group)) %>% dplyr::summarize_if(is.numeric,mean)
+    dt_weights_years=dt_weights_years %>% tidyr::gather("Crisis",value="word_weight",-'get(group)')
     colnames(dt_weights_years)[1]=group
     dt_weights_years
   }
@@ -1681,9 +1710,9 @@ evol_weight_by_group=function(table_N_occurence,weight_method="brut_frequency",g
 
 #Look at average importance of each crisis by country and display the more important elements
 country_radar_dt=function(table_N_occurence,isoc,top_n=50,weight_method="brut_frequency",group="ISO3_Code"){
-  table=evol_weight_by_group(table_N_occurence,weight_method = weight_method,group=group)
-  table %>% filter(ISO3_Code %in% isoc) %>% arrange(-word_weight) %>% top_n(top_n)
-}
+  table=tf_by_group(table_N_occurence,weight_method = weight_method,group=group)
+  table %>% dplyr::filter(ISO3_Code %in% isoc) %>% dplyr::arrange(-word_weight) %>% top_n(top_n)
+} 
 
 country_radar_fig=function(country_radar_dt){
   
@@ -1694,20 +1723,20 @@ country_radar_fig=function(country_radar_dt){
   
   
   country_radar_dt=country_radar_dt %>%
-    arrange(match(Crisis,endo_exo_order)) %>% filter(Crisis %in% endo_exo_order)
+    dplyr::arrange(match(Crisis,endo_exo_order)) %>% dplyr::filter(Crisis %in% endo_exo_order)
   
   Weights=country_radar_dt[,"word_weight"]$word_weight*10000
   
   Weights[Weights==0]=0.0000001
-  Crisis=str_replace_all(country_radar_dt[,"Crisis"]$Crisis,"_"," ")
+  Crisis=stringr::str_replace_all(country_radar_dt[,"Crisis"]$Crisis,"_"," ")
   
   i=6
-  j=6
+  j=6 
   s=5
   alpha_endo=0.8
-  p <- plot_ly(type = 'scatterpolar',
+  p <- plotly::plot_ly(type = 'scatterpolar',
                mode="lines") %>%
-    add_trace(
+    plotly::add_trace(
       r = rep(2.5,length(Crisis)), #max(Weights)
       theta = Crisis,
       line=list(color="lightgrey")) %>%
@@ -1729,15 +1758,15 @@ country_radar_fig=function(country_radar_dt){
   #   name="Endogenous",
   #   line=list(color=toRGB("red",alpha_endo)),
   #   fill = 'toself',fillcolor = toRGB("red",alpha_endo)) %>%
-  add_trace(
+  plotly::add_trace(
     r = Weights,
     theta = Crisis,
     name="Profile of crisis",
     line=list(color="#709Bff"),
     fill = 'toself',fillcolor = '#709Bff',alpha_endo) %>%
-    layout(xaxis = 3, yaxis = median(Weights,na.rm=T)) %>%
+    plotly::layout(xaxis = 3, yaxis = median(Weights,na.rm=T)) %>%
     
-    layout(
+    plotly::layout(
    xaxis = list(title = "", showgrid = T, zeroline = F, showticklabels = T,
                        domain = c(0, 3)
    ),
@@ -1758,58 +1787,33 @@ country_radar_fig=function(country_radar_dt){
 find_associated_keyword=function(keyword){
   #find the keywords associate to the name of the category provide
   #usefull to know what are the words behind each category
-  detect=names(key_words_crisis())[str_detect(tolower(names(key_words_crisis())),tolower(keyword))]
+  detect=names(key_words_crisis())[stringr::str_detect(tolower(names(key_words_crisis())),tolower(keyword))]
   key_words_crisis()[detect]
 }
 
 find_pertinance=function(table.N.occurrence,keyword){
   #rand the more pertinent category given the tf-idf
   words=find_associated_keyword(keyword)
-  table=table_word_weight(table.N.occurrence)
-  table=table %>% gather(Crisis,value="weight",-c(ISO3_Code,Period,year,type_prog,file))
-  results=table %>% filter(str_detect(tolower(Crisis),tolower(keyword)) & weight>0) %>% arrange(-weight)
+  table=tf_idf(table.N.occurrence)
+  table=table %>% tidyr::gather(Crisis,value="weight",-c(ISO3_Code,Period,year,type_prog,file))
+  results=table %>% dplyr::filter(stringr::str_detect(tolower(Crisis),tolower(keyword)) & weight>0) %>% dplyr::arrange(-weight)
   return(list(keywords=words,results=results))
 }
 
 #---------------------------------------------------------------------------
 
-keywords_country_contagion=function(){
-  #table of adjectival and names of countries 
-  if(curl::has_internet()){
-    path="https://en.wikipedia.org/wiki/List_of_adjectival_and_demonymic_forms_for_countries_and_nations"
-    html_file <- try(read_html(path), silent=T)
-    ctry_table=html_file %>% html_nodes(xpath='//*[@id="mw-content-text"]/div/table[1]') %>% html_table(fill=T)
-    ctry_table=ctry_table[[1]]
-    
-    ctry_table=data.frame(ctry_table)[-1,]
-    colnames(ctry_table)=c("ctries","adjectival","Demonyms","Demonyms_2","X")
-    
-    #currencies 
-    path="https://en.wikipedia.org/wiki/List_of_circulating_currencies"
-    html_file <- try(read_html(path), silent=T)
-    currency_table=html_file %>% html_nodes(xpath='//*[@id="mw-content-text"]/div/table[1]') %>% html_table(fill=T)
-    currency_table=currency_table[[1]]
-    names(currency_table)=c("ctries","Currency","Symbol","ISO2_Code","fractional_unit","basis")
-    table=left_join(x=ctry_table,y=currency_table,by="ctries")
-    
-  }else{
-    ctry_table=rio::import("../3. Data/List countries/wikipedia_country_names.RData")
-  }
-  return(table)
-}
-
 search_contagion=function(file){
-  tic()
-  ctry_table=keywords_country_contagion()
+  tictoc::tic()
+  ctry_table=key_words_countries()
   
   ctries=c(ctry_table$ctries,ctry_table$adjectival,ctry_table$Currency,ctry_table$Symbol,key_words_crisis()$Crisis_contagion)
   
   text= clean_text(file)
-  text_df <- tibble(text = text) %>%
-    unnest_tokens(word, text) %>%
-    anti_join(stop_words,by=c("word"))
-  toc()
-  text_df %>% filter(word %in% tolower(ctries)) %>% count(word) %>% arrange(word) %>% filter(n>1)
+  text_df <- dplyr::tibble(text = text) %>%
+    tidytext::unnest_tokens(word, text) %>%
+    dplyr::anti_join(stop_words,by=c("word"))
+  tictoc::toc()
+  text_df %>% dplyr::filter(word %in% tolower(ctries)) %>% count(word) %>% dplyr::arrange(word) %>% dplyr::filter(n>1)
 }
 
 

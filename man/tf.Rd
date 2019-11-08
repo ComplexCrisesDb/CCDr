@@ -1,5 +1,5 @@
-\name{table_brute_frequency}
-\alias{table_brute_frequency}
+\name{tf}
+\alias{tf}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 for each document in the corpus the function creates a table counting the occurence of the words in the vector of keywords and provide a table with the number of occurence,name of the file that is the name of each document in the corpus (from which we can extract: the country code, period, type of program and year)
@@ -8,7 +8,7 @@ for each document in the corpus the function creates a table counting the occure
 for each document in the corpus the function creates a table counting the occurence of the words in the vector of keywords and provide a table with the number of occurence,name of the file that is the name of each document in the corpus (from which we can extract: the country code, period, type of program and year)
 }
 \usage{
-table_brute_frequency(corpus, keywords, brute_freq = F, parrallel = T)
+tf(corpus, keywords, brute_freq = F, parrallel = T)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -56,7 +56,7 @@ function (corpus, keywords, brute_freq = F, parrallel = T)
     require(stringr)
     if (is.vector(keywords) & !is.null(keywords)) {
         table = lapply(corpus, function(x) {
-            output = try(sum(Eval_targeted_pages(x, keywords, 
+            output = try(sum(eval_pages(x, keywords, 
                 brute_freq = brute_freq, parrallel = parrallel)[, 
                 1]))
             if ("try-error" \%in\% class(output)) {

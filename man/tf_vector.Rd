@@ -1,5 +1,5 @@
-\name{table_brute_frequency_vector}
-\alias{table_brute_frequency_vector}
+\name{tf_vector}
+\alias{tf_vector}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 vectorize the function table_brute_frequency() to be able to pass a list of names of keywords keyword_list is a list containing the names of different groups of keywords that have a vector of words to look into.
@@ -8,7 +8,7 @@ vectorize the function table_brute_frequency() to be able to pass a list of name
 vectorize the function table_brute_frequency() to be able to pass a list of names of keywords keyword_list is a list containing the names of different groups of keywords that have a vector of words to look into.
 }
 \usage{
-table_brute_frequency_vector(corpus, keyword_list, brute_freq = F, parrallel = T)
+tf_vector(corpus, keyword_list, brute_freq = F, parrallel = T)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -62,7 +62,7 @@ function (corpus, keyword_list, brute_freq = F, parrallel = T)
             }
             else {
                 res = try({
-                  dt = table_brute_frequency(corpus, keyword_list[[x]], 
+                  dt = tf(corpus, keyword_list[[x]], 
                     brute_freq = brute_freq, parrallel = parrallel)
                   dt = dt \%>\% rename(`:=`(!!paste0(names(keyword_list)[x]), 
                     var))

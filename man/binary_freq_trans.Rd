@@ -1,5 +1,5 @@
-\name{binary_frequency_trans}
-\alias{binary_frequency_trans}
+\name{binary_freq_trans}
+\alias{binary_freq_trans}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
  transform table from Number of occurence to binary variables
@@ -8,12 +8,12 @@
  transform table from Number of occurence to binary variables
 }
 \usage{
-binary_frequency_trans(table_N_occurence)
+binary_freq_trans(table_N_occurence)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{table_N_occurence}{
- output of table_brute_frequency_vector()
+ output of tf_vector()
 }
 }
 \details{

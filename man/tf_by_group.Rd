@@ -1,5 +1,5 @@
-\name{evol_weight_by_group}
-\alias{evol_weight_by_group}
+\name{tf_by_group}
+\alias{tf_by_group}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 compute the average importance of each crisis by groups
@@ -8,7 +8,7 @@ compute the average importance of each crisis by groups
 compute the average importance of each crisis by groups
 }
 \usage{
-evol_weight_by_group(table_N_occurence, weight_method = "brut_frequency", group = NULL)
+tf_by_group(table_N_occurence, weight_method = "brut_frequency", group = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -53,7 +53,7 @@ function (table_N_occurence, weight_method = "brut_frequency",
     group = NULL) 
 {
     if (is.null(group)) {
-        dt_weights_years = table_word_weight(table_N_occurence, 
+        dt_weights_years = tf_idf(table_N_occurence, 
             weight_method) \%>\% ungroup()
         dt_weights_years = dt_weights_years \%>\% gather("Crisis", 
             value = "word_weight")

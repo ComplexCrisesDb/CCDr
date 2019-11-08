@@ -1,5 +1,5 @@
-\name{invers_doc_frequency}
-\alias{invers_doc_frequency}
+\name{idf}
+\alias{idf}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 compute the inverse document frequency as the logarithm of the inverse of the proportion. it allows to give reduce weights of words with high frequency in the corpus
@@ -7,7 +7,7 @@ compute the inverse document frequency as the logarithm of the inverse of the pr
 \description{
 compute the inverse document frequency as the logarithm of the inverse of the proportion. it allows to give reduce weights of words with high frequency in the corpus
 \usage{
-invers_doc_frequency(table_N_occurence, group = NULL)
+idf(table_N_occurence, group = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -56,7 +56,7 @@ function (table_N_occurence, group = NULL)
             log(N.doc.corpus/sum(x))
         }
     }
-    table_N_binary = binary_frequency_trans(table_N_occurence)
+    table_N_binary = binary_freq_trans(table_N_occurence)
     if (!is.null(group)) {
         inverse_doc_freq = table_N_binary \%>\% group_by(get(group)) \%>\% 
             summarize_if(is.numeric, sum) \%>\% mutate_if(is.numeric, 

@@ -1,5 +1,5 @@
-\name{Find_targeted_pages}
-\alias{Find_targeted_pages}
+\name{find_pages}
+\alias{find_pages}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
  provide files either pdf of html and return the paragraphs matching the targetted word
@@ -8,7 +8,7 @@
  provide files either pdf of html and return the paragraphs matching the targetted word
 }
 \usage{
-Find_targeted_pages(file, targetword)
+find_pages(file, targetword)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

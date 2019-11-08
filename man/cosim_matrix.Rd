@@ -1,5 +1,5 @@
-\name{matrix_cosinus_similarity}
-\alias{matrix_cosinus_similarity}
+\name{cosim_matrix}
+\alias{cosim_matrix}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 compute the cosinus similarity matrix by comparing pairwise columns
@@ -8,7 +8,7 @@ compute the cosinus similarity matrix by comparing pairwise columns
 compute the cosinus similarity matrix by comparing pairwise columns
 }
 \usage{
-matrix_cosinus_similarity(table_weights)
+cosim_matrix(table_weights)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -50,7 +50,7 @@ function (table_weights)
         vects))
     for (j in 1:length(vects)) {
         for (i in 1:length(vects)) {
-            res[i, j] = cosinus_similarity(table_weights, vects[j], 
+            res[i, j] = cosim(table_weights, vects[j], 
                 vects[i])
         }
     }

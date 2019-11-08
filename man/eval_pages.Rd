@@ -1,5 +1,5 @@
-\name{Eval_targeted_pages}
-\alias{Eval_targeted_pages}
+\name{eval_pages}
+\alias{eval_pages}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 provide list of files and return summary of counts of occurence of the target world 
@@ -8,7 +8,7 @@ provide list of files and return summary of counts of occurence of the target wo
 provide list of files and return summary of counts of occurence of the target world 
 }
 \usage{
-Eval_targeted_pages(files, targetword, brute_freq = F, parrallel = T)
+eval_pages(files, targetword, brute_freq = F, parrallel = T)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -52,7 +52,7 @@ function (files, targetword, brute_freq = F, parrallel = T)
 {
     if (parrallel) {
         metric = parallel::mclapply(files, function(x) {
-            file = Find_targeted_pages(x, targetword)
+            file = find_pages(x, targetword)
             if (brute_freq) {
                 file$Tot.occurence
             }
@@ -68,7 +68,7 @@ function (files, targetword, brute_freq = F, parrallel = T)
     }
     else {
         metric = lapply(files, function(x) {
-            file = Find_targeted_pages(x, targetword)
+            file = find_pages(x, targetword)
             if (brute_freq) {
                 file$Tot.occurence
             }

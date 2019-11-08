@@ -1,5 +1,5 @@
-\name{cosinus_similarity}
-\alias{cosinus_similarity}
+\name{cosim}
+\alias{cosim}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 formula for the cosinus similiarity that provides the distance between two vectors here two crisis
@@ -8,7 +8,7 @@ formula for the cosinus similiarity that provides the distance between two vecto
 formula for the cosinus similiarity that provides the distance between two vectors here two crisis
 }
 \usage{
-cosinus_similarity(table_N_occurence, vec1, vec2)
+cosim(table_N_occurence, vec1, vec2)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
