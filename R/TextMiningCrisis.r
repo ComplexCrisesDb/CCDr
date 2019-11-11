@@ -30,6 +30,7 @@ key_words_crisis=function(){
     "liberalize",
     "privatize",
     "deregulate",
+    "demonopolization",
     "deregulation"
   )
   
@@ -50,6 +51,9 @@ key_words_crisis=function(){
     "liberalization of trade",
     "liberalization of tariffs",
     "remove tariffs",
+    "open trade policy",
+    "comply with WTO",
+    "WTO",
     "removing tariffs"
   )
   key_words[["Financial_reforms"]]=c(
@@ -61,6 +65,26 @@ key_words_crisis=function(){
     "regulating the financial sector"
   )
   
+  
+  key_words[["Labor_market_reforms"]]=c(
+    "labor market reforms",
+    "reforms to the labor market",
+    "labor market flexibility",
+    "labor market framework",
+    "labor reform"
+  )
+  
+  key_words[["Tax_reforms"]]=c(
+    "tax reform",
+    "fiscal reform",
+    "reform the tax system",
+    "reform of indirect taxation",
+    "tax package",
+    "tax administration",
+    "modifications to the tax regime"
+  )
+  
+  
   key_words[["Banking_reforms"]]=c(
     "banking reform",
     "banking sector reform",
@@ -68,13 +92,64 @@ key_words_crisis=function(){
     "reforming the banking sector",
     "reforming bank",
     "regulation of the banking sector",
+    "banking supervision reform",
+    "banking system consolidation",
+    "bank restructuring reform",
+    "desintermediation of the banking system",
     "regulating the financial sector"
   )
   
+  key_words[["Success_of_reforms"]]=c(
+  "implementation risk",
+  "inconsistent record in policy reform"
+    )
+
   
   #--------
   ## OFFICIAL CREDITORS INTERVENTION
   #--------
+  
+  key_words[["Peformance_criterion"]]=c(
+  "performance criteria",
+  "non observance of performance criterion",
+  "performance criteria were met",
+  "non observance",
+  "delay in the review",
+  "performance criteria and reviews",
+  "completion of the second review",
+  "completion of the first review",
+  "completion of the third review",
+  "completion of the second and third review",
+  "status of implementation of prior actions",
+  "record of policy implementation as been very slow",
+  "policy commitments",
+  "keep the program on track",
+  "program reviews",
+  "waivers of the relevant performance criteria",
+  "request for a waiver",
+  "reviews of the arrangement",
+  "rephasing of purchases",
+  "waiver for the non observance",
+  "review of economic performance",
+  "succesful implementation of the program",
+  "fiscal performance criteria",
+  "modification of the fiscal performance criteria",
+  "second review under the arrangement",
+  "quantitative targets",
+  "were all met",
+  "request waivers of the performance criteria",
+  "policy slippage"
+  )
+  
+  key_words[["Program_extension"]]=c(
+    "augmentation of SDR",
+    "emergency financial procedure",
+    "extension of the stand-by arrangement",
+    "extension of the arrangement",
+    "supplemental reserve facility",
+    "augmentation of access under",
+    "augmentation of the SBA"
+  )
   
   key_words[["Official_support"]]=c(
     "ESFS",
@@ -90,6 +165,10 @@ key_words_crisis=function(){
     "Inter American Development Bank",
     "European stability mechanism",
     "Fed swap lines")
+  
+  key_words[["Technical_assistance"]]=c(
+    "technical assistance"
+  )
   
   key_words[["Precautionary_programs"]]=c(
     #"precaution",
@@ -171,6 +250,7 @@ key_words_crisis=function(){
     "atlantic conflict",
     "military conflict",
     "armed internal conflict",
+    "ethnic rivalries",
     "internal conflict",
     "armed domestic conflict",
     "israeli conflict",
@@ -209,6 +289,8 @@ key_words_crisis=function(){
     "collapse in international prices",
     "significant terms of trade loss",
     "terms of trade declined",
+    "terms of trade drop",
+    'large terms of trade loss',
     "dependenceon oil-related revenue",
     "budgetary dependency on oil revenue",
     "negative terms of trade",
@@ -220,6 +302,7 @@ key_words_crisis=function(){
     "terms of trade were adversely affected",
     "drop in world coffee price",
     "oil price increase",
+    "fluctuations in oil prices",
     "decline in coffee prices",
     "decline in the terms of trade",
     "increase in petroleum price",
@@ -254,6 +337,7 @@ key_words_crisis=function(){
     "political risk",
     "unstable political",
     "political instability",
+    "poor governance",
     "disturbed political conditions",
     "political and economic developments",
     "political and security situation",
@@ -263,9 +347,13 @@ key_words_crisis=function(){
     "political tensions",
     "geopolitical events",
     "geopolitical risk",
+    "election related uncertainty",
+    "election related uncertainties",
+    "governance issues",
     "complex geopolitical situation",
     "geopolitical tensions",
     "geopolitical turmoil",
+    "weak governance",
     "adverse geopolitical events",
     "adverse geopolitical",
     "unexpected political events",
@@ -288,7 +376,12 @@ key_words_crisis=function(){
     "uncertainty about the continuity of policies",
     "uncertainty regarding future policies")
   
-  
+  key_words[["Social_crisis"]]=c(
+    "social risk",
+    "social climate as deteriorate",
+    "deteriorating social climate"
+  )
+    
   #--------
   ## EXOGENEOUS SHOCKS; ECONOMIC
   #--------
@@ -305,14 +398,21 @@ key_words_crisis=function(){
     "fragility of the banking sector",
     "fragile banking sector",
     "banking crisis",
+    "banking system restructuring",
+    "insolvent banks",
+    "insovlvent banking sector",
     "bailout",
     "crisis in the banking sector",
+    "take over of private banks",
+    "private banks taken over",
+    "recapitalize private banks",
     "collapse of the banking sector",
     "increase in nonperforming loans",
     "recapitalization of the banks",
     "recapitalizing the banking system",
     "recapitalizing the banking sector",
     "banking system collapsed",
+    "additional nonperforming loans",
     "collapsed in the banking system",
     "banking system stability",
     "pressure on the banking",
@@ -375,6 +475,12 @@ key_words_crisis=function(){
     "inflationary pressures",
     "inflationary pressure",
     "inflation_crisis")
+  
+  key_words[["trade_crisis"]]=c(
+    "trade war",
+    "disruption of trade",
+    "trade crisis"
+    )
   
   key_words[["Crisis_contagion"]]=c(
     "Russian debt crisis",
@@ -464,6 +570,7 @@ key_words_crisis=function(){
     "spillovers from the global crisis",
     "vulnerable to external shocks",
     "crisis spillover",
+    "regional economic situation turned adverse",
     "contagion from the crisis in neightboring",
     "external shocks",
     "external shock",
@@ -491,6 +598,7 @@ key_words_crisis=function(){
     "panic",
     "potential risks",
     "upward risk",
+    "market confidence",
     "high risk",
     "downside risks",
     "increase the risks",
@@ -508,6 +616,7 @@ key_words_crisis=function(){
     "uncertainty among market participant",
     "change in expectations",
     "speculative capital movements",
+    "speculative attack",
     "uncertainty among market participant",
     "a time of heightened global uncertainty",
     "change in investors sentiment",
@@ -607,6 +716,7 @@ key_words_crisis=function(){
     "decline in reserves",
     "drop in reserves",
     "drop in official reserves",
+    "selling foreign exchange",
     "decline in official reserves",
     "loss of official reserves",
     "loss of international reserves",
@@ -652,7 +762,23 @@ key_words_crisis=function(){
     "adjustable exchange rate bands",
     "crawling band exchange rate",
     "exchange rate peg  within a band",
+    "convertibility regime",
     "adjustable exchange rate band system")
+  
+  key_words[["Losening_monetary_policy"]]=c(
+    "loosening monetary policy",
+    "bring down interest rates"
+  )
+  
+  key_words[["Tightening_monetary_policy"]]=c(
+    "monetary tightening",
+    "tighten monetary policy",
+    "control monetary aggregate",
+    "tighten monetary conditions",
+    "tightening of interest rate",
+    "tightening of monetary policy",
+    "increase in interest rates"
+  )
   
   #----------
   ## OUTPUT SHOCKS
@@ -684,6 +810,7 @@ key_words_crisis=function(){
     "large economic slowdown",
     "severe recession",
     "profond recession",
+    "contraction in output",
     "deep recession",
     "severe contraction",
     "deep contraction",
@@ -697,9 +824,13 @@ key_words_crisis=function(){
   key_words[["Soft_recession"]]=c(
     "slowdown in the economic activity",
     "slowdown in economic growth",
+    "slowdown of the economy",
     "slowdown of output",
     "economic decline",
+    'activity remains weak',
+    "the economy slowed down",
     "declining trend in economic activity",
+    "decline in economic activity",
     "slowing down of business activity",
     "slow down",
     "low rates of economic growth",
@@ -707,9 +838,12 @@ key_words_crisis=function(){
     "economic activity on a downward trend",
     "depressed level of economic activity",
     "the economic situation worsen",
+    "slowing the pace of economic recovery",
     "decline in economic activity",
+    "weakening of economic fundamental",
     "recession",
     "contraction of output",
+    'sluggish recovery',
     "contraction of economic activity",
     "economic downturn",
     "output is estimated to have contracted",
@@ -723,8 +857,23 @@ key_words_crisis=function(){
     "high rate of economic growth",
     "economic activity remains robust",
     "strong economic growth",
-    "recovery",
+    "economy performed well",
+    "economic recovery",
+    "output was growing",
+    "economic expansion",
+    "economic activity accelerated",
+    "GDP increasing",
+    "acceleration in economic activity",
+    "exceeded potential",
+    "recovery of economic activity",
+    "overheating",
+    "achievement of macroeconomic stability",
     "expansion of economic activity",
+    "strong economic activity",
+    "overheating of domestic demand",
+    "favorable economic developments",
+    "overheating of the economy",
+    "domestic demand expansion",
     "The economy continued to perform strongly",
     "strong economic performance")
   
@@ -751,6 +900,7 @@ key_words_crisis=function(){
     "unsustainable debt",
     "stock of external debt increased",
     "budgetary imbalances",
+    "fragile fiscal framework",
     "lack of financial ressources",
     "increase in interest payments",
     "servicing external debt",
@@ -769,6 +919,8 @@ key_words_crisis=function(){
     "debt service obligations",
     "shortfall of revenue",
     "limit new borrowing",
+    "drop in revenue",
+    "expenditure restraint",
     "debt service burden",
     "a gap in financing",
     "financing gap",
@@ -793,6 +945,7 @@ key_words_crisis=function(){
     "overall deficit of the public sector is to be reduced",
     "Maintaining tight financialpolicies",
     "fiscal consolidation",
+    "fiscal adjustment effort",
     "tightening of fiscal policy",
     "reduction in public debt",
     "reduce public sector deficit",
@@ -802,18 +955,23 @@ key_words_crisis=function(){
     "contain the rise in expenditure",
     "substantial adjustments with respect to the budget",
     "freeze wages",
+    "wage moderation",
     "rationalization of public sector expenditure",
     "improve the financial position",
     "control over noninterest expenditures",
     "nonpriority expenditure",
     "long term financial strength",
+    "expenditure discipline",
+    "tax collection effort",
     "reduce operational deficits",
+    "consolidate pulbic sector revenue",
     "fiscal performance",
     "reduction of the deficit",
     "actions on the public finance",
     "measures in the fiscal field",
     "fiscal performance criteria",
     "revenue measures",
+    "expenditure cuts",
     "limiting borrowing",
     "performance criteria in the fiscal area",
     "cash budget deficit",
@@ -834,6 +992,7 @@ key_words_crisis=function(){
     "fiscal discipline",
     "fiscal objectives",
     "fiscal adjustement",
+    "fiscal tightening",
     "reduce the deficit",
     "asjustement effort",
     "fiscal adjustment",
@@ -875,9 +1034,35 @@ key_words_crisis=function(){
     "short term borrowing",
     "short-term maturities",
     "short term public debt",
+    "short term external financing",
+    "short maturity",
+    "short maturities",
     "debt maturing in less than 12 months",
     "shortening of public debt maturity",
+    "shortening of the average maturity",
+    "securities due within less than 12 months",
+    "short term component of the external debt",
     "maturity shortening")
+  
+  
+  key_words[["floating_rate_debt"]]=c(
+   "floating rate securities",
+   "floating rate notes"
+   )
+  
+  
+  key_words[["foreign_debt"]]=c(
+    "de facto dollarization",
+    "denominated in foreign currency",
+    "currency mismatch",
+    "denominated in U.S. dollar",
+    "denominated in US dollar",
+    "foreign exchange-linked bonds",
+    "foreign exchange linked bonds",
+    "debt indexed to the dollar",
+    "debt denominated in foreign exchange",
+    "foreign exchange index debt",
+    "denominated in foreign exchange")
   
   
   key_words[["Sovereign_default"]]=c(
@@ -886,9 +1071,11 @@ key_words_crisis=function(){
     "liquidity crisis",
     "difficulties in servicing its external debt",
     "rescheduling of external debt",
+    "rescheduling agreement",
     "suspend service payments",
     "fiscal crisis",
     "debt relief",
+    "failure to roll over debt",
     "government bonds crisis",
     "government bonds crisis",
     "bond crisis",
@@ -901,6 +1088,7 @@ key_words_crisis=function(){
     "governement default",
     "restructuring of debt",
     "suspension of payments",
+    "debt swap",
     "debt restructuring",
     "difficult time in rolling over its debt",
     "debt rescheduling",
@@ -1560,7 +1748,7 @@ aggregate_corpus=function(path_files,only_files=F){
   
   #output:
   # a list containing the content of each document
-  
+  library(pdftools)
   docs=list.files(path_files,pattern=".pdf")
   docs=stringr::str_remove(docs,".PDF") 
   docs=stringr::str_remove(docs,".pdf")
@@ -1568,7 +1756,8 @@ aggregate_corpus=function(path_files,only_files=F){
   start=1
   x=1 
   corpus=lapply(start:length(docs),function(x){
-    tictoc::tic(docs[x])
+    count<<-count+1
+    tictoc::tic(paste0(count,"/",length(docs)," ",docs[x]))
     path=paste0(path_files,"/",docs[x],".PDF")
     file <- try({
       pdfinfo=pdf_info(path)
@@ -1580,9 +1769,7 @@ aggregate_corpus=function(path_files,only_files=F){
     }else {
       file=clean_text(file)
     }
-    count<-count+1
     print(path)
-    print(count)
     tictoc::toc()
     if(only_files==T){
       file
