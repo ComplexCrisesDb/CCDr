@@ -1350,7 +1350,7 @@ find_pages=function(file,targetword){
   
   require(stringi)
   require(stringr)
-  
+  if(is.null(file)){
   page_locations=list()
   target_pages=list()
   i=0
@@ -1373,6 +1373,7 @@ find_pages=function(file,targetword){
   })
   
   return(list(target=targetword,N.chars=n.chars,N.Occurence=page_locations,Tot.occurence=Tot.occurence,pages=target_pages))
+  }else return(list(target=targetword,N.chars=0,N.Occurence=0,Tot.occurence=0,pages=0,error_message="File in null no mining provided"))
 }
 
 eval_pages=function(files,targetword,brute_freq=F,parrallel=T){
