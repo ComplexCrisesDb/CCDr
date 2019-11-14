@@ -1350,25 +1350,25 @@ find_pages=function(file,targetword){
   
   require(stringi)
   require(stringr)
-  if(is.null(file)){
-  page_locations=list()
-  target_pages=list()
-  i=0
-  Tot.occurence=0
-  file=clean_text(file)
-  n.chars=sum(nchar(file)) #total number of characters in the file after cleaning
-  page_location=sapply(1:length(file),function(x){
-    page=file[[x]] 
-    page=tibble(page) %>%  tidytext::unnest_tokens(word,page,token="ngrams",n=3) %>% dplyr::mutate(word=tolower(word))
-    n.occurence=(page %>% dplyr::filter(grepl(paste(tolower(targetword),collapse="|"),word)) %>% dplyr::summarize(count=n()))$count
-    condition= n.occurence>0
-    if(any(condition)){
-      i<<-i+1
-      page_locations[[i]]<<-paste0("Found in page ",x," :" ,n.occurence," times")
-      target_pages[[i]]<<-file[[x]]
-      Tot.occurence<<-Tot.occurence+n.occurence
-      return("yes")
-    }else {return("no")}
+  if(!is.null(file)){
+    page_locations=list()
+    target_pages=list()
+    i=0
+    Tot.occurence=0
+    file=clean_text(file)
+    n.chars=sum(nchar(file)) #total number of characters in the file after cleaning
+    page_location=sapply(1:length(file),function(x){
+      page=file[[x]] 
+      page=tibble(page) %>%  tidytext::unnest_tokens(word,page,token="ngrams",n=3) %>% dplyr::mutate(word=tolower(word))
+      n.occurence=(page %>% dplyr::filter(grepl(paste(tolower(targetword),collapse="|"),word)) %>% dplyr::summarize(count=n()))$count
+      condition= n.occurence>0
+      if(any(condition)){
+        i<<-i+1
+        page_locations[[i]]<<-paste0("Found in page ",x," :" ,n.occurence," times")
+        target_pages[[i]]<<-file[[x]]
+        Tot.occurence<<-Tot.occurence+n.occurence
+        return("yes")
+      }else {return("no")}
     
   })
   
@@ -1460,7 +1460,7 @@ tf=function(corpus,keywords,brute_freq=F,parrallel=T){
     table=lapply(corpus,function(x){
       output=try(sum(eval_pages(x,keywords,brute_freq=brute_freq,parrallel = parrallel)[,1]))
       if("try-error" %in% class(output)){
-        print(paste0("Warning: error when mining ",keywords))
+        cat(crayon::red(paste0("Warning: error when mining ",keywords)))
         output=0
       }
       output
@@ -1477,7 +1477,7 @@ tf=function(corpus,keywords,brute_freq=F,parrallel=T){
     #   year=year(Period))
     
     table
-  }else{print('please provide a vector of strings as argument for keywords')}
+  }else{cat(crayon::red('please provide a vector of strings as argument for keywords'))}
 }
 
 tf_vector=function(corpus,keyword_list,brute_freq=F,parrallel=T){
@@ -1494,9 +1494,11 @@ tf_vector=function(corpus,keyword_list,brute_freq=F,parrallel=T){
   # item.
   
   #my_keywords=key_words_crisis()
+  progress=dplyr::progress_estimated(length(keyword_list))
   list_table_keyword_occurence=lapply(1:length(keyword_list),function(x){
-    print(paste0("running: ",names(keyword_list)[x]))
-    tictoc::tic()
+    cat(crayon::bgBlack("\n"))
+    cat(crayon::green(paste0("(",x,"/",length(keyword_list),") running: ",names(keyword_list)[x],"\n")))
+    tictoc::tic(names(keyword_list)[x])
     if(!"character" %in% class(keyword_list[[x]])){
       warning("please provide a valid vector of characters")
       dt=NULL
@@ -1509,9 +1511,12 @@ tf_vector=function(corpus,keyword_list,brute_freq=F,parrallel=T){
         dt
       })
       if("try-error" %in% class(dt)){
+        cat(crayon::red(paste0("\n Error: term frequency as not been computed","\n")))
         res=NULL
       }
       tictoc::toc()
+      progress$pause(0.01)$tick()$print()
+      cat(crayon::green(paste0("\n Finished running: ",names(keyword_list)[x],"\n")))
       res
     }
   })
@@ -1587,7 +1592,7 @@ tf_idf=function(table_N_occurence,weight_method="brut_frequency"){
   #document frequency
   dt_inv_doc_freq=try(idf(table_N_occurence))
   if("try_error" %in% dt_inv_doc_freq){
-    print(paste0("Warning: error when using function dt_inv_doc_freq"))
+    cat(crayon::red(paste0("Warning: error when using function dt_inv_doc_freq")))
     return(NULL)
   }
   #select_cols=names(table_N_occurence)[!names(table_N_occurence) %in% c("file","ISO3_Code","Period","year","variable","Review")] 
@@ -1630,7 +1635,7 @@ run_tf=function(corpus_path=paste0(root_path,"/3. Data/IMF Letters of Intents/IM
   # The output is a matrix of tf with a row per document and a column for 
   # each element of the keyword list
   
-  print(paste0("Loading corpus from ",corpus_path))
+  cat(crayon::bgBlue(paste0("Loading corpus from ",corpus_path)))
   #load(file=corpus_path)
   corpus=rio::import(corpus_path)
   #corpus=IMF_LoI
@@ -1675,7 +1680,7 @@ run_tf=function(corpus_path=paste0(root_path,"/3. Data/IMF Letters of Intents/IM
     #print(keyword_list)
     keyword_list=key_words_categories()[keyword_list]
   }else{
-    print("Please provide a valid type_lexicon, either 'words' or 'category'")
+    cat(crayon::red("Please provide a valid type_lexicon, either 'words' or 'category'"))
     return(NULL)
   }
   
@@ -1710,7 +1715,7 @@ run_tf_update=function(path_tf_to_update=paste0(root_path,"/3. Data/IMF Letters 
     return(new_tf)
   }else{
     
-    print("updating selected columns")
+    cat(crayon::green("updating selected columns"))
     tf_to_update=rio::import(path_tf_to_update) 
     dim_tf_to_update=dim(tf_to_update)
     existing_cols=names(tf_to_update)
