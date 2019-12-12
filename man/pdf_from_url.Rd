@@ -2,47 +2,46 @@
 \alias{pdf_from_url}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-download a list of pdf files from a list of url paths
+download a list of pdf files from a list of urls
 }
 \description{
-download a list of pdf files from a list of url paths
+Usefull function to scrap pdf documents from a list of urls. The function will create a directory if not existing and download each element
 }
 \usage{
-pdf_from_url(urls,export_path,filename=NULL)
+pdf_from_url(urls,export_path,overwrite=T)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{urls}{
-  list of urls of pdf documents
+  a dataframe containing at least two columns: name_file (name of each file) and pdf (valid url link to the pdf file)
 }
  \item{export_path}{
  path where to download the files
 }
-\item{filename}{
-Name of the files, each element of the file will receive a number
+\item{overwrite}{
+T/F, if F then the the function will not download the file if already existing
 }
 
 \details{
-test
+download the files in a specified directory or if not in the root directory, creates a RData file with the log of the download
 }
 \value{
-test
+
 }
 \references{
-test
+
 }
 \author{
 Manuel Betin
 }
 \note{
-test
+
 }
 
 \seealso{
-test
+
 }
 \examples{
-test
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
