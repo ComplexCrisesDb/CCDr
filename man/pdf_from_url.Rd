@@ -25,25 +25,6 @@ T/F, if F then the the function will not download the file if already existing
 \details{
 download the files in a specified directory or if not in the root directory, creates a RData file with the log of the download
 }
-\value{
-
-}
-\references{
-
-}
 \author{
 Manuel Betin
 }
-\note{
-
-}
-
-\seealso{
-
-}
-\examples{
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ test}% use one of  RShowDoc("KEYWORDS")
-\keyword{ test}% __ONLY ONE__ keyword per line

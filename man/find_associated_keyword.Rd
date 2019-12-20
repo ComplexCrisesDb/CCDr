@@ -22,31 +22,6 @@ one of the names of category in key_words_crisis()
 \value{
 the function returns a vector of strings corresponding to the selected categories
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
 \author{
-%%  ~~who you are~~
+Manuel Betin
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
-\examples{
-## The function is currently defined as
-function (keyword) 
-{
-    detect = names(key_words_crisis())[str_detect(tolower(names(key_words_crisis())), 
-        tolower(keyword))]
-    key_words_crisis()[detect]
-  }
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

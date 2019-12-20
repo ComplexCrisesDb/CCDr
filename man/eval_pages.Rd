@@ -25,67 +25,9 @@ the type of frequency to choose
 T/F whether to use mcparrallel to perform parrallel computing (only available on mac/linux)
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
 the function return the number of occurence for each file
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
 \author{
-%%  ~~who you are~~
+Manuel Betin
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
-\examples{
-## The function is currently defined as
-function (files, targetword, brute_freq = F, parrallel = T) 
-{
-    if (parrallel) {
-        metric = parallel::mclapply(files, function(x) {
-            file = find_pages(x, targetword)
-            if (brute_freq) {
-                file$Tot.occurence
-            }
-            else {
-                file$Tot.occurence/file$N.chars
-            }
-        }, mc.cores = parallel::detectCores() - 1, mc.allow.recursive = TRUE)
-        N.Occurence = do.call(rbind, metric)
-        if (length(targetword) == 1) {
-            colnames(N.Occurence) = targetword
-        }
-        else colnames(N.Occurence) = "Occurence"
-    }
-    else {
-        metric = lapply(files, function(x) {
-            file = find_pages(x, targetword)
-            if (brute_freq) {
-                file$Tot.occurence
-            }
-            else {
-                file$Tot.occurence/file$N.chars
-            }
-        })
-        N.Occurence = do.call(rbind, metric)
-        if (length(targetword) == 1) {
-            colnames(N.Occurence) = targetword
-        }
-        else colnames(N.Occurence) = "Occurence"
-    }
-    return(N.Occurence)
-  }
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

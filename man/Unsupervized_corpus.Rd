@@ -22,59 +22,9 @@ the length of the ngram considered
  minimum occurrence to keep
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
 a tibble with ngrams in rows, number of occurence and dummies for the typologies 
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
 \author{
-%%  ~~who you are~~
+Manuel Betin
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
-\examples{
-
-## The function is currently defined as
-function (corpus, length_ngram = 2, min_occurence = 10) 
-{
-    mycorpus = lapply(1:length(corpus), function(x) {
-        text = corpus[[x]]
-        tic()
-        cleaned_ngram = clean_ngram(text, length_ngram = length_ngram)
-        cleaned_ngram = cleaned_ngram \%>\% mutate(file = names(corpus)[x])
-        cleaned_ngram = cleaned_ngram \%>\% dplyr::select(word, file, 
-            n, everything())
-        toc()
-        clean_ngram
-    })
-    mycorpus = do.call(rbind, mycorpus)
-    mycorpus = mycorpus \%>\% filter(!grepl("\\d", word))
-    assoc_words = list()
-    assoc_words[["crisis"]] = associated_words(mycorpus, "crisis", 
-        min_occurence = min_occurence)
-    assoc_words[["banks"]] = associated_words(mycorpus, "banks", 
-        min_occurence = min_occurence)
-    assoc_words[["debt"]] = associated_words(mycorpus, "debt", 
-        min_occurence = min_occurence)
-    assoc_words[["reform"]] = associated_words(mycorpus, "reform", 
-        min_occurence = min_occurence)
-    assoc_words[["budget"]] = associated_words(mycorpus, "budget", 
-        min_occurence = min_occurence)
-    return(list(corpus = mycorpus, assoc_words = assoc_words))
-  }
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

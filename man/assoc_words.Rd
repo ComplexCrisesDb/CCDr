@@ -22,40 +22,10 @@ the name of the category to analyse (check outptu of ngram_clean() to see the av
 only display the words with at least this specified number of occurence
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
 a tibble with ngrams in rows, number of occurence and dummies for the typologies 
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
 \author{
-%%  ~~who you are~~
+Manuel Betin
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
-\examples{
-
-function (clean_ngram, type_word, min_occurence = 5) 
-{
-    dt = clean_ngram \%>\% filter(get(type_word) == 1) \%>\% separate(word, 
-        "list_nwords", sep = " ") \%>\% gather() \%>\% filter(value != 
-        "") \%>\% group_by(value) \%>\% summarize(n = n()) \%>\% filter(!str_detect(value, 
-        "\\d")) \%>\% arrange(-n) \%>\% rename(word = value)
-    dt = dt \%>\% filter(!is.na(word) & word != "" & n > min_occurence)
-    return(dt)
-  }
-}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ }% use one of  RShowDoc("KEYWORDS")
-\keyword{ }% __ONLY ONE__ keyword per line
