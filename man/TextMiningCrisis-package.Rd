@@ -27,8 +27,8 @@ Maintainer: \packageMaintainer{TextMiningCrisis}
 %~~ KEYWORDS in the R documentation directory ~~
 \keyword{ Text Mining, Economic crisis, Natural lenguage processing }
 \seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
+%~~ Optional links to other man pages, e.g. ~~
+%~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
 }
 \examples{
 %~~ simple examples of the most important functions ~~

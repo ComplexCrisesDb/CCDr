@@ -8,7 +8,9 @@ barplot for the idf
 barplot for the idf
 }
 \usage{
-idf_barplot(idf,vars_type=c("economic_shock","non_economic_shock","debt_outcomes","debt_structure","characteristics_program","adustment_program"),vars_nature=NULL,idf_trans=F)
+idf_barplot(idf,vars_type=c("economic_shock","non_economic_shock","debt_outcomes",
+                            "debt_structure","characteristics_program","adustment_program"),
+                            vars_nature=NULL,idf_trans=F)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -27,5 +29,5 @@ T/F, F to display the idf, T to display the proportion of documents.
 }
 }
 \author{
-Manuel Bétin
+Manuel Betin
 }

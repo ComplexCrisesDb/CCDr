@@ -8,7 +8,8 @@ Look at average importance of each crisis by country and display the more import
 Look at average importance of each crisis by country and display the more important elements
 }
 \usage{
-country_radar_dt(table_N_occurence, isoc, top_n = 50, weight_method = "brut_frequency", group = "ISO3_Code")
+country_radar_dt(table_N_occurence, isoc, top_n = 50,
+                  weight_method = "brut_frequency", group = "ISO3_Code")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

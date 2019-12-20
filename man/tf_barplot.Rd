@@ -8,7 +8,7 @@ barplot for term frequency
 barplot for term frequency
 }
 \usage{
-tf_barplot(tf,vars_type=c("economic_shock","non_economic_shock","debt_outcomes","debt_structure","characteristics_program","adustment_program),vars_nature=NULL)
+tf_barplot(tf,vars_type,vars_nature)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

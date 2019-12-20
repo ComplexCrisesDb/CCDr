@@ -8,7 +8,7 @@ download a list of pdf files from a list of urls
 Usefull function to scrap pdf documents from a list of urls. The function will create a directory if not existing and download each element
 }
 \usage{
-pdf_from_url(urls,export_path,overwrite=T)
+pdf_from_url(urls,export_path,overwrite)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -21,7 +21,7 @@ pdf_from_url(urls,export_path,overwrite=T)
 \item{overwrite}{
 T/F, if F then the the function will not download the file if already existing
 }
-
+}
 \details{
 download the files in a specified directory or if not in the root directory, creates a RData file with the log of the download
 }

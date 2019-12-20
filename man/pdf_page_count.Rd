@@ -8,11 +8,11 @@ count the number of pages in the pdf
 count the number of pages in the pdf
 }
 \usage{
-pdf_page_count(file)
+pdf_page_count(files)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{file}{
+  \item{files}{
 files: a list of character strings
 }
 }

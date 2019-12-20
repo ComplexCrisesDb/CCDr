@@ -12,7 +12,7 @@ remove_stop(word)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{words}{
+  \item{word}{
 string of character
 }
 }

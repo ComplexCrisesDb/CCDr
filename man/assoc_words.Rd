@@ -12,7 +12,7 @@ assoc_words(clean_ngram, type_word, min_occurence = 5)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{clean_ngram}{
+  \item{cleaned_ngram}{
 output from ngram_clean()
 }
   \item{type_word}{

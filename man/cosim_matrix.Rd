@@ -13,11 +13,11 @@ cosim_matrix(table_weights)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{table_weights}{
-tf.idf dataframe (output of table_word_weight())
+tf.idf dataframe
 }
-\value{
-the function returns a symetric matrix with the cosinus similarity of each pair of categories
 }
 \author{
 Manuel Betin
 }
+
+

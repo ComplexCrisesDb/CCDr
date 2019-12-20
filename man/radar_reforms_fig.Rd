@@ -8,7 +8,7 @@ Look at average importance of each reform and display the more important element
 Look at average importance of each reform by country and display the more important elements
 }
 \usage{
-country_radat_fig(country_radar_dt)
+radar_reforms_fig(country_radar_dt)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

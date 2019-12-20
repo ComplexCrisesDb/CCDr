@@ -8,7 +8,9 @@ function that compute the tf matrix for a corpus given in a list format, the typ
 function that compute the tf matrix for a corpus given in a list format, the type of lexicon to use and the sublist of keywords associated
 }
 \usage{
-run_tf(corpus_path = paste0(root_path, "/3. Data/IMF Letters of Intents/IMF_letofIntent_1960_2014_clean.RData"), type_lexicon = "words", keyword_list = c("Commodity_crisis", "Balance_payment_crisis", "Inflation_crisis"), export_path = NULL, parrallel = T)
+run_tf(corpus_path = paste0(root_path, "/3. Data/IMF Letters of Intents/IMF_letofIntent_1960_2014_clean.RData"), 
+      type_lexicon = "words", keyword_list = c("Commodity_crisis", "Balance_payment_crisis", "Inflation_crisis"), 
+      export_path = NULL, parrallel = T)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
