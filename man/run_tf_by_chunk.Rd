@@ -14,15 +14,15 @@ run_tf_by_chunk(urls,keyword_list,delete_pdfs)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{urls){
+  \item{urls}{
   A dataframe containing two columns: name_file and pdf that respectively
   provide the name that will be given 
   to the file downloaded and pdf that contains the url of the pdf
   }
- \item(keyword_list){
+  \item{keyword_list}{
  vector of names of the elements of the list provided by key_word_crisis()
  }
- \item(extract_number){
+  \item{extract_number}{
    A number that will be ued as a suffix for the name of the corpus and the name of the tf matrix 
  }
   \item(delete_pdfs){
