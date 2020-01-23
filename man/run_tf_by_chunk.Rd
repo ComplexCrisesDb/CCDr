@@ -5,17 +5,18 @@
 Compute the tf from a list of pdfs located on the web
 }
 \description{
-un the term frequency matrix on the list of urls provided as parameter. The function download the pdf, create the
-  #corpus and generate the term frequency matrix, to avoid storage limitation the function deleate original pdf files
-
+un the term frequency matrix on the list of urls provided as parameter. The function download the pdf,
+create thecorpus and generate the term frequency matrix, to avoid storage limitation
+the function deleate original pdf files
 }
 \usage{
 run_tf_by_chunk(urls,keyword_list,delete_pdfs)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{urls}{
-  A dataframe containing two columns: name_file and pdf that respectively provid the name that will be given 
+  \item{urls){
+  A dataframe containing two columns: name_file and pdf that respectively
+  provide the name that will be given 
   to the file downloaded and pdf that contains the url of the pdf
   }
  \item(keyword_list){
@@ -24,10 +25,10 @@ run_tf_by_chunk(urls,keyword_list,delete_pdfs)
  \item(extract_number){
    A number that will be ued as a suffix for the name of the corpus and the name of the tf matrix 
  }
-\item(delete_pdfs){
+  \item(delete_pdfs){
   T/F, set to T it will delete the folder containing the original pdf, usefull option when the number of pdf
   iss very large and the size of the folder start to be very large
-}
+  }
 }
 
 \details{
@@ -53,9 +54,6 @@ Manuel Bétin
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
 run_tf_by_chunk=function(urls=url_links,
