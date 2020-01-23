@@ -25,7 +25,7 @@ run_tf_by_chunk(urls,keyword_list,delete_pdfs)
   \item{extract_number}{
    A number that will be ued as a suffix for the name of the corpus and the name of the tf matrix 
  }
-  \item(delete_pdfs){
+  \item{delete_pdfs}{
   T/F, set to T it will delete the folder containing the original pdf, usefull option when the number of pdf
   iss very large and the size of the folder start to be very large
   }
