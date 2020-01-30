@@ -16,9 +16,6 @@ find_associated_keyword(keyword)
 one of the names of category in key_words_crisis()
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
 the function returns a vector of strings corresponding to the selected categories
 }

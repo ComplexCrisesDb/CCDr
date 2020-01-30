@@ -8,3 +8,10 @@ download the pdf files from the web, consolidate the corpus, create the tf datab
 the tf into a folder called temp. Usefull function for very large list of pdf to avoid storage limitation.
 
 
+TextMiningCrisis v1.0.3 (Release date: 2020-01-30)
+==============
+
+Changes:
+
+* Clean code, remove few useless functions, clean documentation and solve warnings and notes when building the package
+

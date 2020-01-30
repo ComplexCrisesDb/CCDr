@@ -5,12 +5,14 @@
 Compute the tf from a list of pdfs located on the web
 }
 \description{
-un the term frequency matrix on the list of urls provided as parameter. The function download the pdf,
+un the term frequency matrix on the list of urls provided as parameter.
+The function download the pdf,
 create thecorpus and generate the term frequency matrix, to avoid storage limitation
 the function deleate original pdf files
 }
 \usage{
-run_tf_by_chunk(urls,keyword_list,delete_pdfs)
+run_tf_by_chunk(urls = url_links, keyword_list = c("Fiscal outcomes","Currency_crisis"),
+extract_number = 1, delete_pdfs =T)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -23,35 +25,23 @@ run_tf_by_chunk(urls,keyword_list,delete_pdfs)
  vector of names of the elements of the list provided by key_word_crisis()
  }
   \item{extract_number}{
-   A number that will be ued as a suffix for the name of the corpus and the name of the tf matrix 
+   A number that will be used as a suffix for the name of the corpus 
+   and the name of the tf matrix 
  }
   \item{delete_pdfs}{
-  T/F, set to T it will delete the folder containing the original pdf, usefull option when the number of pdf
+  T/F, set to T it will delete the folder containing the original pdf,
+  usefull option when the number of pdf
   iss very large and the size of the folder start to be very large
   }
 }
-
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
-The function creates a temp folder containing the corpus aggregating all documents into a list and the tf dataframe with 
+The function creates a temp folder containing the corpus aggregating all
+documents into a list and the tf dataframe with 
 each index as a column of the dataframe
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
+
 \author{
-Manuel Bétin
-}
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+Manuel Betin
 }
 \examples{
 
@@ -62,15 +52,20 @@ run_tf_by_chunk=function(urls=url_links,
                          delete_pdfs=T
 ){
   
-  #run the term frequency matrix on the list of urls provided as parameter. The function download the pdf, create the
-  #corpus and generate the term frequency matrix, to avoid storage limitation the function deleate original pdf files
+  #run the term frequency matrix on the list of urls provided as parameter.
+  #The function download the pdf, create the
+  #corpus and generate the term frequency matrix, to avoid storage limitation 
+  #the function deleate original pdf files
   
   #parameters:
-  #urls: a dataframe containing two columns: name_file and pdf that respectively provid the name that will be given 
+  #urls: a dataframe containing two columns: name_file and pdf that respectively
+  #provid the name that will be given 
   #to the file downloaded and pdf that contains the url of the pdf
   #keyword_list: one of the element of the list provided by key_word_crisis()
-  #extract_number: a number that will be ued as a suffix for the name of the corpus and the name of the tf matrix 
-  #delete_pdfs: T/F, set to T it will delete the folder containing the original pdf, usefull option when the number of pdf
+  #extract_number: a number that will be ued as a suffix for the name of the corpus 
+  #and the name of the tf matrix 
+  #delete_pdfs: T/F, set to T it will delete the folder containing the original pdf, 
+  #usefull option when the number of pdf
   #is very large and the size of the folder start to be very large
   
   path="temp"
@@ -101,10 +96,7 @@ run_tf_by_chunk=function(urls=url_links,
             type_lexicon = "words",
             keyword_list = keyword_list,
             export_path=path_tf,parrallel=T)
-  file.rename(from=paste0(path_tf,"/tf_crisis_words.RData"),to=paste0(path_tf,"/tf_crisis_words_",extract_number,".RData"))
+  file.rename(from=paste0(path_tf,"/tf_crisis_words.RData"),
+  to=paste0(path_tf,"/tf_crisis_words_",extract_number,".RData"))
 }
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

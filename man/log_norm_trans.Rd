@@ -16,9 +16,6 @@ log_norm_trans(table_N_occurence)
 output of table_brute_frequency_vector()
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
 the function returns the log normal transformation of the dataframe.
 }

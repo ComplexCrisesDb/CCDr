@@ -17,9 +17,6 @@ clean_text(file)
 a string of characters to clean
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
 a string of characters cleanned
 }

@@ -16,9 +16,6 @@ radar_structure_fig(country_radar_dt)
 output of country_radar_dt()
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
 the function returns a radar chart showing the data of country_radar_dt
 }

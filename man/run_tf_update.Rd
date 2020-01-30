@@ -8,10 +8,10 @@ function that update the tf  output of run_tf with the new variables, avoiding r
 function that update the tf  output of run_tf with the new variables, avoiding recomputing all the categories
 }
 \usage{
-run_tf_update(path_tf_to_update = paste0(root_path, "/3. Data/IMF Letters of Intents/tf_crisis_words.RData"), 
-              corpus_path = paste0(root_path, "/3. Data/IMF Letters of Intents/IMF_letofIntent_1960_2014_clean.RData"), 
+run_tf_update(path_tf_to_update = "tf_crisis_words.RData", 
+              corpus_path = "IMF_letofIntent_1960_2014_clean.RData", 
               type_lexicon = "words", keyword_list = NULL,
-              export_path = paste0(root_path, "/3. Data/IMF Letters of Intents/tf_crisis_words.RData"), parrallel = T)
+              export_path = "tf_crisis_words.RData", parrallel = T)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

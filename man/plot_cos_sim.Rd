@@ -19,9 +19,6 @@ cosinus similarity matrix output of matrix_cosinus_similarity()
 the name of the category to plot
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
 plot results of matric cosinus for one selected column 
 }

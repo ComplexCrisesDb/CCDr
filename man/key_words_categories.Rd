@@ -10,9 +10,6 @@
 \usage{
 key_words_categories()
 }
-%- maybe also 'usage' for other objects documented here.
-\arguments{
-}
 \author{
 Manuel Betin
 }

@@ -22,9 +22,6 @@ Type of the categories to display, a vector of arguments among: "economic_shock"
 Nature of the category to display by default NULL but accept a vector of arguments among "exogeneous", "endogeneous","pure_endogeneous"
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
 a list containing the dataframe with the underlying data, a ggplot object dislaying the relative importance of each category, a second ggplot object dislaying the term frequency for each category in percent. 
 }

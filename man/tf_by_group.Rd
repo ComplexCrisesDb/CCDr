@@ -25,9 +25,6 @@ name of the column to group the data
 \value{
 the function returns a summary dataframe with average tf.idf for each category and group
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
 \author{
 Manuel Betin
 }
