@@ -12,7 +12,7 @@ the function deleate original pdf files
 }
 \usage{
 run_tf_by_chunk(urls = url_links, keyword_list = c("Fiscal outcomes","Currency_crisis"),
-extract_number = 1, delete_pdfs =T)
+extract_number = 1, delete_pdfs =T,rm_short_docs=F,min_words=100)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -32,6 +32,14 @@ extract_number = 1, delete_pdfs =T)
   T/F, set to T it will delete the folder containing the original pdf,
   usefull option when the number of pdf
   iss very large and the size of the folder start to be very large
+  }
+  \item{rm_short_docs}{
+  T/F if true then the algorithm remove the documents with less
+  than 100 words or the number specified in min_words
+  }
+  \item{min_words}{
+  the minimum number of words in the document to keep it in the 
+  corpus
   }
 }
 \value{

@@ -15,3 +15,12 @@ Changes:
 
 * Clean code, remove few useless functions, clean documentation and solve warnings and notes when building the package
 
+
+TextMiningCrisis v1.0.4 (Release date: 2020-02-03)
+==============
+
+Changes:
+
+* update run_tf_chunk() to include two parameters to trim the documents that contain less than a specified number of words. usefull
+to clean the corpus of irrelevant documents.
+
