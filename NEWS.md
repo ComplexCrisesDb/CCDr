@@ -24,3 +24,11 @@ Changes:
 * update run_tf_chunk() to include two parameters to trim the documents that contain less than a specified number of words. usefull
 to clean the corpus of irrelevant documents.
 
+
+TextMiningCrisis v1.0.4 (Release date: 2020-02-03)
+==============
+
+Changes:
+
+* Include an example html to show how functions works.
+
