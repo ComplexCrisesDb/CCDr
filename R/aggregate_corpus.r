@@ -24,6 +24,7 @@ aggregate_corpus = function(path_files, only_files = F) {
         }, silent = T)
         if ("try-error" %in% class(file)) {
             warning(paste(docs[[x]], ": Error in path file", sep = ""))
+            pdfinfo=NA
             file = NA
         } else {
             file = clean_text(file)
