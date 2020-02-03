@@ -12,7 +12,7 @@ the function deleate original pdf files
 }
 \usage{
 run_tf_by_chunk(urls = url_links, keyword_list = c("Fiscal outcomes","Currency_crisis"),
-extract_number = 1, delete_pdfs =T,rm_short_docs=F,min_words=100)
+extract_number = 1, delete_pdfs =T,rm_short_docs=F,min_words=100,parrallel=T)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -40,6 +40,10 @@ extract_number = 1, delete_pdfs =T,rm_short_docs=F,min_words=100)
   \item{min_words}{
   the minimum number of words in the document to keep it in the 
   corpus
+  }
+  \item{parrallel}{
+  T/F, if True then the algorithm will use parrallel computing using the 
+  package parrallel (only available on MacOS)
   }
 }
 \value{

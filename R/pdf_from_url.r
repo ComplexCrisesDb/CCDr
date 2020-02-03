@@ -2,6 +2,8 @@
 
 pdf_from_url = function(urls, export_path, overwrite = T) {
     # download from a a dataframe containing the url of the files
+  
+    urls=data.frame(urls)
     ref_colnames = c("title","pdf", "name_file")
     
     if (!dir.exists(export_path)) {

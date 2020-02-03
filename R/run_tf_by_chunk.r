@@ -3,7 +3,8 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
                           extract_number = 1,
                           delete_pdfs = T,
                           rm_short_docs=F,
-                          min_words=100) 
+                          min_words=100,
+                          parrallel=T) 
 {
   
   # run the term frequency matrix on the list of urls provided as parameter.
@@ -33,13 +34,13 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
   # download the files
   pdf_from_url(urls, path_pdf_files, overwrite = F)
   # transform pdf to character and store in list
-  corpus = aggregate_corpus(path_pdf_files)
+  corpus = aggregate_corpus(path_pdf_files,only_files=T)
   
   # remove documents with less than specified number of words
   if(rm_short_docs){
     cat(crayon::blue(paste0("\n Remove from corpus the documents with less than ",min_words," words\n")))
     N_char_corpus=sapply(1:length(corpus),function(x){
-      sum(stri_count_words(corpus[[x]]$file))
+      sum(stri_count_words(corpus[[x]]))
     })
     names(N_char_corpus)=names(corpus)
     N_char_corpus=data.frame(N_char_corpus)
@@ -60,7 +61,7 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
   # run the term frequency matrix
   dt = run_tf(corpus_path = paste0(path_corpus, "/corpus_", 
                                    extract_number, ".RData"), type_lexicon = "words", keyword_list = keyword_list, 
-              export_path = path_tf, parrallel = T)
+              export_path = path_tf, parrallel = parrallel)
   
   file.rename(from = paste0(path_tf, "/tf_crisis_words.RData"), 
               to = paste0(path_tf, "/tf_crisis_words_", extract_number, 
