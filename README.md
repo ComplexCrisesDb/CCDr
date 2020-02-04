@@ -102,22 +102,21 @@ DT::datatable(head(tf_matrix_with_several_categories))
 ## Wrapup function for tf
 
 ```r
-#run term frequency matrix
+## run term frequency matrix
 
 wrapup_for_tf=run_tf(corpus_path = "mycorpus.RData",type_lexicon ="words",keyword_list = c("Currency_crisis","Balance_payment_crisis"),parrallel = F)
 
 DT::datatable(head(wrapup_for_tf))
 ```
 
-# Wrapup function for run_tf that allows directly download the files and run the text mining with a single function
+## Wrapup function for run_tf that allows directly download the files and run the text mining with a single function
 
 ```r
-#wrapup of all preivous functions to download and mine a list of urls directing to the pdfs of interests
 run_tf_by_chunk(urls =url_links,keyword_list = c("Currency_crisis","Balance_payment_crisis"))
 
 ```
 
-# Update the tf dataframe with additional columns with the new categories to compute
+## Update the tf dataframe with additional columns with the new categories to compute
 
 ```r
 
