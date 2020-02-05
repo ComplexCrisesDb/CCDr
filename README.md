@@ -21,6 +21,14 @@ Package containing a set of functions to perform a supervised text mining using 
  
 key functions are
  
+ - pdf_from_url()
+ - aggregate_corpus()
+ - tf()
+ - idf()
+ - run_tf()
+ - run_tf_by_chunk()
+ - run_tf_update()
+
  # example
 
 ```r 
@@ -30,7 +38,7 @@ library(DT)
 library(TextMiningCrisis)
 ```
 
-## Load the data containing the urls
+Load the data containing the urls
 
 ```r
 
@@ -46,7 +54,7 @@ DT::datatable(url_links[,1:5])
 ```
 
 
-## Download the files and store in folter "mydocs_to_textmining"
+Download the files and store in folter "mydocs_to_textmining"
 
 ```r
 
@@ -55,7 +63,7 @@ pdf_from_url(url_links,"mydocs_for_textmining")
 ```
 
 
-## aggregate content of pdfs in folder "mydocs_to_textmining" into a single corpus 
+Aggregate content of pdfs in folder "mydocs_to_textmining" into a single corpus 
 
 ```r
 
@@ -63,7 +71,7 @@ corpus=aggregate_corpus("mydocs_for_textmining",only_files = T)
 save(corpus,file="mycorpus.RData")
 ```
 
-## Find the number of occurence of the word "cotton" by paragraph 
+Find the number of occurence of the word "cotton" by paragraph 
 
 ```r
 doc_example=corpus[4]
@@ -71,14 +79,14 @@ Number_pages_containing_word=eval_pages(doc_example,"debt")
 
 ```
 
-## Find the paragraphs containing the word "cotton" by paragraph
+Find the paragraphs containing the word "cotton" by paragraph
 
 ```r
 pages_containing_word=find_pages(doc_example,"debt")
 
 ```
 
-## compute the document term frequency for all the files in the corpus for the category "Currency_crisis"
+Compute the document term frequency for all the files in the corpus for the category "Currency_crisis"
 
 ```r
 
@@ -88,7 +96,7 @@ DT::datatable(head(tf_matrix))
 ```
 
 
-## compute the document term frequency for several categories "Currency_crisis" and "Balance_payment_crisis"
+Compute the document term frequency for several categories "Currency_crisis" and "Balance_payment_crisis"
 
 ```r
 
@@ -99,24 +107,25 @@ tf_matrix_with_several_categories=tf_vector(corpus,key_words_crisis()[mycategori
 DT::datatable(head(tf_matrix_with_several_categories))
 ```
 
-## Wrapup function for tf
+Wrapup function for tf
 
 ```r
-## run term frequency matrix
+
+Run term frequency matrix
 
 wrapup_for_tf=run_tf(corpus_path = "mycorpus.RData",type_lexicon ="words",keyword_list = c("Currency_crisis","Balance_payment_crisis"),parrallel = F)
 
 DT::datatable(head(wrapup_for_tf))
 ```
 
-## Wrapup function for run_tf that allows directly download the files and run the text mining with a single function
+Wrapup function for run_tf that allows directly download the files and run the text mining with a single function
 
 ```r
 run_tf_by_chunk(urls =url_links,keyword_list = c("Currency_crisis","Balance_payment_crisis"))
 
 ```
 
-## Update the tf dataframe with additional columns with the new categories to compute
+Update the tf dataframe with additional columns with the new categories to compute
 
 ```r
 

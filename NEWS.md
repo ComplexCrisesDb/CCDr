@@ -25,10 +25,20 @@ Changes:
 to clean the corpus of irrelevant documents.
 
 
-TextMiningCrisis v1.0.4 (Release date: 2020-02-03)
+TextMiningCrisis v1.0.5 (Release date: 2020-02-03)
 ==============
 
 Changes:
 
 * Include an example html to show how functions works.
+
+
+
+TextMiningCrisis v1.0.6 (Release date: 2020-02-05)
+==============
+
+Changes:
+
+* Include properly the database of urls to the package: IMF_docs_urls
+
 
