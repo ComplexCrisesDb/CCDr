@@ -1,4 +1,4 @@
-find_pages = function(file, targetword) {
+find_pages = function(file, targetword,n_ngram=10) {
     # provide files either pdf of html and return the paragraphs matching the
     # targetted word parameters file:a character string correspond to the text
     # to analysis targetword: a vector of characters corresponding to word to
@@ -13,7 +13,7 @@ find_pages = function(file, targetword) {
         page_location = sapply(1:length(file), function(x) {
             page = file[[x]]
             page = tibble(page) %>% tidytext::unnest_tokens(word, page, token = "ngrams", 
-                n = 3) %>% dplyr::mutate(word = tolower(word))
+                n = n_ngram) %>% dplyr::mutate(word = tolower(word))
             n.occurence = (page %>% dplyr::filter(grepl(paste(tolower(targetword), 
                 collapse = "|"), word)) %>% dplyr::summarize(count = n()))$count
             condition = n.occurence > 0

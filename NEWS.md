@@ -42,3 +42,13 @@ Changes:
 * Include properly the database of urls to the package: IMF_docs_urls
 
 
+
+TextMiningCrisis v1.0.7 (Release date: 2020-02-12)
+==============
+
+Changes:
+
+* Include an additional parameter (n_ngram=10) to find_pages() to control the number of words in the ngrams used when tokenizing the 
+files. The default value is set to 10 and replace the default set to 3 in previous versions.
+
+

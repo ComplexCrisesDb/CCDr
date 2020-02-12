@@ -32,15 +32,6 @@ The database containing the urls for IMF documents
     \item{\code{type_hierarchy}}{whether the document is a correction, a supplement, or the original file)}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
-\references{
-%%  ~~ possibly secondary sources and usages ~~
-}
 \examples{
 data(IMF_docs_urls)
 ## maybe str(IMF_docs_urls) ; plot(IMF_docs_urls) ...
