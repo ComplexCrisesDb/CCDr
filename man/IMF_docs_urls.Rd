@@ -22,11 +22,9 @@ The database containing the urls for IMF documents
     \item{\code{Review_number}}{for reviews of lending arrangement the number of the review)}
     \item{\code{perf_criteria}}{dummy equal to 1 if mention of performance criteria in the title)}
     \item{\code{waiver}}{dummy equal to 1 if mention of waiver in the title)}
-    \item{\code{waiver}}{dummy equal to 1 if mention of membership in the title)}
-    \item{\code{waiver}}{dummy equal to 1 if mention of statement in the title)}
     \item{\code{repurchase_transaction}}{dummy equal to 1 if mention of repurchase transaction in the title)}
     \item{\code{technical_assistance}}{dummy equal to 1 if mention of technical assistance in the title)}
-    \item{\code{expost_assistance}}{dummy equal to 1 if mention of expost assistance in the title)}
+    \item{\code{expost_assessment}}{dummy equal to 1 if mention of expost assistance in the title)}
     \item{\code{exchange_system}}{dummy equal to 1 if mention of exchange system in the title)}
     \item{\code{overdue_obligations}}{dummy equal to 1 if mention of overdue obligations in the title)}
     \item{\code{type_hierarchy}}{whether the document is a correction, a supplement, or the original file)}

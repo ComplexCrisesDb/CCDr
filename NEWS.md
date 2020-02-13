@@ -52,3 +52,12 @@ Changes:
 files. The default value is set to 10 and replace the default set to 3 in previous versions.
 
 
+TextMiningCrisis v1.1.0 (Release date: 2020-02-13)
+==============
+
+Changes:
+
+* correction in the function find_pages() replace tokenization by ngram with tokenization by sentences.
+
+
+

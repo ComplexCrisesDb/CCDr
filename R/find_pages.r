@@ -12,8 +12,8 @@ find_pages = function(file, targetword,n_ngram=10) {
         n.chars = sum(nchar(file))  #total number of characters in the file after cleaning
         page_location = sapply(1:length(file), function(x) {
             page = file[[x]]
-            page = tibble(page) %>% tidytext::unnest_tokens(word, page, token = "ngrams", 
-                n = n_ngram) %>% dplyr::mutate(word = tolower(word))
+            page = tibble(page) %>% tidytext::unnest_tokens(word, page, token = "sentences") %>%
+              dplyr::mutate(word = tolower(word))
             n.occurence = (page %>% dplyr::filter(grepl(paste(tolower(targetword), 
                 collapse = "|"), word)) %>% dplyr::summarize(count = n()))$count
             condition = n.occurence > 0
