@@ -12,6 +12,7 @@ Package containing a set of functions to perform a supervised text mining using 
 # Author
 
 - Manuel Betin
+- Umberto Collodel
 
 # current version:
 
