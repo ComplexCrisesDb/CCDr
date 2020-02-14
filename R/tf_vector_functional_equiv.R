@@ -50,7 +50,8 @@ tf_vector_trial = function(corpus, keyword_list, brute_freq = F, parrallel = T) 
   
   tryCatch(dt = list_table_keyword_occurence %>% 
     purrr::reduce(left_join, by = c("file")) %>%
-    data.frame()  
+    unique() %>% 
+    data.frame(),  
     error = function(e) {
       cat(crayon::red("\n Error: could not merge tf single keywords dataframes."))
     }
