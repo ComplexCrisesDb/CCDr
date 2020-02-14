@@ -68,5 +68,13 @@ Changes:
 * include argument loc_temp in the function run_tf_by_chunk() to specify the location of the temporary file and be able to change
 the default folder that is the root directory.
 
+TextMiningCrisis v1.1.2 (Release date: 2020-02-14)
+==============
+
+Changes:
+
+* Update of the lexicon of economic crisis with more precise categories for currecncy crisis and types of documents.
+
+
 
 
