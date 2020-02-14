@@ -1,6 +1,4 @@
 
-library(dplyr)
-library(stringr)
 typology_categories = function() {
     
     # draw typology according to the type of variable
@@ -128,8 +126,3 @@ typology_categories = function() {
     
     res
 }
-
-a=typology_categories()
-
-
-setdiff(names(key_words_crisis()),a$variable)
