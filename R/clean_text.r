@@ -7,6 +7,5 @@ clean_text = function(file) {
     file = gsub("\n", "", file)
     file = file[stringr::str_count(file) > 50]
     file = gsub("<U+23AF>", "", file)
-    file = tolower(file)
     return(file)
 }
