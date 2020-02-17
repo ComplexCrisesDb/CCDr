@@ -854,7 +854,7 @@ key_words_crisis <- function(){
     "currency attack"
   )
   
-  key_words[["Global_depreciation"]]=c(
+  key_words[["Currency_crisis_confusing"]]=c(
     "sharp depreciation in the u.s. dollar",
     "sharp depreciation of the u.s. dollar",
     "large depreciation of the u.s.dollar",
@@ -1268,34 +1268,17 @@ key_words_crisis <- function(){
   #---------
   ## PROBLEMATIC DOCUMENTS TAG
   #---------
-  
-  key_words[["Minutes"]] = c(
-    "minutes of executive board meetings"
-  )
-  
-  
-  key_words[["Working_papers"]] = c(
-    "this is a working paper",
+  key_words[["Problematic_documents"]] = c(
+    "minutes of executive board meeting", # Minutes of meeting
+    "this is a working paper", # Working Papers
     "imf working paper",
-    "a working paper of the international monetary fund"
+    "a working paper of the international monetary fund",
+    "draft issues paper", # Issue papers
+    "background paper", #Background papers
+    "provides background to the paper",
+    "individual economy assessments" #Assessments on multiple countries
   )
   
-  key_words[["Issues_papers"]] = c(
-    "issues paper and terms of reference on the role of the IMF"
-  )
   
-  key_words[["Press_releases"]] = c(
-    "press release"
-  )
-  
-  #--------
-  ## HYPOTHETICAL
-  #--------
-  
-  key_words[["Hypothetical"]]= c(
-    "while a sharp depreciation.*would",
-    "a large depreciation.* could"
-  )
-  
-  key_words
+key words
 }
