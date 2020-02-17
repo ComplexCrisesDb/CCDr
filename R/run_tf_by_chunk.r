@@ -4,7 +4,8 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
                           delete_pdfs = T,
                           rm_short_docs=F,
                           min_words=100,
-                          parrallel=T) 
+                          parrallel=T,
+                          loc_temp=NULL) 
 {
   
   # run the term frequency matrix on the list of urls provided as parameter.
@@ -20,8 +21,12 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
   # name of the tf matrix delete_pdfs: T/F, set to T it will delete the folder
   # containing the original pdf, usefull option when the number of pdf is very
   # large and the size of the folder start to be very large
+  if(is.null(loc_temp)){
+    path = "temp"  
+  }else{
+    path=loc_temp
+  }
   
-  path = "temp"
   path_pdf_files = paste0(path, "/files")
   path_corpus = paste0(path, "/corpus")
   path_tf = paste0(path, "/tf")

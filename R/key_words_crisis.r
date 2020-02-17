@@ -1268,7 +1268,6 @@ key_words_crisis <- function(){
   #---------
   ## PROBLEMATIC DOCUMENTS TAG
   #---------
-  
   key_words[["Problematic_documents"]] = c(
     "minutes of executive board meeting", # Minutes of meeting
     "this is a working paper", # Working Papers
@@ -1281,37 +1280,5 @@ key_words_crisis <- function(){
   )
   
   
-  #--------
-  ## HYPOTHETICAL
-  #--------
-  
-  key_words[["Hypothetical"]]= c(
-    "while a sharp depreciation.*would",
-    "a large depreciation.* could"
-  )
-  
-  key_words
+key words
 }
-#"floating rate",
-#"floating interest rates",
-#"foreign exchange-indexed",
-#"exchange rate-indexed bonds",
-#"exchange-indexed securities",
-#"foreign exchange swaps",
-#"dollar-indexed securities",
-
-
-
-# Same procedure for the "synthetic" indicators -----
-
-key_words_indicators <- function(){
-  
-  # -----  
-  # Real exchange rate
-  # -----
-  
-  key_words_indicators[["Real_exchange_rate"]]=c(
-    "improvement of competitiveness in recent months"
-  )
-}
-
