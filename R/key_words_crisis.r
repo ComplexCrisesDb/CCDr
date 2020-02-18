@@ -851,7 +851,9 @@ key_words_crisis <- function(){
     "large devaluation",
     "large depreciation",
     "sharp depreciation",
-    "currency attack"
+    "currency attack",
+    "exchange rate crisis"
+    
   )
   
   key_words[["Currency_crisis_confusing"]]=c(
