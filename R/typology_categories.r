@@ -111,7 +111,7 @@ typology_categories = function() {
     
     channel = unlist(list(Expenditure_shock = Expenditure_shock, Revenue_shock = Revenue_shock, 
                           Debt_shock = Debt_shock,Adjustment_shock=Adjustment_shock,Output_shock=Output_shock,
-                          Spread_shock=Spread_shock,risk_free=risk_free))
+                          Spread_shock=Spread_shock,risk_free=risk_free_rate))
     
     channel = data.frame(channel)
     channel$Type = rownames(channel)

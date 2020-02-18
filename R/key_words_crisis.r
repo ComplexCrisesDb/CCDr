@@ -1280,5 +1280,5 @@ key_words_crisis <- function(){
   )
   
   
-key words
+key_words
 }
