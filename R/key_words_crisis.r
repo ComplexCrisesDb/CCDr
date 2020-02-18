@@ -858,7 +858,7 @@ key_words_crisis <- function(){
     "sharp depreciation in the u.s. dollar",
     "sharp depreciation of the u.s. dollar",
     "large depreciation of the u.s.dollar",
-    "yen's sharp depreciation"
+    "yen.+s sharp depreciation"
   )
   
   key_words[["Floating_exchange_rate"]]=c(
