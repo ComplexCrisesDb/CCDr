@@ -5,10 +5,8 @@ aggregate_corpus = function(path_files, only_files = F) {
     # mining
     
     # parameters: path_files: the path of the directory with the files
-    
     # output: a list containing the content of each document
-  
-    docs = list.files(path_files, pattern = ".pdf")
+    docs = list.files(path_files, pattern = ".pdf",ignore.case = T)
     docs = stringr::str_remove(docs, ".PDF")
     docs = stringr::str_remove(docs, ".pdf")
     count = 0
@@ -17,7 +15,7 @@ aggregate_corpus = function(path_files, only_files = F) {
     corpus = lapply(start:length(docs), function(x) {
         count <<- count + 1
         tictoc::tic(paste0(count, "/", length(docs), " ", docs[x]))
-        path = paste0(path_files, "/", docs[x], ".PDF")
+        path = paste0(path_files, "/", docs[x], ".pdf")
         file <- try({
             pdfinfo = pdf_info(path)
             pdf_text(path) %>% strsplit(split = "\n")
