@@ -1272,6 +1272,7 @@ key_words_crisis <- function(){
   #---------
   key_words[["Problematic_documents"]] = c(
     "minutes of executive board meeting", # Minutes of meeting
+    "executive board attendance",
     "this is a working paper", # Working Papers
     "imf working paper",
     "a working paper of the international monetary fund",
@@ -1282,5 +1283,5 @@ key_words_crisis <- function(){
   )
   
   
-key words
+key_words
 }
