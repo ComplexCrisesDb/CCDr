@@ -1274,7 +1274,7 @@ key_words_crisis <- function(){
     "minutes of executive board meeting", # Minutes of meeting
     "executive board attendance",
     "this is a working paper", # Working Papers
-    "imf working paper",
+    "working paper",
     "a working paper of the international monetary fund",
     "draft issues paper", # Issue papers
     "background paper", #Background papers
