@@ -59,5 +59,40 @@ tf_vector = function(corpus, keyword_list, brute_freq = F, parrallel = T) {
         }
     }
     
-    return(dt)
-}
+    # At this stage dataframe with file name and all different indexes.
+    # Include additional step to net out index computed on confusing keywords (e.g. referring to other countries):
+    
+    # List of "confusing" categories on which the index could be computed:
+    
+    list_net_keywords <- str_extract(names(key_words_crisis()), ".+_confusing")[complete.cases(str_extract(names(key_words_crisis()), ".+_confusing"))]
+     
+    # Check if we computed some of them:
+    
+    if (any(list_net_keywords %in% names(dt))){
+ 
+     dt = split.default(dt, str_remove(names(dt), "_.+"))  # split into list according to the first word of column name, removing the rest.
+     
+     dt = dt %>%    
+     purrr::map(~ if (any(names(.x) != "file")) {                               
+       if (any(str_detect(names(.x), "confusing"))) {                               # if column name with "confusing" within same category 
+            colnames(.x)[grepl('confusing',colnames(.x))] <- "confusing"            # subtract from other indexes.
+            .x %>% 
+              mutate_all(funs(. - confusing)) %>% 
+              select(-confusing)
+          } else {
+            .x
+          }
+       }
+       else {
+         .x
+       }) 
+     
+     
+      dt %>%                                          # Bind net indexes with file list.
+        purrr::reduce(cbind) %>% 
+        select(file,everything())
+     
+    } else {
+       dt
+    }
+  }
