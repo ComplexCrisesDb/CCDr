@@ -801,6 +801,7 @@ key_words_crisis <- function(){
     "strong pressure in exchange rate reserves",
     "depleted international reserves",
     "exhaustion of all foreign exchange reserves" # not original (added on the second stage)
+    "sizeable fall of interantional reserves"
   )
   
   
