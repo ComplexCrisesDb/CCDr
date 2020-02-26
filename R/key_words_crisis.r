@@ -472,6 +472,30 @@ key_words_crisis <- function(){
     "strengthen bank supervision",
     "financial support package")
   
+  key_words[["Banking_crisis_severe"]]=c(
+    # Significant distress in the banking system: bank runs, losses in the banking system and/or bank liquiditations.
+    "present banking crisis",
+    "recent bank failures",
+    "capital of the banking system insurance scheme.* been exhausted",
+    "crisis in the banking sector",
+    "insovlvent banking sector",
+    "banking system collapsed",
+    # Significant banking policy intervention: deposit freezes, bank holidays, significant bank nationalization,
+    # significant guarantees put in place, significant asset purchases, bank restructuring fiscal cost. We do not include bank supervision.
+    "bank holiday",
+    "liquidated a number of privately owned",
+    "temporary recapitalization program",
+    "fiscal costs of the restructuring",
+    "extended the bank recapitalization scheme",
+    "extend emergency credits",
+    ""
+    
+    
+    
+  )
+  
+  # Are banking crisis all in the database? can't see 1981 banking crisis in Chile.
+  
   key_words[["Financial_crisis"]]=c(
     "financial stability crisis",
     "international monetary crisis",
