@@ -480,18 +480,32 @@ key_words_crisis <- function(){
     "crisis in the banking sector",
     "insovlvent banking sector",
     "banking system collapsed",
+    "sizable outflow of deposits",
+    "fears of deposits confiscations",
+    "sustained deposit outflows",
+    "continued withdrawals of.*deposits",
+    "fundamental problems of illiquidity and insolvency in the banking system",
+    "decrease in confidence in the banking system",
     # Significant banking policy intervention: deposit freezes, bank holidays, significant bank nationalization,
     # significant guarantees put in place, significant asset purchases, bank restructuring fiscal cost. We do not include bank supervision.
     "bank holiday",
     "liquidated a number of privately owned",
+    "liquidating insolvent banks",
     "temporary recapitalization program",
     "fiscal costs of the restructuring",
+    "comprehensive restructuring",
     "extended the bank recapitalization scheme",
     "extend emergency credits",
-    ""
-    
-    
-    
+    "lowered legal reserve requirements", 
+    "lowering the legal reserve requirements",
+    "reduced.* minimum legal reserve requirement",
+    "hold lower than required reserves",
+    "operations of banks .* suspended",
+    "suspend operation of banks",
+    "prevent a liquidity crunch in the banking system",
+    "support.*provided.*to banks of systemic importance",
+    "full backing of.*deposits",
+    "up-front backing of.* deposits"
   )
   
   # Are banking crisis all in the database? can't see 1981 banking crisis in Chile.
@@ -824,8 +838,9 @@ key_words_crisis <- function(){
     "exhausted official international reserves",
     "strong pressure in exchange rate reserves",
     "depleted international reserves",
-    "exhaustion of all foreign exchange reserves" # not original (added on the second stage)
-    "sizeable fall of interantional reserves"
+    "exhaustion of all foreign exchange reserves", # not original (added on the second stage)
+    "sizeable fall of interantional reserves",
+    "substantial sales of foreign reserves"
   )
   
   
@@ -1304,6 +1319,7 @@ key_words_crisis <- function(){
     "draft issues paper", # Issue papers
     "background paper", #Background papers
     "provides background to the paper",
+    "attached paper provides background information",
     "individual economy assessments" #Assessments on multiple countries
   )
   
