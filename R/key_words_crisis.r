@@ -472,6 +472,53 @@ key_words_crisis <- function(){
     "strengthen bank supervision",
     "financial support package")
   
+  key_words[["Banking_crisis_severe"]]=c(
+    # Significant distress in the banking system: bank runs, losses in the banking system and/or bank liquiditations.
+    "banking crisis",
+    "bank failures",
+    "run on*.deposits",
+    "capital of the banking system insurance scheme.*exhausted",
+    "crisis in the banking sector",
+    "insovlvent banking sector",
+    "insolvent banking sector",
+    "banking system collapsed",
+    "collapse of the banking system",
+    "collapse of the banking system",
+    "sizable outflow of deposits",
+    "fears of deposits confiscations",
+    "sustained deposit outflows",
+    "continued withdrawals of.*deposits",
+    "sharp decline in deposits",
+    "problems of illiquidity and insolvency in the banking system",
+    "decrease in confidence in the banking system",
+    "paralysis of the banking system",
+    "margin calls",
+    "liquidity crunch in the banking system",
+    # Significant banking policy intervention: deposit freezes, bank holidays, significant bank nationalization,
+    # significant guarantees put in place, significant asset purchases, bank restructuring fiscal cost. We do not include bank supervision.
+    "bank holiday",
+    "liquidated a number of privately owned",
+    "immediate takeover",
+    "liquidating.*insolvent banks",
+    "recapitalization program",
+    "fiscal costs of the restructuring",
+    "comprehensive restructuring",
+    "bank recapitalization scheme",
+    "emergency credits",
+    "bailout",
+    "lowered legal reserve requirements", 
+    "lowering the legal reserve requirements",
+    "reduced.* minimum legal reserve requirement",
+    "hold lower than required reserves",
+    "operations of banks.*suspended",
+    "suspend operation of banks",
+    "support.*provided.*to banks of systemic importance",
+    "backing of.*deposits",
+    "withdraw the licenses of major.*banks"
+  )
+  
+  # Are banking crisis all in the database? can't see 1981 banking crisis in Chile.
+  
   key_words[["Financial_crisis"]]=c(
     "financial stability crisis",
     "international monetary crisis",
@@ -800,7 +847,9 @@ key_words_crisis <- function(){
     "exhausted official international reserves",
     "strong pressure in exchange rate reserves",
     "depleted international reserves",
-    "exhaustion of all foreign exchange reserves" # not original (added on the second stage)
+    "exhaustion of all foreign exchange reserves", # not original (added on the second stage)
+    "sizeable fall of interantional reserves",
+    "substantial sales of foreign reserves"
   )
   
   
@@ -1272,6 +1321,7 @@ key_words_crisis <- function(){
   #---------
   key_words[["Problematic_documents"]] = c(
     "minutes of executive board meeting", # Minutes of meeting
+    "minutes of executive board minutes",
     "executive board attendance",
     "this is a working paper", # Working Papers
     "working paper",
@@ -1279,9 +1329,11 @@ key_words_crisis <- function(){
     "draft issues paper", # Issue papers
     "background paper", #Background papers
     "provides background to the paper",
+    "attached paper provides background information",
     "individual economy assessments" #Assessments on multiple countries
   )
   
   
-key_words
+  key_words
 }
+
