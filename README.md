@@ -77,25 +77,29 @@ url_links=IMF_docs_urls %>%
 url_links= url_links %>% filter(ID=="ARG")
 url_links=url_links[150:155,]
 
-DT::datatable(url_links[,1:5])
-#> PhantomJS not found. You can install it with webshot::install_phantomjs(). If it is installed, please make sure the phantomjs executable can be found via the PATH variable.
+url_links[,1:5]
+#> # A tibble: 6 x 5
+#>   ID    period     title                  hierarchy   pdf                  
+#>   <chr> <date>     <chr>                  <chr>       <chr>                
+#> 1 ARG   1984-12-28 argentina - exchange … <NA>        https://imfbox.box.c…
+#> 2 ARG   1984-12-28 argentina - stand-by … <NA>        https://imfbox.box.c…
+#> 3 ARG   1984-12-28 argentina - stand-by … EBM/84/191… https://imfbox.box.c…
+#> 4 ARG   1984-12-28 argentina - request f… EBM/84/190… https://imfbox.box.c…
+#> 5 ARG   1984-12-28 argentina - stand-by … PR/84/43    https://imfbox.box.c…
+#> 6 ARG   1985-06-11 argentina - letter on… EBS/85/148  https://imfbox.box.c…
 ```
 
-<!--html_preserve-->
-
-<script type="application/json" data-for="htmlwidget-54cec5059f87105cd0cb">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],["ARG","ARG","ARG","ARG","ARG","ARG"],["1984-12-28","1984-12-28","1984-12-28","1984-12-28","1984-12-28","1985-06-11"],["argentina - exchange system","argentina - stand-by arrangement","argentina - stand-by arrangement; exchange system; and purchase transaction - compensatory financing facility","argentina - request for stand-by arrangement; exchange system; and use of fund resources - compensatory financing facility","argentina - stand-by arrangement and compensatory financing facility purchase","argentina - letter on economic policy"],[null,null,"EBM/84/191-1 - Final","EBM/84/190-1 - Final","PR/84/43","EBS/85/148"],["https://imfbox.box.com/shared/static/1lxcyc9weiko2ixvyl3i5xz0yoa72ijz.pdf","https://imfbox.box.com/shared/static/uvfed8avxvzo5grxfz7xr9qonlo8qnbx.pdf","https://imfbox.box.com/shared/static/h0m9udx7wt1vivvttog3joqwt11tp9gg.pdf","https://imfbox.box.com/shared/static/l5g71g6ef6bcgv1qfozasuzbz71mgo7i.pdf","https://imfbox.box.com/shared/static/fsyn97eeip183hd8n7542yx89q617xx0.pdf","https://imfbox.box.com/shared/static/ltlupeyosebks7hpqnlt8195b7nnotyi.pdf"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>period<\/th>\n      <th>title<\/th>\n      <th>hierarchy<\/th>\n      <th>pdf<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script>
-<!--/html_preserve-->
 Download the files and store in folter "mydocs\_to\_textmining"
 
 ``` r
 
 pdf_from_url(url_links,"mydocs_for_textmining")
-#> ARG_1984-12-28_exchange system: succesfully downloadedARG_1984-12-28_exchange system : 1/6: 2.743 sec elapsed
-#> ARG_1984-12-28_request: succesfully downloadedARG_1984-12-28_request : 2/6: 2.196 sec elapsed
-#> ARG_1984-12-28_purchase transac: succesfully downloadedARG_1984-12-28_purchase transac : 3/6: 2.565 sec elapsed
-#> ARG_1984-12-28_request: succesfully downloadedARG_1984-12-28_request : 4/6: 2.601 sec elapsed
-#> ARG_1984-12-28_request: succesfully downloadedARG_1984-12-28_request : 5/6: 2.24 sec elapsed
-#> ARG_1985-06-11_request: succesfully downloadedARG_1985-06-11_request : 6/6: 2.931 sec elapsed
+#> ARG_1984-12-28_exchange system: succesfully downloadedARG_1984-12-28_exchange system : 1/6: 1.929 sec elapsed
+#> ARG_1984-12-28_request: succesfully downloadedARG_1984-12-28_request : 2/6: 1.894 sec elapsed
+#> ARG_1984-12-28_purchase transac: succesfully downloadedARG_1984-12-28_purchase transac : 3/6: 1.979 sec elapsed
+#> ARG_1984-12-28_request: succesfully downloadedARG_1984-12-28_request : 4/6: 1.983 sec elapsed
+#> ARG_1984-12-28_request: succesfully downloadedARG_1984-12-28_request : 5/6: 2.706 sec elapsed
+#> ARG_1985-06-11_request: succesfully downloadedARG_1985-06-11_request : 6/6: 2.773 sec elapsed
 #> urls succesfully downloaded in 'mydocs_for_textmining
 #> '
 ```
@@ -108,19 +112,19 @@ corpus=aggregate_corpus("mydocs_for_textmining",only_files = T)
 #> Warning in stri_replace_all_regex(string, pattern,
 #> fix_replacement(replacement), : argument is not an atomic vector; coercing
 #> [1] "mydocs_for_textmining/ARG_1984-12-28_exchange system.pdf"
-#> 1/4 ARG_1984-12-28_exchange system: 0.014 sec elapsed
+#> 1/4 ARG_1984-12-28_exchange system: 0.022 sec elapsed
 #> Warning in stri_replace_all_regex(string, pattern,
 #> fix_replacement(replacement), : argument is not an atomic vector; coercing
 #> [1] "mydocs_for_textmining/ARG_1984-12-28_purchase transac.pdf"
-#> 2/4 ARG_1984-12-28_purchase transac: 0.05 sec elapsed
+#> 2/4 ARG_1984-12-28_purchase transac: 0.037 sec elapsed
 #> Warning in stri_replace_all_regex(string, pattern,
 #> fix_replacement(replacement), : argument is not an atomic vector; coercing
 #> [1] "mydocs_for_textmining/ARG_1984-12-28_request.pdf"
-#> 3/4 ARG_1984-12-28_request: 0.035 sec elapsed
+#> 3/4 ARG_1984-12-28_request: 0.031 sec elapsed
 #> Warning in stri_replace_all_regex(string, pattern,
 #> fix_replacement(replacement), : argument is not an atomic vector; coercing
 #> [1] "mydocs_for_textmining/ARG_1985-06-11_request.pdf"
-#> 4/4 ARG_1985-06-11_request: 0.223 sec elapsed
+#> 4/4 ARG_1985-06-11_request: 0.205 sec elapsed
 save(corpus,file="mycorpus.RData")
 ```
 
@@ -213,13 +217,16 @@ Compute the document term frequency for all the files in the corpus for the cate
 
 tf_matrix=tf(corpus,"Sovereign_default")
 
-DT::datatable(head(tf_matrix))
+head(tf_matrix)
+#> # A tibble: 4 x 2
+#>   var[,1] file                           
+#>     <dbl> <chr>                          
+#> 1       0 ARG_1984-12-28_exchange system 
+#> 2      NA ARG_1984-12-28_purchase transac
+#> 3       0 ARG_1984-12-28_request         
+#> 4       0 ARG_1985-06-11_request
 ```
 
-<!--html_preserve-->
-
-<script type="application/json" data-for="htmlwidget-7c28b14ac082f5cfdf31">{"x":{"filter":"none","data":[["1","2","3","4"],[[0],[null],[0],[0]],["ARG_1984-12-28_exchange system","ARG_1984-12-28_purchase transac","ARG_1984-12-28_request","ARG_1985-06-11_request"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>var<\/th>\n      <th>file<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":1},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-<!--/html_preserve-->
 Compute the document term frequency for several categories "Currency\_crisis" and "Balance\_payment\_crisis"
 
 ``` r
@@ -229,22 +236,25 @@ mycategories=c('Currency_crisis',"Balance_payment_crisis")
 tf_matrix_with_several_categories=tf_vector(corpus,key_words_crisis()[mycategories])
 #> 
 #> (1/2) running: Currency_crisis
-#> Currency_crisis: 0.253 sec elapsed
+#> Currency_crisis: 0.209 sec elapsed
 #> 
 #>  Finished running: Currency_crisis
 #> 
 #> (2/2) running: Balance_payment_crisis
-#> Balance_payment_crisis: 0.475 sec elapsed
+#> Balance_payment_crisis: 0.231 sec elapsed
 #> 
 #>  Finished running: Balance_payment_crisis
 
-DT::datatable(head(tf_matrix_with_several_categories))
+head(tf_matrix_with_several_categories)
+#> # A tibble: 4 x 3
+#>   file                         Currency_crisis[,1] Balance_payment_crisis[…
+#>   <chr>                                      <dbl>                    <dbl>
+#> 1 ARG_1984-12-28_exchange sys…                   0                 0       
+#> 2 ARG_1984-12-28_purchase tra…                  NA                NA       
+#> 3 ARG_1984-12-28_request                         0                 0.000368
+#> 4 ARG_1985-06-11_request                         0                 0
 ```
 
-<!--html_preserve-->
-
-<script type="application/json" data-for="htmlwidget-72363e87e62035686fe3">{"x":{"filter":"none","data":[["1","2","3","4"],["ARG_1984-12-28_exchange system","ARG_1984-12-28_purchase transac","ARG_1984-12-28_request","ARG_1985-06-11_request"],[[0],[null],[0],[0]],[[0],[null],[0.000367782272894446],[0]]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>file<\/th>\n      <th>Currency_crisis<\/th>\n      <th>Balance_payment_crisis<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-<!--/html_preserve-->
 Wrapup function for tf
 
 ``` r
@@ -254,73 +264,73 @@ Wrapup function for tf
 wrapup_for_tf=run_tf(corpus_path = "mycorpus.RData",type_lexicon ="words",keyword_list = c("Currency_crisis","Balance_payment_crisis"),parrallel = F)
 #> Loading corpus from mycorpus.RData
 #> (1/2) running: Currency_crisis
-#> Currency_crisis: 0.204 sec elapsed
+#> Currency_crisis: 0.202 sec elapsed
 #> 
 #>  Finished running: Currency_crisis
 #> 
 #> (2/2) running: Balance_payment_crisis
-#> Balance_payment_crisis: 0.183 sec elapsed
+#> Balance_payment_crisis: 0.177 sec elapsed
 #> 
 #>  Finished running: Balance_payment_crisis
-#> 0.419 sec elapsed
+#> 0.409 sec elapsed
 #> [1] "export table in mycorpus.RData"
 
-DT::datatable(head(wrapup_for_tf))
+head(wrapup_for_tf)
+#> # A tibble: 4 x 3
+#>   file                         Currency_crisis[,1] Balance_payment_crisis[…
+#>   <chr>                                      <dbl>                    <dbl>
+#> 1 ARG_1984-12-28_exchange sys…                   0                 0       
+#> 2 ARG_1984-12-28_purchase tra…                  NA                NA       
+#> 3 ARG_1984-12-28_request                         0                 0.000368
+#> 4 ARG_1985-06-11_request                         0                 0
 ```
 
-<!--html_preserve-->
-
-<script type="application/json" data-for="htmlwidget-aa25686da78f2cedcf85">{"x":{"filter":"none","data":[["1","2","3","4"],["ARG_1984-12-28_exchange system","ARG_1984-12-28_purchase transac","ARG_1984-12-28_request","ARG_1985-06-11_request"],[[0],[null],[0],[0]],[[0],[null],[0.000367782272894446],[0]]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>file<\/th>\n      <th>Currency_crisis<\/th>\n      <th>Balance_payment_crisis<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-<!--/html_preserve-->
 Wrapup function for run\_tf that allows directly download the files and run the text mining with a single function
 
 ``` r
 run_tf_by_chunk(urls =url_links,keyword_list = c("Currency_crisis","Balance_payment_crisis"))
-#> Warning in dir.create(path): 'temp' already exists
-#> Warning in dir.create(path_corpus): 'temp/corpus' already exists
-#> Warning in dir.create(path_tf): 'temp/tf' already exists
 #> ARG_1984-12-28_exchange system: succesfully downloaded 
-#> ARG_1984-12-28_exchange system : 1/6: 2.514 sec elapsed
+#> ARG_1984-12-28_exchange system : 1/6: 1.867 sec elapsed
 #> ARG_1984-12-28_request: succesfully downloaded 
-#> ARG_1984-12-28_request : 2/6: 2.556 sec elapsed
+#> ARG_1984-12-28_request : 2/6: 2.08 sec elapsed
 #> ARG_1984-12-28_purchase transac: succesfully downloaded 
-#> ARG_1984-12-28_purchase transac : 3/6: 2.341 sec elapsed
+#> ARG_1984-12-28_purchase transac : 3/6: 2.013 sec elapsed
 #> ARG_1984-12-28_request: already downloaded, keep existing 
-#> ARG_1984-12-28_request : 4/6: 0.012 sec elapsed
+#> ARG_1984-12-28_request : 4/6: 0.011 sec elapsed
 #> ARG_1984-12-28_request: already downloaded, keep existing 
 #> ARG_1984-12-28_request : 5/6: 0.011 sec elapsed
 #> ARG_1985-06-11_request: succesfully downloaded 
-#> ARG_1985-06-11_request : 6/6: 2.706 sec elapsed
+#> ARG_1985-06-11_request : 6/6: 2.57 sec elapsed
 #> urls succesfully downloaded in 'temp/files
 #> '
 #> Warning in stri_replace_all_regex(string, pattern,
 #> fix_replacement(replacement), : argument is not an atomic vector; coercing
 #> [1] "temp/files/ARG_1984-12-28_exchange system.pdf"
-#> 1/4 ARG_1984-12-28_exchange system: 0.015 sec elapsed
+#> 1/4 ARG_1984-12-28_exchange system: 0.013 sec elapsed
 #> Warning in stri_replace_all_regex(string, pattern,
 #> fix_replacement(replacement), : argument is not an atomic vector; coercing
 #> [1] "temp/files/ARG_1984-12-28_purchase transac.pdf"
-#> 2/4 ARG_1984-12-28_purchase transac: 0.033 sec elapsed
+#> 2/4 ARG_1984-12-28_purchase transac: 0.041 sec elapsed
 #> Warning in stri_replace_all_regex(string, pattern,
 #> fix_replacement(replacement), : argument is not an atomic vector; coercing
 #> [1] "temp/files/ARG_1984-12-28_request.pdf"
-#> 3/4 ARG_1984-12-28_request: 0.008 sec elapsed
+#> 3/4 ARG_1984-12-28_request: 0.01 sec elapsed
 #> Warning in stri_replace_all_regex(string, pattern,
 #> fix_replacement(replacement), : argument is not an atomic vector; coercing
 #> [1] "temp/files/ARG_1985-06-11_request.pdf"
-#> 4/4 ARG_1985-06-11_request: 0.196 sec elapsed
+#> 4/4 ARG_1985-06-11_request: 0.218 sec elapsed
 #> delete folder with pdf 
 #> Loading corpus from temp/corpus/corpus_1.RData
 #> (1/2) running: Currency_crisis
-#> Currency_crisis: 0.184 sec elapsed
+#> Currency_crisis: 0.19 sec elapsed
 #> 
 #>  Finished running: Currency_crisis
 #> 
 #> (2/2) running: Balance_payment_crisis
-#> Balance_payment_crisis: 0.247 sec elapsed
+#> Balance_payment_crisis: 0.234 sec elapsed
 #> 
 #>  Finished running: Balance_payment_crisis
-#> 0.464 sec elapsed
+#> 0.459 sec elapsed
 #> [1] "export table in temp/corpus/corpus_1.RData"
 #> [1] TRUE
 ```
@@ -335,23 +345,25 @@ updated_tf=run_tf_update(path_tf_to_update = "temp/tf/tf_crisis_words_1.RData",
                 export_path = "temp/tf/tf_crisis_words_1_new.RData")
 #> updating selected columnsLoading corpus from temp/corpus/corpus_1.RData
 #> (1/2) running: Fiscal_outcomes
-#> Fiscal_outcomes: 0.233 sec elapsed
+#> Fiscal_outcomes: 0.205 sec elapsed
 #> 
 #>  Finished running: Fiscal_outcomes
 #> 
 #> (2/2) running: Fiscal_consolidation
-#> Fiscal_consolidation: 0.23 sec elapsed
+#> Fiscal_consolidation: 0.221 sec elapsed
 #> 
 #>  Finished running: Fiscal_consolidation
-#> 0.5 sec elapsed
+#> 0.465 sec elapsed
 #> [1] "export table in temp/corpus/corpus_1.RData"
 #> [1] "Non updated columns:\n\n                 file, Currency_crisis, Balance_payment_crisis"
 #> [1] "Updated columns:\n\n                 Fiscal_outcomes, Fiscal_consolidation"
 
-DT::datatable(head(updated_tf))
+head(updated_tf)
+#> # A tibble: 4 x 5
+#>   file  Currency_crisis… Balance_payment… Fiscal_outcomes… Fiscal_consolid…
+#>   <chr>            <dbl>            <dbl>            <dbl>            <dbl>
+#> 1 ARG_…                0                0          0                0      
+#> 2 ARG_…               NA               NA         NA               NA      
+#> 3 ARG_…                0                0          0                0      
+#> 4 ARG_…                0                0          0.00282          0.00121
 ```
-
-<!--html_preserve-->
-
-<script type="application/json" data-for="htmlwidget-520876c7ac7c855d8176">{"x":{"filter":"none","data":[["1","2","3","4"],["ARG_1984-12-28_exchange system","ARG_1984-12-28_purchase transac","ARG_1984-12-28_request","ARG_1985-06-11_request"],[[0],[null],[0],[0]],[[0],[null],[0],[0]],[[0],[null],[0],[0.00282150888378028]],[[0],[null],[0],[0.00120518712819914]]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>file<\/th>\n      <th>Currency_crisis<\/th>\n      <th>Balance_payment_crisis<\/th>\n      <th>Fiscal_outcomes<\/th>\n      <th>Fiscal_consolidation<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-<!--/html_preserve-->
