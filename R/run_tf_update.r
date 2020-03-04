@@ -1,7 +1,7 @@
 
 run_tf_update = function(path_tf_to_update = "tf_crisis_words.RData", corpus_path = "IMF_letofIntent_1960_2014_clean.RData", 
     type_lexicon = "words", keyword_list = NULL, export_path = "tf_crisis_words.RData", 
-    parrallel = T) {
+    parrallel = T, store_old = F, store_old_path = NULL) {
     
     # function that update the tf output of run_tf with the new variables avoid
     # having to rerun all categories
@@ -37,6 +37,14 @@ run_tf_update = function(path_tf_to_update = "tf_crisis_words.RData", corpus_pat
         print(paste0("Updated columns:\n
                  ", paste0(keyword_list, 
             collapse = ", ")))
+        
+        if(store_old == T){
+          if(dir.exists(store_old_path != T)){
+            dir.create(store_old_path)
+          }
+          file.move(path_tf_to_update, store_old_path)
+        }
+
         rio::export(tf_to_update, export_path)
         
         return(tf_to_update)
