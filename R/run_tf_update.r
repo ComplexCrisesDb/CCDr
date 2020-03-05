@@ -1,3 +1,26 @@
+#'Updates the tf-indexes without repeating full extraction
+#'
+#' Combine probability of shocks, intensity and complexity of relations to construct
+#' .a mesure of severity of crisis
+#'
+#' @param path_tf_to_update Path to old tf dataframe.
+#' @param corpus_path Path to corpus from which perform the extraction.
+#' @param type_lexicon Character: "words" or "category"
+#' @param keyword_list Character vector: names of character vectors to use for extraction.
+#' @param export_path Path to export the file.
+#' @param parrallel Logical. If TRUE, parallel computation for each category.
+#' @param store_old Logical. If TRUE, store old extractions in a directory.
+#' @param store_old_path Path to move old extractions in.
+#'
+#' @return A dataframe with file name, old indexes not specified in keyword_list and updated indexes.
+#'
+#' @author Manuel Bétin, Umberto Collodel
+#'
+#' @examples
+#'
+#'
+#' @export
+
 
 run_tf_update = function(path_tf_to_update = "tf_crisis_words.RData", corpus_path = "IMF_letofIntent_1960_2014_clean.RData", 
     type_lexicon = "words", keyword_list = NULL, export_path = "tf_crisis_words.RData", 
