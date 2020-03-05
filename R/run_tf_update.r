@@ -39,7 +39,7 @@ run_tf_update = function(path_tf_to_update = "tf_crisis_words.RData", corpus_pat
             collapse = ", ")))
         
         if(store_old == T){
-          if(dir.exists(store_old_path != T)){
+          if(dir.exists(store_old_path) != T){
             dir.create(store_old_path)
           }
           file.move(path_tf_to_update, store_old_path)
