@@ -43,6 +43,7 @@ run_tf_update = function(path_tf_to_update = "tf_crisis_words.RData", corpus_pat
         existing_cols = names(tf_to_update)
         
         if (any(existing_cols %in% keyword_list)) {
+          # the problem is here! remove already existing columns but also columns that do not exist. In the end it skips the passage.
             tf_to_update = tf_to_update %>% dplyr::select(-keyword_list)
         }
         
