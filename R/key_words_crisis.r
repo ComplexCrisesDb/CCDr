@@ -1,12 +1,12 @@
 key_words_crisis <- function(){
-
+  
   #key words by type of crisis/distress, capital letter do not matter
   key_words <- list()
-
+  
   #--------
   ## REFORMS AND CONDITIONALITY
   #--------
-
+  
   key_words[["Deregulation"]]=c(
     "privatization",
     "liberalization",
@@ -16,7 +16,7 @@ key_words_crisis <- function(){
     "demonopolization",
     "deregulation"
   )
-
+  
   key_words[["Reform_agenda"]]=c(
     "reform",
     "reforming",
@@ -25,7 +25,7 @@ key_words_crisis <- function(){
     "package",
     "structural program"
   )
-
+  
   key_words[["Trade_reforms"]]=c(
     "trade and tariff programme",
     "trade and tariff program",
@@ -62,8 +62,8 @@ key_words_crisis <- function(){
     "deregulation of financial markets",
     "regulating the financial sector"
   )
-
-
+  
+  
   key_words[["Labor_market_reforms"]]=c(
     "labor market reforms",
     "reforms to the labor market",
@@ -76,7 +76,7 @@ key_words_crisis <- function(){
     "labor market framework",
     "labor reform"
   )
-
+  
   key_words[["Tax_reforms"]]=c(
     "tax reform",
     "fiscal reform",
@@ -86,8 +86,8 @@ key_words_crisis <- function(){
     "tax administration",
     "modifications to the tax regime"
   )
-
-
+  
+  
   key_words[["Banking_reforms"]]=c(
     "banking reform",
     "banking sector reform",
@@ -103,14 +103,14 @@ key_words_crisis <- function(){
     "desintermediation of the banking system",
     "regulating the financial sector"
   )
-
-
-
+  
+  
+  
   #--------
   ## OFFICIAL CREDITORS INTERVENTION
   #--------
-
-
+  
+  
   key_words[["Peformance_criterion"]]=c(
     "performance criteria",
     "non observance of performance criterion",
@@ -142,7 +142,7 @@ key_words_crisis <- function(){
     "request waivers of the performance criteria",
     "policy slippage"
   )
-
+  
   key_words[["Program_extension"]]=c(
     "augmentation of SDR",
     "emergency financial procedure",
@@ -152,7 +152,7 @@ key_words_crisis <- function(){
     "augmentation of access under",
     "augmentation of the SBA"
   )
-
+  
   key_words[["Official_support"]]=c(
     "ESFS",
     "European system of financial supervision",
@@ -169,11 +169,11 @@ key_words_crisis <- function(){
     "Inter American Development Bank",
     "European stability mechanism",
     "Fed swap lines")
-
+  
   key_words[["Technical_assistance"]]=c(
     "technical assistance"
   )
-
+  
   key_words[["Precautionary_programs"]]=c(
     #"precaution",
     "make purchases under the requested stand-by arrangement as needed",
@@ -232,8 +232,8 @@ key_words_crisis <- function(){
     "do not intend to make any purcharse under this stand",
     "do not intend to make purchase under the arrangement",
     "do not intend to draw on the resources")
-
-
+  
+  
   key_words[["Risk_for_IMF"]]=c(
     "Risks to the program",
     "risks to the Fund",
@@ -249,7 +249,7 @@ key_words_crisis <- function(){
     "debt service due to the Fund",
     "payments to the fund"
   )
-
+  
   key_words[["Uncertainty_reforms"]]=c(
     "implementation risk",
     "inconsistent record in policy reform",
@@ -257,20 +257,20 @@ key_words_crisis <- function(){
     "non observance",
     "program implementation"
   )
-
+  
   key_words[["Disbursement"]]=c(
     "frontloaded disbursement",
     "exceptional circumstances provision",
     "Exceptional Access Criteria",
     "Funds access policy"
   )
-
-
+  
+  
   #--------
   ## EXOGENEOUS SHOCKS: NON ECONOMIC
   #--------
-
-
+  
+  
   key_words[["Wars"]]=c(
     "war damage",
     "insurgency crisis",
@@ -300,7 +300,7 @@ key_words_crisis <- function(){
     "guerilla offensive",
     "military take-over"
   )
-
+  
   key_words[["Natural_disaster"]]=c(
     "flooding",
     "drought",
@@ -310,8 +310,28 @@ key_words_crisis <- function(){
     "natural disaster",
     "earthquake",
     "hurricane")
-
+  
+  
   key_words[["Epidemics"]]=c(
+    "epidemics,"
+    "pandemia",
+    "leishmaniasis",
+    "dengue fever",
+    "chikungunya",
+    "mumps",
+    "meningitis",
+    "poliomyelitis",
+    "measles",
+    "zika",
+    "encephalitis",
+    "nipah",
+    "vCJD",
+    "HIV",
+    "smallpox",
+    "Relapsing fever",
+    "typhoid fever",
+    "typhus",
+    "hepatitis",
     "SRAS",
     "H1N1",
     "virus",
@@ -320,7 +340,6 @@ key_words_crisis <- function(){
     "epidemia"
     "ebola",
     "sida",
-    #"aids",
     "rotavirus",
     "Lyme",
     "hepatite",
@@ -332,13 +351,12 @@ key_words_crisis <- function(){
     "yellow fever",
     "cholera",
     "malaria",
-    "coronavirus",
     "influenza",
     "flu",
     "plague"
-  )
-
-
+    )
+  
+  
   key_words[["Commodity_crisis"]]=c(
     "oil crisis",
     "rice crisis",
@@ -387,7 +405,7 @@ key_words_crisis <- function(){
     "energy crisis",
     "fell of agricultural prices"
   )
-
+  
   key_words[["Political_crisis"]]=c(
     "political turmoil",
     "internal security situation",
@@ -442,7 +460,7 @@ key_words_crisis <- function(){
     "facilitate an orderly transition to a new administration",
     "uncertainty about the continuity of policies",
     "uncertainty regarding future policies")
-
+  
   key_words[["Social_crisis"]]=c(
     "social risk",
     "social and political turmoil",
@@ -453,13 +471,13 @@ key_words_crisis <- function(){
     "strike",
     "deteriorating social climate"
   )
-
-
+  
+  
   #--------
   ## EXOGENEOUS SHOCKS; ECONOMIC
   #--------
-
-
+  
+  
   key_words[["Banking_crisis"]]=c(
     "bank resolution",
     "bank crisis",
@@ -499,54 +517,7 @@ key_words_crisis <- function(){
     "confidence in the domestic banking system",
     "strengthen bank supervision",
     "financial support package")
-
-  key_words[["Banking_crisis_severe"]]=c(
-    # Significant distress in the banking system: bank runs, losses in the banking system and/or bank liquiditations.
-    "banking crisis",
-    "bank failures",
-    "run on*.deposits",
-    "capital of the banking system insurance scheme.*exhausted",
-    "crisis in the banking sector",
-    "insovlvent banking sector",
-    "insolvent banking sector",
-    "banking system collapsed",
-    "collapse of the banking system",
-    "collapse of the banking system",
-    "sizable outflow of deposits",
-    "fears of deposits confiscations",
-    "sustained deposit outflows",
-    "continued withdrawals of.*deposits",
-    "sharp decline in deposits",
-    "problems of illiquidity and insolvency in the banking system",
-    "decrease in confidence in the banking system",
-    "paralysis of the banking system",
-    "margin calls",
-    "liquidity crunch in the banking system",
-    # Significant banking policy intervention: deposit freezes, bank holidays, significant bank nationalization,
-    # significant guarantees put in place, significant asset purchases, bank restructuring fiscal cost. We do not include bank supervision.
-    "bank holiday",
-    "liquidated a number of privately owned",
-    "immediate takeover",
-    "liquidating.*insolvent banks",
-    "recapitalization program",
-    "fiscal costs of the restructuring",
-    "comprehensive restructuring",
-    "bank recapitalization scheme",
-    "emergency credits",
-    "bailout",
-    "lowered legal reserve requirements",
-    "lowering the legal reserve requirements",
-    "reduced.* minimum legal reserve requirement",
-    "hold lower than required reserves",
-    "operations of banks.*suspended",
-    "suspend operation of banks",
-    "support.*provided.*to banks of systemic importance",
-    "backing of.*deposits",
-    "withdraw the licenses of major.*banks"
-  )
-
-  # Are banking crisis all in the database? can't see 1981 banking crisis in Chile.
-
+  
   key_words[["Financial_crisis"]]=c(
     "financial stability crisis",
     "international monetary crisis",
@@ -569,7 +540,7 @@ key_words_crisis <- function(){
     "global financial turbulence",
     "viability and health of the financial sector"
   )
-
+  
   key_words[["Inflation_crisis"]]=c(
     "inflation pressure",
     "hyperinflation",
@@ -598,7 +569,7 @@ key_words_crisis <- function(){
     #"inflationary pressures",
     "inflationary pressure",
     "inflation crisis")
-
+  
   key_words[["Trade_crisis"]]=c(
     "trade war",
     "trade policy tension",
@@ -627,8 +598,8 @@ key_words_crisis <- function(){
     "slowdown in global trade",
     "stronger competition of countries"
   )
-
-
+  
+  
   key_words[["World_outcomes"]]=c(
     "world-wide recession",
     "global economic crisis",
@@ -657,7 +628,7 @@ key_words_crisis <- function(){
     "slowdown in international economy",
     "fragile global outlook"
   )
-
+  
   key_words[["Contagion"]]=c(
     "regional crisis",
     "crisis in the region",
@@ -727,7 +698,7 @@ key_words_crisis <- function(){
     "crisis in Brazil",
     "linkage with the US",
     "contagion effects of the Thai crisis")
-
+  
   key_words[["Expectations"]]=c(
     "crisis risks",
     "market reversal",
@@ -789,13 +760,13 @@ key_words_crisis <- function(){
     "shifts in investor sentiment",
     "bolstering market confidence"
   )
-
-
-  #------------
+  
+  
+  #------------  
   ## CURRENCY AND EXCHANGE RATE ISSUES
   #------------
-
-
+  
+  
   key_words[["Balance_payment_crisis"]]=c(
     "Shortage of foreign exchange",
     "bop crisis",
@@ -852,7 +823,7 @@ key_words_crisis <- function(){
     "severe external imbalances",
     "severe internal and external imbalances"
   )
-
+  
   key_words[["Reduction_reserves"]]=c(
     "decline in net international reserves",
     "shortage of international reserves",
@@ -875,12 +846,10 @@ key_words_crisis <- function(){
     "exhausted official international reserves",
     "strong pressure in exchange rate reserves",
     "depleted international reserves",
-    "exhaustion of all foreign exchange reserves", # not original (added on the second stage)
-    "sizeable fall of interantional reserves",
-    "substantial sales of foreign reserves"
+    "exhaustion of all foreign exchange reserves" # not original (added on the second stage)
   )
-
-
+  
+  
   key_words[["Currency_crisis"]]=c(
     "currency weakness",
     "exchange rate crisis",
@@ -916,7 +885,7 @@ key_words_crisis <- function(){
     "continuing depreciation",
     "considerable depreciation"
   )
-
+  
   key_words[["Currency_crisis_severe"]]=c(
     "exchange rate crisis",
     "large real depreciation",
@@ -928,25 +897,23 @@ key_words_crisis <- function(){
     "large devaluation",
     "large depreciation",
     "sharp depreciation",
-    "currency attack",
-    "exchange rate crisis"
-
+    "currency attack"
   )
-
+  
   key_words[["Currency_crisis_confusing"]]=c(
     "sharp depreciation in the u.s. dollar",
     "sharp depreciation of the u.s. dollar",
     "large depreciation of the u.s.dollar",
-    "yen.+s sharp depreciation"
+    "yen's sharp depreciation"
   )
-
+  
   key_words[["Floating_exchange_rate"]]=c(
     "floating exchange rate regime",
     "floating currency",
     "flexible exchange rate",
     "dual exchange market"
   )
-
+  
   key_words[["Fixed_exchange_rate"]]=c(
     "pegged",
     "currency pegs",
@@ -963,7 +930,7 @@ key_words_crisis <- function(){
     "common currency area",
     "fully dollarized"
   )
-
+  
   key_words[["Losening_monetary_policy"]]=c(
     "loosening monetary policy",
     "accommodative monetary policy",
@@ -975,7 +942,7 @@ key_words_crisis <- function(){
     "interest rate cut",
     "bring down interest rates"
   )
-
+  
   key_words[["Tightening_monetary_policy"]]=c(
     "monetary tightening",
     "restrictive monetary policy",
@@ -987,14 +954,14 @@ key_words_crisis <- function(){
     "tightening of monetary policy",
     "increase in interest rates"
   )
-
-
-
+  
+  
+  
   #----------
   ## OUTPUT SHOCKS
   #-----------
-
-
+  
+  
   key_words[["Severe_recession"]]=c(
     "severe economic crisis",
     "very difficult economic circumstances",
@@ -1031,7 +998,7 @@ key_words_crisis <- function(){
     "severe economic downturn",
     "deep economic downturn"
   )
-
+  
   key_words[["Soft_recession"]]=c(
     "slowdown in the economic activity",
     "slowdown in economic growth",
@@ -1061,7 +1028,7 @@ key_words_crisis <- function(){
     "slowdown in the economic activity",
     "slowdown of output",
     "slow economic activity")
-
+  
   key_words[["Expansion"]]=c(
     "exceptionally high rate of economic growth",
     "very strong fundamentals",
@@ -1087,14 +1054,14 @@ key_words_crisis <- function(){
     "domestic demand expansion",
     "The economy continued to perform strongly",
     "strong economic performance")
-
-
-
+  
+  
+  
   #---------
   ## PUBLIC DEBT ISSUES
   #---------
-
-
+  
+  
   key_words[["Fiscal_outcomes"]]=c(
     "large debt servicing burden",
     "large debt service obligation",
@@ -1154,7 +1121,7 @@ key_words_crisis <- function(){
     "deficits",
     "policy stimulus",
     "external sovereign bond buybacks")
-
+  
   key_words[["Fiscal_consolidation"]]=c(
     "overall deficit of the public sector is to be reduced",
     "Maintaining tight financialpolicies",
@@ -1242,7 +1209,7 @@ key_words_crisis <- function(){
     "primary fiscal balance",
     "monitoring of the fiscal performance"
   )
-
+  
   key_words[["Concessional_lending"]]=c(
     "concessional terms"
   )
@@ -1259,14 +1226,14 @@ key_words_crisis <- function(){
     "securities due within less than 12 months",
     "short term component of the external debt",
     "maturity shortening")
-
-
+  
+  
   key_words[["floating_rate_debt"]]=c(
     "floating rate securities",
     "floating rate notes"
   )
-
-
+  
+  
   key_words[["foreign_debt"]]=c(
     "de facto dollarization",
     "denominated in foreign currency",
@@ -1279,60 +1246,53 @@ key_words_crisis <- function(){
     "debt denominated in foreign exchange",
     "foreign exchange index debt",
     "denominated in foreign exchange")
-
-
+  
+  
   key_words[["Sovereign_default"]]=c(
-    "rescheduled debt",
+    "rescheduled debt", #
     "external payments crisis",
-    "liquidity crisis",
-    "difficulties in servicing its external debt",
-    "rescheduling of external debt",
-    "rescheduling agreement",
-    "suspend service payments",
-    "fiscal crisis",
-    "debt relief",
-    "failure to roll over debt",
-    "government bonds crisis",
-    "government bonds crisis",
-    "bond crisis",
-    "debt reprofiling",
-    "sovereign debt crisis",
-    "public debt crisis",
-    "default risks",
+    "difficulties in servicing its external debt",#
+    "difficult time in rolling over its debt",#
+    "rescheduling of external debt",#
+    "rescheduling agreement",##
+    "suspend service payments",#
+    "fiscal crisis",#
+    "debt relief",#
+    "failure to roll over debt",#
+    "government bonds crisis",#
+    "government bonds crisis",#
+    "bond crisis",#
+    "debt reprofiling",#
+    "sovereign debt crisis",#
+    "public debt crisis",#
+    "default risks",#
     "self fulfilling crises",
-    "debt restructuring program",
-    "governement default",
-    "restructuring of debt",
-    "suspension of payments",
-    "debt swap",
-    "debt restructuring",
-    "difficult time in rolling over its debt",
-    "debt rescheduling",
-    "debt service reduction operation",
-    "debt restructuring program",
-    "rescheduling of the debt",
-    "arrears",
-    "rescheduling of arrears",
-    "arrears in the payment",
-    "restructuring of its external debt",
-    "restructuring agreements",
-    "external payment arrears",
-    "external arrears",
-    "interest arrears",
-    "arrears on payments",
-    "arrears on debt service",
-    "external payment arrears",
-    "debt service reduction",
-    "no debt service payments",
-    "restructure these arrears",
-    "relation with external creditors",
-    "Paris Club",
-    "Club of Paris",
-    "debt relief",
-    "debt exchange"
+    "debt restructuring program",#
+    "governement default",#
+    "restructuring of debt",#
+    "suspension of payments",#
+    "debt swap",#
+    "debt restructuring",#
+    "debt rescheduling",#
+    "debt service reduction",#
+    "debt restructuring program",#
+    "rescheduling of the debt",#
+    "arrears",#
+    "rescheduling of arrears",#
+    "arrears in the payment",#
+    "restructuring of its external debt",#
+    "restructuring agreements",#
+    "external payment arrears",#
+    "debt service reduction",#
+    "no debt service payments",#
+    "relation with external creditors",#
+    "Paris Club",#
+    "Club of Paris",#
+    "debt relief",#
+    "debt exchange"#
   )
-
-
+  
+  
   key_words[["Track_record"]]=c(
     "impeccable record of payments to the fund under previous facilities",
     "sound policies",
@@ -1343,24 +1303,21 @@ key_words_crisis <- function(){
     "high level of policy credibility",
     "solid track record"
   )
-
+  
   #---------
   ## PROBLEMATIC DOCUMENTS TAG
   #---------
   key_words[["Problematic_documents"]] = c(
     "minutes of executive board meeting", # Minutes of meeting
-    "minutes of executive board minutes",
-    "executive board attendance",
     "this is a working paper", # Working Papers
-    "working paper",
+    "imf working paper",
     "a working paper of the international monetary fund",
     "draft issues paper", # Issue papers
     "background paper", #Background papers
     "provides background to the paper",
-    "attached paper provides background information",
     "individual economy assessments" #Assessments on multiple countries
   )
-
-
-  key_words
+  
+  
+key_words
 }
