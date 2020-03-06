@@ -311,9 +311,8 @@ key_words_crisis <- function(){
     "earthquake",
     "hurricane")
   
-  
   key_words[["Epidemics"]]=c(
-    "epidemics,"
+    "epidemics",
     "pandemia",
     "leishmaniasis",
     "dengue fever",
