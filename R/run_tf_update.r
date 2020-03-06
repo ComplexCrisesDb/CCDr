@@ -75,9 +75,8 @@ run_tf_update = function(path_tf_to_update = "tf_crisis_words.RData", corpus_pat
           sink(paste0(store_old_path,"/Update_details.txt"))
           cat("Update details:","\n")
           cat("\n")
-          cat("date of update:", Sys.time())
-          cat("countries updated:",paste0(list.files(store_old_path) %>% str_extract("[A-Z]{3}", collapse = " ")))
-          cat("updated indexes:", paste0(keyword_list, collapse = "  "))
+          cat("date of update: ", as.character(Sys.time()),"\n")
+          cat("updated indexes:", paste0(keyword_list, collapse = "  "),"\n")
           sink()
         }
           
