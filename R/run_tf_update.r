@@ -1,7 +1,30 @@
+#'Updates the tf-indexes without repeating full extraction
+#'
+#' Combine probability of shocks, intensity and complexity of relations to construct
+#' .a mesure of severity of crisis
+#'
+#' @param path_tf_to_update Path to old tf dataframe.
+#' @param corpus_path Path to corpus from which perform the extraction.
+#' @param type_lexicon Character: "words" or "category"
+#' @param keyword_list Character vector: names of character vectors to use for extraction.
+#' @param export_path Path to export the file.
+#' @param parrallel Logical. If TRUE, parallel computation for each category.
+#' @param store_old Logical. If TRUE, store old extractions in a directory.
+#' @param store_old_path Path to move old extractions in.
+#'
+#' @return A dataframe with file name, old indexes not specified in keyword_list and updated indexes.
+#'
+#' @author Manuel Bétin, Umberto Collodel
+#'
+#' @examples
+#'
+#'
+#' @export
+
 
 run_tf_update = function(path_tf_to_update = "tf_crisis_words.RData", corpus_path = "IMF_letofIntent_1960_2014_clean.RData", 
     type_lexicon = "words", keyword_list = NULL, export_path = "tf_crisis_words.RData", 
-    parrallel = T) {
+    parrallel = T, store_old = F, store_old_path = NULL) {
     
     # function that update the tf output of run_tf with the new variables avoid
     # having to rerun all categories
@@ -20,7 +43,9 @@ run_tf_update = function(path_tf_to_update = "tf_crisis_words.RData", corpus_pat
         existing_cols = names(tf_to_update)
         
         if (any(existing_cols %in% keyword_list)) {
-            tf_to_update = tf_to_update %>% dplyr::select(-keyword_list)
+          # Remove only columns in both update list and old dataframe:
+            existing_keyword_list <- intersect(existing_cols, keyword_list)
+            tf_to_update = tf_to_update %>% dplyr::select(- existing_keyword_list)
         }
         
         corpus = rio::import(corpus_path)
@@ -37,6 +62,24 @@ run_tf_update = function(path_tf_to_update = "tf_crisis_words.RData", corpus_pat
         print(paste0("Updated columns:\n
                  ", paste0(keyword_list, 
             collapse = ", ")))
+        
+        if(store_old == T){
+          if(dir.exists(store_old_path) != T){
+            dir.create(store_old_path)
+          }
+          # Move old files:
+          file.move(path_tf_to_update, store_old_path, overwrite = TRUE)
+          # Create text file:
+          file.create(paste0(store_old_path,"/Update_details.txt"))
+          # Write the details of the update:
+          sink(paste0(store_old_path,"/Update_details.txt"))
+          cat("Update details:","\n")
+          cat("\n")
+          cat("date of update: ", as.character(Sys.time()),"\n")
+          cat("updated indexes:", paste0(keyword_list, collapse = "  "),"\n")
+          closeAllConnections()
+        }
+          
         rio::export(tf_to_update, export_path)
         
         return(tf_to_update)
