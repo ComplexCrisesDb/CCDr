@@ -337,7 +337,7 @@ key_words_crisis <- function(){
     "virus",
     "epidemy",
     "epidemic",
-    "epidemia"
+    "epidemia",
     "ebola",
     "sida",
     "rotavirus",
