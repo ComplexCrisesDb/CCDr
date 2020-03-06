@@ -77,7 +77,7 @@ run_tf_update = function(path_tf_to_update = "tf_crisis_words.RData", corpus_pat
           cat("\n")
           cat("date of update: ", as.character(Sys.time()),"\n")
           cat("updated indexes:", paste0(keyword_list, collapse = "  "),"\n")
-          sink()
+          closeAllConnections()
         }
           
         rio::export(tf_to_update, export_path)
