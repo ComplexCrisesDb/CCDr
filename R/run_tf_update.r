@@ -68,7 +68,7 @@ run_tf_update = function(path_tf_to_update = "tf_crisis_words.RData", corpus_pat
             dir.create(store_old_path)
           }
           # Move old files:
-          file.move(path_tf_to_update, store_old_path)
+          file.move(path_tf_to_update, store_old_path, overwrite = TRUE)
           # Create text file:
           file.create(paste0(store_old_path,"/Update_details.txt"))
           # Write the details of the update:
