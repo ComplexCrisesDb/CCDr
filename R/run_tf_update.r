@@ -69,15 +69,6 @@ run_tf_update = function(path_tf_to_update = "tf_crisis_words.RData", corpus_pat
           }
           # Move old files:
           file.move(path_tf_to_update, store_old_path, overwrite = TRUE)
-          # Create text file:
-          file.create(paste0(store_old_path,"/Update_details.txt"))
-          # Write the details of the update:
-          sink(paste0(store_old_path,"/Update_details.txt"))
-          cat("Update details:","\n")
-          cat("\n")
-          cat("date of update: ", as.character(Sys.time()),"\n")
-          cat("updated indexes:", paste0(keyword_list, collapse = "  "),"\n")
-          closeAllConnections()
         }
           
         rio::export(tf_to_update, export_path)
