@@ -1,5 +1,12 @@
 clean_text = function(file) {
-    # first step cleaning of the file by removing preselected character
+    #' clean character strings
+    #' clean character string by removing special characters 
+    #' and irrelevant strings
+    #' @param file a string of characters to clean
+    #' @return a clean character string 
+    #' @author Manuel Betin
+    #' @export
+   
     # file=stringr::str_replace_all(file,'[^a-zA-Z\\s]', ' ')
     file = stringr::str_replace_all(file, "[\\s]+", " ")
     file = gsub("\r", "", file)
