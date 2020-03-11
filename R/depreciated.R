@@ -1,12 +1,36 @@
+# plot results of matric cosinus
+plot_cos_sim <- function(cosim_matrix, var) {
+  #' depreciated use cosim_fig()
+  #' depreciated use cosim_fig()
+  #' @param cosim_matrix the cosinus similarity matrix from cosim_matrix()
+  #' @param var the target variable 
+  #' @return a ggplot barplot
+  #' @author Manuel Betin
+  #' @export
+  #' 
+  dt = cosim_matrix %>% dplyr::select(myvar = var)
+  dt$xaxis = rownames(dt)
+  dt = dt %>% dplyr::mutate(xaxis = str_replace(xaxis, "_", " "))
+  
+  plot=ggplot2::ggplot(data = dt) + ggplot2::geom_bar(stat = "identity", aes(x = reorder(xaxis, 
+                                                                                         -myvar), y = myvar)) + ggplot2::theme_bw() + ggplot2::ylab("Cosinus similarity") + 
+    ggplot2::xlab("") + ggplot2::theme(legend.position = "bottom", axis.text.x = ggplot2::element_text(angle = 90, 
+                                                                                                       hjust = 1), axis.text = ggplot2::element_text(size = 8))
+   return(plot)
+  warning("depreciated: use cosim_fig()\n")
+}
+
+
+
 key_words_crisis <- function(){
   
-  #' Lexicon of economic crisis
-  #' Provide the lexicon of economic crisis  
+  #' depreciated: use lexicon(),
+  #' depreciated: use lexicon(),
   #' @return a list of categories with the corresponding words
   #'  associated
   #' @export
   #' @example key_word_crisis()
-
+  
   key_words <- list()
   
   #--------
@@ -1375,7 +1399,276 @@ key_words_crisis <- function(){
     "attached paper provides background information",
     "individual economy assessments" #Assessments on multiple countries
   )
+  warning("depreciated: use lexicon()\n")
+  return(key_words)
+  
+}
+
+find_associated_keywords <- function(keyword) {
+  #' depreciated use lexicon_details()
+  #' depreciated use lexicon_details()
+  #' @param keyword the name of the category of which you want to 
+  #' know the lexicon
+  #' @author Manuel Betin
+  #' @return a vector of words 
+  #' @export
+  detect = names(lexicon())[stringr::str_detect(tolower(names(lexicon())), 
+                                                tolower(keyword))]
+  
+  warning("depreciated: use lexicon_details()\n")
+  return(lexicon()[detect])
   
   
-  key_words
+}
+
+typology_categories <- function() {
+  
+  #' depreciated use lexicon_typology()
+  #' depreciated use lexicon_typology()
+  #' @return a dataframe classifying each category of the lexicon
+  #' @author Manuel Betin
+  #' @example typology_categories()
+  #' @export
+  
+  adjustment_program = c("Deregulation", "Reform_agenda", "Trade_reforms", 
+                         "Financial_reforms", "Labor_market_reforms", "Tax_reforms", "Banking_reforms", 
+                         "Fiscal_consolidation", "Success_of_reforms")
+  
+  characteristics_program = c("Performance_criterion", "Program_extension", 
+                              "Official_support", "Technical_assistance", "Precautionary_programs")
+  
+  economic_shock = c("Banking_crisis", "Financial_crisis", "Inflation_crisis", 
+                     "Trade_crisis", "World_outcomes", "Contagion", "Expectations", 
+                     "Balance_payment_crisis", "Reduction_reserves", "Currency_crisis","Currency_crisis_severe", "Severe_recession", 
+                     "Soft_recession", "Expansion")
+  
+  non_economic_shock = c("Wars", "Natural_disaster", "Commodity_crisis", "Political_crisis", 
+                         "Social_crisis")
+  
+  debt_outcomes = c("Fiscal_outcomes", "Sovereign_default")
+  
+  debt_structure = c("Concessional_lending", "Short_term_debt", "Floating_rate_debt", 
+                     "Foreign_debt", "Track_record")
+  
+  type = unlist(list(adjustment_program = adjustment_program, characteristics_program = characteristics_program, 
+                     economic_shock = economic_shock, non_economic_shock = non_economic_shock, 
+                     debt_outcomes = debt_outcomes, debt_structure = debt_structure))
+  
+  type = data.frame(type)
+  type$Type = rownames(type)
+  names(type) = c("variable", "type")
+  type = type %>% mutate(type = str_remove_all(type, "\\d"))
+  
+  # typology in terms of Economic domain
+  
+  Fiscal_policy = c("Banking_crisis", "Financial_crisis","Trade_crisis", 
+                    "Natural_disaster", "Commodity_crisis", "Wars","Severe_recession", "Soft_recession", 
+                    "Expansion", "Fiscal_outcomes", "Sovereign_default","Political_crisis", "Social_crisis",
+                    "Disbursement","Fiscal_consolidation","Short_term_debt","Floating_rate_debt",
+                    "Concessional_lending","Foreign_debt")
+  
+  Monetary_policy = c("Inflation_crisis", "Balance_payment_crisis", 
+                      "Reduction_reserves", "Currency_crisis","Currency_crisis_severe","Global_depreciation",
+                      "Floating_exchange_rate","Fixed_exchange_rate","Losening_monetary_policy","Tightening_monetary_policy")
+  
+  Structural_policy = c("Trade_crisis","Performance_criterion","Program_extension",
+                        "Deregulation", "Reform_agenda", "Trade_reforms", "Financial_reforms", 
+                        "Labor_market_reforms", "Tax_reforms", "Banking_reforms", "Fiscal_consolidation", 
+                        "Success_of_reforms","Official_support","Technical_assistance","uncertainty_reforms")
+  
+  forward_guidance=c("Expectations","Contagion","World_outcomes","Precautionary_programs")
+  
+  domain = unlist(list(Fiscal_policy = Fiscal_policy, Monetary_policy = Monetary_policy, 
+                       Structural_policy = Structural_policy,forward_guidance=forward_guidance))
+  
+  domain = data.frame(domain)
+  domain$Type = rownames(domain)
+  names(domain) = c("variable", "domain")
+  domain = domain %>% mutate(domain = str_remove_all(domain, "\\d"))
+  
+  # typology in terms of Nature of the shocks
+  
+  Other_Financial_shock = c("Banking_crisis", "Financial_crisis", "Balance_payment_crisis", 
+                            "Reduction_reserves", "Currency_crisis","Currency_crisis_severe","World_outcomes", "Contagion",
+                            "Expectations")
+  
+  Fiscal_financial_shock = c( "Fiscal_outcomes", "Sovereign_default","Short_term_debt","Floating_rate_debt",
+                              "Concessional_lending","Foreign_debt")
+  
+  Real_shock = c("Severe_recession", "Soft_recession", "Expansion","Trade_crisis","Inflation_crisis",
+                 "Political_crisis", "Social_crisis","Natural_disaster","Commodity_crisis", "Wars")
+  
+  Economic_ajustement=c("Deregulation", "Reform_agenda", "Trade_reforms", "Financial_reforms", 
+                        "Labor_market_reforms", "Tax_reforms", "Banking_reforms", "Fiscal_consolidation", 
+                        "Success_of_reforms","Performance_criterion","Program_extension","Official_Support",
+                        "Technical_assistance","Precautionary_programs","Official_support")
+  
+  nature = unlist(list(Other_Financial_shock = Other_Financial_shock, Fiscal_financial_shock = Fiscal_financial_shock, 
+                       Real_shock = Real_shock,Economic_ajustement=Economic_ajustement))
+  
+  nature = data.frame(nature)
+  nature$Type = rownames(nature)
+  names(nature) = c("variable", "nature_shock")
+  nature = nature %>% mutate(nature_shock = str_remove_all(nature_shock, "\\d"))
+  
+  
+  # Transmission to public finance
+  
+  Expenditure_shock = c("Banking_crisis", "Financial_crisis","World_outcomes", "Contagion",
+                        "Expectations")
+  
+  Revenue_shock = c("Balance_payment_crisis", "Natural_disaster","Commodity_crisis", "Wars",
+                    "Reduction_reserves", "Currency_crisis","Currency_crisis_severe","Trade_crisis","Inflation_crisis",
+                    "Official_support")
+  
+  Debt_shock = c("Fiscal_outcomes", "Sovereign_default","Short_term_debt","Floating_rate_debt",
+                 "Concessional_lending","Foreign_debt")
+  
+  
+  Adjustment_shock=c("Deregulation", "Reform_agenda", "Trade_reforms", "Financial_reforms", 
+                     "Labor_market_reforms", "Tax_reforms", "Banking_reforms", "Fiscal_consolidation", 
+                     "Success_of_reforms","Performance_criterion","Program_extension","Official_Support",
+                     "Technical_assistance","Precautionary_programs","Political_crisis", "Social_crisis")
+  
+  Output_shock=c("Severe_recession","Soft_recession", "Severe_recession", "Soft_recession", "Expansion")
+  
+  Spread_shock=c("Expectations","Contagion","Precautionary_program")
+  
+  risk_free_rate=c("World_outcomes")
+  
+  channel = unlist(list(Expenditure_shock = Expenditure_shock, Revenue_shock = Revenue_shock, 
+                        Debt_shock = Debt_shock,Adjustment_shock=Adjustment_shock,Output_shock=Output_shock,
+                        Spread_shock=Spread_shock,risk_free=risk_free_rate))
+  
+  channel = data.frame(channel)
+  channel$Type = rownames(channel)
+  names(channel) = c("variable", "channel")
+  channel = channel %>% mutate(channel = str_remove_all(channel, "\\d"))
+  
+  
+  
+  res = type %>% mutate(variable=as.character(variable))%>% left_join(nature %>% mutate(variable=as.character(variable)), by = c("variable"))
+  res = res %>% left_join(domain%>% mutate(variable=as.character(variable)), by = c("variable"))
+  res = res %>% left_join(channel%>% mutate(variable=as.character(variable)), by = c("variable"))
+  warning("depreciated: use lexicon_typology()\n")
+  return(res)
+  
+}
+
+country_radar_fig = function(radar_dt) {
+  
+  #' depreciated use radar_shocks_fig()
+  #' depreciated use radar_shocks_fig()
+  #' @param radar_dt output of country_radar_fig
+  #' @return a plotly object 
+  #' @author Manuel Betin
+  #' @export   
+  
+  endo_exo_order = c("Wars", "Natural_disaster", "Commodity_crisis", "trade_crisis", 
+                     "World_outcomes", "Expectations", "Contagion", "Balance_payment_crisis", 
+                     "Reduction_reserves", "Currency_crisis", "Banking_crisis", "Financial_crisis", 
+                     "Severe_recession", "Soft_recession", "Inflation_crisis", "Political_crisis", 
+                     "Social_crisis", "Fiscal_outcomes", "Fiscal_consolidation", "Sovereign_default")
+  
+  reforms = c("Deregulation", "Reform_agenda", "Trade_reforms", "Financial_reforms", 
+              "Labor_market_reforms", "Tax_reforms", "Banking_reforms")
+  
+  structure = c("Concessional_lending", "Short_term_debt", "floating_rate_debt", 
+                "foreign_debt", "Fixed_exchange_rate", "Floating_exchange_rate", "Technical_assistance")
+  
+  radar_dt = radar_dt %>% dplyr::arrange(match(Crisis, endo_exo_order)) %>% 
+    dplyr::filter(Crisis %in% endo_exo_order)
+  
+  Weights = radar_dt[, "word_weight"]$word_weight * 10000
+  
+  Weights[Weights == 0] = 1e-07
+  Crisis = stringr::str_replace_all(radar_dt[, "Crisis"]$Crisis, "_", 
+                                    " ")
+  
+  i = 6
+  j = 6
+  s = 5
+  alpha_endo = 0.8
+  p <- plotly::plot_ly(type = "scatterpolar", mode = "lines") %>% plotly::add_trace(r = rep(2.5, 
+                                                                                            length(Crisis)), theta = Crisis, line = list(color = "lightgrey")) %>% 
+    plotly::add_trace(r = Weights, theta = Crisis, name = "Profile of crisis", 
+                      line = list(color = "#709Bff"), fill = "toself", fillcolor = "#709Bff", 
+                      alpha_endo) %>% plotly::layout(xaxis = 3, yaxis = median(Weights, 
+                                                                               na.rm = T)) %>% plotly::layout(xaxis = list(title = "", showgrid = T, 
+                                                                                                                           zeroline = F, showticklabels = T, domain = c(0, 3)), yaxis = list(title = radar_dt$ISO3_Code %>% 
+                                                                                                                                                                                               unique(), showgrid = F, zeroline = F, showticklabels = F), font = list(family = "serif", 
+                                                                                                                                                                                                                                                                size = 20), legend = list(bgcolor = "transparent", title = "test"), 
+                                                                                                          showlegend = FALSE)
+  warning("depreciated: use radar_shocks_fig()\n")    
+  return(p)
+  
+}
+
+country_radar_dt = function(tf_data, isoc, top_n = 50, weight_method = "brut_frequency", 
+                    group = "ISO3_Code") {
+  #' depreciated use radar_dt()
+  #' depreciated use radar_dt()
+  #' @param  tf_data a dataframe with documents in rows and tf-idfs of each categories
+  #' in columns
+  #' @param isoc the iso3 code of the country to display
+  #' @param top_n the first n larger index to display
+  #' @param weight_method the type of method for the tf computation one of "brut_frequency",
+  #'  "binary_frequency","log_norm_frequency"
+  #' @param group the grouping variable of interest
+  #' @author Manuel Betin
+  #' @return a tible with the value of the tf summarized according to the grouping selected
+  #' @export
+  
+  table = tf_by_group(tf_data, weight_method = weight_method, mygroup = group)
+  table=table %>% dplyr::filter(ISO3_Code %in% isoc) %>% dplyr::arrange(-word_weight) %>% 
+    top_n(top_n)
+  warning("depreciated: use radar_dt()\n")
+  return(table)
+}
+
+
+find_pages = function(file, targetword) {
+  #' depreciated use get_pages()
+  #' depreciated use get_pages()
+  #' @param file a character string correspond to the text
+  #' to analysis
+  #' @param targetword a vector of characters corresponding to word to
+  #' search and count for in the text
+  #' @author Manuel Betin
+  #' @return a list of strings of characters where words have been found.
+  #' @export
+  #' 
+  if (!is.null(file)) {
+    page_locations = list()
+    target_pages = list()
+    i = 0
+    Tot.occurence = 0
+    file = clean_text(file)
+    n.chars = sum(nchar(file))  #total number of characters in the file after cleaning
+    page_location = sapply(1:length(file), function(x) {
+      page = file[[x]]
+      page = tibble(page) %>% tidytext::unnest_tokens(word, page, token = "sentences") %>%
+        dplyr::mutate(word = tolower(word))
+      n.occurence = (page %>% dplyr::filter(grepl(paste(tolower(targetword), 
+                                                        collapse = "|"), word)) %>% dplyr::summarize(count = n()))$count
+      condition = n.occurence > 0
+      if (any(condition)) {
+        i <<- i + 1
+        page_locations[[i]] <<- paste0("Found in page ", x, " :", n.occurence, 
+                                       " times")
+        target_pages[[i]] <<- file[[x]]
+        Tot.occurence <<- Tot.occurence + n.occurence
+        return("yes")
+      } else {
+        return("no")
+      }
+      
+    })
+    warning("depreciated use get_pages()\n")
+    return(list(target = targetword, N.chars = n.chars, N.Occurence = page_locations, 
+                Tot.occurence = Tot.occurence, pages = target_pages))
+  } else{ 
+    warning("depreciated use get_pages()\n")
+    return(list(target = targetword, N.chars = 0, N.Occurence = 0, Tot.occurence = 0, 
+                     pages = 0, error_message = "File is null no mining provided"))}
 }

@@ -92,6 +92,20 @@ Changes:
 * Include new indexes: one for banking_crisis_severe that mimics currency_crisis_severe, epidemics that contains words related to epidemy. tf function is set as to disregard documents that are not relevant such as minutes of executive boards
 
 
+TextMiningCrisis v1.3.0 (Release date: 2020-03-11)
+==============
+
+Changes:
+
+* change the name of some functions to :
+ - plot_cos_sim() => cosim_fig()
+ - key_word_crisis() => lexicon() 
+ - typology_categories() => lexicon_typology()
+ - find_associated_keywords() => lexicon_details()
+ - country_radar_dt() => radar_dt()
+ - country_radar_fig() => radar_shocks_fig() 
+ - find_pages() => get_pages()
+
 
 
 

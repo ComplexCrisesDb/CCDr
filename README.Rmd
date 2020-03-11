@@ -31,7 +31,9 @@ Package containing a set of functions to perform a supervised text mining using 
 
 # current version:
 
- 1.0.3
+ 1.3.0
+ 
+ see NEWS.md for more details on new features
  
  # usage
  
@@ -44,6 +46,16 @@ key functions are
  - run_tf()
  - run_tf_by_chunk()
  - run_tf_update()
+
+depreciate functions:
+
+ - plot_cos_sim() => cosim_fig()
+ - key_word_crisis() => lexicon() 
+ - typology_categories() => lexicon_typology()
+ - find_associated_keywords() => lexicon_details()
+ - country_radar_dt() => radar_dt()
+ - country_radar_fig() => radar_shocks_fig() 
+ - find_pages() => get_pages()
 
  # example
 
@@ -88,6 +100,18 @@ corpus=aggregate_corpus("mydocs_for_textmining",only_files = T)
 save(corpus,file="mycorpus.RData")
 ```
 
+use the lexicon
+
+```{r}
+lexicon()["Severe_recession"]
+```
+
+
+```{r}
+lexicon_typology()
+```
+
+
 Find the number of occurence of the word "cotton" by paragraph 
 
 ```{r}
@@ -100,7 +124,7 @@ Find the paragraphs containing the word "cotton" by paragraph
 
 ```{r}
 
-pages_containing_word=find_pages(doc_example$`ARG_1985-06-11_request`,"debt")
+pages_containing_word=get_pages(doc_example$`ARG_1985-06-11_request`,"debt")
 pages_containing_word
 ```
 
@@ -119,8 +143,8 @@ Compute the document term frequency for several categories "Currency_crisis" and
 ```{r}
 
 # term frequency matrix for several categories of crisis
-mycategories=c('Currency_crisis',"Balance_payment_crisis")
-tf_matrix_with_several_categories=tf_vector(corpus,key_words_crisis()[mycategories])
+mycategories=c('Currency_crisis',"Balance_payment_crisis","Sovereign_default")
+tf_matrix_with_several_categories=tf_vector(corpus,lexicon()[mycategories])
 
 head(tf_matrix_with_several_categories)
 ```
