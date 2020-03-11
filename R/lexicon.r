@@ -1404,6 +1404,8 @@ lexicon_typology = function() {
   #' @example typology_categories()
   #' @export
   
+  #include new categories in the proper classification
+  
   adjustment_program = c("Deregulation", "Reform_agenda", "Trade_reforms", 
                          "Financial_reforms", "Labor_market_reforms", "Tax_reforms", "Banking_reforms", 
                          "Fiscal_consolidation", "Success_of_reforms")
@@ -1411,13 +1413,13 @@ lexicon_typology = function() {
   characteristics_program = c("Performance_criterion", "Program_extension", 
                               "Official_support", "Technical_assistance", "Precautionary_programs")
   
-  economic_shock = c("Banking_crisis", "Financial_crisis", "Inflation_crisis", 
+  economic_shock = c("Banking_crisis","Banking_crisis_severe", "Financial_crisis", "Inflation_crisis", 
                      "Trade_crisis", "World_outcomes", "Contagion", "Expectations", 
                      "Balance_payment_crisis", "Reduction_reserves", "Currency_crisis","Currency_crisis_severe", "Severe_recession", 
                      "Soft_recession", "Expansion")
   
   non_economic_shock = c("Wars", "Natural_disaster", "Commodity_crisis", "Political_crisis", 
-                         "Social_crisis")
+                         "Social_crisis","Epidemics")
   
   debt_outcomes = c("Fiscal_outcomes", "Sovereign_default")
   
@@ -1435,7 +1437,7 @@ lexicon_typology = function() {
   
   # typology in terms of Economic domain
   
-  Fiscal_policy = c("Banking_crisis", "Financial_crisis","Trade_crisis", 
+  Fiscal_policy = c("Banking_crisis","Banking_crisis_severe", "Financial_crisis","Trade_crisis", 
                     "Natural_disaster", "Commodity_crisis", "Wars","Severe_recession", "Soft_recession", 
                     "Expansion", "Fiscal_outcomes", "Sovereign_default","Political_crisis", "Social_crisis",
                     "Disbursement","Fiscal_consolidation","Short_term_debt","Floating_rate_debt",
@@ -1462,14 +1464,14 @@ lexicon_typology = function() {
   
   # typology in terms of Nature of the shocks
   
-  Other_Financial_shock = c("Banking_crisis", "Financial_crisis", "Balance_payment_crisis", 
+  Other_Financial_shock = c("Banking_crisis","Banking_crisis_severe", "Financial_crisis", "Balance_payment_crisis", 
                             "Reduction_reserves", "Currency_crisis","Currency_crisis_severe","World_outcomes", "Contagion",
                             "Expectations")
   
   Fiscal_financial_shock = c( "Fiscal_outcomes", "Sovereign_default","Short_term_debt","Floating_rate_debt",
                               "Concessional_lending","Foreign_debt")
   
-  Real_shock = c("Severe_recession", "Soft_recession", "Expansion","Trade_crisis","Inflation_crisis",
+  Real_shock = c("Severe_recession", "Soft_recession", "Epidemics","Expansion","Trade_crisis","Inflation_crisis",
                  "Political_crisis", "Social_crisis","Natural_disaster","Commodity_crisis", "Wars")
   
   Economic_ajustement=c("Deregulation", "Reform_agenda", "Trade_reforms", "Financial_reforms", 
@@ -1488,8 +1490,8 @@ lexicon_typology = function() {
   
   # Transmission to public finance
   
-  Expenditure_shock = c("Banking_crisis", "Financial_crisis","World_outcomes", "Contagion",
-                        "Expectations")
+  Expenditure_shock = c("Banking_crisis","Banking_crisis_severe", "Financial_crisis","World_outcomes", "Contagion",
+                        "Expectations","Epidemics")
   
   Revenue_shock = c("Balance_payment_crisis", "Natural_disaster","Commodity_crisis", "Wars",
                     "Reduction_reserves", "Currency_crisis","Currency_crisis_severe","Trade_crisis","Inflation_crisis",
