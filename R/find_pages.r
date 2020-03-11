@@ -1,9 +1,16 @@
-find_pages = function(file, targetword,n_ngram=10) {
-    # provide files either pdf of html and return the paragraphs matching the
-    # targetted word parameters file:a character string correspond to the text
-    # to analysis targetword: a vector of characters corresponding to word to
-    # search and count for in the text
-    if (!is.null(file)) {
+find_pages = function(file, targetword) {
+    #' Find the page where words a located
+    #' Provide files either pdf of html and return the paragraphs matching the
+    #' targetted word 
+    #' @param file a character string correspond to the text
+    #' to analysis
+    #' @param targetword a vector of characters corresponding to word to
+    #' search and count for in the text
+    #' @author Manuel Betin
+    #' @return a list of strings of characters where words have been found.
+    #' @export
+    #' 
+  if (!is.null(file)) {
         page_locations = list()
         target_pages = list()
         i = 0

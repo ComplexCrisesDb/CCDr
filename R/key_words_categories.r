@@ -1,5 +1,10 @@
 key_words_categories = function() {
-    
+   #' classification of categories by type
+   #' Provide a classification of each  category into different types
+   #' @return a list of type regrouping the different categories
+   #' @author Manuel Betin
+   #' @export
+  
     cat_1 = c("Deregulation", "Reform_agenda", "Trade_reforms", "Financial_reforms", 
         "Labor_market_reforms", "Tax_reforms", "Banking_reforms", "Fiscal_consolidation", 
         "Success_of_reforms")

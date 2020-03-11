@@ -1,7 +1,13 @@
 idf = function(table_N_occurence, group = NULL) {
-    # compute the inverse document frequency as the logarithm of the inverse of
-    # the proportion. it allows to give reduce weight of words with high
-    # frequency in the corpus
+    #' Compute the inverse document frequency
+    #' The idf is computed as the logarithm of the inverse of the proportion. 
+    #' it allows to give reduce weight of words with high
+    #' frequency in the corpus
+    #' @param table_N_occurence a dataframe of term frequencies
+    #' @param group the grouping variable 
+    #' @return a tibble with the idf of each categories 
+    #' @author Manuel Betin
+    #' @export
     
     N.doc.corpus = dim(table_N_occurence)[1]
     idf_trans = function(x) {

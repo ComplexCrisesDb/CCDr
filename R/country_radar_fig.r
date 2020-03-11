@@ -1,6 +1,15 @@
 
 country_radar_fig = function(country_radar_dt) {
     
+  #' Radar chart of the tf 
+  #' Use the country_radar_dt() output and draw a radar chart to display the 
+  #' term frequencies of the selected categories. Indexes are order counterclockwise
+  #' from more exogeneous (15:15) to more exogeneous
+  #' @param country_radar_dt output of country_radar_fig
+  #' @return a plotly object 
+  #' @author Manuel Betin
+  #' @export   
+  
     endo_exo_order = c("Wars", "Natural_disaster", "Commodity_crisis", "trade_crisis", 
         "World_outcomes", "Expectations", "Contagion", "Balance_payment_crisis", 
         "Reduction_reserves", "Currency_crisis", "Banking_crisis", "Financial_crisis", 

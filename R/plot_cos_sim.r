@@ -1,6 +1,14 @@
 
 # plot results of matric cosinus
 plot_cos_sim = function(cos_sim, var) {
+  #' barpot of the cosinus similarity
+  #' barpot of the cosinus similarity
+  #' @param cos_sim the cosinus similarity matrix from cosim_matrix()
+  #' @param var the target variable 
+  #' @return a ggplot barplot
+  #' @author Manuel Betin
+  #' @export
+  #' 
     dt = cos_sim %>% dplyr::select(myvar = var)
     dt$xaxis = rownames(dt)
     dt = dt %>% dplyr::mutate(xaxis = str_replace(xaxis, "_", " "))

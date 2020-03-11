@@ -1,13 +1,20 @@
 tf = function(corpus, keywords, brute_freq = F, parrallel = T) {
-    # for each document in the corpus the function creates a table counting the
-    # occurence of the words in the vector of keywords and provide a table with
-    # the number of occurence, name of the file that is the name of each
-    # document in the corpus (from which we can extract: the country code,
-    # period, type of program and year)
+    #' Compute the term freqeuency matrix
+    #' for each document in the corpus the function creates a table counting the
+    #' occurence of the words in the vector of keywords and provide a table with
+    #' the number of occurence, name of the file that is the name of each
+    #' document in the corpus
     
-    # parameters: corpus: a list of texts from pdf_text() with different names
-    # for each element keywords: a vector of strings containing the targeted
-    # words to look for
+    #' @param corpus a list of texts from pdf_from_url() with different names
+    #' for each element
+    #' @param  keywords a vector of strings containing the targeted
+    #' words to look for
+    #' @param brute_freq T/F if set to F it will compute the term frequency
+    #' otherwise it will only count the occurence
+    #' @author Manuel Betin
+    #' @return a dataframe of term frequencies with documents in rows and categories
+    #' in columns
+    #' @export
     
     if (is.vector(keywords) & !is.null(keywords)) {
         table = lapply(corpus, function(x) {

@@ -1,6 +1,12 @@
 key_words_crisis <- function(){
   
-  #key words by type of crisis/distress, capital letter do not matter
+  #' Lexicon of economic crisis
+  #' Provide the lexicon of economic crisis  
+  #' @return a list of categories with the corresponding words
+  #'  associated
+  #' @export
+  #' @example key_word_crisis()
+
   key_words <- list()
   
   #--------

@@ -1,16 +1,19 @@
 tf_vector = function(corpus, keyword_list, brute_freq = F, parrallel = T) {
-    # vectorize the function tf() to be able to pass a list of names of keywords
-    # keyword_list is a list containing the names of different groups of
-    # keywords that have a vector of words to look into.
+    #' vectorize the function tf() to be able to pass a list of names of keywords
+    #' keyword_list is a list containing the names of different groups of
+    #' keywords that have a vector of words to look into.
     
-    # parameteres: corpus: a list of texts from pdf_text() with different names
-    # for each element keyword_list: the names of the items in
-    # keyword_list_crisis to include in the computation
+    #' @param corpus a list of texts from pdf_text() with different names
+    #' for each element
+    #' @param keyword_list the names of the items in key_word_crisis to
+    #'  include in the computation
+    #'  @param brute_freq T/F if T it will just count the occurence, otherwise
+    #'  it will compute the term frequency
+    #'  @param parrallele T/F if T it will use mclapply from the parrallel package
+    #'  @author Manuel Betin
+    #'  @return a tibble with the term frequencies for the selected categories
+    #'  @export
     
-    # outptut: a table with each row corresponding to a document and each colum
-    # providing the number of occurence for the given item.
-    
-    # my_keywords=key_words_crisis()
     progress = dplyr::progress_estimated(length(keyword_list))
     list_table_keyword_occurence = lapply(1:length(keyword_list), function(x) {
         cat(crayon::bgBlack("\n"))

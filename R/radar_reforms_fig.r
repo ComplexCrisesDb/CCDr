@@ -1,5 +1,11 @@
 radar_reforms_fig = function(country_radar_dt) {
-    
+  #' Radar chart of the tf 
+  #' Use the country_radar_dt() output and draw a radar chart to display the 
+  #' term frequencies of the reforms categories. 
+  #' @param country_radar_dt output of country_radar_fig
+  #' @return a plotly object 
+  #' @author Manuel Betin
+  #' @export   
     endo_exo_order = c("Deregulation", "Reform_agenda", "Trade_reforms", "Financial_reforms", 
         "Labor_market_reforms", "Tax_reforms", "Banking_reforms")
     

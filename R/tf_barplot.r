@@ -1,9 +1,18 @@
 tf_barplot = function(tf, vars_type = c("economic_shock", "non_economic_shock", 
     "debt_outcomes", "debt_structure", "characteristics_program", "adustment_program"), 
     vars_nature = NULL) {
-    # take as input the term frequency matrix and reshape it to plot the values
-    # for all numeric columns and group them in two dimensions: the type of
-    # variable and the nature of the shock (exogeneous or endogenous)
+    #' barplot of term frequencies
+    #' take as input the term frequency matrix and reshape it to plot the values
+    #' for all numeric columns and group them in two dimensions: the type of
+    #' variable and the nature of the shock (exogeneous or endogenous)
+    #' @param tf a term frequency matrix from tf()
+    #' @param vars_type the type of categories to include (see typology_categories()
+    #'  for more details)
+    #' @param vars_nature the nature of categories to include (see typology_categories()
+    #'  for more details)
+    #'  @author Manuel Betin
+    #'  @return a ggplot barplot
+    #'  @export
     
     res = list()
     avg_tf = tf %>% mutate_if(is.numeric, funs(ifelse(. == 0, NA, .))) %>% ungroup() %>% 

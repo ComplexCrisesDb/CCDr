@@ -1,7 +1,16 @@
 # function to download pdf files from urls
 
 pdf_from_url = function(urls, export_path, overwrite = T) {
-    # download from a a dataframe containing the url of the files
+    #' download pdf documents 
+    #' download from a a dataframe containing the url of the files
+    #' the pdf of interest
+    #' @param urls a dataframe with a row by document and at least the following columns
+    #' title, pdf, and name_file. title contains the title of the document, pdf the url 
+    #' where to download the files and name_file the name that will be given to the pdf
+    #' @param overwrite T the function re download the file and overwrite the existing 
+    #' @return creates a folder and store the pdf
+    #' @author Manuel Betin
+    #' @export
   
     urls=data.frame(urls)
     ref_colnames = c("title","pdf", "name_file")

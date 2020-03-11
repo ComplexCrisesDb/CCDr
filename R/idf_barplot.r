@@ -4,6 +4,16 @@ idf_barplot = function(idf, vars_type = c("economic_shock", "non_economic_shock"
     "debt_outcomes", "debt_structure", "characteristics_program", "adustment_program"), 
     vars_nature = NULL, idf_trans = F) {
     
+    #' barplot for the idf
+    #' barplot displaying the idf of the categories
+    #' @param idf a tibble of idf as produced by idf()
+    #' @param vars_type a vector with the type of shocks to include (see typology_categories() for classification)
+    #' @param vars_nature a vector of the nature of shocks to include (see typology_categories() for classification)
+    #' @param idf_trans T use the term frequency transformation, F use the proportion
+    #' @author Manuel Betin
+    #' @return 
+    #' @export
+    #'  
     idf = LoI_idf
     res = list()
     

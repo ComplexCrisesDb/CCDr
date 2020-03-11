@@ -1,5 +1,14 @@
 
 radar_structure_fig = function(country_radar_dt) {
+  
+  #' Radar chart of the tf 
+  #' Use the country_radar_dt() output and draw a radar chart to display the 
+  #' term frequencies of the debt structure category. 
+  #' @param country_radar_dt output of country_radar_fig
+  #' @return a plotly object 
+  #' @author Manuel Betin
+  #' @export   
+  #' 
     endo_exo_order = c("Concessional_lending", "Short_term_debt", "floating_rate_debt", 
         "foreign_debt", "Fixed_exchange_rate", "Floating_exchange_rate", "Technical_assistance")
     

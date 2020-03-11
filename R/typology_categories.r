@@ -1,7 +1,12 @@
 
 typology_categories = function() {
     
-    # draw typology according to the type of variable
+    #' provide the typology of each category
+    #' provide the typology of each category
+    #' @return a dataframe classifying each category of the lexicon
+    #' @author Manuel Betin
+    #' @example typology_categories()
+    #' @export
     
     adjustment_program = c("Deregulation", "Reform_agenda", "Trade_reforms", 
         "Financial_reforms", "Labor_market_reforms", "Tax_reforms", "Banking_reforms", 

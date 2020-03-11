@@ -1,6 +1,10 @@
 pdf_page_count = function(files) {
-    # count the number of pages in the pdf parameters: files: a list of
-    # character strings
+    #' count the number of pages in the pdf
+    #' count the number of pages in the pdf
+    #' @param files a list of character strings
+    #' @return the number of pages in the document
+    #' @author Manuel Betin
+    #' @export
     
     error_no_metadata = try({
         files[[1]]$info

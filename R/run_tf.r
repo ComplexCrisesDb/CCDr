@@ -5,10 +5,18 @@ run_tf = function(corpus_path = "IMF_letofIntent_1960_2014_clean.RData", type_le
     keyword_list = c("Commodity_crisis", "Balance_payment_crisis", "Inflation_crisis"), 
     export_path = NULL, parrallel = T) {
     
-    # function that compute the tf matrix for a corpus given in a list format,
-    # the type of lexicon to use and the sublist of keywords associated The
-    # output is a matrix of tf with a row per document and a column for each
-    # element of the keyword list
+    #' Compute the tf matrix for a corpus given in a list format,
+    #' the type of lexicon to use and the sublist of keywords associated The
+    #' output is a matrix of tf with a row per document and a column for each
+    #' element of the keyword list
+    #' @param corpus_path the path to the RData file containing the corpus to analyze
+    #' @param type_lexicon "words" or "categories" for the type of lexicon to use
+    #' @param keyword_list the categories on which computing the term frequency
+    #' @param export_path the path were to export the tf
+    #' @param parrallel T/F to use mclapply from the parrallel package
+    #' @return a dataframe of term frequencies
+    #' @author Manuel Betin
+    #' @export
     
     cat(crayon::bgBlue(paste0("Loading corpus from ", corpus_path)))
     corpus = rio::import(corpus_path)

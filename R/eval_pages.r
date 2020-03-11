@@ -1,12 +1,19 @@
 eval_pages = function(files, targetword, brute_freq = F, parrallel = T) {
-    # provide list of files and return summary of counts of occurence of the
-    # target world parameters: file:a character string correspond to the text to
-    # analysis targetword: a vector of characters corresponding to word to
-    # search and count for in the text brute_freq: T if you only want the
-    # frequency count of the word, if F the output is the it provides the term
-    # frequency for the set of targetwords provided parrallel: if T the function
-    # use the mclapply function to use parrallele computing from the package
-    # 'parrallele'
+    #'Look for the presence of the targetword into a character string
+    #' Provide list of files and return summary of counts of occurence of the
+    #' target world 
+    #' @param file a character string correspond to the text to
+    #' analysis
+    #' @param targetword a vector of characters corresponding to word to
+    #' search and count for in the text 
+    #' @param brute_freq: T if you only want the frequency count of the word,
+    #'if F the output is the it provides the term frequency for the set of 
+    #'targetwords provided
+    #' @param parrallel if T the function use the mclapply function to use
+    #'  parrallele computing from the package "parrallele"
+    #'  @author Manuel Betin
+    #'  @return  return the number of occurence of the targetword for each file 
+    #'  @export
     
     if (parrallel) {
         metric = parallel::mclapply(files, function(x) {

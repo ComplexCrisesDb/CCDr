@@ -8,19 +8,31 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
                           loc_temp=NULL) 
 {
   
-  # run the term frequency matrix on the list of urls provided as parameter.
-  # The function download the pdf, create the corpus and generate the term
-  # frequency matrix, to avoid storage limitation the function deleate
-  # original pdf files
+  #' run the term frequency matrix on the list of urls provided as parameter.
+  #' The function download the pdf, create the corpus and generate the term
+  #' frequency matrix, to avoid storage limitation the function deleate
+  #' original pdf files
   
-  # parameters: urls: a dataframe containing two columns: name_file and pdf
-  # that respectively provid the name that will be given to the file
-  # downloaded and pdf that contains the url of the pdf keyword_list: one of
-  # the element of the list provided by key_word_crisis() extract_number: a
-  # number that will be ued as a suffix for the name of the corpus and the
-  # name of the tf matrix delete_pdfs: T/F, set to T it will delete the folder
-  # containing the original pdf, usefull option when the number of pdf is very
-  # large and the size of the folder start to be very large
+  #' @param urls a dataframe containing two columns: name_file and pdf
+  #' that respectively provid the name that will be given to the file
+  #' downloaded and pdf that contains the url of the pdf
+  #' @param keyword_list one of the element of the list provided by
+  #'  key_word_crisis()
+  #' @param extract_number a number that will be ued as a suffix for the name 
+  #' of the corpus and the name of the tf matrix
+  #' @param delete_pdfs T/F, set to T it will delete the folder 
+  #' containing the original pdf, usefull option when the number of pdf is very
+  #' large and the size of the folder start to be very large
+  #' @param rm_short_docs T/F T if you want to remove the documents under a 
+  #' certain number of words
+  #' @param min_word the minimum word in the document necessary to perform
+  #' the text mining
+  #' @param parrallel if T then will use mclapply from the package parrallel
+  #' @param loc_temp   path to the folder containing the files, corpus and tf
+  #' @author Manuel Betin
+  #' @return create forlders where pdfs, corpus and tf-idf matrix are stored
+  #' @export
+  #' 
   if(is.null(loc_temp)){
     path = "temp"  
   }else{
