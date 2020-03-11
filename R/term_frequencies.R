@@ -511,9 +511,9 @@ tf_barplot = function(tf, vars_type = c("economic_shock", "non_economic_shock",
   #' for all numeric columns and group them in two dimensions: the type of
   #' variable and the nature of the shock (exogeneous or endogenous)
   #' @param tf a term frequency matrix from tf()
-  #' @param vars_type the type of categories to include (see typology_categories()
+  #' @param vars_type the type of categories to include (see lexicon_typology()
   #'  for more details)
-  #' @param vars_nature the nature of categories to include (see typology_categories()
+  #' @param vars_nature the nature of categories to include (see lexicon_typology()
   #'  for more details)
   #'  @author Manuel Betin
   #'  @return a ggplot barplot
@@ -524,7 +524,7 @@ tf_barplot = function(tf, vars_type = c("economic_shock", "non_economic_shock",
     summarize_if(is.numeric, funs(mean(., na.rm = T) * 100)) %>% gather(key = "variable", 
                                                                         value = "tf_idf")
   
-  avg_tf = avg_tf %>% left_join(typology_categories(), by = c("variable"))
+  avg_tf = avg_tf %>% left_join(lexicon_typology(), by = c("variable"))
   
   res[["tf_table_avg"]] = avg_tf
   
@@ -583,8 +583,8 @@ idf_barplot = function(idf, vars_type = c("economic_shock", "non_economic_shock"
   #' barplot for the idf
   #' barplot displaying the idf of the categories
   #' @param idf a tibble of idf as produced by idf()
-  #' @param vars_type a vector with the type of shocks to include (see typology_categories() for classification)
-  #' @param vars_nature a vector of the nature of shocks to include (see typology_categories() for classification)
+  #' @param vars_type a vector with the type of shocks to include (see lexicon_typology() for classification)
+  #' @param vars_nature a vector of the nature of shocks to include (see lexicon_typology() for classification)
   #' @param idf_trans T use the term frequency transformation, F use the proportion
   #' @author Manuel Betin
   #' @return a ggplot barplot object 
@@ -598,7 +598,7 @@ idf_barplot = function(idf, vars_type = c("economic_shock", "non_economic_shock"
   }
   idf = idf %>% rename(variable = Crisis)
   
-  idf = idf %>% left_join(typology_categories(), by = c("variable"))
+  idf = idf %>% left_join(lexicon_typology(), by = c("variable"))
   
   res[["table"]] = idf
   
