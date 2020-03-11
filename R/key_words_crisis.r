@@ -550,7 +550,7 @@ key_words_crisis <- function(){
     "bank recapitalization scheme",
     "emergency credits",
     "bailout",
-    "lowered legal reserve requirements", 
+    "lowered legal reserve requirements",
     "lowering the legal reserve requirements",
     "reduced.* minimum legal reserve requirement",
     "hold lower than required reserves",
@@ -807,7 +807,7 @@ key_words_crisis <- function(){
   )
   
   
-  #------------  
+  #------------
   ## CURRENCY AND EXCHANGE RATE ISSUES
   #------------
   
@@ -1298,54 +1298,47 @@ key_words_crisis <- function(){
   
   
   key_words[["Sovereign_default"]]=c(
-    "rescheduled debt",
+    "rescheduled debt", #
     "external payments crisis",
-    "liquidity crisis",
-    "difficulties in servicing its external debt",
-    "rescheduling of external debt",
-    "rescheduling agreement",
-    "suspend service payments",
-    "fiscal crisis",
-    "debt relief",
-    "failure to roll over debt",
-    "government bonds crisis",
-    "government bonds crisis",
-    "bond crisis",
-    "debt reprofiling",
-    "sovereign debt crisis",
-    "public debt crisis",
-    "default risks",
+    "difficulties in servicing its external debt",#
+    "difficult time in rolling over its debt",#
+    "rescheduling of external debt",#
+    "rescheduling agreement",##
+    "suspend service payments",#
+    "fiscal crisis",#
+    "debt relief",#
+    "failure to roll over debt",#
+    "government bonds crisis",#
+    "government bonds crisis",#
+    "bond crisis",#
+    "debt reprofiling",#
+    "sovereign debt crisis",#
+    "public debt crisis",#
+    "default risks",#
     "self fulfilling crises",
-    "debt restructuring program",
-    "governement default",
-    "restructuring of debt",
-    "suspension of payments",
-    "debt swap",
-    "debt restructuring",
-    "difficult time in rolling over its debt",
-    "debt rescheduling",
-    "debt service reduction operation",
-    "debt restructuring program",
-    "rescheduling of the debt",
-    "arrears",
-    "rescheduling of arrears",
-    "arrears in the payment",
-    "restructuring of its external debt",
-    "restructuring agreements",
-    "external payment arrears",
-    "external arrears",
-    "interest arrears",
-    "arrears on payments",
-    "arrears on debt service",
-    "external payment arrears",
-    "debt service reduction",
-    "no debt service payments",
-    "restructure these arrears",
-    "relation with external creditors",
-    "Paris Club",
-    "Club of Paris",
-    "debt relief",
-    "debt exchange"
+    "debt restructuring program",#
+    "governement default",#
+    "restructuring of debt",#
+    "suspension of payments",#
+    "debt swap",#
+    "debt restructuring",#
+    "debt rescheduling",#
+    "debt service reduction",#
+    "debt restructuring program",#
+    "rescheduling of the debt",#
+    "arrears",#
+    "rescheduling of arrears",#
+    "arrears in the payment",#
+    "restructuring of its external debt",#
+    "restructuring agreements",#
+    "external payment arrears",#
+    "debt service reduction",#
+    "no debt service payments",#
+    "relation with external creditors",#
+    "Paris Club",#
+    "Club of Paris",#
+    "debt relief",#
+    "debt exchange"#
   )
   
   
@@ -1380,4 +1373,3 @@ key_words_crisis <- function(){
   
   key_words
 }
-

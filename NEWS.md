@@ -76,5 +76,22 @@ Changes:
 * Update of the lexicon of economic crisis with more precise categories for currecncy crisis and types of documents.
 
 
+TextMiningCrisis v1.2.2 (Release date: 2020-02-20)
+==============
+
+Changes:
+
+* deal better with special characters in the lexicon and include netting of confusion sentences in the tf_vector function. 
+find_page() now tokenize by sentences an no longer by n-gram.
+
+TextMiningCrisis v1.2.3 (Release date: 2020-03-03)
+==============
+
+Changes:
+
+* Include new indexes: one for banking_crisis_severe that mimics currency_crisis_severe, epidemics that contains words related to epidemy. tf function is set as to disregard documents that are not relevant such as minutes of executive boards
+
+
+
 
 

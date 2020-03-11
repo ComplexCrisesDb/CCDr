@@ -1,0 +1,157 @@
+---
+output: github_document
+always_allow_html: yes
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# TextMiningCrisis 
+
+***
+***
+
+last update: 30/01/2020
+
+# Description
+
+Package containing a set of functions to perform a supervised text mining using a lexicon of economic crisis to observe the profile and intensity of economic crisis in a text document.
+
+# Author
+
+- Manuel Betin
+- Umberto Collodel
+
+# current version:
+
+ 1.0.3
+ 
+ # usage
+ 
+key functions are
+ 
+ - pdf_from_url()
+ - aggregate_corpus()
+ - tf()
+ - idf()
+ - run_tf()
+ - run_tf_by_chunk()
+ - run_tf_update()
+
+ # example
+
+```{r} 
+library(dplyr)
+library(rio)
+library(DT)
+library(TextMiningCrisis)
+```
+
+Load the data containing the urls
+
+```{r}
+
+set.seed(2)
+data("IMF_docs_urls")
+
+url_links=IMF_docs_urls %>%
+  mutate(name_file=paste0(ID,"_",period,"_",type_doc_programs))
+
+url_links= url_links %>% filter(ID=="ARG")
+url_links=url_links[150:155,]
+
+url_links[,1:5]
+```
+
+
+Download the files and store in folter "mydocs_to_textmining"
+
+```{r}
+
+pdf_from_url(url_links,"mydocs_for_textmining")
+
+```
+
+
+Aggregate content of pdfs in folder "mydocs_to_textmining" into a single corpus 
+
+```{r}
+
+corpus=aggregate_corpus("mydocs_for_textmining",only_files = T)
+save(corpus,file="mycorpus.RData")
+```
+
+Find the number of occurence of the word "cotton" by paragraph 
+
+```{r}
+doc_example=corpus[4]
+Number_pages_containing_word=eval_pages(doc_example,"debt")
+Number_pages_containing_word
+```
+
+Find the paragraphs containing the word "cotton" by paragraph
+
+```{r}
+
+pages_containing_word=find_pages(doc_example$`ARG_1985-06-11_request`,"debt")
+pages_containing_word
+```
+
+Compute the document term frequency for all the files in the corpus for the category "Currency_crisis"
+
+```{r}
+
+tf_matrix=tf(corpus,"Sovereign_default")
+
+head(tf_matrix)
+```
+
+
+Compute the document term frequency for several categories "Currency_crisis" and "Balance_payment_crisis"
+
+```{r}
+
+# term frequency matrix for several categories of crisis
+mycategories=c('Currency_crisis',"Balance_payment_crisis")
+tf_matrix_with_several_categories=tf_vector(corpus,key_words_crisis()[mycategories])
+
+head(tf_matrix_with_several_categories)
+```
+
+Wrapup function for tf
+
+```{r}
+
+#Run term frequency matrix
+
+wrapup_for_tf=run_tf(corpus_path = "mycorpus.RData",type_lexicon ="words",keyword_list = c("Currency_crisis","Balance_payment_crisis"),parrallel = F)
+
+head(wrapup_for_tf)
+```
+
+Wrapup function for run_tf that allows directly download the files and run the text mining with a single function
+
+```{r}
+run_tf_by_chunk(urls =url_links,keyword_list = c("Currency_crisis","Balance_payment_crisis"))
+```
+
+Update the tf dataframe with additional columns with the new categories to compute
+
+```{r}
+
+updated_tf=run_tf_update(path_tf_to_update = "temp/tf/tf_crisis_words_1.RData",
+                corpus_path = "temp/corpus/corpus_1.RData",
+                keyword_list = c("Fiscal_outcomes","Fiscal_consolidation"),
+                export_path = "temp/tf/tf_crisis_words_1_new.RData")
+
+head(updated_tf)
+```
+
+
