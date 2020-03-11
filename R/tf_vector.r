@@ -44,7 +44,12 @@ tf_vector = function(corpus, keyword_list, brute_freq = F, parrallel = T) {
     })
     names(list_table_keyword_occurence) = names(keyword_list)
     
+      
     dt = list_table_keyword_occurence[[1]]
+    
+    # If more than one index, reduce the merge.
+    
+    if(names(keyword_list > 1)){
     for (i in 2:length(list_table_keyword_occurence)) {
         res = try({
             dt = dt %>% dplyr::left_join(list_table_keyword_occurence[[i]], 
@@ -57,6 +62,7 @@ tf_vector = function(corpus, keyword_list, brute_freq = F, parrallel = T) {
             dt = res
             dt = dt %>% dplyr::select(file, everything()) %>% dplyr::distinct()  #ISO3_Code,Period,year,type_prog,
         }
+    }
     }
     
     # At this stage dataframe with file name and all different indexes.

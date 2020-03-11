@@ -351,10 +351,9 @@ key_words_crisis <- function(){
     "cholera",
     "malaria",
     "influenza",
-    "flu",
-    "plague"
+    "^flu$",
+    "^plague$"
   )
-  
   
   key_words[["Commodity_crisis"]]=c(
     "oil crisis",
@@ -1362,7 +1361,7 @@ key_words_crisis <- function(){
     "minutes of executive board minutes",
     "executive board attendance",
     "this is a working paper", # Working Papers
-    "working paper",
+    "(?<!\\(.{4})working paper",
     "a working paper of the international monetary fund",
     "draft issues paper", # Issue papers
     "background paper", #Background papers
