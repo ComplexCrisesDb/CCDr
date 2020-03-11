@@ -1597,8 +1597,9 @@ country_radar_fig = function(radar_dt) {
                                                                                na.rm = T)) %>% plotly::layout(xaxis = list(title = "", showgrid = T, 
                                                                                                                            zeroline = F, showticklabels = T, domain = c(0, 3)), yaxis = list(title = radar_dt$ISO3_Code %>% 
                                                                                                                                                                                                unique(), showgrid = F, zeroline = F, showticklabels = F), font = list(family = "serif", 
-                                                                                                                                                                                                                                                                      size = 20), legend = list(bgcolor = "transparent", title = "test"), 
-  warning("depreciated: use radar_shocks_fig()")                                                                                                            showlegend = FALSE)
+                                                                                                                                                                                                                                                                size = 20), legend = list(bgcolor = "transparent", title = "test"), 
+                                                                                                          showlegend = FALSE)
+  warning("depreciated: use radar_shocks_fig()")    
   p
   
 }

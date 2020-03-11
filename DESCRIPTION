@@ -3,7 +3,7 @@ Type: Package
 Title: Natural Language Processing (NPL) for economic crisis
 Version: 1.3.0
 Date: 2020-01-23
-Author: Betin Manuel
+Author: Betin Manuel, Umberto Collodel
 Maintainer: <manubetin@gmail.com>
 Description: Perform a text analysis using a lexicon of economic crisis to observe the profile and intensity of economic crisis in a pdf documents.
 License: GPL-3
@@ -22,7 +22,6 @@ Imports:
     ggplot2,
     rio,
     tictoc,
-    lubridate,
-    filesstring
+    lubridate
 Suggests: 
     testthat
