@@ -1521,9 +1521,9 @@ lexicon_typology = function() {
   
   
   
-  res = type %>% left_join(nature, by = c("variable"))
-  res = res %>% left_join(domain, by = c("variable"))
-  res = res %>% left_join(channel, by = c("variable"))
+  res = type %>% mutate(variable=as.character(variable))%>% left_join(nature %>% mutate(variable=as.character(variable)), by = c("variable"))
+  res = res %>% left_join(domain%>% mutate(variable=as.character(variable)), by = c("variable"))
+  res = res %>% left_join(channel%>% mutate(variable=as.character(variable)), by = c("variable"))
   
   res
 }

@@ -16,13 +16,13 @@ plot_cos_sim <- function(cosim_matrix, var) {
                                                                                          -myvar), y = myvar)) + ggplot2::theme_bw() + ggplot2::ylab("Cosinus similarity") + 
     ggplot2::xlab("") + ggplot2::theme(legend.position = "bottom", axis.text.x = ggplot2::element_text(angle = 90, 
                                                                                                        hjust = 1), axis.text = ggplot2::element_text(size = 8))
- warning("depreciated: use cosim_fig()")
    return(plot)
+  warning("depreciated: use cosim_fig()\n")
 }
 
 
 
-key_word_crisis <- function(){
+key_words_crisis <- function(){
   
   #' depreciated: use lexicon(),
   #' depreciated: use lexicon(),
@@ -1399,9 +1399,9 @@ key_word_crisis <- function(){
     "attached paper provides background information",
     "individual economy assessments" #Assessments on multiple countries
   )
+  warning("depreciated: use lexicon()\n")
+  return(key_words)
   
-  warning("depreciated: use lexicon()")
-  key_words
 }
 
 find_associated_keywords <- function(keyword) {
@@ -1414,9 +1414,10 @@ find_associated_keywords <- function(keyword) {
   #' @export
   detect = names(lexicon())[stringr::str_detect(tolower(names(lexicon())), 
                                                 tolower(keyword))]
-  warning("depreciated: use lexicon_details()")
   
+  warning("depreciated: use lexicon_details()\n")
   return(lexicon()[detect])
+  
   
 }
 
@@ -1546,13 +1547,12 @@ typology_categories <- function() {
   
   
   
-  res = type %>% left_join(nature, by = c("variable"))
-  res = res %>% left_join(domain, by = c("variable"))
-  res = res %>% left_join(channel, by = c("variable"))
+  res = type %>% mutate(variable=as.character(variable))%>% left_join(nature %>% mutate(variable=as.character(variable)), by = c("variable"))
+  res = res %>% left_join(domain%>% mutate(variable=as.character(variable)), by = c("variable"))
+  res = res %>% left_join(channel%>% mutate(variable=as.character(variable)), by = c("variable"))
+  warning("depreciated: use lexicon_typology()\n")
+  return(res)
   
-  warning("depreciated: use lexicon_typology()")
-  
-  res
 }
 
 country_radar_fig = function(radar_dt) {
@@ -1599,8 +1599,8 @@ country_radar_fig = function(radar_dt) {
                                                                                                                                                                                                unique(), showgrid = F, zeroline = F, showticklabels = F), font = list(family = "serif", 
                                                                                                                                                                                                                                                                 size = 20), legend = list(bgcolor = "transparent", title = "test"), 
                                                                                                           showlegend = FALSE)
-  warning("depreciated: use radar_shocks_fig()")    
-  p
+  warning("depreciated: use radar_shocks_fig()\n")    
+  return(p)
   
 }
 
@@ -1622,7 +1622,7 @@ country_radar_dt = function(tf_data, isoc, top_n = 50, weight_method = "brut_fre
   table = tf_by_group(tf_data, weight_method = weight_method, mygroup = group)
   table=table %>% dplyr::filter(ISO3_Code %in% isoc) %>% dplyr::arrange(-word_weight) %>% 
     top_n(top_n)
-  warning("depreciated: use radar_dt()")
+  warning("depreciated: use radar_dt()\n")
   return(table)
 }
 
@@ -1664,11 +1664,11 @@ find_pages = function(file, targetword) {
       }
       
     })
-    warning("depreciated use get_pages()")
+    warning("depreciated use get_pages()\n")
     return(list(target = targetword, N.chars = n.chars, N.Occurence = page_locations, 
                 Tot.occurence = Tot.occurence, pages = target_pages))
   } else{ 
-    warning("depreciated use get_pages()")
+    warning("depreciated use get_pages()\n")
     return(list(target = targetword, N.chars = 0, N.Occurence = 0, Tot.occurence = 0, 
                      pages = 0, error_message = "File is null no mining provided"))}
 }

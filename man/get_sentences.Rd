@@ -8,9 +8,9 @@ and respective keyword}
 get_sentences(corpus, keyword_list)
 }
 \arguments{
-\item{corpus:}{list with collection documents}
+\item{corpus}{list with collection documents}
 
-\item{keyword_list:}{character vector with categories from key_words_crisis function}
+\item{keyword_list}{character vector with categories from key_words_crisis function}
 }
 \value{
 Tibble with two columns: sentences containing keyword and respective keyword.

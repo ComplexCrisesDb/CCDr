@@ -11,6 +11,7 @@ tf = function(corpus, keywords, brute_freq = F, parrallel = T) {
   #' words to look for
   #' @param brute_freq T/F if set to F it will compute the term frequency
   #' otherwise it will only count the occurence
+  #' @param parrallel T/F if T use mclapply from parrallel package
   #' @author Manuel Betin
   #' @return a dataframe of term frequencies with documents in rows and categories
   #' in columns
@@ -23,7 +24,7 @@ tf = function(corpus, keywords, brute_freq = F, parrallel = T) {
       # Check the first page of each document for bad keyword.
       
       valid_document <- tibble(first_page = tolower(x[[1]])) %>% 
-        filter(!str_detect(first_page, paste(key_words_crisis()[["Problematic_documents"]], collapse = "|"))) %>% 
+        filter(!str_detect(first_page, paste(lexicon()[["Problematic_documents"]], collapse = "|"))) %>% 
         nrow()
       
       # If is a valid document, continue with tf-calculation. Else, return NA.
@@ -61,9 +62,9 @@ tf_vector = function(corpus, keyword_list, brute_freq = F, parrallel = T) {
   #' for each element
   #' @param keyword_list the names of the items in lexicon to
   #'  include in the computation
-  #'  @param brute_freq T/F if T it will just count the occurence, otherwise
+  #' @param brute_freq T/F if T it will just count the occurence, otherwise
   #'  it will compute the term frequency
-  #'  @param parrallele T/F if T it will use mclapply from the parrallel package
+  #' @param parrallel T/F if T it will use mclapply from the parrallel package
   #'  @author Manuel Betin
   #'  @return a tibble with the term frequencies for the selected categories
   #'  @export
@@ -106,7 +107,7 @@ tf_vector = function(corpus, keyword_list, brute_freq = F, parrallel = T) {
   
   # If more than one index, reduce the merge.
   
-  if(names(keyword_list > 1)){
+  if(length(names(keyword_list)) > 1){
     for (i in 2:length(list_table_keyword_occurence)) {
       res = try({
         dt = dt %>% dplyr::left_join(list_table_keyword_occurence[[i]], 
@@ -127,7 +128,7 @@ tf_vector = function(corpus, keyword_list, brute_freq = F, parrallel = T) {
   
   # List of "confusing" categories on which the index could be computed:
   
-  list_net_keywords <- str_extract(names(key_words_crisis()), ".+_confusing")[complete.cases(str_extract(names(key_words_crisis()), ".+_confusing"))]
+  list_net_keywords <- str_extract(names(lexicon()), ".+_confusing")[complete.cases(str_extract(names(lexicon()), ".+_confusing"))]
   
   # Check if we computed some of them:
   
@@ -229,7 +230,7 @@ run_tf = function(corpus_path = "IMF_letofIntent_1960_2014_clean.RData",
                        "Constraining", "Contagion")
       print(keyword_list)
     }
-    keyword_list = key_words_crisis()[keyword_list]
+    keyword_list = lexicon()[keyword_list]
   } else if (type_lexicon == "category") {
     if (is.null(keyword_list)) {
       keyword_list = c("Exogenous", "Manifestations", "Instruments")
@@ -284,7 +285,7 @@ run_tf_update = function(path_tf_to_update = "tf_crisis_words.RData",
   if (is.null(keyword_list)) {
     print("Updating all columns")
     new_tf = run_tf(corpus_path = corpus_path, type_lexicon = type_lexicon, 
-                    keyword_list = key_words_crisis(), export_path = paste0(root_path, 
+                    keyword_list = lexicon(), export_path = paste0(root_path, 
                                                                             "/3. Data/IMF Letters of Intents/tf_crisis_words.RData"), parrallel = parrallel)
     return(new_tf)
   } else {
@@ -359,7 +360,7 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
   #' large and the size of the folder start to be very large
   #' @param rm_short_docs T/F T if you want to remove the documents under a 
   #' certain number of words
-  #' @param min_word the minimum word in the document necessary to perform
+  #' @param min_words the minimum word in the document necessary to perform
   #' the text mining
   #' @param parrallel if T then will use mclapply from the package parrallel
   #' @param loc_temp   path to the folder containing the files, corpus and tf

@@ -6,6 +6,7 @@ pdf_from_url = function(urls, export_path, overwrite = T) {
   #' @param urls a dataframe with a row by document and at least the following columns
   #' title, pdf, and name_file. title contains the title of the document, pdf the url 
   #' where to download the files and name_file the name that will be given to the pdf
+  #' @param export_path path where to store the downloaded pdfs
   #' @param overwrite T the function re download the file and overwrite the existing 
   #' @return creates a folder and store the pdf
   #' @author Manuel Betin
@@ -167,11 +168,11 @@ eval_pages = function(files, targetword, brute_freq = F, parrallel = T) {
   #'Look for the presence of the targetword into a character string
   #' Provide list of files and return summary of counts of occurence of the
   #' target world 
-  #' @param file a character string correspond to the text to
+  #' @param files a character string correspond to the text to
   #' analysis
   #' @param targetword a vector of characters corresponding to word to
   #' search and count for in the text 
-  #' @param brute_freq: T if you only want the frequency count of the word,
+  #' @param brute_freq T if you only want the frequency count of the word,
   #'if F the output is the it provides the term frequency for the set of 
   #'targetwords provided
   #' @param parrallel if T the function use the mclapply function to use
@@ -264,8 +265,8 @@ get_sentences <- function(corpus, keyword_list){
   #'
   #'Function that simplifies checking validity indexes and potential problems in keywords
   #'
-  #' @param corpus: list with collection documents
-  #' @param keyword_list: character vector with categories from key_words_crisis function
+  #' @param corpus list with collection documents
+  #' @param keyword_list character vector with categories from key_words_crisis function
   #'
   #' @return Tibble with two columns: sentences containing keyword and respective keyword. 
   #'

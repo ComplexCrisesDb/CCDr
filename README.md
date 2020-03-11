@@ -23,7 +23,9 @@ Author
 current version:
 ================
 
-1.0.3
+1.3.0
+
+see NEWS.md for more details on new features
 
 \# usage
 
@@ -36,6 +38,16 @@ key functions are
 -   run\_tf()
 -   run\_tf\_by\_chunk()
 -   run\_tf\_update()
+
+depreciate functions:
+
+-   plot\_cos\_sim() =&gt; cosim\_fig()
+-   key\_word\_crisis() =&gt; lexicon()
+-   typology\_categories() =&gt; lexicon\_typology()
+-   find\_associated\_keywords() =&gt; lexicon\_details()
+-   country\_radar\_dt() =&gt; radar\_dt()
+-   country\_radar\_fig() =&gt; radar\_shocks\_fig()
+-   find\_pages() =&gt; get\_pages()
 
 \# example
 
@@ -61,6 +73,12 @@ library(TextMiningCrisis)
 #> Warning: replacing previous import 'dplyr::union' by 'lubridate::union'
 #> when loading 'TextMiningCrisis'
 #> Warning: replacing previous import 'dplyr::setdiff' by 'lubridate::setdiff'
+#> when loading 'TextMiningCrisis'
+#> Warning: replacing previous import 'lubridate::intersect' by
+#> 'dplyr::intersect' when loading 'TextMiningCrisis'
+#> Warning: replacing previous import 'lubridate::union' by 'dplyr::union'
+#> when loading 'TextMiningCrisis'
+#> Warning: replacing previous import 'lubridate::setdiff' by 'dplyr::setdiff'
 #> when loading 'TextMiningCrisis'
 ```
 
@@ -94,12 +112,12 @@ Download the files and store in folter "mydocs\_to\_textmining"
 ``` r
 
 pdf_from_url(url_links,"mydocs_for_textmining")
-#> ARG_1984-12-28_exchange system: succesfully downloadedARG_1984-12-28_exchange system : 1/6: 1.929 sec elapsed
-#> ARG_1984-12-28_request: succesfully downloadedARG_1984-12-28_request : 2/6: 1.894 sec elapsed
-#> ARG_1984-12-28_purchase transac: succesfully downloadedARG_1984-12-28_purchase transac : 3/6: 1.979 sec elapsed
-#> ARG_1984-12-28_request: succesfully downloadedARG_1984-12-28_request : 4/6: 1.983 sec elapsed
-#> ARG_1984-12-28_request: succesfully downloadedARG_1984-12-28_request : 5/6: 2.706 sec elapsed
-#> ARG_1985-06-11_request: succesfully downloadedARG_1985-06-11_request : 6/6: 2.773 sec elapsed
+#> ARG_1984-12-28_exchange system: succesfully downloadedARG_1984-12-28_exchange system : 1/6: 3.094 sec elapsed
+#> ARG_1984-12-28_request: succesfully downloadedARG_1984-12-28_request : 2/6: 3.151 sec elapsed
+#> ARG_1984-12-28_purchase transac: succesfully downloadedARG_1984-12-28_purchase transac : 3/6: 3.727 sec elapsed
+#> ARG_1984-12-28_request: succesfully downloadedARG_1984-12-28_request : 4/6: 4.25 sec elapsed
+#> ARG_1984-12-28_request: succesfully downloadedARG_1984-12-28_request : 5/6: 3.722 sec elapsed
+#> ARG_1985-06-11_request: succesfully downloadedARG_1985-06-11_request : 6/6: 3.833 sec elapsed
 #> urls succesfully downloaded in 'mydocs_for_textmining
 #> '
 ```
@@ -112,7 +130,7 @@ corpus=aggregate_corpus("mydocs_for_textmining",only_files = T)
 #> Warning in stri_replace_all_regex(string, pattern,
 #> fix_replacement(replacement), : argument is not an atomic vector; coercing
 #> [1] "mydocs_for_textmining/ARG_1984-12-28_exchange system.pdf"
-#> 1/4 ARG_1984-12-28_exchange system: 0.022 sec elapsed
+#> 1/4 ARG_1984-12-28_exchange system: 0.021 sec elapsed
 #> Warning in stri_replace_all_regex(string, pattern,
 #> fix_replacement(replacement), : argument is not an atomic vector; coercing
 #> [1] "mydocs_for_textmining/ARG_1984-12-28_purchase transac.pdf"
@@ -120,12 +138,153 @@ corpus=aggregate_corpus("mydocs_for_textmining",only_files = T)
 #> Warning in stri_replace_all_regex(string, pattern,
 #> fix_replacement(replacement), : argument is not an atomic vector; coercing
 #> [1] "mydocs_for_textmining/ARG_1984-12-28_request.pdf"
-#> 3/4 ARG_1984-12-28_request: 0.031 sec elapsed
+#> 3/4 ARG_1984-12-28_request: 0.04 sec elapsed
 #> Warning in stri_replace_all_regex(string, pattern,
 #> fix_replacement(replacement), : argument is not an atomic vector; coercing
 #> [1] "mydocs_for_textmining/ARG_1985-06-11_request.pdf"
-#> 4/4 ARG_1985-06-11_request: 0.205 sec elapsed
+#> 4/4 ARG_1985-06-11_request: 0.274 sec elapsed
 save(corpus,file="mycorpus.RData")
+```
+
+use the lexicon
+
+``` r
+lexicon()["Severe_recession"]
+#> $Severe_recession
+#>  [1] "severe economic crisis"                 
+#>  [2] "very difficult economic circumstances"  
+#>  [3] "Severe recession"                       
+#>  [4] "severe crisis"                          
+#>  [5] "economic crisis"                        
+#>  [6] "steep recession"                        
+#>  [7] "strong recessionary headwinds"          
+#>  [8] "sharp slowdown"                         
+#>  [9] "sharp declines in output"               
+#> [10] "significant loss of output"             
+#> [11] "economic collapse"                      
+#> [12] "deeper recession"                       
+#> [13] "deepening recession"                    
+#> [14] "painful recession"                      
+#> [15] "prolonged recession"                    
+#> [16] "lengthening recession"                  
+#> [17] "severity of the recession"              
+#> [18] "economic recession"                     
+#> [19] "sharp contraction of economic activity" 
+#> [20] "strong contraction of economic activity"
+#> [21] "large contraction of economic activity" 
+#> [22] "deep recession"                         
+#> [23] "large economic slowdown"                
+#> [24] "severe recession"                       
+#> [25] "profond recession"                      
+#> [26] "contraction in output"                  
+#> [27] "deep recession"                         
+#> [28] "severe contraction"                     
+#> [29] "deep contraction"                       
+#> [30] "profond contraction"                    
+#> [31] "large decline in income per capita"     
+#> [32] "deep economic downturn"                 
+#> [33] "severe economic downturn"               
+#> [34] "deep economic downturn"
+```
+
+``` r
+lexicon_typology()
+#>                  variable                    type           nature_shock
+#> 1            Deregulation      adjustment_program    Economic_ajustement
+#> 2           Reform_agenda      adjustment_program    Economic_ajustement
+#> 3           Trade_reforms      adjustment_program    Economic_ajustement
+#> 4       Financial_reforms      adjustment_program    Economic_ajustement
+#> 5    Labor_market_reforms      adjustment_program    Economic_ajustement
+#> 6             Tax_reforms      adjustment_program    Economic_ajustement
+#> 7         Banking_reforms      adjustment_program    Economic_ajustement
+#> 8    Fiscal_consolidation      adjustment_program    Economic_ajustement
+#> 9    Fiscal_consolidation      adjustment_program    Economic_ajustement
+#> 10     Success_of_reforms      adjustment_program    Economic_ajustement
+#> 11  Performance_criterion characteristics_program    Economic_ajustement
+#> 12      Program_extension characteristics_program    Economic_ajustement
+#> 13       Official_support characteristics_program    Economic_ajustement
+#> 14   Technical_assistance characteristics_program    Economic_ajustement
+#> 15 Precautionary_programs characteristics_program    Economic_ajustement
+#> 16         Banking_crisis          economic_shock  Other_Financial_shock
+#> 17       Financial_crisis          economic_shock  Other_Financial_shock
+#> 18       Inflation_crisis          economic_shock             Real_shock
+#> 19           Trade_crisis          economic_shock             Real_shock
+#> 20           Trade_crisis          economic_shock             Real_shock
+#> 21         World_outcomes          economic_shock  Other_Financial_shock
+#> 22         World_outcomes          economic_shock  Other_Financial_shock
+#> 23              Contagion          economic_shock  Other_Financial_shock
+#> 24              Contagion          economic_shock  Other_Financial_shock
+#> 25           Expectations          economic_shock  Other_Financial_shock
+#> 26           Expectations          economic_shock  Other_Financial_shock
+#> 27 Balance_payment_crisis          economic_shock  Other_Financial_shock
+#> 28     Reduction_reserves          economic_shock  Other_Financial_shock
+#> 29        Currency_crisis          economic_shock  Other_Financial_shock
+#> 30 Currency_crisis_severe          economic_shock  Other_Financial_shock
+#> 31       Severe_recession          economic_shock             Real_shock
+#> 32       Severe_recession          economic_shock             Real_shock
+#> 33         Soft_recession          economic_shock             Real_shock
+#> 34         Soft_recession          economic_shock             Real_shock
+#> 35              Expansion          economic_shock             Real_shock
+#> 36                   Wars      non_economic_shock             Real_shock
+#> 37       Natural_disaster      non_economic_shock             Real_shock
+#> 38       Commodity_crisis      non_economic_shock             Real_shock
+#> 39       Political_crisis      non_economic_shock             Real_shock
+#> 40          Social_crisis      non_economic_shock             Real_shock
+#> 41        Fiscal_outcomes           debt_outcomes Fiscal_financial_shock
+#> 42      Sovereign_default           debt_outcomes Fiscal_financial_shock
+#> 43   Concessional_lending          debt_structure Fiscal_financial_shock
+#> 44        Short_term_debt          debt_structure Fiscal_financial_shock
+#> 45     Floating_rate_debt          debt_structure Fiscal_financial_shock
+#> 46           Foreign_debt          debt_structure Fiscal_financial_shock
+#> 47           Track_record          debt_structure                   <NA>
+#>               domain           channel
+#> 1  Structural_policy  Adjustment_shock
+#> 2  Structural_policy  Adjustment_shock
+#> 3  Structural_policy  Adjustment_shock
+#> 4  Structural_policy  Adjustment_shock
+#> 5  Structural_policy  Adjustment_shock
+#> 6  Structural_policy  Adjustment_shock
+#> 7  Structural_policy  Adjustment_shock
+#> 8      Fiscal_policy  Adjustment_shock
+#> 9  Structural_policy  Adjustment_shock
+#> 10 Structural_policy  Adjustment_shock
+#> 11 Structural_policy  Adjustment_shock
+#> 12 Structural_policy  Adjustment_shock
+#> 13 Structural_policy     Revenue_shock
+#> 14 Structural_policy  Adjustment_shock
+#> 15  forward_guidance  Adjustment_shock
+#> 16     Fiscal_policy Expenditure_shock
+#> 17     Fiscal_policy Expenditure_shock
+#> 18   Monetary_policy     Revenue_shock
+#> 19     Fiscal_policy     Revenue_shock
+#> 20 Structural_policy     Revenue_shock
+#> 21  forward_guidance Expenditure_shock
+#> 22  forward_guidance         risk_free
+#> 23  forward_guidance Expenditure_shock
+#> 24  forward_guidance      Spread_shock
+#> 25  forward_guidance Expenditure_shock
+#> 26  forward_guidance      Spread_shock
+#> 27   Monetary_policy     Revenue_shock
+#> 28   Monetary_policy     Revenue_shock
+#> 29   Monetary_policy     Revenue_shock
+#> 30   Monetary_policy     Revenue_shock
+#> 31     Fiscal_policy      Output_shock
+#> 32     Fiscal_policy      Output_shock
+#> 33     Fiscal_policy      Output_shock
+#> 34     Fiscal_policy      Output_shock
+#> 35     Fiscal_policy      Output_shock
+#> 36     Fiscal_policy     Revenue_shock
+#> 37     Fiscal_policy     Revenue_shock
+#> 38     Fiscal_policy     Revenue_shock
+#> 39     Fiscal_policy  Adjustment_shock
+#> 40     Fiscal_policy  Adjustment_shock
+#> 41     Fiscal_policy        Debt_shock
+#> 42     Fiscal_policy        Debt_shock
+#> 43     Fiscal_policy        Debt_shock
+#> 44     Fiscal_policy        Debt_shock
+#> 45     Fiscal_policy        Debt_shock
+#> 46     Fiscal_policy        Debt_shock
+#> 47              <NA>              <NA>
 ```
 
 Find the number of occurence of the word "cotton" by paragraph
@@ -142,7 +301,7 @@ Find the paragraphs containing the word "cotton" by paragraph
 
 ``` r
 
-pages_containing_word=find_pages(doc_example$`ARG_1985-06-11_request`,"debt")
+pages_containing_word=get_pages(doc_example$`ARG_1985-06-11_request`,"debt")
 pages_containing_word
 #> $target
 #> [1] "debt"
@@ -232,27 +391,32 @@ Compute the document term frequency for several categories "Currency\_crisis" an
 ``` r
 
 # term frequency matrix for several categories of crisis
-mycategories=c('Currency_crisis',"Balance_payment_crisis")
-tf_matrix_with_several_categories=tf_vector(corpus,key_words_crisis()[mycategories])
+mycategories=c('Currency_crisis',"Balance_payment_crisis","Sovereign_default")
+tf_matrix_with_several_categories=tf_vector(corpus,lexicon()[mycategories])
 #> 
-#> (1/2) running: Currency_crisis
-#> Currency_crisis: 0.209 sec elapsed
+#> (1/3) running: Currency_crisis
+#> Currency_crisis: 0.355 sec elapsed
 #> 
 #>  Finished running: Currency_crisis
 #> 
-#> (2/2) running: Balance_payment_crisis
-#> Balance_payment_crisis: 0.231 sec elapsed
+#> (2/3) running: Balance_payment_crisis
+#> Balance_payment_crisis: 0.247 sec elapsed
 #> 
 #>  Finished running: Balance_payment_crisis
+#> 
+#> (3/3) running: Sovereign_default
+#> Sovereign_default: 0.234 sec elapsed
+#> 
+#>  Finished running: Sovereign_default
 
 head(tf_matrix_with_several_categories)
-#> # A tibble: 4 x 3
-#>   file                         Currency_crisis[,1] Balance_payment_crisis[…
-#>   <chr>                                      <dbl>                    <dbl>
-#> 1 ARG_1984-12-28_exchange sys…                   0                 0       
-#> 2 ARG_1984-12-28_purchase tra…                  NA                NA       
-#> 3 ARG_1984-12-28_request                         0                 0.000368
-#> 4 ARG_1985-06-11_request                         0                 0
+#> # A tibble: 4 x 4
+#>   file             Currency_crisis[,… Balance_payment_cr… Sovereign_defaul…
+#>   <chr>                         <dbl>               <dbl>             <dbl>
+#> 1 ARG_1984-12-28_…                  0            0                 0       
+#> 2 ARG_1984-12-28_…                 NA           NA                NA       
+#> 3 ARG_1984-12-28_…                  0            0.000368          0.000368
+#> 4 ARG_1985-06-11_…                  0            0                 0.00617
 ```
 
 Wrapup function for tf
@@ -264,15 +428,15 @@ Wrapup function for tf
 wrapup_for_tf=run_tf(corpus_path = "mycorpus.RData",type_lexicon ="words",keyword_list = c("Currency_crisis","Balance_payment_crisis"),parrallel = F)
 #> Loading corpus from mycorpus.RData
 #> (1/2) running: Currency_crisis
-#> Currency_crisis: 0.202 sec elapsed
+#> Currency_crisis: 0.159 sec elapsed
 #> 
 #>  Finished running: Currency_crisis
 #> 
 #> (2/2) running: Balance_payment_crisis
-#> Balance_payment_crisis: 0.177 sec elapsed
+#> Balance_payment_crisis: 0.183 sec elapsed
 #> 
 #>  Finished running: Balance_payment_crisis
-#> 0.409 sec elapsed
+#> 0.379 sec elapsed
 #> [1] "export table in mycorpus.RData"
 
 head(wrapup_for_tf)
@@ -289,48 +453,51 @@ Wrapup function for run\_tf that allows directly download the files and run the 
 
 ``` r
 run_tf_by_chunk(urls =url_links,keyword_list = c("Currency_crisis","Balance_payment_crisis"))
+#> Warning in dir.create(path): 'temp' already exists
+#> Warning in dir.create(path_corpus): 'temp/corpus' already exists
+#> Warning in dir.create(path_tf): 'temp/tf' already exists
 #> ARG_1984-12-28_exchange system: succesfully downloaded 
-#> ARG_1984-12-28_exchange system : 1/6: 1.867 sec elapsed
+#> ARG_1984-12-28_exchange system : 1/6: 2.399 sec elapsed
 #> ARG_1984-12-28_request: succesfully downloaded 
-#> ARG_1984-12-28_request : 2/6: 2.08 sec elapsed
+#> ARG_1984-12-28_request : 2/6: 3.201 sec elapsed
 #> ARG_1984-12-28_purchase transac: succesfully downloaded 
-#> ARG_1984-12-28_purchase transac : 3/6: 2.013 sec elapsed
+#> ARG_1984-12-28_purchase transac : 3/6: 2.532 sec elapsed
 #> ARG_1984-12-28_request: already downloaded, keep existing 
-#> ARG_1984-12-28_request : 4/6: 0.011 sec elapsed
+#> ARG_1984-12-28_request : 4/6: 0.014 sec elapsed
 #> ARG_1984-12-28_request: already downloaded, keep existing 
 #> ARG_1984-12-28_request : 5/6: 0.011 sec elapsed
 #> ARG_1985-06-11_request: succesfully downloaded 
-#> ARG_1985-06-11_request : 6/6: 2.57 sec elapsed
+#> ARG_1985-06-11_request : 6/6: 3.02 sec elapsed
 #> urls succesfully downloaded in 'temp/files
 #> '
 #> Warning in stri_replace_all_regex(string, pattern,
 #> fix_replacement(replacement), : argument is not an atomic vector; coercing
 #> [1] "temp/files/ARG_1984-12-28_exchange system.pdf"
-#> 1/4 ARG_1984-12-28_exchange system: 0.013 sec elapsed
+#> 1/4 ARG_1984-12-28_exchange system: 0.011 sec elapsed
 #> Warning in stri_replace_all_regex(string, pattern,
 #> fix_replacement(replacement), : argument is not an atomic vector; coercing
 #> [1] "temp/files/ARG_1984-12-28_purchase transac.pdf"
-#> 2/4 ARG_1984-12-28_purchase transac: 0.041 sec elapsed
+#> 2/4 ARG_1984-12-28_purchase transac: 0.052 sec elapsed
 #> Warning in stri_replace_all_regex(string, pattern,
 #> fix_replacement(replacement), : argument is not an atomic vector; coercing
 #> [1] "temp/files/ARG_1984-12-28_request.pdf"
-#> 3/4 ARG_1984-12-28_request: 0.01 sec elapsed
+#> 3/4 ARG_1984-12-28_request: 0.009 sec elapsed
 #> Warning in stri_replace_all_regex(string, pattern,
 #> fix_replacement(replacement), : argument is not an atomic vector; coercing
 #> [1] "temp/files/ARG_1985-06-11_request.pdf"
-#> 4/4 ARG_1985-06-11_request: 0.218 sec elapsed
+#> 4/4 ARG_1985-06-11_request: 0.208 sec elapsed
 #> delete folder with pdf 
 #> Loading corpus from temp/corpus/corpus_1.RData
 #> (1/2) running: Currency_crisis
-#> Currency_crisis: 0.19 sec elapsed
+#> Currency_crisis: 0.179 sec elapsed
 #> 
 #>  Finished running: Currency_crisis
 #> 
 #> (2/2) running: Balance_payment_crisis
-#> Balance_payment_crisis: 0.234 sec elapsed
+#> Balance_payment_crisis: 0.237 sec elapsed
 #> 
 #>  Finished running: Balance_payment_crisis
-#> 0.459 sec elapsed
+#> 0.452 sec elapsed
 #> [1] "export table in temp/corpus/corpus_1.RData"
 #> [1] TRUE
 ```
@@ -345,15 +512,15 @@ updated_tf=run_tf_update(path_tf_to_update = "temp/tf/tf_crisis_words_1.RData",
                 export_path = "temp/tf/tf_crisis_words_1_new.RData")
 #> updating selected columnsLoading corpus from temp/corpus/corpus_1.RData
 #> (1/2) running: Fiscal_outcomes
-#> Fiscal_outcomes: 0.205 sec elapsed
+#> Fiscal_outcomes: 0.218 sec elapsed
 #> 
 #>  Finished running: Fiscal_outcomes
 #> 
 #> (2/2) running: Fiscal_consolidation
-#> Fiscal_consolidation: 0.221 sec elapsed
+#> Fiscal_consolidation: 0.2 sec elapsed
 #> 
 #>  Finished running: Fiscal_consolidation
-#> 0.465 sec elapsed
+#> 0.453 sec elapsed
 #> [1] "export table in temp/corpus/corpus_1.RData"
 #> [1] "Non updated columns:\n\n                 file, Currency_crisis, Balance_payment_crisis"
 #> [1] "Updated columns:\n\n                 Fiscal_outcomes, Fiscal_consolidation"
