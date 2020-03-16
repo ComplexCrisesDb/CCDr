@@ -344,7 +344,7 @@ lexicon <- function(){
     "epidemic",
     "epidemia",
     "ebola",
-    "sida",
+    "^sida$",
     "rotavirus",
     "Lyme",
     "hepatite",
@@ -1367,13 +1367,14 @@ lexicon <- function(){
     "minutes of executive board minutes",
     "executive board attendance",
     "this is a working paper", # Working Papers
-    "(?<!\\(.{4})working paper",
+    "working paper",
     "a working paper of the international monetary fund",
     "draft issues paper", # Issue papers
     "background paper", #Background papers
     "provides background to the paper",
     "attached paper provides background information",
-    "individual economy assessments" #Assessments on multiple countries
+    "individual economy assessments", #Assessments on multiple countries
+    "april 2012 global financial stability report" # found looking through epidemics India
   )
   
   
