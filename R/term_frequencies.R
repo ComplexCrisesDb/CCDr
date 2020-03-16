@@ -53,7 +53,7 @@ tf = function(corpus, keywords, brute_freq = F, parrallel = T) {
   }
 }
 
-tf_vector = function(corpus, keyword_list, brute_freq = F, parrallel = T) {
+tf_vector = function(corpus, keyword_list, brute_freq = F, parrallel = T, net_confusing = T) {
   #' vectorize the function tf() to be able to pass a list of names of keywords
   #' keyword_list is a list containing the names of different groups of
   #' keywords that have a vector of words to look into.
@@ -65,6 +65,8 @@ tf_vector = function(corpus, keyword_list, brute_freq = F, parrallel = T) {
   #' @param brute_freq T/F if T it will just count the occurence, otherwise
   #'  it will compute the term frequency
   #' @param parrallel T/F if T it will use mclapply from the parrallel package
+  #' @param centre_countries Default is NULL. If character vector, netting of confusing
+  #' keywords will not be performed for those countries.
   #'  @author Manuel Betin
   #'  @return a tibble with the term frequencies for the selected categories
   #'  @export
@@ -130,9 +132,10 @@ tf_vector = function(corpus, keyword_list, brute_freq = F, parrallel = T) {
   
   list_net_keywords <- str_extract(names(lexicon()), ".+_confusing")[complete.cases(str_extract(names(lexicon()), ".+_confusing"))]
   
-  # Check if we computed some of them:
+  # Double check: check if we calculated some and check if country different from centre countries. If TRUE,
+  # proceed to net. Otherwise return df.
   
-  if (any(list_net_keywords %in% names(dt))){
+  if (any(list_net_keywords %in% names(dt)) & unique(str_extract(dt$file,"[A-Z]{3}") != centre_countries)){
     
     dt = split.default(dt, str_remove(names(dt), "_.+"))  # split into list according to the first word of column name, removing the rest.
     
