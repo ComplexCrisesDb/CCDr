@@ -329,6 +329,7 @@ lexicon <- function(){
     "measles",
     "zika",
     "encephalitis",
+    "sars",
     "nipah",
     "vCJD",
     "HIV",
