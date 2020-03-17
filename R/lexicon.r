@@ -1374,7 +1374,8 @@ lexicon <- function(){
     "provides background to the paper",
     "attached paper provides background information",
     "individual economy assessments", #Assessments on multiple countries
-    "april 2012 global financial stability report" # found looking through epidemics India
+    "april 2012 global financial stability report", # found looking through epidemics India
+    "poverty reduction strategy paper"
   )
   
   
