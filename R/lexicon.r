@@ -951,9 +951,10 @@ lexicon <- function(){
     "large devaluation",
     "large depreciation",
     "sharp depreciation",
+    "sharp depreclatlon",
     "currency attack",
-    "exchange rate crisis"
-    
+    "exchange rate crisis",
+    'unsuccessful attempt to.*maintain the exchange rate unchanged'
   )
   
   key_words[["Currency_crisis_confusing"]]=c(
