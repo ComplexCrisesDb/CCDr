@@ -53,7 +53,7 @@ tf = function(corpus, keywords, brute_freq = F, parrallel = T) {
   }
 }
 
-tf_vector = function(corpus, keyword_list, brute_freq = F, parrallel = T, net_confusing = T) {
+tf_vector = function(corpus, keyword_list, brute_freq = F, parrallel = T, centre_countries = "USA") {
   #' vectorize the function tf() to be able to pass a list of names of keywords
   #' keyword_list is a list containing the names of different groups of
   #' keywords that have a vector of words to look into.
@@ -65,8 +65,8 @@ tf_vector = function(corpus, keyword_list, brute_freq = F, parrallel = T, net_co
   #' @param brute_freq T/F if T it will just count the occurence, otherwise
   #'  it will compute the term frequency
   #' @param parrallel T/F if T it will use mclapply from the parrallel package
-  #' @param centre_countries Default is NULL. If character vector, netting of confusing
-  #' keywords will not be performed for those countries.
+  #' @param centre_countries Character string. Default is "USA". Netting of confusing
+  #' keywords will not be performed countries in the vector.
   #'  @author Manuel Betin
   #'  @return a tibble with the term frequencies for the selected categories
   #'  @export
