@@ -26,10 +26,12 @@ There are five families of functions in the package to help you thorugh the diff
   <li>Text extraction: tools to download files and read (aggregate) into the global environment. </li>
   <li>Text cleaning: cleanse corpus from elements that would hinder Natural Language Processing.</li>
   <li>Term frequencies: set of functions to compute tf-idfs from the corpus.</li>
+  <li> Comparison and refine: check eventual mistakes and render updating easy <li>
 </ol>
 
 #Selection
-You can create your own dictionary of expressions for multiple categories:
+You can create your own dictionary of expressions for multiple categories.<br>
+In this case, we show the keywords we created for natural disasters and conflicts:
 ```{r warning=FALSE}
 TextMiningCrisis::lexicon() [c("Natural_disaster","Wars")]
 ```
