@@ -1,0 +1,49 @@
+---
+title: "Introduction to TextMiningCrisis: <br> an accessible framework for Natural Language Processing"
+author: "Manuel Betin, Umberto Collodel"
+date: "3/20/2020"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to TextMiningCrisis: an accessible framework for Natural Language Processing}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Getting started with text analysis can be a daunting task for researchers/practioners. <br> There are different elements of confusion: mainly, the many steps to take before the selected documents can be actually analyzed as quantitative data and the variety of functions coming from different packages, each with its own trade-offs. <br> 
+The purpose of the TextMiningCrisis package is to make Natural Language Processing tasks easier, hence more accessible, consolidating the different steps into an unified framework.
+
+
+![Stylized representation of normal steps into a NPL task](TextMiningCrisis_process.png)
+
+There are five families of functions in the package to help you thorugh the different stages:
+<ol>
+  <li>Lexicon: these functions allow to create and inspect your own dictionary of expressions related to the event of interest.</li>
+  <li>Text extraction: tools to download files and read (aggregate) into the global environment. </li>
+  <li>Text cleaning: cleanse corpus from elements that would hinder Natural Language Processing.</li>
+  <li>Term frequencies: set of functions to compute tf-idfs from the corpus.</li>
+</ol>
+
+#Selection
+You can create your own dictionary of expressions for multiple categories:
+```{r warning=FALSE}
+TextMiningCrisis::lexicon() [c("Natural_disaster","Wars")]
+```
+
+#Pre-processing
+##Download files
+The function ```pdf_from_url``` downloads all the pdfs from a dataframe of urls into a directory using the ```download_file``` function.
+
+##Aggregate corpus
+The function ```aggregate_corpus``` loads all the files present into a directory into a single list.
+
+##Clean text
+The function ```clean_text``` makes easier the actual analysis, removing double spaces, line breaks and characters not detected when reading.
+
+#NPL
+
+
+
