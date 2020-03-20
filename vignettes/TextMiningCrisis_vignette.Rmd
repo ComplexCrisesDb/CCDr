@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 Getting started with text analysis can be a daunting task for researchers/practioners. <br> There are different elements of confusion: mainly, the many steps to take before the selected documents can be actually analyzed as quantitative data and the variety of functions coming from different packages, each with its own trade-offs. <br> 
-The purpose of the TextMiningCrisis package is to make Natural Language Processing tasks easier, hence more accessible, reproducible and faster, consolidating the different steps into an unified framework.
+The purpose of the TextMiningCrisis package is to make Natural Language Processing tasks easier, hence more accessible and reproducible, consolidating the different steps into an unified framework.
 
 
 ![Stylized representation of normal steps into a NPL task](TextMiningCrisis_process.png)
@@ -26,7 +26,7 @@ There are five families of functions in the package to help you thorugh the diff
   <li>Text extraction: tools to download files and read (aggregate) into the global environment. </li>
   <li>Text cleaning: cleanse corpus from elements that would hinder Natural Language Processing.</li>
   <li>Term frequencies: set of functions to compute tf-idfs from the corpus.</li>
-  <li> Comparison and refine: check eventual mistakes and render updating easy <li>
+  <li> Comparison and refine: check eventual mistakes and render updating easy.
 </ol>
 
 #Selection
@@ -121,10 +121,36 @@ tf_year %>%
 There seems to be three different waves of currency crises, in 1981,1983-1985 and 1989. In the last year of the decade the tf reaches its maximumum: 0.01\% of the documents' characters is on average devoted to currency crisis. For wars, instead, the index starts rising in 1983 and reaches its peak in 1985.
 
 
+##Under the hood: important add-ons
+
+<ol>
+  <li> Avoid problematic documents:<br>
+  In the scraping process, we might end up with some URLs of problematic documents i.e. documents on which we do not want to conduct the tf extraction. In our example, we downloaded many working paperThe logical step to take would be the manually erase these documents: this, in turn, would be tedious and take a long time. <br> <br>
+  We incorporate an automated alternative to the best of our possibilities in the ```run_tf``` function. Given a set of keywords in our dictionary (included in the category Problematic_documents)
+  
+```{r}
+TextMiningCrisis::lexicon()[c("Problematic_documents")] %>% data.frame() %>% filter(str_detect(Problematic_documents, "working"))
+```
+  
+  
+  the function checks if at least one of them appears in the first page of each document of the corpus: if the logical returns TRUE, the extraction is not performed and an NA is returned in the dataframe for the respective file.
+  
+  
+  <li> Confusing keywords: sometimes words included in a category may refer to another individual e.g. talking about currency   crisis in other countries. <br> <br>
+  We offer the possibility to control for this issue for any category of interest in the lexicon. It is sufficient to create a   category with same name, ending with "*_confusing". Here an example for currency crises:
+```{r}
+TextMiningCrisis::lexicon()[c("Currency_crisis_confusing")] %>% data.frame() 
+```
+
+The correction clearly will not run for the countries/individuals the confusing keywords refer to.
+
+</ol>
+
 
 #Comparison
-Now, you want to control the peak in 1989 in the tf for currency crisis.<br>
-What are the exact keywords that were detected? in which context? <br>
+Now, you are a bit surprised by the result, you did not know about any currency crisis for Argentina in 1989. Nevertheless, there it is the peak of your index. <br>
+Is it a colossal blunder or indeed the truth?
+What are the exact keywords that were detected? and in which context? <br>
 To check, we can use the ```get_sentences``` function. 
 
 ```{r}
@@ -136,6 +162,8 @@ sentences_currency_crisis[["ARG_1989-10-17_request"]]
 Was the IMF really talking about currency crises in that year for Argentina or the lexicon we used has some issues that need to be addressed?<br>
 
 ```{r}
+# Extract the third sentence with keyword detected in a randomly chosen 1989 document:
+
 sentences_currency_crisis[["ARG_1989-10-17_request"]] %>% 
   select(sentence) %>% 
   slice(3) %>% 
@@ -143,8 +171,20 @@ sentences_currency_crisis[["ARG_1989-10-17_request"]] %>%
 
 ```
 It is now clear that it was not a mistake and we even have additional information about the timing of the shock.
-<br>
-<br>
+
+##Need to re-run
+Assume there is a mistake in your extraction and you want to repeat it for a single category, that you want to compare your index adding or removing a keyword or that you simply want to add an index for a new category without changing the others. This can easily achieved with the ```run_tf_update``` function:
+
+```{r results='hide'}
+# In this example we add an index for natural disasters events to the previous extraction:
+
+tf_path = "~/Desktop/Packages/TextMiningCrisis/data/tf_crisis_words_example.RData"
+corpus_path = "~/Desktop/Packages/TextMiningCrisis/data/corpus_example.RData"
+
+TextMiningCrisis::run_tf_update(path_tf_to_update = tf_path, corpus_path = corpus_path, keyword_list = c("Natural_disaster"))
+```
+
+
 
 
 
