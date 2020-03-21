@@ -125,7 +125,7 @@ There seems to be three different waves of currency crises, in 1981,1983-1985 an
 
 <ol>
   <li> Avoid problematic documents:<br>
-  In the scraping process, we might end up with some URLs of problematic documents i.e. documents on which we do not want to conduct the tf extraction. In our example, we downloaded many working paper together with . The logical step to take would be the manually erase these documents: this, in turn, would be tedious and take a long time. <br> <br>
+  In the scraping process, we might end up with some URLs of problematic documents i.e. documents on which we do not want to conduct the tf extraction. In our example, we downloaded many working paper together with. If this kind of information is not present into the metadata, the next logical step to take would be the manually erase these documents: this, in turn, would be tedious and take a long time. <br> <br>
   We incorporate an automated alternative to the best of our possibilities in the ```run_tf``` function. Given a set of keywords in our dictionary (included in the category Problematic_documents)
   
 ```{r}
