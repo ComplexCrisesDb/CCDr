@@ -68,7 +68,7 @@ corpus[[1]][[2]]
 
 #NPL
 ```run_tf``` returns from the corpus of documents a term-frequency matrix. What is it? For each of the categories in the ```lexicon``` function, counts the occurence of the selected keywords in every document and divides it by the total number of characters.<br> <br>
-In this example, we want to quantify the use of words related to currency crisis and wars in documents on Argentina published by the IMF. The period our corpus cover is 1970-1980:
+In this example, we want to quantify the use of words related to currency crisis and wars in documents on Argentina published by the IMF. The period our corpus covers is 1970-1980:
 ```{r warning=FALSE,results='hide'}
 
 
@@ -125,7 +125,7 @@ There seems to be three different waves of currency crises, in 1981,1983-1985 an
 
 <ol>
   <li> Avoid problematic documents:<br>
-  In the scraping process, we might end up with some URLs of problematic documents i.e. documents on which we do not want to conduct the tf extraction. In our example, we downloaded many working paperThe logical step to take would be the manually erase these documents: this, in turn, would be tedious and take a long time. <br> <br>
+  In the scraping process, we might end up with some URLs of problematic documents i.e. documents on which we do not want to conduct the tf extraction. In our example, we downloaded many working paper together with . The logical step to take would be the manually erase these documents: this, in turn, would be tedious and take a long time. <br> <br>
   We incorporate an automated alternative to the best of our possibilities in the ```run_tf``` function. Given a set of keywords in our dictionary (included in the category Problematic_documents)
   
 ```{r}
@@ -175,16 +175,44 @@ It is now clear that it was not a mistake and we even have additional informatio
 ##Need to re-run
 Assume there is a mistake in your extraction and you want to repeat it for a single category, that you want to compare your index adding or removing a keyword or that you simply want to add an index for a new category without changing the others. This can easily achieved with the ```run_tf_update``` function:
 
-```{r results='hide'}
+```{r echo=T,results='hide'}
 # In this example we add an index for natural disasters events to the previous extraction:
 
 tf_path = "~/Desktop/Packages/TextMiningCrisis/data/tf_crisis_words_example.RData"
 corpus_path = "~/Desktop/Packages/TextMiningCrisis/data/corpus_example.RData"
 
-TextMiningCrisis::run_tf_update(path_tf_to_update = tf_path, corpus_path = corpus_path, keyword_list = c("Natural_disaster"))
+updated_tf <-TextMiningCrisis::run_tf_update(path_tf_to_update = tf_path, corpus_path = corpus_path, keyword_list = c("Natural_disaster"))
 ```
+If we average the index by year and plot as in the previous example:
+```{r echo=F,fig.width=7}
+
+# Average by year and plot as before:
+
+updated_tf_year <- updated_tf %>% 
+  mutate(year = str_extract(file,"\\d{4}")) %>%
+  mutate(iso3c = str_extract(file,"[A-Z]{3}")) %>%
+  group_by(iso3c,year) %>% 
+  summarize(Natural_disaster = mean(Natural_disaster, na.rm = TRUE))
+
+updated_tf_year %>% 
+  ggplot(aes(year,Natural_disaster*100,col = iso3c, group = 1)) +
+  geom_line() +
+  theme_bw() +
+  ylab("%") +
+  xlab("") +
+  theme(legend.position = "none") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+
+TextMiningCrisis::get_sentences(corpus, c("Natural_disaster"))[["ARG_1988-02-26_Use fund"]] %>% select(sentence) %>% slice(10) %>% data.frame()
 
 
+
+```
+The index seems rather volatile for Argentina throughout the period, but there is a marked rising in 1985 that ends with a peak in 1988. Indeed, the function ```get_sentence``` confirms the result of the index.
+
+#A function to conquer them all:
+
+You understood the purpose of all the main functions, but you would like to summarise the whole in just a line of code and you are still not confortable to write your own function? No problem, we thought about you and came up with the ```run_tf_by_chunk``` function.
 
 
 
