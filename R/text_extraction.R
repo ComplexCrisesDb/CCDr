@@ -1,5 +1,5 @@
 
-pdf_from_url = function(urls, export_path, overwrite = T) {
+pdf_from_url = function(urls, export_path, engine, overwrite = T) {
   #' download pdf documents 
   #' download from a a dataframe containing the url of the files
   #' the pdf of interest
@@ -117,7 +117,7 @@ pdf_page_count = function(files) {
   }
 }
 
-aggregate_corpus = function(path_files, only_files = F) {
+aggregate_corpus = function(path_files, ENGINE, only_files = F) {
   #' Aggregate pdf files into list of characters
   #'
   #' function that takes the path of the directory and load all
@@ -125,6 +125,8 @@ aggregate_corpus = function(path_files, only_files = F) {
   #' mining
   
   #' @param path_files the path of the directory with the files
+  #' @param ENGINE similar to engine argument in readPDF from 'tm' package. 
+  #' Function to use to read pdf into environment, either pdf_text or pdf_ocr_text.
   #' @param only_files T/F whether to include in the list only the content or also
   #' the metadata of the pdf file
   #' @author Manuel Betin
@@ -143,7 +145,7 @@ aggregate_corpus = function(path_files, only_files = F) {
     path = paste0(path_files, "/", docs[x], ".pdf")
     file <- try({
       pdfinfo = pdf_info(path)
-      pdf_text(path) %>% strsplit(split = "\n")
+      ENGINE(path) %>% strsplit(split = "\n")
     }, silent = T)
     if ("try-error" %in% class(file)) {
       warning(paste(docs[[x]], ": Error in path file", sep = ""))
