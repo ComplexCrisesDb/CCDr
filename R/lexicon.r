@@ -1402,7 +1402,6 @@ lexicon_details = function(keyword) {
 lexicon_typology = function() {
   
   #' provide the typology of each category
-  #' provide the typology of each category
   #' @return a dataframe classifying each category of the lexicon
   #' @author Manuel Betin
   #' @example typology_categories()
