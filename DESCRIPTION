@@ -24,4 +24,7 @@ Imports:
     tictoc,
     lubridate
 Suggests: 
-    testthat
+    testthat,
+    knitr
+VignetteBuilder:
+    knitr
