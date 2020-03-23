@@ -361,6 +361,7 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
   #' @param delete_pdfs T/F, set to T it will delete the folder 
   #' containing the original pdf, usefull option when the number of pdf is very
   #' large and the size of the folder start to be very large
+  #' @param ENGINE function to read pdf into environment. Either pdf_text or pdf_ocr_text.
   #' @param rm_short_docs T/F T if you want to remove the documents under a 
   #' certain number of words
   #' @param min_words the minimum word in the document necessary to perform
@@ -389,7 +390,7 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
   # download the files
   pdf_from_url(urls, path_pdf_files, overwrite = F)
   # transform pdf to character and store in list
-  corpus = aggregate_corpus(path_pdf_files,only_files=T)
+  corpus = aggregate_corpus(path_pdf_files, ENGINE, only_files=T)
   
   # remove documents with less than specified number of words
   if(rm_short_docs){
