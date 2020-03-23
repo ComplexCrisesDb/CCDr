@@ -163,6 +163,7 @@ aggregate_corpus = function(path_files, ENGINE, only_files = F) {
     }
   })
   names(corpus) = docs
+  attr(corpus, "class") <- c("corpusTM","list")
   return(corpus)
 }
 
