@@ -303,8 +303,19 @@ lexicon <- function(){
     "conflict zone",
     "civil conflict",
     "armed conflicts",
+    "terrorism",
+    "terrorist attacks"
     "guerilla offensive",
     "military take-over"
+  )
+  
+  key_words[["Migration"]]=c(
+    "refugee",
+    "migrants",
+    "populatio inflow",
+    "asylum",
+    "migration flows",
+    "immigrant"
   )
   
   key_words[["Natural_disaster"]]=c(
