@@ -5,7 +5,9 @@ print.corpusTM <- function(x,...){
   #' @parm optional arguments to ```print```
   #' @author Manuel Betin, Umberto Collodel
   #' @export
+  cat("\n")
   cat("Number of documents: ",length(corpus),"\n") 
   cat("First document: ",names(corpus)[[1]],"\n")
   cat("Last document: ",tail(names(corpus), n = 1),"\n")
+  cat("\n")
 }
