@@ -4,7 +4,7 @@
 \alias{aggregate_corpus}
 \title{Aggregate pdf files into list of characters}
 \usage{
-aggregate_corpus(path_files, ENGINE, only_files = F)
+aggregate_corpus(path_files, ENGINE = "pdf_text", only_files = F)
 }
 \arguments{
 \item{path_files}{the path of the directory with the files}
