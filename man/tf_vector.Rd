@@ -6,7 +6,8 @@
 keyword_list is a list containing the names of different groups of
 keywords that have a vector of words to look into.}
 \usage{
-tf_vector(corpus, keyword_list, brute_freq = F, parrallel = T)
+tf_vector(corpus, keyword_list, brute_freq = F, parrallel = T,
+  centre_countries = "USA")
 }
 \arguments{
 \item{corpus}{a list of texts from pdf_text() with different names
@@ -18,10 +19,13 @@ include in the computation}
 \item{brute_freq}{T/F if T it will just count the occurence, otherwise
 it will compute the term frequency}
 
-\item{parrallel}{T/F if T it will use mclapply from the parrallel package
-@author Manuel Betin
-@return a tibble with the term frequencies for the selected categories
-@export}
+\item{parrallel}{T/F if T it will use mclapply from the parrallel package}
+
+\item{centre_countries}{Character string. Default is "USA". Netting of confusing
+keywords will not be performed countries in the vector.
+ @author Manuel Betin
+ @return a tibble with the term frequencies for the selected categories
+ @export}
 }
 \description{
 vectorize the function tf() to be able to pass a list of names of keywords

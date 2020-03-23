@@ -2,8 +2,7 @@
 % Please edit documentation in R/lexicon.r
 \name{lexicon_typology}
 \alias{lexicon_typology}
-\title{provide the typology of each category
-provide the typology of each category}
+\title{provide the typology of each category}
 \usage{
 lexicon_typology()
 }
@@ -11,7 +10,6 @@ lexicon_typology()
 a dataframe classifying each category of the lexicon
 }
 \description{
-provide the typology of each category
 provide the typology of each category
 }
 \author{

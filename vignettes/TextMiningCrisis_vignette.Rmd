@@ -11,7 +11,7 @@ vignette: >
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
+knitr::opts_chunk$set(eval = F)
 ```
 
 Getting started with text analysis can be a daunting task for researchers/practioners. <br> There are different elements of confusion: mainly, the many steps to take before the selected documents can be actually analyzed as quantitative data and the variety of functions coming from different packages, each with its own trade-offs. <br> 
@@ -52,17 +52,17 @@ Three messages can appear during the process of download:
 The function ```aggregate_corpus``` loads all the files present into a directory into a single list and cleans them.
 
 ```{r warning=FALSE,results='hide'}
-# Aggregate files in docs_example directory (IMF documents for Argentina 1980-1990):
+## Aggregate files in docs_example directory (IMF documents for Argentina 1980-1990):
 
-corpus <- TextMiningCrisis::aggregate_corpus("~/Desktop/Packages/TextMiningCrisis/data/docs_example", only_files = T)
+#corpus <- TextMiningCrisis::aggregate_corpus("../data/docs_example", only_files = T)
 ```
+
 ```{r}
 # Show the second page of the first document:
-
+data("IMF_corpus_example")
+corpus=IMF_corpus_example
 corpus[[1]][[2]]
-
 ```
-
 
 
 
@@ -73,8 +73,9 @@ In this example, we want to quantify the use of words related to currency crisis
 
 
 # Create a term-frequency matrix for previous corpus:
+data("IMF_tf_example")
 
-tf <-TextMiningCrisis::run_tf("~/Desktop/Packages/TextMiningCrisis/data/corpus_example.RData",keyword_list = c("Currency_crisis_severe","Wars"))
+tf <-TextMiningCrisis::run_tf("../data/corpus_example.RData",keyword_list = c("Currency_crisis_severe","Wars"))
 
 ```
 
@@ -178,8 +179,8 @@ Assume there is a mistake in your extraction and you want to repeat it for a sin
 ```{r echo=T,results='hide'}
 # In this example we add an index for natural disasters events to the previous extraction:
 
-tf_path = "~/Desktop/Packages/TextMiningCrisis/data/tf_crisis_words_example.RData"
-corpus_path = "~/Desktop/Packages/TextMiningCrisis/data/corpus_example.RData"
+tf_path = "../data/tf_crisis_words_example.RData"
+corpus_path = "../data/corpus_example.RData"
 
 updated_tf <-TextMiningCrisis::run_tf_update(path_tf_to_update = tf_path, corpus_path = corpus_path, keyword_list = c("Natural_disaster"))
 ```
