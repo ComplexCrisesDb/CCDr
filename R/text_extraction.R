@@ -117,7 +117,7 @@ pdf_page_count = function(files) {
   }
 }
 
-aggregate_corpus = function(path_files, ENGINE, only_files = F) {
+aggregate_corpus = function(path_files, ENGINE="pdf_text", only_files = F) {
   #' Aggregate pdf files into list of characters
   #'
   #' function that takes the path of the directory and load all
