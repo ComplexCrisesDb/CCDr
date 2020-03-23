@@ -301,7 +301,9 @@ lexicon <- function(){
     "military conflict",
     "conflict regions",
     "conflict zone",
+    "regional conflict",
     "civil conflict",
+    "conflicts in the region"
     "armed conflicts",
     "terrorism",
     "terrorist attacks"
@@ -369,6 +371,8 @@ lexicon <- function(){
     "cholera",
     "malaria",
     "influenza",
+    "coronavirus",
+    "Covid-19",
     "^flu$",
     "^plague$"
   )
