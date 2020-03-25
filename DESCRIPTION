@@ -22,7 +22,8 @@ Imports:
     ggplot2,
     rio,
     tictoc,
-    lubridate
+    lubridate,
+    tesseract
 Suggests: 
     testthat,
     knitr

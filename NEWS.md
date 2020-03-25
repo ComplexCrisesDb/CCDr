@@ -107,5 +107,11 @@ Changes:
  - find_pages() => get_pages()
 
 
+TextMiningCrisis v1.3.1 (Release date: 2020-03-23)
+==============
+
+update aggregate_corpus() with the argument ENGINE that can be either "pdf_text" to use pdf_text() fonction from pdftools package to read the pdf files or "pdf_ocr_text" from tesseract packages. using "pdf_ocr_text" allows to more precisely read pdf that are scanned documents. Warning: using pdf_ocr_text increase very substantially the computing time.
+
+Include vignette to discribe the use of the package
 
 

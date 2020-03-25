@@ -301,10 +301,23 @@ lexicon <- function(){
     "military conflict",
     "conflict regions",
     "conflict zone",
+    "regional conflict",
     "civil conflict",
+    "conflicts in the region"
     "armed conflicts",
+    "terrorism",
+    "terrorist attacks"
     "guerilla offensive",
     "military take-over"
+  )
+  
+  key_words[["Migration"]]=c(
+    "refugee",
+    "migrants",
+    "populatio inflow",
+    "asylum",
+    "migration flows",
+    "immigrant"
   )
   
   key_words[["Natural_disaster"]]=c(
@@ -358,6 +371,8 @@ lexicon <- function(){
     "cholera",
     "malaria",
     "influenza",
+    "coronavirus",
+    "Covid-19",
     "^flu$",
     "^plague$"
   )
