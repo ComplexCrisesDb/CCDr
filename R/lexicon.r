@@ -303,10 +303,10 @@ lexicon <- function(){
     "conflict zone",
     "regional conflict",
     "civil conflict",
-    "conflicts in the region"
+    "conflicts in the region",
     "armed conflicts",
     "terrorism",
-    "terrorist attacks"
+    "terrorist attacks",
     "guerilla offensive",
     "military take-over"
   )
@@ -501,7 +501,7 @@ lexicon <- function(){
   key_words[["Housing_crisis"]]=c(
     "home prices have been declining",
     "drops in real estate prices",
-    "house price trends"
+    "house price trends",
     "home-price overvaluation",
     "real house prices declining",
     "foreclosures",
