@@ -303,10 +303,10 @@ lexicon <- function(){
     "conflict zone",
     "regional conflict",
     "civil conflict",
-    "conflicts in the region"
+    "conflicts in the region",
     "armed conflicts",
     "terrorism",
-    "terrorist attacks"
+    "terrorist attacks",
     "guerilla offensive",
     "military take-over"
   )
@@ -357,6 +357,7 @@ lexicon <- function(){
     "epidemy",
     "epidemic",
     "epidemia",
+    "avian flu",
     "ebola",
     "^sida$",
     "rotavirus",
@@ -497,6 +498,43 @@ lexicon <- function(){
   ## EXOGENEOUS SHOCKS; ECONOMIC
   #--------
   
+  key_words[["Housing_crisis"]]=c(
+    "home prices have been declining",
+    "drops in real estate prices",
+    "house price trends",
+    "home-price overvaluation",
+    "real house prices declining",
+    "foreclosures",
+    "house price inflation",
+    "house-price inflation",
+    "foreclosures",
+    "bust in housing",
+    "home-price declines",
+    "house-price declines",
+    "house prices fall",
+    "stalling house prices",
+    "slower house price",
+    "slowing housing wealth",
+    "Declines in house prices",
+    "headwinds from housing",
+    "problems in housing",
+    "housing downturn",
+    "cooling housing market",
+    "cooling in the housing market",
+    "change in housing wealth",
+    "deceleration in house prices",
+    "slowdown in the housing market",
+    "housing slowdown",
+    "house prices seemed overvalued",
+    "housing boom",
+    "Falling house prices",
+    "spillovers from the housing market",
+    "spillovers from housing",
+    "housing market weakness",
+    "slowdown in the housing market",
+    "subprime",
+    "residential investment has declined rapidly"
+  )
   
   key_words[["Banking_crisis"]]=c(
     "bank resolution",
@@ -628,6 +666,7 @@ lexicon <- function(){
     "lowering the rate of inflation",
     "pressure on prices",
     "high inflation",
+    "high headline inflation",
     "severe inflation",
     "combat inflation",
     "cronic inflation",
@@ -1434,7 +1473,7 @@ lexicon_typology = function() {
   economic_shock = c("Banking_crisis","Banking_crisis_severe", "Financial_crisis", "Inflation_crisis", 
                      "Trade_crisis", "World_outcomes", "Contagion", "Expectations", 
                      "Balance_payment_crisis", "Reduction_reserves", "Currency_crisis","Currency_crisis_severe", "Severe_recession", 
-                     "Soft_recession", "Expansion")
+                     "Soft_recession", "Expansion","Housing_crisis")
   
   non_economic_shock = c("Wars", "Natural_disaster", "Commodity_crisis", "Political_crisis", 
                          "Social_crisis","Epidemics")
@@ -1465,7 +1504,7 @@ lexicon_typology = function() {
                       "Reduction_reserves", "Currency_crisis","Currency_crisis_severe","Global_depreciation",
                       "Floating_exchange_rate","Fixed_exchange_rate","Losening_monetary_policy","Tightening_monetary_policy")
   
-  Structural_policy = c("Trade_crisis","Performance_criterion","Program_extension",
+  Structural_policy = c("Trade_crisis","Housing_crisis","Performance_criterion","Program_extension",
                         "Deregulation", "Reform_agenda", "Trade_reforms", "Financial_reforms", 
                         "Labor_market_reforms", "Tax_reforms", "Banking_reforms", "Fiscal_consolidation", 
                         "Success_of_reforms","Official_support","Technical_assistance","uncertainty_reforms")
@@ -1484,7 +1523,7 @@ lexicon_typology = function() {
   
   Other_Financial_shock = c("Banking_crisis","Banking_crisis_severe", "Financial_crisis", "Balance_payment_crisis", 
                             "Reduction_reserves", "Currency_crisis","Currency_crisis_severe","World_outcomes", "Contagion",
-                            "Expectations")
+                            "Expectations","Housing_crisis")
   
   Fiscal_financial_shock = c( "Fiscal_outcomes", "Sovereign_default","Short_term_debt","Floating_rate_debt",
                               "Concessional_lending","Foreign_debt")
@@ -1509,7 +1548,7 @@ lexicon_typology = function() {
   # Transmission to public finance
   
   Expenditure_shock = c("Banking_crisis","Banking_crisis_severe", "Financial_crisis","World_outcomes", "Contagion",
-                        "Expectations","Epidemics")
+                        "Expectations","Epidemics","Housing_crisis")
   
   Revenue_shock = c("Balance_payment_crisis", "Natural_disaster","Commodity_crisis", "Wars",
                     "Reduction_reserves", "Currency_crisis","Currency_crisis_severe","Trade_crisis","Inflation_crisis",
