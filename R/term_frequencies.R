@@ -339,6 +339,7 @@ run_tf_update = function(path_tf_to_update = "tf_crisis_words.RData",
 run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes", 
                                                              "Currency_crisis"),
                           extract_number = 1,
+                          ENGINE=pdf_text,
                           delete_pdfs = T,
                           rm_short_docs=F,
                           min_words=100,
@@ -358,6 +359,9 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
   #'  lexicon()
   #' @param extract_number a number that will be ued as a suffix for the name 
   #' of the corpus and the name of the tf matrix
+  #' @param ENGINE similar to engine argument in readPDF from 'tm' package. 
+  #' Function to use to read pdf into environment, either pdf_text or
+  #' pdf_ocr_text.
   #' @param delete_pdfs T/F, set to T it will delete the folder 
   #' containing the original pdf, usefull option when the number of pdf is very
   #' large and the size of the folder start to be very large
@@ -389,7 +393,7 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
   # download the files
   pdf_from_url(urls, path_pdf_files, overwrite = F)
   # transform pdf to character and store in list
-  corpus = aggregate_corpus(path_pdf_files,only_files=T)
+  corpus = aggregate_corpus(path_pdf_files,ENGINE=ENGINE,only_files=T)
   
   # remove documents with less than specified number of words
   if(rm_short_docs){
