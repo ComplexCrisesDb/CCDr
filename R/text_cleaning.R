@@ -21,8 +21,12 @@ clean_text = function(file) {
   file = stringr::str_replace_all(file, "[\\s]+", " ")
   file = gsub("\r", "", file)
   file = gsub("\"", "", file)
-  file = gsub("\n", "", file)
+  file = gsub("\n", "", file) %>% 
+  iconv("utf-8","ascii",sub = "") %>% 
+  str_replace_all("-\\s","") %>% 
+  str_replace_all("~\\s","") 
   file = file[stringr::str_count(file) > 50]
-  file = gsub("<U+23AF>", "", file)
   return(file)
 }
+
+

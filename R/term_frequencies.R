@@ -365,6 +365,7 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
   #' @param delete_pdfs T/F, set to T it will delete the folder 
   #' containing the original pdf, usefull option when the number of pdf is very
   #' large and the size of the folder start to be very large
+  #' @param ENGINE function to read pdf into environment. Either pdf_text or pdf_ocr_text.
   #' @param rm_short_docs T/F T if you want to remove the documents under a 
   #' certain number of words
   #' @param min_words the minimum word in the document necessary to perform

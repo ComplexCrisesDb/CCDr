@@ -126,7 +126,7 @@ aggregate_corpus = function(path_files, ENGINE=pdf_text, only_files = F) {
   
   #' @param path_files the path of the directory with the files
   #' @param ENGINE similar to engine argument in readPDF from 'tm' package. 
-  #' Function to use to read pdf into environment, either pdf_text or pdf_ocr_text.
+  #' Function to read pdf into environment, either pdf_text or pdf_ocr_text.
   #' @param only_files T/F whether to include in the list only the content or also
   #' the metadata of the pdf file
   #' @author Manuel Betin
@@ -163,6 +163,7 @@ aggregate_corpus = function(path_files, ENGINE=pdf_text, only_files = F) {
     }
   })
   names(corpus) = docs
+  attr(corpus, "class") <- c("corpusTM","list")
   return(corpus)
 }
 
