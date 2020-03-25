@@ -357,6 +357,7 @@ lexicon <- function(){
     "epidemy",
     "epidemic",
     "epidemia",
+    "avian flu",
     "ebola",
     "^sida$",
     "rotavirus",
@@ -497,6 +498,43 @@ lexicon <- function(){
   ## EXOGENEOUS SHOCKS; ECONOMIC
   #--------
   
+  key_words[["Housing_crisis"]]=c(
+    "home prices have been declining",
+    "drops in real estate prices",
+    "house price trends"
+    "home-price overvaluation",
+    "real house prices declining",
+    "foreclosures",
+    "house price inflation",
+    "house-price inflation",
+    "foreclosures",
+    "bust in housing",
+    "home-price declines",
+    "house-price declines",
+    "house prices fall",
+    "stalling house prices",
+    "slower house price",
+    "slowing housing wealth",
+    "Declines in house prices",
+    "headwinds from housing",
+    "problems in housing",
+    "housing downturn",
+    "cooling housing market",
+    "cooling in the housing market",
+    "change in housing wealth",
+    "deceleration in house prices",
+    "slowdown in the housing market",
+    "housing slowdown",
+    "house prices seemed overvalued",
+    "housing boom",
+    "Falling house prices",
+    "spillovers from the housing market",
+    "spillovers from housing",
+    "housing market weakness",
+    "slowdown in the housing market",
+    "subprime",
+    "residential investment has declined rapidly"
+  )
   
   key_words[["Banking_crisis"]]=c(
     "bank resolution",
@@ -628,6 +666,7 @@ lexicon <- function(){
     "lowering the rate of inflation",
     "pressure on prices",
     "high inflation",
+    "high headline inflation",
     "severe inflation",
     "combat inflation",
     "cronic inflation",
