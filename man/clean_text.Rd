@@ -2,9 +2,7 @@
 % Please edit documentation in R/text_cleaning.R
 \name{clean_text}
 \alias{clean_text}
-\title{clean character strings
-clean character string by removing special characters 
-and irrelevant strings}
+\title{clean character strings}
 \usage{
 clean_text(file)
 }
@@ -15,7 +13,6 @@ clean_text(file)
 a clean character string
 }
 \description{
-clean character strings
 clean character string by removing special characters 
 and irrelevant strings
 }

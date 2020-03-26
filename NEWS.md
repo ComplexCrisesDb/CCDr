@@ -115,3 +115,10 @@ update aggregate_corpus() with the argument ENGINE that can be either "pdf_text"
 Include vignette to discribe the use of the package
 
 
+
+TextMiningCrisis v1.3.1 (Release date: 2020-03-26)
+==============
+
+New function get_imf_country_report() that download the last imf country reports from the imf website.
+
+

@@ -1,6 +1,6 @@
 remove_stop = function(word) {
   #' remove stop words
-  #' remove stop words
+  #' @description remove stop words
   #' @param word that as to be checked
   #' @author Manuel Betin
   #' @export
@@ -10,7 +10,7 @@ remove_stop = function(word) {
 
 clean_text = function(file) {
   #' clean character strings
-  #' clean character string by removing special characters 
+  #' @description clean character string by removing special characters 
   #' and irrelevant strings
   #' @param file a string of characters to clean
   #' @return a clean character string 

@@ -2,8 +2,7 @@
 % Please edit documentation in R/radarplot.R
 \name{radar_dt}
 \alias{radar_dt}
-\title{Transform the tf-idf database in proper format for drawing the radar chart of categories
-Transform the tf-idf database in proper format for drawing the radar chart of categories}
+\title{Transform the tf-idf database in proper format for drawing the radar chart of categories}
 \usage{
 radar_dt(tf_data, isoc, top_n = 50, weight_method = "brut_frequency",
   group = "ISO3_Code")
@@ -25,7 +24,6 @@ in columns}
 a tible with the value of the tf summarized according to the grouping selected
 }
 \description{
-Transform the tf-idf database in proper format for drawing the radar chart of categories
 Transform the tf-idf database in proper format for drawing the radar chart of categories
 }
 \author{

@@ -2,8 +2,7 @@
 % Please edit documentation in R/lexicon.r
 \name{lexicon}
 \alias{lexicon}
-\title{Lexicon of economic crisis
-Provide the lexicon of economic crisis}
+\title{Lexicon of economic crisis}
 \usage{
 lexicon()
 }
@@ -12,6 +11,5 @@ a list of categories with the corresponding words
  associated
 }
 \description{
-Lexicon of economic crisis
 Provide the lexicon of economic crisis
 }

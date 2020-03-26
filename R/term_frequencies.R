@@ -208,7 +208,7 @@ run_tf = function(corpus_path = "IMF_letofIntent_1960_2014_clean.RData",
                   export_path = NULL, parrallel = T) {
   
   #' Compute the tf matrix for a corpus given in a list format,
-  #' the type of lexicon to use and the sublist of keywords associated The
+  #' @description the type of lexicon to use and the sublist of keywords associated The
   #' output is a matrix of tf with a row per document and a column for each
   #' element of the keyword list
   #' @param corpus_path the path to the RData file containing the corpus to analyze
@@ -264,7 +264,7 @@ run_tf_update = function(path_tf_to_update = "tf_crisis_words.RData",
                          parrallel = T, store_old = F, store_old_path = NULL) {
   #'Updates the tf-indexes without repeating full extraction
   #'
-  #' Combine probability of shocks, intensity and complexity of relations to construct
+  #' @description Combine probability of shocks, intensity and complexity of relations to construct
   #' .a mesure of severity of crisis
   #'
   #' @param path_tf_to_update Path to old tf dataframe.
@@ -348,7 +348,7 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
 {
   
   #' run the term frequency matrix on the list of urls provided as parameter.
-  #' The function download the pdf, create the corpus and generate the term
+  #' @description The function download the pdf, create the corpus and generate the term
   #' frequency matrix, to avoid storage limitation the function deleate
   #' original pdf files
   
@@ -431,7 +431,7 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
 
 idf = function(tf_data, group = NULL) {
   #' Compute the inverse document frequency
-  #' The idf is computed as the logarithm of the inverse of the proportion. 
+  #' @description The idf is computed as the logarithm of the inverse of the proportion. 
   #' it allows to give reduce weight of words with high
   #' frequency in the corpus
   #' @param tf_data a dataframe of term frequencies
@@ -466,7 +466,7 @@ idf = function(tf_data, group = NULL) {
 
 tf_idf = function(tf_data, weight_method = "brut_frequency") {
   #' Compute the tf-idf matrix
-  #' weight the term frequency (tf) of each category by the its idf to
+  #' @description weight the term frequency (tf) of each category by the its idf to
   #' improve the discriminatory power of the categories that are rare in
   #' the corpus
   
@@ -516,7 +516,7 @@ tf_barplot = function(tf, vars_type = c("economic_shock", "non_economic_shock",
                                         "characteristics_program", "adustment_program"), 
                       vars_nature = NULL) {
   #' barplot of term frequencies
-  #' take as input the term frequency matrix and reshape it to plot the values
+  #' @description take as input the term frequency matrix and reshape it to plot the values
   #' for all numeric columns and group them in two dimensions: the type of
   #' variable and the nature of the shock (exogeneous or endogenous)
   #' @param tf a term frequency matrix from tf()
@@ -524,9 +524,9 @@ tf_barplot = function(tf, vars_type = c("economic_shock", "non_economic_shock",
   #'  for more details)
   #' @param vars_nature the nature of categories to include (see lexicon_typology()
   #'  for more details)
-  #'  @author Manuel Betin
-  #'  @return a ggplot barplot
-  #'  @export
+  #' @author Manuel Betin
+  #' @return a ggplot barplot
+  #' @export
   
   res = list()
   avg_tf = tf %>% mutate_if(is.numeric, funs(ifelse(. == 0, NA, .))) %>% ungroup() %>% 
@@ -590,7 +590,7 @@ idf_barplot = function(idf, vars_type = c("economic_shock", "non_economic_shock"
                        vars_nature = NULL, idf_trans = F) {
   
   #' barplot for the idf
-  #' barplot displaying the idf of the categories
+  #' @description barplot displaying the idf of the categories
   #' @param idf a tibble of idf as produced by idf()
   #' @param vars_type a vector with the type of shocks to include (see lexicon_typology() for classification)
   #' @param vars_nature a vector of the nature of shocks to include (see lexicon_typology() for classification)
@@ -599,7 +599,7 @@ idf_barplot = function(idf, vars_type = c("economic_shock", "non_economic_shock"
   #' @return a ggplot barplot object 
   #' @export
   #'  
-  idf = LoI_idf
+
   res = list()
   
   if (idf_trans == T) {

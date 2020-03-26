@@ -2,8 +2,7 @@
 % Please edit documentation in R/cosimilarity.R
 \name{cosim_fig}
 \alias{cosim_fig}
-\title{barpot of the cosinus similarity
-barpot of the cosinus similarity}
+\title{barpot of the cosinus similarity}
 \usage{
 cosim_fig(cosim_matrix, var)
 }
@@ -16,7 +15,6 @@ cosim_fig(cosim_matrix, var)
 a ggplot barplot
 }
 \description{
-barpot of the cosinus similarity
 barpot of the cosinus similarity
 }
 \author{

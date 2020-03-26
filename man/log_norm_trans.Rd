@@ -2,8 +2,7 @@
 % Please edit documentation in R/text_extraction.R
 \name{log_norm_trans}
 \alias{log_norm_trans}
-\title{log normal transformation of the table
-log normal transformation of the table}
+\title{log normal transformation of the table}
 \usage{
 log_norm_trans(tf_data)
 }
@@ -14,7 +13,6 @@ log_norm_trans(tf_data)
 a tibble of tf with log norm transformation
 }
 \description{
-log normal transformation of the table
 log normal transformation of the table
 }
 \author{

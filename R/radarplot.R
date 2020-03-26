@@ -1,7 +1,7 @@
 radar_structure_fig = function(radar_dt) {
   
   #' Radar chart of the tf 
-  #' Use the radar_dt() output and draw a radar chart to display the 
+  #' @description Use the radar_dt() output and draw a radar chart to display the 
   #' term frequencies of the debt structure category. 
   #' @param radar_dt output of country_radar_fig
   #' @return a plotly object 
@@ -39,7 +39,7 @@ radar_structure_fig = function(radar_dt) {
 radar_shocks_fig = function(radar_dt) {
   
   #' Radar chart of the tf 
-  #' Use the radar_dt() output and draw a radar chart to display the 
+  #' @description  Use the radar_dt() output and draw a radar chart to display the 
   #' term frequencies of the selected categories. Indexes are order counterclockwise
   #' from more exogeneous (15:15) to more exogeneous
   #' @param radar_dt output of country_radar_fig
@@ -88,7 +88,7 @@ radar_shocks_fig = function(radar_dt) {
 
 radar_reforms_fig = function(radar_dt) {
   #' Radar chart of the tf 
-  #' Use the radar_dt() output and draw a radar chart to display the 
+  #' @description Use the radar_dt() output and draw a radar chart to display the 
   #' term frequencies of the reforms categories. 
   #' @param radar_dt output of country_radar_fig
   #' @return a plotly object 
@@ -127,7 +127,7 @@ radar_reforms_fig = function(radar_dt) {
 radar_dt = function(tf_data, isoc, top_n = 50, weight_method = "brut_frequency", 
                             group = "ISO3_Code") {
   #' Transform the tf-idf database in proper format for drawing the radar chart of categories
-  #' Transform the tf-idf database in proper format for drawing the radar chart of categories
+  #' @description Transform the tf-idf database in proper format for drawing the radar chart of categories
   #' @param  tf_data a dataframe with documents in rows and tf-idfs of each categories
   #' in columns
   #' @param isoc the iso3 code of the country to display

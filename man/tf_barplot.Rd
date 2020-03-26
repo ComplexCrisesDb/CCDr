@@ -2,10 +2,7 @@
 % Please edit documentation in R/term_frequencies.R
 \name{tf_barplot}
 \alias{tf_barplot}
-\title{barplot of term frequencies
-take as input the term frequency matrix and reshape it to plot the values
-for all numeric columns and group them in two dimensions: the type of
-variable and the nature of the shock (exogeneous or endogenous)}
+\title{barplot of term frequencies}
 \usage{
 tf_barplot(tf, vars_type = c("economic_shock", "non_economic_shock",
   "debt_outcomes", "debt_structure", "characteristics_program",
@@ -18,14 +15,16 @@ tf_barplot(tf, vars_type = c("economic_shock", "non_economic_shock",
 for more details)}
 
 \item{vars_nature}{the nature of categories to include (see lexicon_typology()
-for more details)
-@author Manuel Betin
-@return a ggplot barplot
-@export}
+for more details)}
+}
+\value{
+a ggplot barplot
 }
 \description{
-barplot of term frequencies
 take as input the term frequency matrix and reshape it to plot the values
 for all numeric columns and group them in two dimensions: the type of
 variable and the nature of the shock (exogeneous or endogenous)
+}
+\author{
+Manuel Betin
 }

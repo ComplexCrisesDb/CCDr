@@ -2,8 +2,7 @@
 % Please edit documentation in R/term_frequencies.R
 \name{idf_barplot}
 \alias{idf_barplot}
-\title{barplot for the idf
-barplot displaying the idf of the categories}
+\title{barplot for the idf}
 \usage{
 idf_barplot(idf, vars_type = c("economic_shock", "non_economic_shock",
   "debt_outcomes", "debt_structure", "characteristics_program",
@@ -22,7 +21,6 @@ idf_barplot(idf, vars_type = c("economic_shock", "non_economic_shock",
 a ggplot barplot object
 }
 \description{
-barplot for the idf
 barplot displaying the idf of the categories
 }
 \author{
