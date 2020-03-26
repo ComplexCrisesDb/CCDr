@@ -2,9 +2,7 @@
 % Please edit documentation in R/cosimilarity.R
 \name{cosim}
 \alias{cosim}
-\title{Compute cosinus similarity of two vectors
-Measure the distance between two vectors using cosinus similarity
-formula}
+\title{Compute cosinus similarity of two vectors}
 \usage{
 cosim(tf_data, vec1, vec2)
 }
@@ -21,7 +19,6 @@ A number providing the similarity between the two vectors
 between the two vectors
 }
 \description{
-Compute cosinus similarity of two vectors
 Measure the distance between two vectors using cosinus similarity
 formula
 }

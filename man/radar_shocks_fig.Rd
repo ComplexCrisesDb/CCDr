@@ -2,10 +2,7 @@
 % Please edit documentation in R/radarplot.R
 \name{radar_shocks_fig}
 \alias{radar_shocks_fig}
-\title{Radar chart of the tf 
-Use the radar_dt() output and draw a radar chart to display the 
-term frequencies of the selected categories. Indexes are order counterclockwise
-from more exogeneous (15:15) to more exogeneous}
+\title{Radar chart of the tf}
 \usage{
 radar_shocks_fig(radar_dt)
 }
@@ -16,7 +13,6 @@ radar_shocks_fig(radar_dt)
 a plotly object
 }
 \description{
-Radar chart of the tf 
 Use the radar_dt() output and draw a radar chart to display the 
 term frequencies of the selected categories. Indexes are order counterclockwise
 from more exogeneous (15:15) to more exogeneous

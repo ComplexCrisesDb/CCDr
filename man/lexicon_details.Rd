@@ -2,8 +2,7 @@
 % Please edit documentation in R/lexicon.r
 \name{lexicon_details}
 \alias{lexicon_details}
-\title{Provide the keywords associate to the name of the category
-usefull know what are the words behind each category}
+\title{Provide the keywords associate to the name of the category}
 \usage{
 lexicon_details(keyword)
 }
@@ -15,7 +14,6 @@ know the lexicon}
 a vector of words
 }
 \description{
-Provide the keywords associate to the name of the category
 usefull know what are the words behind each category
 }
 \author{

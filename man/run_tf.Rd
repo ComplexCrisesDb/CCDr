@@ -2,10 +2,7 @@
 % Please edit documentation in R/term_frequencies.R
 \name{run_tf}
 \alias{run_tf}
-\title{Compute the tf matrix for a corpus given in a list format,
-the type of lexicon to use and the sublist of keywords associated The
-output is a matrix of tf with a row per document and a column for each
-element of the keyword list}
+\title{Compute the tf matrix for a corpus given in a list format,}
 \usage{
 run_tf(corpus_path = "IMF_letofIntent_1960_2014_clean.RData",
   type_lexicon = "words", keyword_list = c("Commodity_crisis",
@@ -27,7 +24,6 @@ run_tf(corpus_path = "IMF_letofIntent_1960_2014_clean.RData",
 a dataframe of term frequencies
 }
 \description{
-Compute the tf matrix for a corpus given in a list format,
 the type of lexicon to use and the sublist of keywords associated The
 output is a matrix of tf with a row per document and a column for each
 element of the keyword list

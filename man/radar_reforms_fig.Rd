@@ -2,9 +2,7 @@
 % Please edit documentation in R/radarplot.R
 \name{radar_reforms_fig}
 \alias{radar_reforms_fig}
-\title{Radar chart of the tf 
-Use the radar_dt() output and draw a radar chart to display the 
-term frequencies of the reforms categories.}
+\title{Radar chart of the tf}
 \usage{
 radar_reforms_fig(radar_dt)
 }
@@ -15,7 +13,6 @@ radar_reforms_fig(radar_dt)
 a plotly object
 }
 \description{
-Radar chart of the tf 
 Use the radar_dt() output and draw a radar chart to display the 
 term frequencies of the reforms categories.
 }

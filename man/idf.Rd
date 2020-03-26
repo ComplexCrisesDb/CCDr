@@ -2,10 +2,7 @@
 % Please edit documentation in R/term_frequencies.R
 \name{idf}
 \alias{idf}
-\title{Compute the inverse document frequency
-The idf is computed as the logarithm of the inverse of the proportion. 
-it allows to give reduce weight of words with high
-frequency in the corpus}
+\title{Compute the inverse document frequency}
 \usage{
 idf(tf_data, group = NULL)
 }
@@ -18,7 +15,6 @@ idf(tf_data, group = NULL)
 a tibble with the idf of each categories
 }
 \description{
-Compute the inverse document frequency
 The idf is computed as the logarithm of the inverse of the proportion. 
 it allows to give reduce weight of words with high
 frequency in the corpus

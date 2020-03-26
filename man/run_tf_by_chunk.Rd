@@ -2,15 +2,12 @@
 % Please edit documentation in R/term_frequencies.R
 \name{run_tf_by_chunk}
 \alias{run_tf_by_chunk}
-\title{run the term frequency matrix on the list of urls provided as parameter.
-The function download the pdf, create the corpus and generate the term
-frequency matrix, to avoid storage limitation the function deleate
-original pdf files}
+\title{run the term frequency matrix on the list of urls provided as parameter.}
 \usage{
 run_tf_by_chunk(urls = url_links, keyword_list = c("Fiscal outcomes",
-  "Currency_crisis"), extract_number = 1, delete_pdfs = T,
-  rm_short_docs = F, min_words = 100, parrallel = T,
-  loc_temp = NULL)
+  "Currency_crisis"), extract_number = 1, ENGINE = pdf_text,
+  delete_pdfs = T, rm_short_docs = F, min_words = 100,
+  parrallel = T, loc_temp = NULL)
 }
 \arguments{
 \item{urls}{a dataframe containing two columns: name_file and pdf
@@ -22,6 +19,10 @@ lexicon()}
 
 \item{extract_number}{a number that will be ued as a suffix for the name 
 of the corpus and the name of the tf matrix}
+
+\item{ENGINE}{similar to engine argument in readPDF from 'tm' package. 
+Function to use to read pdf into environment, either pdf_text or
+pdf_ocr_text.}
 
 \item{delete_pdfs}{T/F, set to T it will delete the folder 
 containing the original pdf, usefull option when the number of pdf is very
@@ -41,7 +42,6 @@ the text mining}
 create forlders where pdfs, corpus and tf-idf matrix are stored
 }
 \description{
-run the term frequency matrix on the list of urls provided as parameter.
 The function download the pdf, create the corpus and generate the term
 frequency matrix, to avoid storage limitation the function deleate
 original pdf files

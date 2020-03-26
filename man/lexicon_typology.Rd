@@ -10,7 +10,7 @@ lexicon_typology()
 a dataframe classifying each category of the lexicon
 }
 \description{
-provide the typology of each category
+Provide a typology for each category in the lexicon
 }
 \author{
 Manuel Betin

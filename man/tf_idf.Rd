@@ -2,10 +2,7 @@
 % Please edit documentation in R/term_frequencies.R
 \name{tf_idf}
 \alias{tf_idf}
-\title{Compute the tf-idf matrix
-weight the term frequency (tf) of each category by the its idf to
-improve the discriminatory power of the categories that are rare in
-the corpus}
+\title{Compute the tf-idf matrix}
 \usage{
 tf_idf(tf_data, weight_method = "brut_frequency")
 }
@@ -19,7 +16,6 @@ a dataframe of tf-idf with documents in rows and categories
 in columns
 }
 \description{
-Compute the tf-idf matrix
 weight the term frequency (tf) of each category by the its idf to
 improve the discriminatory power of the categories that are rare in
 the corpus

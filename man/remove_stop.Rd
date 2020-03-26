@@ -2,8 +2,7 @@
 % Please edit documentation in R/text_cleaning.R
 \name{remove_stop}
 \alias{remove_stop}
-\title{remove stop words
-remove stop words}
+\title{remove stop words}
 \usage{
 remove_stop(word)
 }
@@ -11,7 +10,6 @@ remove_stop(word)
 \item{word}{that as to be checked}
 }
 \description{
-remove stop words
 remove stop words
 }
 \author{
