@@ -20,7 +20,7 @@ pdf_from_url = function(urls, export_path, overwrite = T) {
     dir.create(export_path, recursive = T)
   }
   log = list()
-  if (any(names(urls) %in% ref_colnames)) {
+  if (ref_colnames %in% any(names(urls))) {
     # make sure the files has the proper format with at least the name of the
     # file and a url link to pdf
     count = 0
