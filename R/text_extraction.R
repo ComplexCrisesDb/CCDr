@@ -120,7 +120,7 @@ pdf_page_count = function(files) {
 aggregate_corpus = function(path_files, ENGINE=pdf_text, only_files = F) {
   #' Aggregate pdf files into list of characters
   #'
-  #' function that takes the path of the directory and load all
+  #'@description function that takes the path of the directory and load all
   #' the pdfs of the directory into a list in order to further perform the text
   #' mining
   
@@ -168,7 +168,7 @@ aggregate_corpus = function(path_files, ENGINE=pdf_text, only_files = F) {
 
 eval_pages = function(files, targetword, brute_freq = F, parrallel = T) {
   #'Look for the presence of the targetword into a character string
-  #' Provide list of files and return summary of counts of occurence of the
+  #' @description Provide list of files and return summary of counts of occurence of the
   #' target world 
   #' @param files a character string correspond to the text to
   #' analysis
@@ -218,7 +218,7 @@ eval_pages = function(files, targetword, brute_freq = F, parrallel = T) {
 
 get_pages = function(file, targetword) {
   #' Find the page where words a located
-  #' Provide files either pdf of html and return the paragraphs matching the
+  #' @description Provide files either pdf of html and return the paragraphs matching the
   #' targetted word 
   #' @param file a character string correspond to the text
   #' to analysis
@@ -265,7 +265,7 @@ get_sentences <- function(corpus, keyword_list){
   #'From a corpus (collection documents), returns the sentences where keyword detected
   #'and respective keyword
   #'
-  #'Function that simplifies checking validity indexes and potential problems in keywords
+  #'@description Function that simplifies checking validity indexes and potential problems in keywords
   #'
   #' @param corpus list with collection documents
   #' @param keyword_list character vector with categories from key_words_crisis function
@@ -289,7 +289,7 @@ get_sentences <- function(corpus, keyword_list){
 
 log_norm_trans = function(tf_data) {
   #' log normal transformation of the table
-  #' log normal transformation of the table
+  #' @description log normal transformation of the table
   #' @param tf_data a dataframe of term frequencies
   #' @return a tibble of tf with log norm transformation
   #' @author Manuel Betin
@@ -304,7 +304,7 @@ log_norm_trans = function(tf_data) {
 binary_freq_trans = function(tf_data) {
   #' binary transformation of tfidf
   
-  #' transform table from Number of occurence to binary variables
+  #'@description  transform table from Number of occurence to binary variables
   
   #' @param tf_data a dataframe with numerical columns corresponding
   #' to the tf idf of each category
@@ -325,8 +325,8 @@ check_extract=function(path_urls="../Betin_Collodel/2. Text mining IMF_data/data
                        path_tf_idf="../Betin_Collodel/2. Text mining IMF_data/datasets/tagged docs/tf_idf.RData",
                        path_final_tf_idf="../Betin_Collodel/2. Text mining IMF_data/datasets/tagged docs/tf_idf_database.RData"){
   
-  
-  #'check the validity of each steps in the scripts to see what documents are lost
+  #' find attrition in the NLP process
+  #'@description check the validity of each steps in the scripts to see what documents are lost
   #'in each step of the process from the download, to the 
   #'text mining and finally to the merging with the rest of the variables
   

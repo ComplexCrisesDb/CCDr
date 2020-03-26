@@ -2,7 +2,7 @@
 # vectors here two crisis
 cosim = function(tf_data, vec1, vec2) {
   #' Compute cosinus similarity of two vectors
-  #' Measure the distance between two vectors using cosinus similarity
+  #'@description Measure the distance between two vectors using cosinus similarity
   #' formula
   #' @param tf_data a tibble with documents in rows and number 
   #' of occurence of each type of crisi in columns
@@ -30,7 +30,7 @@ cosim = function(tf_data, vec1, vec2) {
 cosim_matrix = function(tf_data) {
   #' Compute all pairwise cosinus similarity for a dataframe of indexes
   #' 
-  #' compute the matrix of cosinus simularity between all the type of crisis
+  #'@description  compute the matrix of cosinus simularity between all the type of crisis
   #' @param tf_data a table of tf-idf with documents in rows and
   #' type of crisis in columns
   #' @author Manuel Betin
@@ -54,7 +54,7 @@ cosim_matrix = function(tf_data) {
 # plot results of matric cosinus
 cosim_fig = function(cosim_matrix, var) {
   #' barpot of the cosinus similarity
-  #' barpot of the cosinus similarity
+  #' @description  barpot of the cosinus similarity
   #' @param cosim_matrix the cosinus similarity matrix from cosim_matrix()
   #' @param var the target variable 
   #' @return a ggplot barplot

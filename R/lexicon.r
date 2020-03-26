@@ -1,7 +1,7 @@
 lexicon <- function(){
   
   #' Lexicon of economic crisis
-  #' Provide the lexicon of economic crisis  
+  #' @description Provide the lexicon of economic crisis  
   #' @return a list of categories with the corresponding words
   #'  associated
   #' @export
@@ -1440,7 +1440,7 @@ lexicon <- function(){
 
 lexicon_details = function(keyword) {
   #' Provide the keywords associate to the name of the category
-  #' usefull know what are the words behind each category
+  #' @description usefull know what are the words behind each category
   #' @param keyword the name of the category of which you want to 
   #' know the lexicon
   #' @author Manuel Betin
@@ -1456,6 +1456,7 @@ lexicon_details = function(keyword) {
 lexicon_typology = function() {
   
   #' provide the typology of each category
+  #' @description Provide a typology for each category in the lexicon
   #' @return a dataframe classifying each category of the lexicon
   #' @author Manuel Betin
   #' @example typology_categories()
