@@ -1,7 +1,7 @@
 
-pdf_from_url = function(urls, export_path, overwrite = T) {
+pdf_from_url = function(urls, export_path, engine, overwrite = T) {
   #' download pdf documents 
-  #' @description  download from a a dataframe containing the url of the files
+  #' download from a a dataframe containing the url of the files
   #' the pdf of interest
   #' @param urls a dataframe with a row by document and at least the following columns
   #' title, pdf, and name_file. title contains the title of the document, pdf the url 
@@ -20,7 +20,7 @@ pdf_from_url = function(urls, export_path, overwrite = T) {
     dir.create(export_path, recursive = T)
   }
   log = list()
-  if (ref_colnames %in% any(names(urls))) {
+  if (any(names(urls) %in% ref_colnames)) {
     # make sure the files has the proper format with at least the name of the
     # file and a url link to pdf
     count = 0
@@ -86,7 +86,7 @@ pdf_from_url = function(urls, export_path, overwrite = T) {
 
 pdf_page_count = function(files) {
   #' count the number of pages in the pdf
-  #' @description count the number of pages in the pdf
+  #' count the number of pages in the pdf
   #' @param files a list of character strings
   #' @return the number of pages in the document
   #' @author Manuel Betin
@@ -117,10 +117,10 @@ pdf_page_count = function(files) {
   }
 }
 
-aggregate_corpus = function(path_files, ENGINE=pdf_text, only_files = F) {
+aggregate_corpus = function(path_files, ENGINE, only_files = F) {
   #' Aggregate pdf files into list of characters
   #'
-  #'@description function that takes the path of the directory and load all
+  #' function that takes the path of the directory and load all
   #' the pdfs of the directory into a list in order to further perform the text
   #' mining
   
@@ -169,7 +169,7 @@ aggregate_corpus = function(path_files, ENGINE=pdf_text, only_files = F) {
 
 eval_pages = function(files, targetword, brute_freq = F, parrallel = T) {
   #'Look for the presence of the targetword into a character string
-  #' @description Provide list of files and return summary of counts of occurence of the
+  #' Provide list of files and return summary of counts of occurence of the
   #' target world 
   #' @param files a character string correspond to the text to
   #' analysis
@@ -219,7 +219,7 @@ eval_pages = function(files, targetword, brute_freq = F, parrallel = T) {
 
 get_pages = function(file, targetword) {
   #' Find the page where words a located
-  #' @description Provide files either pdf of html and return the paragraphs matching the
+  #' Provide files either pdf of html and return the paragraphs matching the
   #' targetted word 
   #' @param file a character string correspond to the text
   #' to analysis
@@ -266,7 +266,7 @@ get_sentences <- function(corpus, keyword_list){
   #'From a corpus (collection documents), returns the sentences where keyword detected
   #'and respective keyword
   #'
-  #'@description Function that simplifies checking validity indexes and potential problems in keywords
+  #'Function that simplifies checking validity indexes and potential problems in keywords
   #'
   #' @param corpus list with collection documents
   #' @param keyword_list character vector with categories from key_words_crisis function
@@ -290,10 +290,11 @@ get_sentences <- function(corpus, keyword_list){
 
 log_norm_trans = function(tf_data) {
   #' log normal transformation of the table
-  #' @description log normal transformation of the table
+  #' log normal transformation of the table
   #' @param tf_data a dataframe of term frequencies
   #' @return a tibble of tf with log norm transformation
   #' @author Manuel Betin
+  #' @export
   log_norm_trans = function(x) {
     ifelse(x > 0, 1 + log(x), 0)
   }
@@ -305,13 +306,14 @@ log_norm_trans = function(tf_data) {
 binary_freq_trans = function(tf_data) {
   #' binary transformation of tfidf
   
-  #'@description  transform table from Number of occurence to binary variables
+  #' transform table from Number of occurence to binary variables
   
   #' @param tf_data a dataframe with numerical columns corresponding
   #' to the tf idf of each category
   #' @author Manuel Betin
   #' @return a dataframe with binary frequencies 0 if the tf_idf is zero and 1
   #' if it is non zero
+  #' @export
   
   binary_trans = function(x) {
     ifelse(x > 0, 1, 0)
@@ -326,8 +328,8 @@ check_extract=function(path_urls="../Betin_Collodel/2. Text mining IMF_data/data
                        path_tf_idf="../Betin_Collodel/2. Text mining IMF_data/datasets/tagged docs/tf_idf.RData",
                        path_final_tf_idf="../Betin_Collodel/2. Text mining IMF_data/datasets/tagged docs/tf_idf_database.RData"){
   
-  #' find attrition in the NLP process
-  #'@description check the validity of each steps in the scripts to see what documents are lost
+  
+  #'check the validity of each steps in the scripts to see what documents are lost
   #'in each step of the process from the download, to the 
   #'text mining and finally to the merging with the rest of the variables
   
@@ -374,136 +376,64 @@ check_extract=function(path_urls="../Betin_Collodel/2. Text mining IMF_data/data
               files_not_downloaded=missing_urls))
 }
 
-
-get_imf_country_reports=function(npages=NULL){
-  #' download the url of the country reports from the imf website
-  #' @description Provide the urls to download the imf country reports from
-  #' https://www.imf.org/en/Publications/CR/
-  #' @param npages the number of pages to download by default it wil download all the pages 
-  #' that he will find. to download only the most recent set npages=1
-  #' @author Manuel Betin
-  #' @return dataframe with the title of the document, the name of the file and the url of the file
-  #' @export 
-  #' 
-  #' 
+check_gaps_pdfs <- function(general_path = "/Volumes/Elements/IMF documents/", only_large = TRUE){
   
-  #find the hompage of the IMF
-  homepage=read_html("https://www.imf.org/en/Publications/CR/")
-  #find the total number of pages of country reports
-  if(is.null(npages)){
-    npages=homepage %>% html_nodes(xpath = "/html/body/div[3]/main/article/div[3]/div[1]/p/text()") %>% html_text() 
-    npages=str_extract(npages,"\\d\\d\\d")[2] %>% as.numeric()
-    cat(crayon::blue(paste("Download of all the country reports,",npages,"pages in total", sep = "")))
-  }else{
-    cat(crayon::blue(paste("Download only the last,",npages,"pages (",npages*10,") documents", sep = "")))
-  }
-  progress = dplyr::progress_estimated(npages)
-  urls=lapply(1:npages,function(x){
-    tictoc::tic(paste0("page: ",x,"/",npages))
-    #get pages of country report
-    homepage=read_html(paste0("https://www.imf.org/en/Publications/CR/?page=",x))
-    results=homepage %>% html_nodes(xpath = '/html/body/div[3]/main/article/div[3]')
-    #get url of the page of the document
-    href=results %>% html_nodes("a") %>% html_attr("href")
-    href=data.frame(href) 
-    href=href %>% filter(!str_detect(href,"www.imf.org")) %>%
-      mutate(url=paste0("https://www.imf.org/",href))
-    #get url of the pdf and metadata associated
-    dt=lapply(href$url,function(myurl){
-      dt=try({ 
-        #get the html of the apge
-        docpage=read_html(myurl)
-        #find the name of the document
-        docname=docpage %>% html_nodes(css=".conf") %>% html_text()
-        #find the date of the document and clean 
-        docdate=docpage %>% html_nodes(css=".pub-lang .pub-desc") %>% html_text()
-        docdate=docdate[1]
-        docdate=str_remove_all(docdate,"\r\n") %>% str_remove_all(" ")
-        #find url to download pdf
-        docurl= docpage %>% html_nodes(css = ".piwik_download") %>% html_attr('href')
-        docurl=paste0("https://www.imf.org",docurl)
-        #consolidate info
-        data.frame(title=docname,period=docdate,pdf=docurl)}, silent = T)
-      if ("try-error" %in% class(dt)) { #on error return NA
-        cat(crayon::red(paste(docname, ": Error in path file: ", 
-                              myurl, sep = "")))
-        data.frame(title=NA,period=NA,pdf=myurl)
-      }
-      dt
-    })
-    dt=do.call(rbind,dt)
-    dt=dt %>% mutate(pdf=as.character(pdf),
-                     name_file=str_extract(pdf,"[:alpha:][:alpha:][:alpha:][:alpha:][:alpha:]\\d+(?=.ashx?)"),
-                     iso3=substr(name_file,1,3),
-                     period=as.Date(period,format=c("%B%d,%Y")),
-                     year=year(period)) %>% dplyr::select(title,pdf,iso3,period,year,name_file)
-    progress$pause(0.01)$tick()$print()
-    tictoc::toc()
-    dt
-  })
-  urls=do.call(rbind,urls)
+  #' check if there are gaps greater than one year in the documents
   
-  #clean the titles to find the iso code
-  find_name_from_title=function(dt){
+  #'@param general_path path with one subdirectory per individual and for each of them a files subdirectory with pdfs
+  #'@param only_large Logical. Consider only gaps greater than two years. Default is TRUE.
+  #'@author Manuel Betin, Umberto Collodel
+  #'@return a nested list: for every individual the number of gaps and a dataframe with the details.
+  #' 
+  #'@export
+  
+  # Names folders with pdfs by individual:
+  
+  names_individual <- list.files(general_path) %>% 
+    str_extract("[A-Z]{3}") %>% 
+    na.omit()
+  
+  # Extract from pdf folder individual units the year of the file and calculate difference with its lag:
+  # (if difference greater than 1, means there is at least a year gap)
+  
+  list_year_files <- names_individual %>% 
+    purrr::map(~ paste0("/Volumes/Elements/IMF documents/",.x,"/files")) %>% 
+    purrr::map(~ list.files(.x)) %>% 
+    purrr::map(~ str_extract(.x,"\\d{4}")) %>% 
+    purrr::map(~  data.frame(year_files = as.numeric(.x))) %>% 
+    purrr::map(~ .x %>% mutate(gap = year_files - dplyr::lag(year_files))) %>% 
+    purrr::map(~ .x %>% filter(gap > 1))
+  
+  # Attribute country name to each element of the list:
+  
+  names(list_year_files) <- names_countries
+  
+  
+  # Explicit the year gap - write into character:
+  # if statement to filter only for big gaps (more than one year)
+  
+  if(only_large == T){
     
-    if(!any(c("title","year") %in% names(dt))){
-      print("please provide a valide database containing at least the columns title and year")
-      dt
-    }else{
-      dt=dt %>% mutate(title2=str_replace(title,":","-")) %>% separate(title2,into="country",sep="-") %>% dplyr::select(iso3,country,period,title,everything())
-      
-      dt= dt  %>% mutate(country=str_trim(gsub('[^ -~]', '', country),"both"))
-      
-      ctries=countrycode::countrycode(list_countries(),origin="iso3c",destination="country.name") %>% tolower()
-      
-      nonstandard_ctrynames=c(COD="zaire",SOM="somalia",YEM="yemen arab republic","yugoslavia",CIV="ivory coast",WSM="western samoa",HUN="hungarian people's republic",KOR="korea",
-                              MMR="burma",VCT="st. vincent and the grenadines",GMB="the gambia",CIV="cote d'ivoire",COD="people's republic of the congo",CHN="people's republic of china",
-                              EGY="arab republic of egypt",MOZ="people's republic of mozambique",TTO="trinidad and tobago",STP="sao tome and principe",LAO="lao people's democratic republic",
-                              MOZ="republic of mozambique",POL="republic of poland",CZE="czech and slovak federal republic",RUS='russian federation',CZE="czech republic",SVK="slovak republic",
-                              LVA='republic of latvia',KGZ="kyrgyz republic",MDA="republic of moldova",VNM="viet nam",LTU="republic of lithuania",EST="republic of estonia",KAZ="republic of kazakhstan",
-                              MKD="former yugoslav republic of macedonia",COG="republic of congo",HRV="republic of croatia",ARM="republic of armenia",BLR="republic of belarus",UZB="republic of uzbekistan",
-                              AZE="azerbaijan republic",GEO="republic of georgia",KAZ="republic of kazakstan",BIH="republic of bosnia and herzegovina",YEM="republic of yemen",TJK="republic of tajikistan",
-                              BIH="bosnia and herzegovina",KOR="republic of korea",KNA="st. kitts and nevis",GNQ="guinea bissau",MEX="mexico <U+0097> arrangement under the flexible credit line",
-                              MEX="mexico<U+0097>review under the flexible credit line arrangement",COL="colombia<U+0097>review under the flexible credit line arrangement")
-      
-      nonstandard_ctrynames2=as.data.frame(nonstandard_ctrynames)
-      nonstandard_ctrynames2$iso3c=names(nonstandard_ctrynames)
-      names(nonstandard_ctrynames2)=c("iso3_new","iso3c")
-      nonstandard_ctrynames2=nonstandard_ctrynames2 %>% mutate(iso3_new=as.character(iso3_new))
-      
-      dt=dt %>% mutate(iso3_error=ifelse(!country %in% c(ctries,nonstandard_ctrynames),country,""),
-                       iso3_new=as.character(ifelse(country %in% c(ctries,nonstandard_ctrynames),country,"")))
-      
-      dt=dt %>% left_join(nonstandard_ctrynames2,by=c("iso3_new"))
-      
-      #correct manually some cases and transform to iso3c
-      dt=dt %>% mutate(iso3c=ifelse(is.na(iso3c),countrycode::countrycode(iso3_new,origin="country.name",destination="iso3c"),iso3c),
-                       iso3c=ifelse(str_detect(iso3,"mexico"),"MEX",iso3c),
-                       #iso3c=ifelse(str_detect(title,"germany"),"DEU",iso3c),
-                       iso3c=ifelse(str_detect(iso3,"philippines"),"PHL",iso3c),
-                       iso3c=ifelse(str_detect(iso3,"macedonia"),"MKD",iso3c),
-                       iso3c=ifelse(str_detect(iso3,"yugoslavia"),"YUG",iso3c))
-      
-      
-      mycountries=c(ctries,nonstandard_ctrynames)
-      for(j in 1:length(mycountries)){
-        iso3ccode=countrycode::countrycode(mycountries[j],origin="country.name",destination="iso3c")
-        dt=dt%>%mutate(iso3c=ifelse(is.na(iso3c) & str_detect(title,mycountries[j]),iso3ccode,iso3c))
-      }
-      
-      
-      
-      dt=dt %>% dplyr::select(-c(iso3_new,iso3_error)) %>% rename(iso3_from_title=iso3c) %>%
-        dplyr::select(iso3,country,iso3_from_title,period,year,pdf,everything())
-      
-      
-    }
-    dt
+    gap_character <- list_year_files %>% 
+      purrr::map(~ .x %>% mutate(large_gap = case_when(gap > 2 ~ "Yes",
+                                                       TRUE ~ "No"))) %>%
+      purrr::map(~ .x %>% filter(large_gap == "Yes")) %>% 
+      purrr::map(~ .x %>% mutate(gap = paste0(year_files - gap,"-",year_files))) %>%
+      purrr::map(~ .x %>% select(gap, large_gap)) 
+  } else{
+    
+    gap_character <- list_year_files %>% 
+      purrr::map(~ .x %>% mutate(large_gap = case_when(gap > 2 ~ "Yes",
+                                                       TRUE ~ "No"))) %>%
+      purrr::map(~ .x %>% mutate(gap = paste0(year_files - gap,"-",year_files))) %>%
+      purrr::map(~ .x %>% select(gap, large_gap))
+    
   }
   
-  urls=urls %>% find_name_from_title()
-  urls= urls %>% mutate(iso3=countrycode::countrycode(country,origin="country.name",destination="iso3c"))
-  urls=urls %>% mutate(title=tolower(title)) %>% dplyr::select(title,pdf,iso3,period,year,name_file)
+  # Provide a final list with number of gaps by country and the dataframe with detail:
   
-  return(urls)
+  gap_character %>% 
+    purrr::discard(~ nrow(.x) == 0) %>% # remove countries with gaps from list
+    purrr::map(~ list(gap_number = nrow(.x),gap_detail = .x)) 
+  
 }
