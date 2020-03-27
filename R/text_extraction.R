@@ -381,7 +381,7 @@ check_gaps_pdfs <- function(general_path = "/Volumes/Elements/IMF documents/", o
   #' check if there are gaps greater than one year in the documents
   
   #'@param general_path path with one subdirectory per individual and for each of them a files subdirectory with pdfs
-  #'@param only_large consider only gaps greater than two years
+  #'@param only_large Logical. Consider only gaps greater than two years. Default is TRUE.
   #'@author Manuel Betin, Umberto Collodel
   #'@return a nested list: for every individual the number of gaps and a dataframe with the details.
   #' 
