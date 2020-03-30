@@ -406,7 +406,7 @@ check_gaps_pdfs <- function(general_path = "/Volumes/Elements/IMF documents/", o
   
   # Attribute country name to each element of the list:
   
-  names(list_year_files) <- names_countries
+  names(list_year_files) <- names_individual
   
   
   # Explicit the year gap - write into character:
