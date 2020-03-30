@@ -2,7 +2,7 @@ print.corpusTM <- function(x,...){
   #' Printing CorpusTM
   #' S3 method for class "corpus.TM"
   #' @param x object of class "corpus.TM"
-  #' @parm optional arguments to ```print```
+  #' @param ... optional arguments to ```print```
   #' @author Manuel Betin, Umberto Collodel
   #' @export
   cat("\n")
