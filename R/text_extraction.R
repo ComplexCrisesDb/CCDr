@@ -145,7 +145,7 @@ aggregate_corpus = function(path_files, ENGINE, only_files = F) {
     path = paste0(path_files, "/", docs[x], ".pdf")
     file <- try({
       pdfinfo = pdf_info(path)
-      ENGINE(path) %>% strsplit(split = "\n")
+      ENGINE(path) 
     }, silent = T)
     if ("try-error" %in% class(file)) {
       warning(paste(docs[[x]], ": Error in path file", sep = ""))
