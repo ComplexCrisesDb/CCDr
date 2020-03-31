@@ -1455,6 +1455,7 @@ lexicon <- function(){
     "background paper", # Background papers: similar to working papers
     "provides background to the paper",
     "attached paper provides background information",
+    "background documentation for",
     "draft issues paper", # Issue papers: similar to working paper
     "selected issues", # Selected issues
     "financial system stability assessment", # Similar to selected issues for financial system
@@ -1463,7 +1464,8 @@ lexicon <- function(){
     "global financial stability report", # found looking through epidemics India
     "debt sustainability analysis", #?
     "triennial surveillance review", # Documents on internal IMF functioning
-    "interim surveillance review"
+    "interim surveillance review",
+    "report on the observance of standard and codes"
   )
   key_words
 }
