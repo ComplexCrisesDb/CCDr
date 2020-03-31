@@ -281,34 +281,28 @@ lexicon <- function(){
     "war damage",
     "insurgency crisis",
     "security crisis",
-    "civil war",
-    "war claims",
-    "war reconstruction",
-    "war recovery",
-    "war strategy",
-    "post conflict assistance",
-    "armed conflict",
-    "oingoing conflict",
-    "atlantic conflict",
-    "military conflict",
-    "armed internal conflict",
-    "ethnic rivalries",
-    "internal conflict",
-    "armed domestic conflict",
-    "israeli conflict",
-    "sahara conflict",
-    "violent conflict",
-    "military conflict",
-    "conflict regions",
-    "conflict zone",
-    "regional conflict",
     "civil conflict",
+    "civil war",
+    "ensuing conflict",
+    "armed conflict",
+    "armed internal conflict",
+    "armed domestic conflict",
+    "oingoing conflict",
+    "violent conflict",
+    "atlantic conflict",
+    "internal conflict",
+    "regional conflict",
     "conflicts in the region",
-    "armed conflicts",
-    "terrorism",
-    "terrorist attacks",
-    "guerilla offensive",
+    "conflict zone",
+    "conflict regions",
+    "military coup",
     "military take-over",
+    "escalated attacks",
+    "breakdown of cease-fire",
+    "ethnic rivalries",
+    "terrorist attacks",
+    "terrorism",
+    "guerilla offensive",
     "continuing external aggression",
     "incidence de la guerre",
     "hostilités"
@@ -322,7 +316,8 @@ lexicon <- function(){
   
   
   key_words[["Migration"]]=c(
-    "refugee",
+    "refugee flows",
+    "influx of refugees",
     "migrants",
     "populatio inflow",
     "asylum",
@@ -335,10 +330,13 @@ lexicon <- function(){
     "drought",
     "record-low levels of rainfall",
     "natural calamities",
-    "virus",
+    "power shortage",
     "natural disaster",
     "earthquake",
-    "hurricane")
+    "hurricane",
+    "typhoon",
+    "adverse weather conditions"
+    )
   
   key_words[["Epidemics"]]=c(
     "epidemics",
@@ -742,7 +740,9 @@ lexicon <- function(){
     "further deterioration in the international environment",
     "uncertain external environment",
     "slowdown in international economy",
-    "fragile global outlook"
+    "fragile global outlook",
+    "international financial turmoil",
+    "sharply deteriorating external conditions"
   )
   
   key_words[["Contagion"]]=c(
@@ -1432,6 +1432,7 @@ lexicon <- function(){
     "minutes of executive board meeting", # Minutes of meeting
     "minutes of executive board minutes",
     "executive board attendance",
+    "final minutes of executive board meeting",
     "this is a working paper", # Working Papers
     "working paper",
     "a working paper of the international monetary fund",
@@ -1441,7 +1442,8 @@ lexicon <- function(){
     "attached paper provides background information",
     "individual economy assessments", #Assessments on multiple countries
     "april 2012 global financial stability report", # found looking through epidemics India
-    "poverty reduction strategy paper"
+    "poverty reduction strategy paper",
+    "debt sustainability analysis"
   )
   
   
