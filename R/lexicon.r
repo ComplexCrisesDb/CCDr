@@ -394,8 +394,9 @@ lexicon <- function(){
   key_words[["Commodity_crisis"]]=c(
     "oil crisis",
     "rice crisis",
+    "crop crisis",
+    "crop failure",
     "severe shortages of rice",
-    "food crisis",
     "terms-of-trade shock",
     "deterioration in the terms of trade",
     "decline in terms of trade",
