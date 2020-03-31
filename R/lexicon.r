@@ -308,8 +308,18 @@ lexicon <- function(){
     "terrorism",
     "terrorist attacks",
     "guerilla offensive",
-    "military take-over"
+    "military take-over",
+    "continuing external aggression",
+    "incidence de la guerre",
+    "hostilités"
   )
+  
+  key_words[["Wars_confusing"]]=c(
+    "since the end of the civil war"
+  )
+  
+  
+  
   
   key_words[["Migration"]]=c(
     "refugee",
