@@ -276,7 +276,7 @@ lexicon <- function(){
   ## EXOGENEOUS SHOCKS: NON ECONOMIC
   #--------
   
-  
+  # State-based conflict, non-state conflict and one-sided violence (difficult to divide).
   key_words[["Wars"]]=c(
     "war damage",
     "insurgency crisis",
@@ -297,6 +297,7 @@ lexicon <- function(){
     "conflict regions",
     "military coup",
     "military take-over",
+    "coup d'etat",
     "escalated attacks",
     "breakdown of cease-fire",
     "ethnic rivalries",
@@ -313,29 +314,31 @@ lexicon <- function(){
   )
   
   
-  
-  
+  # Stemming might improve this category.
   key_words[["Migration"]]=c(
-    "refugee flows",
-    "influx of refugees",
-    "migrants",
-    "populatio inflow",
+    "refugee",
+    "migrant",
+    "migration",
+    "population inflow",
     "asylum",
-    "migration flows",
-    "immigrant"
+    "immigrant",
+    "immigration"
   )
   
   key_words[["Natural_disaster"]]=c(
-    "flooding",
+    "flood",
     "drought",
-    "record-low levels of rainfall",
+    "rainfall",
     "natural calamities",
     "power shortage",
     "natural disaster",
     "earthquake",
     "hurricane",
     "typhoon",
-    "adverse weather conditions"
+    "cyclone",
+    "calamity",
+    "adverse weather conditions",
+    "tsunami"
     )
   
   key_words[["Epidemics"]]=c(
@@ -381,15 +384,19 @@ lexicon <- function(){
     "malaria",
     "influenza",
     "coronavirus",
-    "Covid-19",
+    "covid 19",
     "^flu$",
-    "^plague$"
+    "^plague$",
+    "virus",
+    "infection"
   )
   
   key_words[["Commodity_crisis"]]=c(
     "oil crisis",
     "rice crisis",
+    "severe shortages of rice",
     "food crisis",
+    "terms-of-trade shock",
     "deterioration in the terms of trade",
     "decline in terms of trade",
     "adverse terms of trade",
@@ -432,7 +439,8 @@ lexicon <- function(){
     "domestic energy crisis",
     "fall in prices of raw materials",
     "energy crisis",
-    "fell of agricultural prices"
+    "fell of agricultural prices",
+    "tourism.*suffer"
   )
   
   key_words[["Political_crisis"]]=c(
@@ -441,7 +449,7 @@ lexicon <- function(){
     "political atmosphere",
     "political crisis",
     "political uncertainty",
-    "Political instability",
+    "political instability",
     "political transition spillovers ",
     "political turn-over",
     "policies risks",
@@ -488,7 +496,12 @@ lexicon <- function(){
     "politial risk",
     "facilitate an orderly transition to a new administration",
     "uncertainty about the continuity of policies",
-    "uncertainty regarding future policies")
+    "uncertainty regarding future policies",
+    "unstable political environment",
+    "military coup",
+    "coup d'etat",
+    "annulment of the election",
+    "parliamentary upheavals")
   
   key_words[["Social_crisis"]]=c(
     "social risk",
@@ -1018,7 +1031,8 @@ lexicon <- function(){
     "sharp depreclatlon",
     "currency attack",
     "exchange rate crisis",
-    'unsuccessful attempt to.*maintain the exchange rate unchanged'
+    'unsuccessful attempt to.*maintain the exchange rate unchanged',
+    "foreign currency turmoil"
   )
   
   key_words[["Currency_crisis_confusing"]]=c(
@@ -1428,6 +1442,8 @@ lexicon <- function(){
   #---------
   ## PROBLEMATIC DOCUMENTS TAG
   #---------
+  
+  # Informational annexes still included because part of recent articles IV.
   key_words[["Problematic_documents"]] = c(
     "minutes of executive board meeting", # Minutes of meeting
     "minutes of executive board minutes",
@@ -1436,17 +1452,19 @@ lexicon <- function(){
     "this is a working paper", # Working Papers
     "working paper",
     "a working paper of the international monetary fund",
-    "draft issues paper", # Issue papers
-    "background paper", #Background papers
+    "background paper", # Background papers: similar to working papers
     "provides background to the paper",
     "attached paper provides background information",
-    "individual economy assessments", #Assessments on multiple countries
-    "april 2012 global financial stability report", # found looking through epidemics India
-    "poverty reduction strategy paper",
-    "debt sustainability analysis"
+    "draft issues paper", # Issue papers: similar to working paper
+    "selected issues", # Selected issues
+    "financial system stability assessment", # Similar to selected issues for financial system
+    "poverty reduction strategy paper", # Similar to selected issues for poverty 
+    "individual economy assessments", # Assessments on multiple countries for a single issue
+    "global financial stability report", # found looking through epidemics India
+    "debt sustainability analysis", #?
+    "triennial surveillance review", # Documents on internal IMF functioning
+    "interim surveillance review"
   )
-  
-  
   key_words
 }
 
