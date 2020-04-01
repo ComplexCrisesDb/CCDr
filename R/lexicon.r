@@ -341,6 +341,7 @@ lexicon <- function(){
     "tsunami"
     )
   
+  # Problem of epidemic+virus double counting is avoided with tokenization by sentence. 
   key_words[["Epidemics"]]=c(
     "epidemics",
     "pandemia",
