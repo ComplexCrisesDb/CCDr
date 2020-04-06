@@ -492,7 +492,7 @@ lexicon <- function(){
   
   key_words[["Social_crisis"]]=c(
     "social risk",
-    "social and political turmoil",
+    "social.*turmoil", # originally, social and political turmoil
     "social disruption",
     "social climate as deteriorate",
     "social tension",
@@ -656,33 +656,31 @@ lexicon <- function(){
   
   key_words[["Inflation_crisis"]]=c(
     "inflation pressure",
-    "hyperinflation",
+    "inflationary pressure", # with pressure (plurals taken into account)
+    "high.{10}inflation",
     "high rate of inflation",
-    "contain inflationary pressure",
-    "the rate of inflation accelerate",
+    "severe.{10}inflation",
+    "large.{10}inflation",
+    "unprecedented.{10}inflation", # adj. severity + inflation (quantifier to take into account headline) - check how they use rete of inflation
+    "sharp.{1} increase in domestic prices",
+    "large increase in.{10}prices",
+    "high pressure on.{10}prices",  # adj. severity + increase in domestic prices (quantifier 1 for sharp because of spelling mistakes sharpe)
+    # (quantifier 10 for domestic)
+    "inflation.*critical",
+    "inflation.*unprecedented levels", # inflation + has reached +... special character to control for different patterns
+    "the rate of inflation accelerated sharply", # find pattern for this
+    "inflation crisis",
+    "hyperinflation", # extreme
+    "large monetary creation", # involving monetary creation (also here to find pattern)
+    "combat inflation", # measures to correct 
     "halting inflation",
-    "inflationary pressures",
     "halt to inflation",
     "limit inflationary pressures",
     "efforts against inflation",
     "reduction of inflation",
     "issuing paper money",
-    "inflation has now reached a critical",
-    #"infaltion has reached",
-    "inflation at unprecedented levels",
-    "large monetary creation",
     "lowering the rate of inflation",
-    "pressure on prices",
-    "high inflation",
-    "high headline inflation",
-    "severe inflation",
-    "combat inflation",
-    "cronic inflation",
-    "sharpe increase in domestic prices",
-    "large increase in domestic prices",
-    #"inflationary pressures",
-    "inflationary pressure",
-    "inflation crisis")
+    "cronic inflation")
   
   key_words[["Trade_crisis"]]=c(
     "trade war",
