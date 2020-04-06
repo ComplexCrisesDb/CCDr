@@ -513,7 +513,7 @@ check_diff_pdfs_urls <- function(path, urls_data){
   
   # List of name files from URLs database:
   
-  if(name_file %in% names(urls_data)){
+  if("name_file" %in% names(urls_data)){
   
   tot_list_urls <- urls_data %>% select(name_file) %>% 
     .$name_file
