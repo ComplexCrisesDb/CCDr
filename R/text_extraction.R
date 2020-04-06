@@ -1,5 +1,5 @@
 
-pdf_from_url = function(urls, export_path, engine, overwrite = T) {
+pdf_from_url = function(urls, export_path, overwrite = T) {
   #' download pdf documents 
   #' download from a a dataframe containing the url of the files
   #' the pdf of interest
@@ -126,7 +126,7 @@ aggregate_corpus = function(path_files, ENGINE, only_files = F) {
   
   #' @param path_files the path of the directory with the files
   #' @param ENGINE similar to engine argument in readPDF from 'tm' package. 
-  #' Function to read pdf into environment, either pdf_text or pdf_ocr_text.
+  #' Function to read pdf into environment, either pdf_text or pdf_ocr_text, depending on whether image or not.
   #' @param only_files T/F whether to include in the list only the content or also
   #' the metadata of the pdf file
   #' @author Manuel Betin
@@ -145,7 +145,7 @@ aggregate_corpus = function(path_files, ENGINE, only_files = F) {
     path = paste0(path_files, "/", docs[x], ".pdf")
     file <- try({
       pdfinfo = pdf_info(path)
-      ENGINE(path) %>% strsplit(split = "\n")
+      ENGINE(path) 
     }, silent = T)
     if ("try-error" %in% class(file)) {
       warning(paste(docs[[x]], ": Error in path file", sep = ""))
@@ -406,7 +406,7 @@ check_gaps_pdfs <- function(general_path = "/Volumes/Elements/IMF documents/", o
   
   # Attribute country name to each element of the list:
   
-  names(list_year_files) <- names_countries
+  names(list_year_files) <- names_individual
   
   
   # Explicit the year gap - write into character:

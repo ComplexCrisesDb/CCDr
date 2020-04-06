@@ -276,60 +276,72 @@ lexicon <- function(){
   ## EXOGENEOUS SHOCKS: NON ECONOMIC
   #--------
   
-  
+  # State-based conflict, non-state conflict and one-sided violence (difficult to divide).
   key_words[["Wars"]]=c(
     "war damage",
     "insurgency crisis",
     "security crisis",
-    "civil war",
-    "war claims",
-    "war reconstruction",
-    "war recovery",
-    "war strategy",
-    "post conflict assistance",
-    "armed conflict",
-    "oingoing conflict",
-    "atlantic conflict",
-    "military conflict",
-    "armed internal conflict",
-    "ethnic rivalries",
-    "internal conflict",
-    "armed domestic conflict",
-    "israeli conflict",
-    "sahara conflict",
-    "violent conflict",
-    "military conflict",
-    "conflict regions",
-    "conflict zone",
-    "regional conflict",
     "civil conflict",
+    "civil war",
+    "ensuing conflict",
+    "armed conflict",
+    "armed internal conflict",
+    "armed domestic conflict",
+    "oingoing conflict",
+    "violent conflict",
+    "atlantic conflict",
+    "internal conflict",
+    "regional conflict",
     "conflicts in the region",
-    "armed conflicts",
-    "terrorism",
+    "conflict zone",
+    "conflict regions",
+    "military coup",
+    "military take-over",
+    "coup d'etat",
+    "escalated attacks",
+    "breakdown of cease-fire",
+    "ethnic rivalries",
     "terrorist attacks",
+    "terrorism",
     "guerilla offensive",
-    "military take-over"
+    "continuing external aggression",
+    "incidence de la guerre",
+    "hostilités"
   )
   
+  key_words[["Wars_confusing"]]=c(
+    "since the end of the civil war"
+  )
+  
+  
+  # Stemming might improve this category.
   key_words[["Migration"]]=c(
     "refugee",
-    "migrants",
-    "populatio inflow",
+    "migrant",
+    "migration",
+    "population inflow",
     "asylum",
-    "migration flows",
-    "immigrant"
+    "immigrant",
+    "immigration"
   )
   
   key_words[["Natural_disaster"]]=c(
-    "flooding",
+    "flood",
     "drought",
-    "record-low levels of rainfall",
+    "rainfall",
     "natural calamities",
-    "virus",
+    "power shortage",
     "natural disaster",
     "earthquake",
-    "hurricane")
+    "hurricane",
+    "typhoon",
+    "cyclone",
+    "calamity",
+    "adverse weather conditions",
+    "tsunami"
+    )
   
+  # Problem of epidemic+virus double counting is avoided with tokenization by sentence. 
   key_words[["Epidemics"]]=c(
     "epidemics",
     "pandemia",
@@ -373,58 +385,54 @@ lexicon <- function(){
     "malaria",
     "influenza",
     "coronavirus",
-    "Covid-19",
+    "covid 19",
     "^flu$",
-    "^plague$"
+    "^plague$",
+    "virus",
+    "infection"
   )
   
   key_words[["Commodity_crisis"]]=c(
     "oil crisis",
     "rice crisis",
-    "food crisis",
+    "crop crisis",
+    "crop failure",
+    "commodity crisis",
+    "energy crisis",
+    "cotton crisis",
+    "crisis in the cotton",
+    "severe shortages{1} of rice",
+    "fall in prices of raw materials",
+    "price of copper continue to drop",
+    "swing in copper price",
+    "weakness in the copper price",
+    "adverse movement in the price of copper",
+    "decline in coffee prices",
+    "decline in international coffee prices",
+    "drop in world coffee price",
+    "fell of agricultural prices",
+    "tourism.*suffer",
+    "terms-of-trade shock",
     "deterioration in the terms of trade",
-    "decline in terms of trade",
+    "deteriorating terms of trade",
     "adverse terms of trade",
     "terms of trade loss",
     "unfavorable terms of trade",
     "severe drop in terms of trade",
-    "severe terms of trade shocks",
-    "vulnerability to terms of trade shocks",
-    "collapse in international prices",
+    "severe terms of trade drop",
+    "severe terms of trade shock",
     "significant terms of trade loss",
-    "terms of trade declined",
-    "terms of trade drop",
+    "sharp fall in its terms of trade",
     'large terms of trade loss',
+    "adverse movement in the terms of trade",
+    "terms of trade were adversely affected",
     "dependenceon oil-related revenue",
     "budgetary dependency on oil revenue",
-    "negative terms of trade",
-    "terms of trade worsen",
-    "crisis in the cotton",
-    "sharp fall in its terms of trade",
     "increase in world oil prices",
-    "decline in international coffee prices",
-    "terms of trade were adversely affected",
     "drop in world coffee price",
     "oil price increase",
     "fluctuations in oil prices",
-    "decline in coffee prices",
-    "decline in the terms of trade",
-    "increase in petroleum price",
-    "Terms of trade shock",
-    "adverse movement in the terms of trade",
-    "adverse movement in the price of copper",
-    "weakness in the copper price",
-    "decline in the copper price",
-    "swing in copper price",
-    "price of copper continue to drop",
-    "fluctuations in the terms of trade",
-    "deteriorating terms of trade",
-    "commodity crisis",
-    "movements in commodity prices",
-    "domestic energy crisis",
-    "fall in prices of raw materials",
-    "energy crisis",
-    "fell of agricultural prices"
+    "increase in petroleum price"
   )
   
   key_words[["Political_crisis"]]=c(
@@ -433,7 +441,7 @@ lexicon <- function(){
     "political atmosphere",
     "political crisis",
     "political uncertainty",
-    "Political instability",
+    "political instability",
     "political transition spillovers ",
     "political turn-over",
     "policies risks",
@@ -480,7 +488,12 @@ lexicon <- function(){
     "politial risk",
     "facilitate an orderly transition to a new administration",
     "uncertainty about the continuity of policies",
-    "uncertainty regarding future policies")
+    "uncertainty regarding future policies",
+    "unstable political environment",
+    "military coup",
+    "coup d'etat",
+    "annulment of the election",
+    "parliamentary upheavals")
   
   key_words[["Social_crisis"]]=c(
     "social risk",
@@ -732,7 +745,9 @@ lexicon <- function(){
     "further deterioration in the international environment",
     "uncertain external environment",
     "slowdown in international economy",
-    "fragile global outlook"
+    "fragile global outlook",
+    "international financial turmoil",
+    "sharply deteriorating external conditions"
   )
   
   key_words[["Contagion"]]=c(
@@ -1008,7 +1023,8 @@ lexicon <- function(){
     "sharp depreclatlon",
     "currency attack",
     "exchange rate crisis",
-    'unsuccessful attempt to.*maintain the exchange rate unchanged'
+    'unsuccessful attempt to.*maintain the exchange rate unchanged',
+    "foreign currency turmoil"
   )
   
   key_words[["Currency_crisis_confusing"]]=c(
@@ -1418,23 +1434,31 @@ lexicon <- function(){
   #---------
   ## PROBLEMATIC DOCUMENTS TAG
   #---------
+  
+  # Informational annexes still included because part of recent articles IV.
   key_words[["Problematic_documents"]] = c(
     "minutes of executive board meeting", # Minutes of meeting
     "minutes of executive board minutes",
     "executive board attendance",
+    "final minutes of executive board meeting",
     "this is a working paper", # Working Papers
     "working paper",
     "a working paper of the international monetary fund",
-    "draft issues paper", # Issue papers
-    "background paper", #Background papers
+    "background paper", # Background papers: similar to working papers
     "provides background to the paper",
     "attached paper provides background information",
-    "individual economy assessments", #Assessments on multiple countries
-    "april 2012 global financial stability report", # found looking through epidemics India
-    "poverty reduction strategy paper"
+    "background documentation for",
+    "draft issues paper", # Issue papers: similar to working paper
+    "selected issues", # Selected issues
+    "financial system stability assessment", # Similar to selected issues for financial system
+    "poverty reduction strategy paper", # Similar to selected issues for poverty 
+    "individual economy assessments", # Assessments on multiple countries for a single issue
+    "global financial stability report", # found looking through epidemics India
+    "debt sustainability analysis", #?
+    "triennial surveillance review", # Documents on internal IMF functioning
+    "interim surveillance review",
+    "report on the observance of standard and codes"
   )
-  
-  
   key_words
 }
 
