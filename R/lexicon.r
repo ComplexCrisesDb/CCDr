@@ -657,30 +657,32 @@ lexicon <- function(){
   key_words[["Inflation_crisis"]]=c(
     "inflation pressure",
     "inflationary pressure", # with pressure (plurals taken into account)
-    "high.{10}inflation",
+    "high.{0,10}inflation",
     "high rate of inflation",
-    "severe.{10}inflation",
-    "large.{10}inflation",
+    "severe.{0,10}inflation",
+    "large.{0,10}inflation",
+    "virulence.{0,10}inflation",
     "unprecedented.{10}inflation", # adj. severity + inflation (quantifier to take into account headline) - check how they use rete of inflation
-    "sharp.{1} increase in domestic prices",
-    "large increase in.{10}prices",
-    "high pressure on.{10}prices",  # adj. severity + increase in domestic prices (quantifier 1 for sharp because of spelling mistakes sharpe)
+    "sharp.{0,2}increase in domestic prices",
+    "large increase in.{0,10}prices",
+    "high pressure on.{0,10}prices",  # adj. severity + increase in domestic prices (quantifier 1 for sharp because of spelling mistakes sharpe)
     # (quantifier 10 for domestic)
     "inflation.*critical",
     "inflation.*unprecedented levels", # inflation + has reached +... special character to control for different patterns
-    "the rate of inflation accelerated sharply", # find pattern for this
+    "despite the acceleration of inflation",
+    "the rate of inflation accelerated sharply", # acceleration - find pattern for this
     "inflation crisis",
     "hyperinflation", # extreme
     "large monetary creation", # involving monetary creation (also here to find pattern)
     "combat inflation", # measures to correct 
     "halting inflation",
     "halt to inflation",
-    "limit inflationary pressures",
     "efforts against inflation",
-    "reduction of inflation",
-    "issuing paper money",
+    "quick reduction.*inflation",
+    "inflation down quickly",
     "lowering the rate of inflation",
-    "cronic inflation")
+    'entrenchment of inflationary behavior')
+  
   
   key_words[["Trade_crisis"]]=c(
     "trade war",
