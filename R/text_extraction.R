@@ -492,3 +492,40 @@ add_to_corpus <- function(old_corpus_path, files_updated_path, ENGINE){
   return(final_corpus)
 }
 
+
+
+check_diff_pdfs_urls <- function(path, urls_data){
+  #' Check difference between pdfs downloaded and original urls
+  #' Check difference between pdfs downloaded and original urls
+  #' @param path path to all individual units subdirectories.
+  #' @param urls_data dataframe. original urls, must have at least a column named "name_file".
+  #' @author Manuel Betin, Umberto Collodel
+  #' @export
+  
+  # List of pdfs downloaded:
+  
+  tot_list_pdfs <- list.files(path) %>% 
+    str_subset("[A-Z]{3}") %>% 
+    map_chr(~ paste0(path,.x,"/files")) %>% 
+    map(~ list.files(.x)) %>% 
+    modify_depth(2, ~ .x %>% str_remove(".pdf")) %>% 
+    reduce(`c`)
+  
+  # List of name files from URLs database:
+  
+  if(name_file %in% names(urls_data)){
+  
+  tot_list_urls <- urls_data %>% select(name_file) %>% 
+    .$name_file
+  }
+  else{
+    cat(crayon::red("The url dataframe supplied has no column 'name_file'"))
+  }
+  
+  # Comparison:
+  
+  setdiff(tot_list_urls, tot_list_pdfs)
+  
+  
+}
+
