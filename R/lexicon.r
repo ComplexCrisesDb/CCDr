@@ -318,17 +318,19 @@ lexicon <- function(){
   key_words[["Migration"]]=c(
     "refugee",
     "migrant",
-    "migration",
+    "inward migration",
     "population inflow",
     "asylum",
     "immigrant",
     "immigration"
   )
   
+
   key_words[["Natural_disaster"]]=c(
     "flood",
     "drought",
     "rainfall",
+    "torrential rains",
     "natural calamities",
     "power shortage",
     "natural disaster",
@@ -349,7 +351,7 @@ lexicon <- function(){
     "pandemic",
     "virus",
     "infection",
-    "^flu$",
+    "\\sflu\\s",
     "relapsing fever",
     "typhoid fever",
     "leishmaniasis",
@@ -360,20 +362,20 @@ lexicon <- function(){
     "measles",
     "zika",
     "encephalitis",
-    "sars",
-    "mers",
+    "sars$",
+    "\\smers\\s",
     "nipah",
     "vcjd",
-    "hiv",
+    "\\shiv\\s",
+    "hiv/aids",
     "typhus",
     "hepatitis",
-    "sras",
     "h1n1",
     "h5n1",
     "ebola",
-    "^sida$",
+    "\\ssida\\s",
     "rotavirus",
-    "lyme",
+    "\\slyme\\s",
     "hepatite",
     "chikungunya",
     "dysenteria",
@@ -384,7 +386,7 @@ lexicon <- function(){
     "malaria",
     "coronavirus",
     "covid 19",
-    "^plague$"
+    "\\splague\\s"
   )
   
   key_words[["Commodity_crisis"]]=c(
@@ -488,7 +490,8 @@ lexicon <- function(){
     "military coup",
     "coup d'etat",
     "annulment of the election",
-    "parliamentary upheavals")
+    "parliamentary upheavals",
+    "critical political.*juncture") # political and economical
   
   key_words[["Social_crisis"]]=c(
     "social risk",
@@ -1444,8 +1447,8 @@ lexicon <- function(){
     "attached paper provides background information",
     "background documentation for",
     "draft issues paper", # Issue papers: similar to working paper
-    "selected issues", # Selected issues
-    "financial system stability assessment", # Similar to selected issues for financial system
+    "(?<!the documents listed below have been or will be separately released. )selected issues", # Selected issues
+    "(?<!the documents listed below have been or will be separately released. selected issues )financial system stability assessment", # Similar to selected issues for financial system
     "poverty reduction strategy paper", # Similar to selected issues for poverty 
     "individual economy assessments", # Assessments on multiple countries for a single issue
     "global financial stability report", # found looking through epidemics India
