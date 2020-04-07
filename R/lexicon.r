@@ -504,8 +504,11 @@ lexicon <- function(){
     "social climate as deteriorate",
     "social tension",
     "protest",
-    "strike",
-    "deteriorating social climate"
+    "railroad-transport strike",
+    "deteriorating social climate",
+    "blockade",
+    "social unrest",
+    "walkouts"
   )
   
   
@@ -881,7 +884,8 @@ lexicon <- function(){
     "pressures on confidence",
     "self-fulfilling",
     "shifts in investor sentiment",
-    "bolstering market confidence"
+    "bolstering market confidence",
+    "confidence crisis"
   )
   
   
