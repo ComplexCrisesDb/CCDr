@@ -305,8 +305,7 @@ lexicon <- function(){
     "terrorism",
     "guerilla offensive",
     "continuing external aggression",
-    "incidence de la guerre",
-    "hostilités"
+    "incidence de la guerre"
   )
   
   key_words[["Wars_confusing"]]=c(

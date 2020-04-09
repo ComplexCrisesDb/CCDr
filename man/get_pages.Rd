@@ -2,7 +2,9 @@
 % Please edit documentation in R/text_extraction.R
 \name{get_pages}
 \alias{get_pages}
-\title{Find the page where words a located}
+\title{Find the page where words a located
+Provide files either pdf of html and return the paragraphs matching the
+targetted word}
 \usage{
 get_pages(file, targetword)
 }
@@ -17,6 +19,7 @@ search and count for in the text}
 a list of strings of characters where words have been found.
 }
 \description{
+Find the page where words a located
 Provide files either pdf of html and return the paragraphs matching the
 targetted word
 }

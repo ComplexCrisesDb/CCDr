@@ -2,7 +2,8 @@
 % Please edit documentation in R/text_extraction.R
 \name{pdf_page_count}
 \alias{pdf_page_count}
-\title{count the number of pages in the pdf}
+\title{count the number of pages in the pdf
+count the number of pages in the pdf}
 \usage{
 pdf_page_count(files)
 }
@@ -13,6 +14,7 @@ pdf_page_count(files)
 the number of pages in the document
 }
 \description{
+count the number of pages in the pdf
 count the number of pages in the pdf
 }
 \author{
