@@ -366,7 +366,7 @@ lexicon <- function(){
     "measles",
     "zika",
     "encephalitis",
-    "sars$",
+    "\\ssars\\s",
     "\\smers\\s",
     "nipah",
     "vcjd",
