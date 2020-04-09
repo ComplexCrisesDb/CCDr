@@ -508,7 +508,8 @@ lexicon <- function(){
     "deteriorating social climate",
     "blockade",
     "social unrest",
-    "walkouts"
+    "walkouts",
+    "events of may-june 1968" #removed strike: misleading and in any case accompanied by other words.
   )
   
   
