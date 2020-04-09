@@ -375,6 +375,7 @@ check_extract=function(path_urls="../Betin_Collodel/2. Text mining IMF_data/data
 
 
 get_imf_country_reports=function(npages=NULL){
+  
   #' download the url of the country reports from the imf website
   #' @description Provide the urls to download the imf country reports from
   #' https://www.imf.org/en/Publications/CR/
@@ -382,6 +383,7 @@ get_imf_country_reports=function(npages=NULL){
   #' that he will find. to download only the most recent set npages=1
   #' @author Manuel Betin
   #' @return dataframe with the title of the document, the name of the file and the url of the file
+  #' 
   #' @export 
   #' 
   #' 
