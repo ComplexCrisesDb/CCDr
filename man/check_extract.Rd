@@ -2,7 +2,9 @@
 % Please edit documentation in R/text_extraction.R
 \name{check_extract}
 \alias{check_extract}
-\title{find attrition in the NLP process}
+\title{check the validity of each steps in the scripts to see what documents are lost
+in each step of the process from the download, to the 
+text mining and finally to the merging with the rest of the variables}
 \usage{
 
   check_extract(path_urls = "../Betin_Collodel/2. Text mining IMF_data/datasets/urls docs/urls_Requests_Reviews_articleIV.RData",

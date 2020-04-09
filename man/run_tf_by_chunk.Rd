@@ -37,6 +37,8 @@ the text mining}
 \item{parrallel}{if T then will use mclapply from the package parrallel}
 
 \item{loc_temp}{path to the folder containing the files, corpus and tf}
+
+\item{ENGINE}{function to read pdf into environment. Either pdf_text or pdf_ocr_text.}
 }
 \value{
 create forlders where pdfs, corpus and tf-idf matrix are stored

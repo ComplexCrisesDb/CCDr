@@ -2,7 +2,9 @@
 % Please edit documentation in R/text_extraction.R
 \name{eval_pages}
 \alias{eval_pages}
-\title{Look for the presence of the targetword into a character string}
+\title{Look for the presence of the targetword into a character string
+Provide list of files and return summary of counts of occurence of the
+target world}
 \usage{
 eval_pages(files, targetword, brute_freq = F, parrallel = T)
 }
@@ -24,6 +26,7 @@ parrallele computing from the package "parrallele"
 @export}
 }
 \description{
+Look for the presence of the targetword into a character string
 Provide list of files and return summary of counts of occurence of the
 target world
 }
