@@ -317,17 +317,19 @@ lexicon <- function(){
   key_words[["Migration"]]=c(
     "refugee",
     "migrant",
-    "migration",
+    "inward migration",
     "population inflow",
     "asylum",
     "immigrant",
     "immigration"
   )
   
+
   key_words[["Natural_disaster"]]=c(
     "flood",
     "drought",
     "rainfall",
+    "torrential rains",
     "natural calamities",
     "power shortage",
     "natural disaster",
@@ -340,41 +342,44 @@ lexicon <- function(){
     "tsunami"
     )
   
+  key_words[["Natural_disaster_confusing"]]=c(
+    "easing of drought"
+  )
+  
   # Problem of epidemic+virus double counting is avoided with tokenization by sentence. 
   key_words[["Epidemics"]]=c(
-    "epidemics",
+    "epidemic",
+    "epidemia",
     "pandemia",
+    "pandemic",
+    "virus",
+    "infection",
+    "\\sflu\\s",
+    "relapsing fever",
+    "typhoid fever",
     "leishmaniasis",
-    "dengue fever",
-    "chikungunya",
+    "dengue",
     "mumps",
     "meningitis",
     "poliomyelitis",
     "measles",
     "zika",
     "encephalitis",
-    "sars",
+    "\\ssars\\s",
+    "\\smers\\s",
     "nipah",
-    "vCJD",
-    "HIV",
-    "smallpox",
-    "Relapsing fever",
-    "typhoid fever",
+    "vcjd",
+    "\\shiv\\s",
+    "hiv/aids",
     "typhus",
     "hepatitis",
-    "SRAS",
-    "H1N1",
-    "virus",
-    "epidemy",
-    "epidemic",
-    "epidemia",
-    "avian flu",
+    "h1n1",
+    "h5n1",
     "ebola",
-    "^sida$",
+    "\\ssida\\s",
     "rotavirus",
-    "Lyme",
+    "\\slyme\\s",
     "hepatite",
-    "H5N1",
     "chikungunya",
     "dysenteria",
     "dysentery",
@@ -382,13 +387,9 @@ lexicon <- function(){
     "yellow fever",
     "cholera",
     "malaria",
-    "influenza",
     "coronavirus",
     "covid 19",
-    "^flu$",
-    "^plague$",
-    "virus",
-    "infection"
+    "\\splague\\s"
   )
   
   key_words[["Commodity_crisis"]]=c(
@@ -492,17 +493,22 @@ lexicon <- function(){
     "military coup",
     "coup d'etat",
     "annulment of the election",
-    "parliamentary upheavals")
+    "parliamentary upheavals",
+    "critical political.*juncture") # political and economical
   
   key_words[["Social_crisis"]]=c(
     "social risk",
-    "social and political turmoil",
+    "social.*turmoil", # originally, social and political turmoil
     "social disruption",
     "social climate as deteriorate",
     "social tension",
     "protest",
-    "strike",
-    "deteriorating social climate"
+    "railroad-transport strike",
+    "deteriorating social climate",
+    "blockade",
+    "social unrest",
+    "walkouts",
+    "events of may-june 1968" #removed strike: misleading and in any case accompanied by other words.
   )
   
   
@@ -660,33 +666,33 @@ lexicon <- function(){
   
   key_words[["Inflation_crisis"]]=c(
     "inflation pressure",
-    "hyperinflation",
+    "inflationary pressure", # with pressure (plurals taken into account)
+    "high.{0,10}inflation",
     "high rate of inflation",
-    "contain inflationary pressure",
-    "the rate of inflation accelerate",
+    "severe.{0,10}inflation",
+    "large.{0,10}inflation",
+    "virulence.{0,10}inflation",
+    "unprecedented.{10}inflation", # adj. severity + inflation (quantifier to take into account headline) - check how they use rete of inflation
+    "sharp.{0,2}increase in domestic prices",
+    "large increase in.{0,10}prices",
+    "high pressure on.{0,10}prices",  # adj. severity + increase in domestic prices (quantifier 1 for sharp because of spelling mistakes sharpe)
+    # (quantifier 10 for domestic)
+    "inflation.*critical",
+    "inflation.*unprecedented levels", # inflation + has reached +... special character to control for different patterns
+    "despite the acceleration of inflation",
+    "the rate of inflation accelerated sharply", # acceleration - find pattern for this
+    "inflation crisis",
+    "hyperinflation", # extreme
+    "large monetary creation", # involving monetary creation (also here to find pattern)
+    "combat inflation", # measures to correct 
     "halting inflation",
-    "inflationary pressures",
     "halt to inflation",
-    "limit inflationary pressures",
     "efforts against inflation",
-    "reduction of inflation",
-    "issuing paper money",
-    "inflation has now reached a critical",
-    #"infaltion has reached",
-    "inflation at unprecedented levels",
-    "large monetary creation",
+    "quick reduction.*inflation",
+    "inflation down quickly",
     "lowering the rate of inflation",
-    "pressure on prices",
-    "high inflation",
-    "high headline inflation",
-    "severe inflation",
-    "combat inflation",
-    "cronic inflation",
-    "sharpe increase in domestic prices",
-    "large increase in domestic prices",
-    #"inflationary pressures",
-    "inflationary pressure",
-    "inflation crisis")
+    'entrenchment of inflationary behavior')
+  
   
   key_words[["Trade_crisis"]]=c(
     "trade war",
@@ -878,7 +884,8 @@ lexicon <- function(){
     "pressures on confidence",
     "self-fulfilling",
     "shifts in investor sentiment",
-    "bolstering market confidence"
+    "bolstering market confidence",
+    "confidence crisis"
   )
   
   
@@ -1448,8 +1455,8 @@ lexicon <- function(){
     "attached paper provides background information",
     "background documentation for",
     "draft issues paper", # Issue papers: similar to working paper
-    "selected issues", # Selected issues
-    "financial system stability assessment", # Similar to selected issues for financial system
+    "(?<!the documents listed below have been or will be separately released. )selected issues", # Selected issues
+    "(?<!the documents listed below have been or will be separately released. selected issues )financial system stability assessment", # Similar to selected issues for financial system
     "poverty reduction strategy paper", # Similar to selected issues for poverty 
     "individual economy assessments", # Assessments on multiple countries for a single issue
     "global financial stability report", # found looking through epidemics India

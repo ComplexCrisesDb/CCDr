@@ -437,3 +437,95 @@ check_gaps_pdfs <- function(general_path = "/Volumes/Elements/IMF documents/", o
     purrr::map(~ list(gap_number = nrow(.x),gap_detail = .x)) 
   
 }
+
+
+add_to_corpus <- function(old_corpus_path, files_updated_path, ENGINE){
+  #' Add new files to a corpus
+  #' Add new files to a corpus without reaggregating everything
+  #' @param old_corpus_path path to old corpus. List
+  #' @param files_updated_path directory with some new pdfs.
+  #' @param ENGINE similar to engine argument in readPDF from 'tm' package. 
+  #' Function to read pdf into environment, either pdf_text or pdf_ocr_text, depending on whether image or not.
+  #' @author Manuel Betin, Umberto Collodel
+  #' @export
+  
+  old_corpus <- rio::import(old_corpus_path)
+  stopifnot(is.list(old_corpus))
+  
+  # Find files not included in the old corpus: 
+  
+  names_prexisting <- names(old_corpus)
+  names_new <- list.files(files_updated_path) %>% 
+    stringr::str_remove(".pdf")
+  
+  names_new_docs <- setdiff(names_new, names_prexisting)  
+  
+  # Aggregate the new files:
+  
+  count = 0
+  
+  new_corpus <- names_new_docs %>% 
+    map_chr(~ paste0(new_files_path,"/",.x,".pdf")) %>%
+    map( function(x){ 
+      count <<- count + 1
+      tictoc::tic(paste0(count, "/", length(names_new_docs), " ", x))
+      file <- tryCatch(ENGINE(x), error = function(e){
+        cat(crayon::red("Error aggregating new document: ",x,"\n"))
+      })
+      tictoc::toc()
+      clean_text(file)
+    }
+    )
+  
+  # Assign names:
+  
+  names(new_corpus) <- names_new_docs
+  
+  # Add elements to the list and sort by element name:
+  
+  final_corpus <- c(new_corpus,corpus)
+  final_corpus <- final_corpus[order(names(final_corpus))] 
+  
+  # Change class:
+  
+  attr(final_corpus,"class") <- c("corpusTM","list")
+  return(final_corpus)
+}
+
+
+
+check_diff_pdfs_urls <- function(path, urls_data){
+  #' Check difference between pdfs downloaded and original urls
+  #' Check difference between pdfs downloaded and original urls
+  #' @param path path to all individual units subdirectories.
+  #' @param urls_data dataframe. original urls, must have at least a column named "name_file".
+  #' @author Manuel Betin, Umberto Collodel
+  #' @export
+  
+  # List of pdfs downloaded:
+  
+  tot_list_pdfs <- list.files(path) %>% 
+    str_subset("[A-Z]{3}") %>% 
+    map_chr(~ paste0(path,.x,"/files")) %>% 
+    map(~ list.files(.x)) %>% 
+    modify_depth(2, ~ .x %>% str_remove(".pdf")) %>% 
+    reduce(`c`)
+  
+  # List of name files from URLs database:
+  
+  if("name_file" %in% names(urls_data)){
+  
+  tot_list_urls <- urls_data %>% select(name_file) %>% 
+    .$name_file
+  }
+  else{
+    cat(crayon::red("The url dataframe supplied has no column 'name_file'"))
+  }
+  
+  # Comparison:
+  
+  setdiff(tot_list_urls, tot_list_pdfs)
+  
+  
+}
+
