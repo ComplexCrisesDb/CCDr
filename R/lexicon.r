@@ -279,6 +279,7 @@ lexicon <- function(){
   # State-based conflict, non-state conflict and one-sided violence (difficult to divide).
   key_words[["Wars"]]=c(
     "war damage",
+    "war-damaged",
     "insurgency crisis",
     "security crisis",
     "civil conflict",
@@ -338,7 +339,7 @@ lexicon <- function(){
     "calamity",
     "adverse weather conditions",
     "tsunami"
-    )
+  )
   
   # Problem of epidemic+virus double counting is avoided with tokenization by sentence. 
   key_words[["Epidemics"]]=c(
@@ -377,6 +378,9 @@ lexicon <- function(){
     "H5N1",
     "chikungunya",
     "dysenteria",
+    "avian influenza",
+    "zoonoses",
+    "infectious disease",
     "dysentery",
     "smallpox",
     "yellow fever",
@@ -506,9 +510,48 @@ lexicon <- function(){
   )
   
   
+  key_words[["Labormarket_boom"]]=c(
+    "low unemployment",
+    "decline in unemployment",
+    "wage pressure",
+    "rising employment")
+  
+  key_words[["Labormarket_crisis"]]=c(
+    "unemployment rate jumped",
+    "increased layoffs"
+  )
+  
   #--------
   ## EXOGENEOUS SHOCKS; ECONOMIC
   #--------
+  
+  
+  
+  key_words[["Nuclear_accident"]]=c(
+    "nuclear disaster",
+    "nuclear accident",
+    "nuclear damage")
+  
+  key_words[["Cyber_attack"]]=c(
+    "cyber attack",
+    "hacking",
+    "hackers")
+  
+  
+  key_words[["Credit_boom"]]=c(
+    "strong credit growth",
+    "credit expansion",
+    "rapid credit growth",
+    'credit-driven domestic boom',
+    "vigorous credit growth",
+    "rapid accumulation of household debt")
+  
+  
+  key_words[["Housing_boom"]]=c(
+    "real estate boom",
+    "rising housing price",
+    "increase in house price",
+    "increase in real estate price")
   
   key_words[["Housing_crisis"]]=c(
     "home prices have been declining",
@@ -516,6 +559,7 @@ lexicon <- function(){
     "house price trends",
     "home-price overvaluation",
     "real house prices declining",
+    "cooled the property market",
     "foreclosures",
     "house price inflation",
     "house-price inflation",
@@ -524,6 +568,7 @@ lexicon <- function(){
     "home-price declines",
     "house-price declines",
     "house prices fall",
+    "housing market correction",
     "stalling house prices",
     "slower house price",
     "slowing housing wealth",
@@ -819,6 +864,14 @@ lexicon <- function(){
     "linkage with the US",
     "contagion effects of the Thai crisis")
   
+  
+  key_words[["Positive_expectations"]]=c(
+    "positive expectations",
+    "vibrant business environment",
+    "favorable investment climate",
+    "high level of market confidence")
+  
+  
   key_words[["Expectations"]]=c(
     "crisis risks",
     "market reversal",
@@ -1073,10 +1126,13 @@ lexicon <- function(){
     "monetary tightening",
     "restrictive monetary policy",
     "tighten monetary policy",
+    "restrictive monetary policy",
     "control monetary aggregate",
     "tighten monetary conditions",
     "tightening of interest rate",
     "increase interest rate",
+    "tighter lending conditions",
+    "higher interest rates",
     "tightening of monetary policy",
     "increase in interest rates"
   )
@@ -1159,6 +1215,7 @@ lexicon <- function(){
     "exceptionally high rate of economic growth",
     "very strong fundamentals",
     "high rate of economic growth",
+    "high GDP growth",
     "economic activity remains robust",
     "strong economic growth",
     "economy performed well",
@@ -1179,8 +1236,40 @@ lexicon <- function(){
     "overheating of the economy",
     "domestic demand expansion",
     "The economy continued to perform strongly",
-    "strong economic performance")
+    "strong economic performance",
+    "high competitivitness",
+    "rapid real convergence",
+    "economy is currently running over its potential",
+    "economy that is growing above potential",
+    "buyant investments",
+    "optimistic outlook",
+    "competitivitness remain solid",
+    "stable growth path",
+    "economic overheating",
+    "rapid economic growth",
+    "output above potential",
+    "rapid economic expansion",
+    "overheating pressures",
+    "economic success",
+    "GDP growth above potential",
+    "remarkable economic performance",
+    "overheated economy",
+    "over-heated economy",
+    "strong growth performance",
+    "economy is overheating",
+    "contain demand pressures")
   
+  
+  key_words[["Poverty_crisis"]]=c(
+    "poverty",
+    "the poor",
+    "basic access",
+    "pro-poor",
+    "social hardship",
+    "food security",
+    "low income familly",
+    "living condition"
+  )
   
   
   #---------
@@ -1248,12 +1337,35 @@ lexicon <- function(){
     "policy stimulus",
     "external sovereign bond buybacks")
   
+  
+  key_words[["Low_public_debt"]]=c("low level of public debt",
+                                  "low public debt",
+                                  "negligible public debt",
+                                  "strong fiscal position",
+                                  "low gross government debt",
+                                  "fiscal position is strong",
+                                  "outstanding record of fiscal policy",
+                                  'strong fiscal outcomes')
+  
+  
+  key_words[["Fiscal_stimulus"]]=c("fiscal_stimulus",
+                                   "fiscal boost",
+                                   "fiscal package",
+                                   "fiscal support",
+                                   "fiscal loosening",
+                                   "positive fiscal impulse",
+                                   "expansionary fiscal stance")
+  
+  
+  
   key_words[["Fiscal_consolidation"]]=c(
     "overall deficit of the public sector is to be reduced",
     "Maintaining tight financialpolicies",
     "fiscal consolidation",
     "fiscal adjustment effort",
     "tightening of fiscal policy",
+    "tight fiscal stance",
+    "budget surplus",
     "reduction in public debt",
     "reduce public sector deficit",
     "containing expenditures",
@@ -1333,7 +1445,8 @@ lexicon <- function(){
     "package of fiscal measures",
     "additional fiscal measures",
     "primary fiscal balance",
-    "monitoring of the fiscal performance"
+    "monitoring of the fiscal performance",
+    "firm fiscal policy"
   )
   
   key_words[["Concessional_lending"]]=c(
@@ -1489,27 +1602,27 @@ lexicon_typology = function() {
   
   adjustment_program = c("Deregulation", "Reform_agenda", "Trade_reforms", 
                          "Financial_reforms", "Labor_market_reforms", "Tax_reforms", "Banking_reforms", 
-                         "Fiscal_consolidation", "Success_of_reforms")
+                         "Fiscal_consolidation", "Success_of_reforms","Fiscal_stimulus")
   
   characteristics_program = c("Performance_criterion", "Program_extension", 
                               "Official_support", "Technical_assistance", "Precautionary_programs")
   
   economic_shock = c("Banking_crisis","Banking_crisis_severe", "Financial_crisis", "Inflation_crisis", 
-                     "Trade_crisis", "World_outcomes", "Contagion", "Expectations", 
-                     "Balance_payment_crisis", "Reduction_reserves", "Currency_crisis","Currency_crisis_severe", "Severe_recession", 
-                     "Soft_recession", "Expansion","Housing_crisis")
+                     "Trade_crisis", "World_outcomes", "Contagion", "Expectations", "Housing_crisis",
+                     "Balance_payment_crisis", "Currency_crisis","Currency_crisis_severe", "Severe_recession", 
+                     "Soft_recession", "Expansion","Fiscal_outcomes", "Sovereign_default","Labormarket_crisis",
+                     "Labormarket_boom","Credit_boom","Housing_boom","Expansion","Low_public_debt","poverty_crisis",
+                     "Positive_expectations")
   
   non_economic_shock = c("Wars", "Natural_disaster", "Commodity_crisis", "Political_crisis", 
-                         "Social_crisis","Epidemics")
-  
-  debt_outcomes = c("Fiscal_outcomes", "Sovereign_default")
+                         "Social_crisis","Epidemics","Cyber_attack","Nuclear_accident")
   
   debt_structure = c("Concessional_lending", "Short_term_debt", "Floating_rate_debt", 
                      "Foreign_debt", "Track_record")
   
   type = unlist(list(adjustment_program = adjustment_program, characteristics_program = characteristics_program, 
                      economic_shock = economic_shock, non_economic_shock = non_economic_shock, 
-                     debt_outcomes = debt_outcomes, debt_structure = debt_structure))
+                      debt_structure = debt_structure))
   
   type = data.frame(type)
   type$Type = rownames(type)
@@ -1518,22 +1631,27 @@ lexicon_typology = function() {
   
   # typology in terms of Economic domain
   
-  Fiscal_policy = c("Banking_crisis","Banking_crisis_severe", "Financial_crisis","Trade_crisis", 
-                    "Natural_disaster", "Commodity_crisis", "Wars","Severe_recession", "Soft_recession", 
-                    "Expansion", "Fiscal_outcomes", "Sovereign_default","Political_crisis", "Social_crisis",
+  Fiscal_policy = c("Natural_disaster", "Commodity_crisis", "Wars",
+                    "Severe_recession", "Fiscal_outcomes", "Sovereign_default",
+                    "Political_crisis", "Social_crisis","Nuclear_accident",
                     "Disbursement","Fiscal_consolidation","Short_term_debt","Floating_rate_debt",
-                    "Concessional_lending","Foreign_debt")
+                    "Concessional_lending","Foreign_debt","Fiscal_stimulus","Low_public_debt")
   
-  Monetary_policy = c("Inflation_crisis", "Balance_payment_crisis", 
-                      "Reduction_reserves", "Currency_crisis","Currency_crisis_severe","Global_depreciation",
-                      "Floating_exchange_rate","Fixed_exchange_rate","Losening_monetary_policy","Tightening_monetary_policy")
+  Fiscal_monetary_policy=c("Banking_crisis","Banking_crisis_severe","Severe_recession","Expansion")
   
-  Structural_policy = c("Trade_crisis","Housing_crisis","Performance_criterion","Program_extension",
-                        "Deregulation", "Reform_agenda", "Trade_reforms", "Financial_reforms", 
+  Monetary_policy = c("Financial_crisis","Inflation_crisis", "Balance_payment_crisis", 
+                      "Currency_crisis","Currency_crisis_severe","Global_depreciation",
+                      "Floating_exchange_rate","Fixed_exchange_rate","Losening_monetary_policy",
+                      "Tightening_monetary_policy","Credit_boom","Banking_crisis","Banking_crisis_severe")
+  
+  Structural_policy = c("Trade_crisis","Housing_crisis","Soft_recession","Performance_criterion","Program_extension",
+                        "Deregulation", "Reform_agenda", "Trade_reforms", "Financial_reforms", "Poverty_crisis",
                         "Labor_market_reforms", "Tax_reforms", "Banking_reforms", "Fiscal_consolidation", 
-                        "Success_of_reforms","Official_support","Technical_assistance","uncertainty_reforms")
+                        "Success_of_reforms","Official_support","Technical_assistance","uncertainty_reforms",
+                        "Labormarket_crisis","Labormarket_boom","Housing_boom","Nuclear_accident","Expansion",
+                        "Cyber_attack","Epidemics")
   
-  forward_guidance=c("Expectations","Contagion","World_outcomes","Precautionary_programs")
+  forward_guidance=c("Expectations","Contagion","World_outcomes","Precautionary_programs","Positive_expectations")
   
   domain = unlist(list(Fiscal_policy = Fiscal_policy, Monetary_policy = Monetary_policy, 
                        Structural_policy = Structural_policy,forward_guidance=forward_guidance))
@@ -1545,22 +1663,23 @@ lexicon_typology = function() {
   
   # typology in terms of Nature of the shocks
   
-  Other_Financial_shock = c("Banking_crisis","Banking_crisis_severe", "Financial_crisis", "Balance_payment_crisis", 
+  Financial_shock = c("Banking_crisis","Banking_crisis_severe", "Financial_crisis", "Balance_payment_crisis", 
                             "Reduction_reserves", "Currency_crisis","Currency_crisis_severe","World_outcomes", "Contagion",
-                            "Expectations","Housing_crisis")
-  
-  Fiscal_financial_shock = c( "Fiscal_outcomes", "Sovereign_default","Short_term_debt","Floating_rate_debt",
-                              "Concessional_lending","Foreign_debt")
+                            "Expectations","Housing_crisis","Fiscal_outcomes", "Sovereign_default","Short_term_debt","Floating_rate_debt",
+                            "Concessional_lending","Foreign_debt","Credit_boom","Housing_boom","Positive_expectations")
   
   Real_shock = c("Severe_recession", "Soft_recession", "Epidemics","Expansion","Trade_crisis","Inflation_crisis",
-                 "Political_crisis", "Social_crisis","Natural_disaster","Commodity_crisis", "Wars")
+                 "Political_crisis", "Social_crisis","Natural_disaster","Commodity_crisis", "Wars","Expansion",
+                 "Nuclear_accident","Labormarket_crisis","Labormarket_boom","low_public_debt","Low_public_debt",
+                 "poverty_crisis","Cyber_attack")
   
   Economic_ajustement=c("Deregulation", "Reform_agenda", "Trade_reforms", "Financial_reforms", 
                         "Labor_market_reforms", "Tax_reforms", "Banking_reforms", "Fiscal_consolidation", 
+                        "Fiscal_stimulus",
                         "Success_of_reforms","Performance_criterion","Program_extension","Official_Support",
                         "Technical_assistance","Precautionary_programs","Official_support")
   
-  nature = unlist(list(Other_Financial_shock = Other_Financial_shock, Fiscal_financial_shock = Fiscal_financial_shock, 
+  nature = unlist(list(Financial_shock =Financial_shock,
                        Real_shock = Real_shock,Economic_ajustement=Economic_ajustement))
   
   nature = data.frame(nature)
@@ -1572,15 +1691,14 @@ lexicon_typology = function() {
   # Transmission to public finance
   
   Expenditure_shock = c("Banking_crisis","Banking_crisis_severe", "Financial_crisis","World_outcomes", "Contagion",
-                        "Expectations","Epidemics","Housing_crisis")
+                        "Epidemics","Housing_crisis","Fiscal_stimulus")
   
   Revenue_shock = c("Balance_payment_crisis", "Natural_disaster","Commodity_crisis", "Wars",
                     "Reduction_reserves", "Currency_crisis","Currency_crisis_severe","Trade_crisis","Inflation_crisis",
                     "Official_support")
   
   Debt_shock = c("Fiscal_outcomes", "Sovereign_default","Short_term_debt","Floating_rate_debt",
-                 "Concessional_lending","Foreign_debt")
-  
+                 "Concessional_lending","Foreign_debt","Low_public_debt")
   
   Adjustment_shock=c("Deregulation", "Reform_agenda", "Trade_reforms", "Financial_reforms", 
                      "Labor_market_reforms", "Tax_reforms", "Banking_reforms", "Fiscal_consolidation", 
@@ -1589,13 +1707,16 @@ lexicon_typology = function() {
   
   Output_shock=c("Severe_recession","Soft_recession", "Severe_recession", "Soft_recession", "Expansion")
   
-  Spread_shock=c("Expectations","Contagion","Precautionary_program")
+  Spread_shock=c("Expectations","Positive_expectations","Contagion","Precautionary_program")
   
   risk_free_rate=c("World_outcomes")
   
+  labor_market_shock=c("labormarket_crisis","Labormarket_boom")
+  
   channel = unlist(list(Expenditure_shock = Expenditure_shock, Revenue_shock = Revenue_shock, 
                         Debt_shock = Debt_shock,Adjustment_shock=Adjustment_shock,Output_shock=Output_shock,
-                        Spread_shock=Spread_shock,risk_free=risk_free_rate))
+                        Spread_shock=Spread_shock,risk_free=risk_free_rate,
+                        Labor_market_shock=labor_market_shock))
   
   channel = data.frame(channel)
   channel$Type = rownames(channel)
