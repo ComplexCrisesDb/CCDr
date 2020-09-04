@@ -1,0 +1,41 @@
+"0","wrapup_for_tf=run_tf(corpus_path = ""mycorpus.RData"",type_lexicon =""words"",keyword_list = c(""Currency_crisis"",""Balance_payment_crisis""),parrallel = F)
+"
+"1","[44mLoading corpus from mycorpus.RData[49m"
+"1","[40m
+[49m"
+"1","[32m(1/2) running: Currency_crisis
+[39m"
+"1","Currency_crisis: 0.211 sec elapsed
+"
+"1",""
+"1","|=========================================                                          | 50% ~0 s remaining"
+"1"," "
+"1"," "
+"1"," "
+"1"," "
+"1"," "
+"1","[32m
+ Finished running: Currency_crisis
+[39m"
+"1","[40m
+[49m"
+"1","[32m(2/2) running: Balance_payment_crisis
+[39m"
+"1","Balance_payment_crisis: 0.215 sec elapsed
+"
+"1",""
+"1","|===================================================================================|100% ~0 s remaining"
+"1"," "
+"1"," "
+"1"," "
+"1"," "
+"1"," "
+"1","[32m
+ Finished running: Balance_payment_crisis
+[39m"
+"1","0.47 sec elapsed
+"
+"1","[1]"
+"1"," ""export table in mycorpus.RData"""
+"1","
+"
