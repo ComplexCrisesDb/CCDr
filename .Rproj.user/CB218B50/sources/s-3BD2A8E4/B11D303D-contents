@@ -4,3 +4,23 @@ library(pkgdown)
 usethis::use_pkgdown()
 
 pkgdown::build_site()
+
+set.seed(2)
+data("IMF_docs_urls")
+
+url_links=IMF_docs_urls %>%
+  mutate(name_file=paste0(ID,"_",period,"_",type_doc_programs))
+
+url_links= url_links %>% filter(ID=="ARG")
+url_links=url_links[150:155,]
+
+url_links[,1:5]
+#> # A tibble: 6 x 5
+#>   ID    period     title                  hierarchy   pdf                  
+#>   <chr> <date>     <chr>                  <chr>       <chr>                
+#> 1 ARG   1984-12-28 argentina - exchange … <NA>        https://imfbox.box.c…
+#> 2 ARG   1984-12-28 argentina - stand-by … <NA>        https://imfbox.box.c…
+#> 3 ARG   1984-12-28 argentina - stand-by … EBM/84/191… https://imfbox.box.c…
+#> 4 ARG   1984-12-28 argentina - request f… EBM/84/190… https://imfbox.box.c…
+#> 5 ARG   1984-12-28 argentina - stand-by … PR/84/43    https://imfbox.box.c…
+#> 6 ARG   1985-06-11 argentina - letter on… EBS/85/148  https://imfbox.box.c…
