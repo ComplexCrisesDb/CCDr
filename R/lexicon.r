@@ -1724,10 +1724,66 @@ lexicon_typology = function() {
   channel = channel %>% mutate(channel = str_remove_all(channel, "\\d"))
   
   
+  ## TSPH characteristics
+  
+  Hotspots = c("Banking_crisis","Banking_crisis_severe","Natural_disaster","Sovereign_default","poverty_crisis")
+  
+  Paralyzers = c("Commodity_crisis","Balance_payment_crisis","Currency_crisis","Severe_recession","Social_crisis")
+  
+  Spreaders = c("Soft_recession","Inflation_crisis","Political_crisis","Expectations","Contagion","Financial_crisis")
+  
+  Triggers=c("Epidemics", "Housing_crisis", "Cyber_attack", "Nuclear_accident", "Wars","Migration",
+             "Trade_crisis", "World_outcomes")
+  
+  TSPH = unlist(list(Triggers = Triggers, Spreaders = Spreaders, 
+                     Paralyzers = Paralyzers,Hotspots=Hotspots))
+  
+  TSPH = data.frame(TSPH)
+  TSPH$Type = rownames(TSPH)
+  names(TSPH) = c("variable", "TSPH")
+  TSPH = TSPH %>% mutate(TSPH = str_remove_all(TSPH, "\\d"))
+  
+  
+  #location in the TSPH system
+  
+  TDER = c("Housing_crisis")
+  TDNER=c("Wars","Epidemics")
+  TNDER=c("Trade_crisis","World_outcomes")
+  TNDNER=c("Migration")
+  SDER=c("Inflation_crisis","Soft_recession")
+  SDEF=c("Financial_crisis","Expectations")
+  SDNER=c("Political_crisis")
+  SNDER=c("Contagion")
+  PDER=c("Severe_recession")
+  PDNER=c("Social_crisis")
+  PNDER=c("Commodity_crisis")
+  PNDEF=c("Balance_payment_crisis","Currency_crisis")
+  HDEF=c("Sovereign_default","Banking_crisis")
+  HDNER=c("Natural_disasters")
+  
+  Location = unlist(list(T.D.E.R = TDER, T.D.NE.R=TDNER,T.ND.E.R=TNDER,T.ND.NE.R=TNDNER,
+                         S.D.E.R=SDER,S.D.E.F=SDEF,S.D.NE.R=SDNER,S.ND.E.R=SNDER,
+                         P.D.E.R=PDER,P.D.NE.R=PDNER,P.ND.E.R=PNDER,
+                         P.ND.E.F=PNDEF,H.D.E.F=HDEF,H.D.NE.R=HDNER))
+  
+  Location = data.frame(Location)
+  Location$Type = rownames(Location)
+  names(Location) = c("variable", "Location")
+  Location = Location %>% mutate(Location = str_remove_all(Location, "\\d"))
+  
   
   res = type %>% mutate(variable=as.character(variable))%>% left_join(nature %>% mutate(variable=as.character(variable)), by = c("variable"))
   res = res %>% left_join(domain%>% mutate(variable=as.character(variable)), by = c("variable"))
   res = res %>% left_join(channel%>% mutate(variable=as.character(variable)), by = c("variable"))
+  res = res %>% left_join(TSPH%>% mutate(variable=as.character(variable)), by = c("variable"))
+  res = res %>% left_join(Location%>% mutate(variable=as.character(variable)), by = c("variable"))
   
   res
 }
+
+lexicon_typology() %>% filter(!is.na(Location)) %>% unique()
+
+
+
+
+
