@@ -1781,8 +1781,6 @@ lexicon_typology = function() {
   res
 }
 
-lexicon_typology() %>% filter(!is.na(Location)) %>% unique()
-
 
 
 
