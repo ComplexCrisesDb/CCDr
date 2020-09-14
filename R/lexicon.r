@@ -1622,7 +1622,7 @@ lexicon_typology = function() {
                      "Positive_expectations")
   
   non_economic_shock = c("Wars", "Natural_disaster", "Commodity_crisis", "Political_crisis", 
-                         "Social_crisis","Epidemics","Cyber_attack","Nuclear_accident")
+                         "Social_crisis","Epidemics","Cyber_attack","Nuclear_accident","Migration")
   
   debt_structure = c("Concessional_lending", "Short_term_debt", "Floating_rate_debt", 
                      "Foreign_debt", "Track_record")
@@ -1656,7 +1656,7 @@ lexicon_typology = function() {
                         "Labor_market_reforms", "Tax_reforms", "Banking_reforms", "Fiscal_consolidation", 
                         "Success_of_reforms","Official_support","Technical_assistance","uncertainty_reforms",
                         "Labormarket_crisis","Labormarket_boom","Housing_boom","Nuclear_accident","Expansion",
-                        "Cyber_attack","Epidemics")
+                        "Cyber_attack","Epidemics","Migration")
   
   forward_guidance=c("Expectations","Contagion","World_outcomes","Precautionary_programs","Positive_expectations")
   
@@ -1678,7 +1678,7 @@ lexicon_typology = function() {
   Real_shock = c("Severe_recession", "Soft_recession", "Epidemics","Expansion","Trade_crisis","Inflation_crisis",
                  "Political_crisis", "Social_crisis","Natural_disaster","Commodity_crisis", "Wars","Expansion",
                  "Nuclear_accident","Labormarket_crisis","Labormarket_boom","low_public_debt","Low_public_debt",
-                 "poverty_crisis","Cyber_attack")
+                 "poverty_crisis","Cyber_attack","Migration")
   
   Economic_ajustement=c("Deregulation", "Reform_agenda", "Trade_reforms", "Financial_reforms", 
                         "Labor_market_reforms", "Tax_reforms", "Banking_reforms", "Fiscal_consolidation", 
@@ -1702,7 +1702,7 @@ lexicon_typology = function() {
   
   Revenue_shock = c("Balance_payment_crisis", "Natural_disaster","Commodity_crisis", "Wars",
                     "Reduction_reserves", "Currency_crisis","Currency_crisis_severe","Trade_crisis","Inflation_crisis",
-                    "Official_support")
+                    "Official_support","Migration")
   
   Debt_shock = c("Fiscal_outcomes", "Sovereign_default","Short_term_debt","Floating_rate_debt",
                  "Concessional_lending","Foreign_debt","Low_public_debt")
@@ -1765,8 +1765,8 @@ lexicon_typology = function() {
   PDNER=c("Social_crisis")
   PNDER=c("Commodity_crisis")
   PNDEF=c("Balance_payment_crisis","Currency_crisis")
-  HDEF=c("Sovereign_default","Banking_crisis")
-  HDNER=c("Natural_disasters")
+  HDEF=c("Sovereign_default","Banking_crisis","Banking_crisis_severe")
+  HDNER=c("Natural_disaster")
   
   Location = unlist(list(T.D.E.R = TDER, T.D.NE.R=TDNER,T.ND.E.R=TNDER,T.ND.NE.R=TNDNER,
                          S.D.E.R=SDER,S.D.E.F=SDEF,S.D.NE.R=SDNER,S.ND.E.R=SNDER,
