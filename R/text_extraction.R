@@ -139,16 +139,17 @@ aggregate_corpus = function(path_files, ENGINE, only_files = F) {
   count = 0
   start = 1
   x = 1
+  
   corpus = lapply(start:length(docs), function(x) {
     count <<- count + 1
     tictoc::tic(paste0(count, "/", length(docs), " ", docs[x]))
     path = paste0(path_files, "/", docs[x], ".pdf")
     file <- try({
-      pdfinfo = pdf_info(path)
+      pdfinfo = pdftools::pdf_info(path)
       ENGINE(path) 
     }, silent = T)
     if ("try-error" %in% class(file)) {
-      warning(paste(docs[[x]], ": Error in path file", sep = ""))
+      warning(paste(docs[[x]], ": Error in path file or in the pdf extraction engine \n", sep = ""))
       pdfinfo=NA
       file = NA
     } else {

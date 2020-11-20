@@ -8,7 +8,7 @@ Maintainer: <manubetin@gmail.com>
 Description: Perform a text analysis using a lexicon of economic crisis to observe the profile and intensity of economic crisis in a pdf documents.
 License: GPL-3
 RoxygenNote: 6.1.2
-Imports: 
+Depends: 
     dplyr,
     pdftools,
     xml2,
