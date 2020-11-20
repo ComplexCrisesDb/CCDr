@@ -4,15 +4,16 @@
 \alias{run_tf}
 \title{Compute the tf matrix for a corpus given in a list format,}
 \usage{
-run_tf(corpus_path = "IMF_letofIntent_1960_2014_clean.RData",
-  type_lexicon = "words", keyword_list = c("Commodity_crisis",
-  "Balance_payment_crisis", "Inflation_crisis"), export_path = NULL,
-  parrallel = T)
+run_tf(
+  corpus_path = "IMF_letofIntent_1960_2014_clean.RData",
+  type_lexicon = "words",
+  keyword_list = c("Commodity_crisis", "Balance_payment_crisis", "Inflation_crisis"),
+  export_path = NULL,
+  parrallel = T
+)
 }
 \arguments{
 \item{corpus_path}{the path to the RData file containing the corpus to analyze}
-
-\item{type_lexicon}{"words" or "categories" for the type of lexicon to use}
 
 \item{keyword_list}{the categories on which computing the term frequency}
 

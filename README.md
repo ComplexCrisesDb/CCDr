@@ -1,7 +1,18 @@
 
+-   [TextMiningCrisis](#textminingcrisis)
+-   [Description](#description)
+-   [Author](#author)
+-   [Current version:](#current-version)
+-   [Installation](#installation)
+-   [Usage](#usage)
+    -   [LEXICON: Browse lexicon of economic crisis](#lexicon-browse-lexicon-of-economic-crisis)
+    -   [CORPUS: Download IMF reports](#corpus-download-imf-reports)
+    -   [CORPUS: Aggregate the pdf files into a dataset in text format](#corpus-aggregate-the-pdf-files-into-a-dataset-in-text-format)
+    -   [CORPUS: Explore the reports](#corpus-explore-the-reports)
+    -   [TERM FREQUENCIES: compute the indexes](#term-frequencies-compute-the-indexes)
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-TextMiningCrisis
-================
+# TextMiningCrisis
 
 ------------------------------------------------------------------------
 
@@ -9,147 +20,140 @@ TextMiningCrisis
 
 last update: 30/01/2020
 
-Description
-===========
+# Description
 
-Package containing a set of functions to perform a supervised text mining using a lexicon of economic crisis to observe the profile and intensity of economic crisis in a text document.
+Perform a supervised text mining (Natural Language Processing) using an add hoc lexicon of economic crisis and a corpus of economic reports from the International Monetary Fund (IMF)
 
-Author
-======
+# Author
 
 -   Manuel Betin
 -   Umberto Collodel
 
-current version:
-================
+# Current version:
 
-1.3.0
+1.4.0
 
 see NEWS.md for more details on new features
 
-\# usage
+# Installation
 
-key functions are
+The current version of the package is available on github and can be installed using the devtools package.
 
--   pdf\_from\_url()
--   aggregate\_corpus()
--   tf()
--   idf()
--   run\_tf()
--   run\_tf\_by\_chunk()
--   run\_tf\_update()
+    #> Loading required package: dplyr
+    #> 
+    #> Attaching package: 'dplyr'
+    #> The following objects are masked from 'package:stats':
+    #> 
+    #>     filter, lag
+    #> The following objects are masked from 'package:base':
+    #> 
+    #>     intersect, setdiff, setequal, union
+    #> Loading required package: pdftools
+    #> Using poppler version 0.73.0
+    #> Loading required package: xml2
+    #> Loading required package: rvest
+    #> Loading required package: tidytext
+    #> Loading required package: tidyr
+    #> Loading required package: rlang
+    #> 
+    #> Attaching package: 'rlang'
+    #> The following object is masked from 'package:xml2':
+    #> 
+    #>     as_list
+    #> Loading required package: stringr
+    #> Loading required package: plotly
+    #> Loading required package: ggplot2
+    #> 
+    #> Attaching package: 'plotly'
+    #> The following object is masked from 'package:ggplot2':
+    #> 
+    #>     last_plot
+    #> The following object is masked from 'package:stats':
+    #> 
+    #>     filter
+    #> The following object is masked from 'package:graphics':
+    #> 
+    #>     layout
+    #> Loading required package: crayon
+    #> 
+    #> Attaching package: 'crayon'
+    #> The following object is masked from 'package:plotly':
+    #> 
+    #>     style
+    #> The following object is masked from 'package:ggplot2':
+    #> 
+    #>     %+%
+    #> The following object is masked from 'package:rlang':
+    #> 
+    #>     chr
+    #> Loading required package: rio
+    #> 
+    #> Attaching package: 'rio'
+    #> The following object is masked from 'package:plotly':
+    #> 
+    #>     export
+    #> Loading required package: tictoc
+    #> Loading required package: lubridate
+    #> 
+    #> Attaching package: 'lubridate'
+    #> The following objects are masked from 'package:base':
+    #> 
+    #>     date, intersect, setdiff, union
 
-depreciate functions:
+# Usage
 
--   plot\_cos\_sim() =&gt; cosim\_fig()
--   key\_word\_crisis() =&gt; lexicon()
--   typology\_categories() =&gt; lexicon\_typology()
--   find\_associated\_keywords() =&gt; lexicon\_details()
--   country\_radar\_dt() =&gt; radar\_dt()
--   country\_radar\_fig() =&gt; radar\_shocks\_fig()
--   find\_pages() =&gt; get\_pages()
+The package provides several functions to compute term frequencies on the corpus of reports. Due to the different potential usages and for the necessity to handle large amounts of data several wrap up functions are provided to be able to perform the different steps one by one or sequentially. The packages is constructed in three different blocs:
 
-\# example
+-   Lexicon: define and prepare categories and keywords
+-   Corpus: download, explore and aggregate
+-   Term Frequencies: compute the indexes
+
+The main functions are:
+
+-   **lexicon()**: provide the list of categories and keywords
+-   **pdf\_from\_url()**: download reports in pdf formats
+-   **aggregate\_corpus()**: transform pdf into a dataframe of text
+-   **tf\_vector()**: run the term frequency on the corpus for several categories
+-   **run\_tf()**; run the term frequency on locally stored corpus
+-   **run\_tf\_by\_chunk()** run the term frequency directly downloading the files
+-   **run\_tf\_update()** update the term frequency matrix with new categories
+
+## LEXICON: Browse lexicon of economic crisis
+
+Access the names of the existing categories in the lexicon using the function lexicon()
 
 ``` r
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-library(rio)
-library(DT)
-library(TextMiningCrisis)
-#> Warning: replacing previous import 'plotly::last_plot' by
-#> 'ggplot2::last_plot' when loading 'TextMiningCrisis'
-#> Warning: replacing previous import 'plotly::export' by 'rio::export' when
-#> loading 'TextMiningCrisis'
-#> Warning: replacing previous import 'dplyr::intersect' by
-#> 'lubridate::intersect' when loading 'TextMiningCrisis'
-#> Warning: replacing previous import 'dplyr::union' by 'lubridate::union'
-#> when loading 'TextMiningCrisis'
-#> Warning: replacing previous import 'dplyr::setdiff' by 'lubridate::setdiff'
-#> when loading 'TextMiningCrisis'
-#> Warning: replacing previous import 'lubridate::intersect' by
-#> 'dplyr::intersect' when loading 'TextMiningCrisis'
-#> Warning: replacing previous import 'lubridate::union' by 'dplyr::union'
-#> when loading 'TextMiningCrisis'
-#> Warning: replacing previous import 'lubridate::setdiff' by 'dplyr::setdiff'
-#> when loading 'TextMiningCrisis'
+lexicon() %>% names()
+#>  [1] "Wars"                       "Wars_confusing"            
+#>  [3] "Migration"                  "Natural_disaster"          
+#>  [5] "Natural_disaster_confusing" "Epidemics"                 
+#>  [7] "Commodity_crisis"           "Political_crisis"          
+#>  [9] "Social_crisis"              "Labormarket_boom"          
+#> [11] "Labormarket_crisis"         "Nuclear_accident"          
+#> [13] "Cyber_attack"               "Credit_boom"               
+#> [15] "Housing_boom"               "Housing_crisis"            
+#> [17] "Banking_crisis"             "Banking_crisis_severe"     
+#> [19] "Financial_crisis"           "Inflation_crisis"          
+#> [21] "Trade_crisis"               "World_outcomes"            
+#> [23] "Contagion"                  "Positive_expectations"     
+#> [25] "Expectations"               "Balance_payment_crisis"    
+#> [27] "Reduction_reserves"         "Currency_crisis"           
+#> [29] "Currency_crisis_severe"     "Currency_crisis_confusing" 
+#> [31] "Floating_exchange_rate"     "Fixed_exchange_rate"       
+#> [33] "Losening_monetary_policy"   "Tightening_monetary_policy"
+#> [35] "Severe_recession"           "Soft_recession"            
+#> [37] "Expansion"                  "Poverty_crisis"            
+#> [39] "Fiscal_outcomes"            "Low_public_debt"           
+#> [41] "Fiscal_stimulus"            "Fiscal_consolidation"      
+#> [43] "Concessional_lending"       "Short_term_debt"           
+#> [45] "floating_rate_debt"         "foreign_debt"              
+#> [47] "Sovereign_default"          "Problematic_documents"
 ```
 
-Load the data containing the urls
+Browse the keywords associated to each category using lexicon\_details("nameofmycategory")
 
 ``` r
-
-set.seed(2)
-data("IMF_docs_urls")
-
-url_links=IMF_docs_urls %>%
-  mutate(name_file=paste0(ID,"_",period,"_",type_doc_programs))
-
-url_links= url_links %>% filter(ID=="ARG")
-url_links=url_links[150:155,]
-
-url_links[,1:5]
-#> # A tibble: 6 x 5
-#>   ID    period     title                  hierarchy   pdf                  
-#>   <chr> <date>     <chr>                  <chr>       <chr>                
-#> 1 ARG   1984-12-28 argentina - exchange … <NA>        https://imfbox.box.c…
-#> 2 ARG   1984-12-28 argentina - stand-by … <NA>        https://imfbox.box.c…
-#> 3 ARG   1984-12-28 argentina - stand-by … EBM/84/191… https://imfbox.box.c…
-#> 4 ARG   1984-12-28 argentina - request f… EBM/84/190… https://imfbox.box.c…
-#> 5 ARG   1984-12-28 argentina - stand-by … PR/84/43    https://imfbox.box.c…
-#> 6 ARG   1985-06-11 argentina - letter on… EBS/85/148  https://imfbox.box.c…
-```
-
-Download the files and store in folter "mydocs\_to\_textmining"
-
-``` r
-
-pdf_from_url(url_links,"mydocs_for_textmining")
-#> ARG_1984-12-28_exchange system: succesfully downloadedARG_1984-12-28_exchange system : 1/6: 3.094 sec elapsed
-#> ARG_1984-12-28_request: succesfully downloadedARG_1984-12-28_request : 2/6: 3.151 sec elapsed
-#> ARG_1984-12-28_purchase transac: succesfully downloadedARG_1984-12-28_purchase transac : 3/6: 3.727 sec elapsed
-#> ARG_1984-12-28_request: succesfully downloadedARG_1984-12-28_request : 4/6: 4.25 sec elapsed
-#> ARG_1984-12-28_request: succesfully downloadedARG_1984-12-28_request : 5/6: 3.722 sec elapsed
-#> ARG_1985-06-11_request: succesfully downloadedARG_1985-06-11_request : 6/6: 3.833 sec elapsed
-#> urls succesfully downloaded in 'mydocs_for_textmining
-#> '
-```
-
-Aggregate content of pdfs in folder "mydocs\_to\_textmining" into a single corpus
-
-``` r
-
-corpus=aggregate_corpus("mydocs_for_textmining",only_files = T)
-#> Warning in stri_replace_all_regex(string, pattern,
-#> fix_replacement(replacement), : argument is not an atomic vector; coercing
-#> [1] "mydocs_for_textmining/ARG_1984-12-28_exchange system.pdf"
-#> 1/4 ARG_1984-12-28_exchange system: 0.021 sec elapsed
-#> Warning in stri_replace_all_regex(string, pattern,
-#> fix_replacement(replacement), : argument is not an atomic vector; coercing
-#> [1] "mydocs_for_textmining/ARG_1984-12-28_purchase transac.pdf"
-#> 2/4 ARG_1984-12-28_purchase transac: 0.037 sec elapsed
-#> Warning in stri_replace_all_regex(string, pattern,
-#> fix_replacement(replacement), : argument is not an atomic vector; coercing
-#> [1] "mydocs_for_textmining/ARG_1984-12-28_request.pdf"
-#> 3/4 ARG_1984-12-28_request: 0.04 sec elapsed
-#> Warning in stri_replace_all_regex(string, pattern,
-#> fix_replacement(replacement), : argument is not an atomic vector; coercing
-#> [1] "mydocs_for_textmining/ARG_1985-06-11_request.pdf"
-#> 4/4 ARG_1985-06-11_request: 0.274 sec elapsed
-save(corpus,file="mycorpus.RData")
-```
-
-use the lexicon
-
-``` r
-lexicon()["Severe_recession"]
+lexicon_details("Severe_recession")
 #> $Severe_recession
 #>  [1] "severe economic crisis"                 
 #>  [2] "very difficult economic circumstances"  
@@ -187,317 +191,280 @@ lexicon()["Severe_recession"]
 #> [34] "deep economic downturn"
 ```
 
+Create your own lexicon by creating a named list with the set of keywords associated
+
 ``` r
-lexicon_typology()
-#>                  variable                    type           nature_shock
-#> 1            Deregulation      adjustment_program    Economic_ajustement
-#> 2           Reform_agenda      adjustment_program    Economic_ajustement
-#> 3           Trade_reforms      adjustment_program    Economic_ajustement
-#> 4       Financial_reforms      adjustment_program    Economic_ajustement
-#> 5    Labor_market_reforms      adjustment_program    Economic_ajustement
-#> 6             Tax_reforms      adjustment_program    Economic_ajustement
-#> 7         Banking_reforms      adjustment_program    Economic_ajustement
-#> 8    Fiscal_consolidation      adjustment_program    Economic_ajustement
-#> 9    Fiscal_consolidation      adjustment_program    Economic_ajustement
-#> 10     Success_of_reforms      adjustment_program    Economic_ajustement
-#> 11  Performance_criterion characteristics_program    Economic_ajustement
-#> 12      Program_extension characteristics_program    Economic_ajustement
-#> 13       Official_support characteristics_program    Economic_ajustement
-#> 14   Technical_assistance characteristics_program    Economic_ajustement
-#> 15 Precautionary_programs characteristics_program    Economic_ajustement
-#> 16         Banking_crisis          economic_shock  Other_Financial_shock
-#> 17       Financial_crisis          economic_shock  Other_Financial_shock
-#> 18       Inflation_crisis          economic_shock             Real_shock
-#> 19           Trade_crisis          economic_shock             Real_shock
-#> 20           Trade_crisis          economic_shock             Real_shock
-#> 21         World_outcomes          economic_shock  Other_Financial_shock
-#> 22         World_outcomes          economic_shock  Other_Financial_shock
-#> 23              Contagion          economic_shock  Other_Financial_shock
-#> 24              Contagion          economic_shock  Other_Financial_shock
-#> 25           Expectations          economic_shock  Other_Financial_shock
-#> 26           Expectations          economic_shock  Other_Financial_shock
-#> 27 Balance_payment_crisis          economic_shock  Other_Financial_shock
-#> 28     Reduction_reserves          economic_shock  Other_Financial_shock
-#> 29        Currency_crisis          economic_shock  Other_Financial_shock
-#> 30 Currency_crisis_severe          economic_shock  Other_Financial_shock
-#> 31       Severe_recession          economic_shock             Real_shock
-#> 32       Severe_recession          economic_shock             Real_shock
-#> 33         Soft_recession          economic_shock             Real_shock
-#> 34         Soft_recession          economic_shock             Real_shock
-#> 35              Expansion          economic_shock             Real_shock
-#> 36                   Wars      non_economic_shock             Real_shock
-#> 37       Natural_disaster      non_economic_shock             Real_shock
-#> 38       Commodity_crisis      non_economic_shock             Real_shock
-#> 39       Political_crisis      non_economic_shock             Real_shock
-#> 40          Social_crisis      non_economic_shock             Real_shock
-#> 41        Fiscal_outcomes           debt_outcomes Fiscal_financial_shock
-#> 42      Sovereign_default           debt_outcomes Fiscal_financial_shock
-#> 43   Concessional_lending          debt_structure Fiscal_financial_shock
-#> 44        Short_term_debt          debt_structure Fiscal_financial_shock
-#> 45     Floating_rate_debt          debt_structure Fiscal_financial_shock
-#> 46           Foreign_debt          debt_structure Fiscal_financial_shock
-#> 47           Track_record          debt_structure                   <NA>
-#>               domain           channel
-#> 1  Structural_policy  Adjustment_shock
-#> 2  Structural_policy  Adjustment_shock
-#> 3  Structural_policy  Adjustment_shock
-#> 4  Structural_policy  Adjustment_shock
-#> 5  Structural_policy  Adjustment_shock
-#> 6  Structural_policy  Adjustment_shock
-#> 7  Structural_policy  Adjustment_shock
-#> 8      Fiscal_policy  Adjustment_shock
-#> 9  Structural_policy  Adjustment_shock
-#> 10 Structural_policy  Adjustment_shock
-#> 11 Structural_policy  Adjustment_shock
-#> 12 Structural_policy  Adjustment_shock
-#> 13 Structural_policy     Revenue_shock
-#> 14 Structural_policy  Adjustment_shock
-#> 15  forward_guidance  Adjustment_shock
-#> 16     Fiscal_policy Expenditure_shock
-#> 17     Fiscal_policy Expenditure_shock
-#> 18   Monetary_policy     Revenue_shock
-#> 19     Fiscal_policy     Revenue_shock
-#> 20 Structural_policy     Revenue_shock
-#> 21  forward_guidance Expenditure_shock
-#> 22  forward_guidance         risk_free
-#> 23  forward_guidance Expenditure_shock
-#> 24  forward_guidance      Spread_shock
-#> 25  forward_guidance Expenditure_shock
-#> 26  forward_guidance      Spread_shock
-#> 27   Monetary_policy     Revenue_shock
-#> 28   Monetary_policy     Revenue_shock
-#> 29   Monetary_policy     Revenue_shock
-#> 30   Monetary_policy     Revenue_shock
-#> 31     Fiscal_policy      Output_shock
-#> 32     Fiscal_policy      Output_shock
-#> 33     Fiscal_policy      Output_shock
-#> 34     Fiscal_policy      Output_shock
-#> 35     Fiscal_policy      Output_shock
-#> 36     Fiscal_policy     Revenue_shock
-#> 37     Fiscal_policy     Revenue_shock
-#> 38     Fiscal_policy     Revenue_shock
-#> 39     Fiscal_policy  Adjustment_shock
-#> 40     Fiscal_policy  Adjustment_shock
-#> 41     Fiscal_policy        Debt_shock
-#> 42     Fiscal_policy        Debt_shock
-#> 43     Fiscal_policy        Debt_shock
-#> 44     Fiscal_policy        Debt_shock
-#> 45     Fiscal_policy        Debt_shock
-#> 46     Fiscal_policy        Debt_shock
-#> 47              <NA>              <NA>
+my_new_lexicon=list(Recession=c("severe economic crisis",
+                                "Severe recession",
+                                "severe crisis"))
 ```
 
-Find the number of occurence of the word "cotton" by paragraph
+## CORPUS: Download IMF reports
+
+Access urls of the IMF reports in the archives. The dataset "BetinCollodel\_urls" contains for document the relevant metadata including the name of the country, the date of publication, the url of the IMF archives where the documents can be downloaded and several other information extracted from the metadata of the documents. For instance the document corresponding to the request for Standby Arrangement of Argentina on the 25 of january of 1983 is accessible on the following link <https://imfbox.box.com/shared/static/fx9w2df3n8u4ya2ni4ulnbrgp42c3ait.pdf> .
 
 ``` r
-doc_example=corpus[4]
-Number_pages_containing_word=eval_pages(doc_example,"debt")
-Number_pages_containing_word
-#>                                debt
-#> ARG_1985-06-11_request 0.0002830189
+#load dataset containing urls of documents 
+data("BetinCollodel_urls")
+
+url_links= BetinCollodel_urls %>% filter(ID=="ARG")
+url_links=url_links[150:155,]
+
+url_links %>% head(.,3)
+#> # A tibble: 3 x 21
+#>   ID    period     title hierarchy pdf   type_doc_progra… type_program
+#>   <chr> <date>     <chr> <chr>     <chr> <chr>            <chr>       
+#> 1 ARG   1983-01-25 arge… EBS/83/8… http… request          SBA         
+#> 2 ARG   1983-05-18 arge… EBS/83/97 http… modification     SBA         
+#> 3 ARG   1983-05-27 arge… <NA>      http… modification     <NA>        
+#> # … with 14 more variables: type_doc_consultations <chr>, Review_number <chr>,
+#> #   perf_criteria <chr>, waiver <chr>, modification <chr>, membership <dbl>,
+#> #   statements <dbl>, repurchase_transaction <dbl>, technical_assistance <dbl>,
+#> #   expost_assessment <dbl>, exchange_system <dbl>, overdue_obligations <dbl>,
+#> #   type_hierarchy <chr>, name_file <chr>
 ```
 
-Find the paragraphs containing the word "cotton" by paragraph
+Download several reports in pdf format and store them locally in folter of your choice using the pdf\_from\_url() function. The following example downloads 5 reports corresponding to the 5 urls provided in the dataset url\_links. Note that to properly download the file, the argument urls must be a table containing at least two columns: name\_file (the name of the files downloaded) and pdf (the url need to access the files in the archives). The second argument *export\_path* corresponds to name of a folder where the downloaded files will be saved.
 
 ``` r
 
-pages_containing_word=get_pages(doc_example$`ARG_1985-06-11_request`,"debt")
+pdf_from_url(url_links[,1],"mydocs_for_textmining")
+#> Please provide a valid data.frame of with at least two columns: name_file (name of your file) and pdf (the url link)
+```
+
+To access more recent reports from the current publications of the IMF website
+
+## CORPUS: Aggregate the pdf files into a dataset in text format
+
+Documents in pdf format need to be properly transformed into text format to be able to perform the text analysis. The function aggregate\_corpus() aggregates all the files into a single list. In the following example the documents contained in the folder "mydocs\_to\_textmining" are aggregated. The argument only\_files=T ensure that only the text in the document are stored and not the information in the metadata.
+
+``` r
+corpus=aggregate_corpus("mydocs_for_textmining",only_files = T)
+#> [1] "mydocs_for_textmining/ARG_1983-01-25_request.pdf"
+#> 1/5 ARG_1983-01-25_request: 0.151 sec elapsed
+#> [1] "mydocs_for_textmining/ARG_1983-05-18_modification.pdf"
+#> 2/5 ARG_1983-05-18_modification: 0.049 sec elapsed
+#> [1] "mydocs_for_textmining/ARG_1983-05-27_modification.pdf"
+#> 3/5 ARG_1983-05-27_modification: 0.191 sec elapsed
+#> [1] "mydocs_for_textmining/ARG_1983-06-08_exchange system.pdf"
+#> 4/5 ARG_1983-06-08_exchange system: 0.014 sec elapsed
+#> [1] "mydocs_for_textmining/ARG_1983-07-28_exchange system.pdf"
+#> 5/5 ARG_1983-07-28_exchange system: 0.013 sec elapsed
+
+save(corpus,file="mycorpus.RData")
+```
+
+## CORPUS: Explore the reports
+
+To perform exploratory analysis on the reports, to extract specific paragraphs or to enrich your lexicon you can perform a keyword search in a specific document. In the following example the function locate all the occurrences of "debt" in the request for Standby Arrangement of Argentina in 1983.
+
+``` r
+
+pages_containing_word=get_pages(corpus$`ARG_1983-01-25_request`,"debt")
 pages_containing_word
 #> $target
 #> [1] "debt"
 #> 
 #> $N.chars
-#> [1] 53000
+#> [1] 54686
 #> 
 #> $N.Occurence
 #> $N.Occurence[[1]]
-#> [1] "Found in page 2 :3 times"
+#> [1] "Found in page 3 :1 times"
 #> 
 #> $N.Occurence[[2]]
-#> [1] "Found in page 5 :1 times"
+#> [1] "Found in page 6 :1 times"
 #> 
 #> $N.Occurence[[3]]
-#> [1] "Found in page 7 :1 times"
+#> [1] "Found in page 8 :1 times"
 #> 
 #> $N.Occurence[[4]]
-#> [1] "Found in page 8 :2 times"
+#> [1] "Found in page 12 :1 times"
 #> 
 #> $N.Occurence[[5]]
-#> [1] "Found in page 9 :2 times"
+#> [1] "Found in page 14 :2 times"
 #> 
 #> $N.Occurence[[6]]
-#> [1] "Found in page 13 :1 times"
-#> 
-#> $N.Occurence[[7]]
-#> [1] "Found in page 14 :1 times"
-#> 
-#> $N.Occurence[[8]]
 #> [1] "Found in page 15 :1 times"
 #> 
+#> $N.Occurence[[7]]
+#> [1] "Found in page 16 :4 times"
+#> 
+#> $N.Occurence[[8]]
+#> [1] "Found in page 17 :1 times"
+#> 
 #> $N.Occurence[[9]]
-#> [1] "Found in page 21 :3 times"
+#> [1] "Found in page 18 :1 times"
+#> 
+#> $N.Occurence[[10]]
+#> [1] "Found in page 19 :5 times"
+#> 
+#> $N.Occurence[[11]]
+#> [1] "Found in page 20 :1 times"
 #> 
 #> 
 #> $Tot.occurence
-#> [1] 15
+#> [1] 19
 #> 
 #> $pages
 #> $pages[[1]]
-#> [1] "c( June 11, 1985, Mr. Jacques de Larosiere, Managing Director, International Monetary Fund, Washington, D.C. 20431, Dear Mr. de Larosiere,, 1. Argentina is facing a deep economic crisis related to both short-, term problems and obstacles to growth stemming from low investment and, from the heavy burden of interest payments on the foreign debt. Struc-, tural rigidities and short-term imbalances have not permitted the country, to escape from its long record of economic stagnation and high inflation., Indeed, during the past ten years the annual rate of inflation averaged, well over 200 percent, while output remained virtually unchanged. The, challenge confronting the Constitutional Government requires firm and, decisive action. It is necessary to break the momentum of inflation to, restore a growing economy and a lasting improvement in living standards., All the economic and social sectors of the country are asked to contribute, to this task, all participating in an equitable manner and in accordance, with their means. Achievement of these objectives requires a drastic, cutback in the fiscal deficit through a reduction of public spending and, the generation of new revenue. Such action would permit a lowering of, the inflation tax, which is particularly burdensome on lower income, groups. A substantial reduction in the fiscal deficit will facilitate, the pursuit of an anti-inflationary monetary policy compatible with an, expansion of credit to the private sector at reasonable levels of, interest rates. On the external front, the combination of an adequate, exchange rate and appropriate institutional arrangements would promote, export growth as a means of reconciling economic reactivation and, external equilibrium. Increased domestic savings and exports will make, it possible to service the external debt at the same time that the eco-, nomy is recovering. The Government is convinced that this approach is, the only one that can help Argentina to reverse the process of economic, deterioration of recent years., 2. In September 1984, the Government adopted an economic program which, sought a substantial reduction of inflation, a sustainable balance of, payments position, and corrective adjustments in relative prices, to, lay the basis for sustained growth of output and employment. This pro-, gram is supported by a stand-by arrangement from the Fund, in an amount, of SDR 1,419 million, which runs through March 27, 1986. The program, includes, inter alia, a sizable reduction in the fiscal deficit and a, tightening of monetary policy, a slowing in the rate of increase of, production costs, a liberalisation of price controls, a downward ad-, justment in the real exchange value of the peso, a reduction of res-, trictions on trade and payments for current international transactions,, and the normalization of Argentina's external debt situation., 3. Significant progress in several of the above-mentioned areas was, made in the last quarter of 1984. Monetary and credit policy was, tightened and interest rates generally became positive in real terms,)"
+#> [1] " -2(i) the cumulative overall balance of payments targets described in paragraph 2 of the Memorandum of Understanding annexed to the attached letter have not been met, or (ii) the limit on the cumulative borrowing needs of the nonfinancial public sector described in paragraph 3 of the Memorandum of Understanding annexed to the attached letter has been exceeded, or (iii) the cumulative limit on the outstanding disbursed external debt of the public sector described in -paragraph 5 of the Memorandum of Understanding annexed to the attached letter has been exceeded, or (iv) the limits on total maturities falling due within 36 months of the end of .each calendar quarter described in paragraph 5 of the Memorandum of Understanding annexed to the attached letter have been exceeded, or, (c) during any period after February 28, 1983 in which the system of special rebates for exports to new markets has not been terminated, or (d) during any period after March 31, 1983 in which the schedule for the phased elimination of the minimum foreign financing requirements for imports, as set out in paragraph 6 of the Memorandum of Understanding annexed to the attached letter, has not been adhered to, or (e) during any period after June 30, 1983 in which external payments arrears persist or reappear, or (f) during any period after July 31, 1983 in which under: standings between Argentina and the Fund on a schedule for the elimina-1 tion of existing multiple currency practices and restrictions on pay: ments and transfers for current international transactions have not , been reached, or (g) during the entire period of this stand-by arrangement, if Argentina (I) imposes or intensifies restrictions, on payments and transfers for current international transactions, or "
 #> 
 #> $pages[[2]]
-#> [1] "c( -4-, cutback of spending by these segments of the public sector, as there, was an increase in their floatFng debt and a buildup in unpaid bills., In addition, at the end of 1984 there were delays in the payment of, public sector wages, including in the National Administration. Partly, because of reductions in the backlog of unpaid obligations, the cash, deficit of the nonfinancial public sector increased--counter to the, usual seasonal pattern--to more than 9 percent of GDP in the first, quarter of 1985., 11. In an effort to strengthen the fiscal position in 1985, and partic-, ularly in the second half of the year, in recent weeks the Government, has re-examined the budget that had been submitted to the Congress early, in the year and is about to introduce a revised budget proposal incor-, porating reductions in budgetary credits of the order of 12 percent in, relation to the original proposal. Including the effect of these reduc-, tions and several measures to raise revenue (described below), the, deficit of the nonfinancial public sector on a budget basis is estimated, to decline from 12 314 percent of GDP in 1984 to less than 6 percent of, GDP in 1985. Relative to GDP, expenditure would decline from 34 l/2 per-, cent to less than 31 percent from 1984 to 1985, while revenue would, increase from 1es.s than 22 percent of GDP to nearly 25 percent., 12. Consistent with the fiscal estimates on a budget basis just men-, tioned and the effects of additional measures taken in recent weeks (in, particular, real increases in prices charged by public enterprises),, the cash deficit of the nonfinancial public sector would decline from, about 8 l/2 percent of GDP in 1984 to less than 4 percent of GDP in, 1985. On a semiannual basis, the decline would be from about 8 percent, of GDP in the second half of 1984 to less than 2 percent of GDP in the, second half of 1985. Cash expenditure would decline from 30 l/4 percent, of GDP in the second half of 1984 to 27 3/4 percent of GDP in the second, half of 1985. The decline in expenditure is more marked if adjustment, is made for salary and other payments deferred from the second half of, IL984 into 1985 and for the effect of the employer social security con-, tribution introduced in October 1984. The Government is taking steps, to ensure that the effort to restrain cash spending is reflected fully, in cuts in actual expenditure and not merely in a postponement of pay-, ments. Also, the fiscal plan includes a substantial increase in public, sector revenue in the second half of 1985. Achievement of this objec-, tive requires in part legislation that already has been introduced or, is expected to be submitted shortly to the National Congress; to the, extent that these legislative proposals were not enacted, the Government, would submit alternative legislation or would take administrative action, with an equivalent deficit-reducing effect. A summary of the budget, and cash operations of the public sector 1n terms of GDP, including, projections for the second half of 1985 and the first quarter of 1986,, is presented in Table 1., 13. Wage moderation and a hiring freeze in the public sector are ex-, pected to play an important role in the underlying improvement in the, public finances. In late May 1985 the Government decreed a freeze on)"
+#> [1] " 5. ATTACHMENT Buenos Aires, Argentina January 7, 1983 Mr. Jacques de Larosiere . .. Managing Director International Monetary Fund Washington, D.C. 20431 U.S.A. Dear Mr. de Larosiere, 1. Annexed are (1) a Memorandum of the Government of the Republic of Argentina on Certain Aspects of its Economi,c Policy.for the period through March 1984; and (2) a Memorandum of Understanding setting out : certain operational guidelines for the conduct of this economic policy from January 1983 through April 1984.. The memoranda describe the measures that Argentina already has taken and still has to take in order to correct economic imbalances and to ensure economic growth on solid and stable foundations. 2. In support of this 15month program, we request herewith a stand-by arrangement with the International Monetary Fund in an amount of SDR 1,500 million, including access to the Fund's borrowed resources. We believe that our request for Argentina's maximum access to Fund resources permissible under existing policies is fully justified given the exceptional circumstances of our country and the pronounced deterioration in international capital market conditions which not only affect Argentina but the entire world. Moreover, believing as.we do. that the process of full economic recovery and restoration of financial stability will not be completed by the time the present Government leaves office, we would like to ensure that the authorities who will succeed it will have the opportunity to establish, if they desire, new financial relations between Argentina and the Fund. To this end the Government is prepared to arrange preliminary contacts prior to March 1984 between representatives of the Fund and the authorities in charge of the next government. 3. The Government of the Republic of Argentina intends to enter into discussions with the international financial community to secure a restructuring of its public and private external debt and attaches great importance to any assistance the Fund could lend in this exercise, as well as in efforts to obtain new external financing. 4. The annexed Memorandum of Understanding covers the principal economic targets and policy undertakings for the period of the requested arrangement. The Government of the Republic of Argentina understands that if, for any reason, any of these targets or policy undertakings are not observed in the period to the end of the arrangement, Argentina will not request any purchase under the arrangement that would raise the Fund's holdings of Argentina pesos beyond the first credit tranche "
 #> 
 #> $pages[[3]]
-#> [1] "c( -6-, facilitate legal action against offenders. In this respect, it is, proposed that the tax office be allowed access to certain information, on transactions through banks and the stock exchange that at present is, protected by the bank secrecy laws. The tax package also seeks to, enhance investment incentives by reducing corporate tax rates and the, value-added tax on specified investment goods., 17. A substantial1 improvement in the public finances is expected to, come from a reduction in the operating losses of the public enterprises., Recently, there have been sizable real increases in the prices charged, for goods and services marketed by the enterprises, and the Government, intends to maintain the present level of these prices in real terms., On the basis of this policy, and a program of spending restraint, it is, expected that the operating losses of the enterprises, which amounted, to 2 percent of GDP in the second half of 1984, will be eliminated in, the second half of 1985. Largely owing to adjustments implemented in, May-June 1985, the effective real level of prices charged by the enter-, prises (net of taxes) in the second half of this year would exceed, on, average, that in the second half of 1984 by 50 percent for liquid fuels,, 34 percent for postal services, 26 percent for natural gas, 25 per-, cent for electricity, 20 percent for telephones, and 18 percent for, railway and air transportation. The overall increase in real prices, between those two periods is estimated at 33 percent, and the value of, sales by the enterprises (net of intra-public sector transactions) is, projected to rise by the equivalent of 2 percent of GDP. Moreover,, spending on goods and nonpersonnel services by the enterprises is to be, strictly curtailed. A plan to eliminate the backlog of unpaid bills in, the second and third quarters of 1985, which already has been put into, effect, is expected to help lower the prices paid by the enterprises, for their inputs as well as their domestic interest costs. In summary,, the overall cash deficit of the enterprises is expected to fall from, almost 4 percent of GDP in the second half of 1984 to around 2 percent, of GDP in the second half of 1985., '18 . To ensure that the program of spending restraint in the public, enterprises is implemented, the Government intends to step up its, monitoring of the enterprises on a current basis through the Public, Enterprises Comptroller's Office; this task will be facilitated by the, requirement established in the 1984 budget that starting in 1985 the, budgets of the public enterprises be subject to approval by Presidential, decree. The Government also will ensure that its wage policy is imple-, mented in the enterprises through the careful screening of proposed, wage increases by the Public Sector Salary Commission. Finally, the, Government is to turn over to the enterprises responsibility for the, payment of an increasing proportion of the interest on their external, debt; this propo-rtion is expected to rise to about 70 percent in 1985, from less than 30 percent in 1984. To ensure compliance with this, objective, a mechanism is being implemented under which enterprises will, make monthly contributions, in accordance with a pre-established schedule,, to an account in the Central Bank to meet foreign interest payments. The, extension of this deposit mechanism to other external obligations of, the enterprises is under active consideration. )"
+#> [1] " -7ANNEX I MEMORANDUM OF THE GOVERNMENTOF THE REPUBLIC OF ARGENTINA ON CERTAIN ASPECTS OF ITS ECONOMIC'POLICY I. Objectives and Strategies for Economic Recovery 1. The Argentine economy is in a severely depressed state and plagued,with acute imbalances.. The rate of inflation remains high and real wages have declined sharply. Real GDP growth, uneven during 1976-79, came to a halt in 1980 and was negative in 1981-82. Output now,barely is at its level of six years ago, and real per capita income is at its lowest level in a decade. Unemployment approached 6 per cent in mid-1982 and underemployment has risen sharply. 2. The exchange rate policy pursued until March 31, 1981 led to an overvaluation of the peso and caused heavy external current payments imbalances which were financed by foreign borrowing on an increasing scale and on ever shorter terms. From that time on, attempts were made to correct these imbalances by an adjustment of the real exchange rate, which did reduce the deficit to some extent, but the lack of supporting domestic policies and waning confidence caused the overall balance of payments deficit to grow in the remainder of 1981. After a brief improvement in early 1982, the overall imbalances intensified during the second quarter of the year, when Argentina's access to international financial markets was interrupted, shipping routes were altered, and payments arrears began to accumulate. Argentina's external debt now exceeds USS36 billion, about one half of which falls due in 1983. The overall balance of payments deficit incurred in 1981 and 1982 combined is estimated.at USS9 billion, which has reduced the disposable international reserves of the Central Bank to -an extremely low level. Internally, wholesale prices rose by 180 per cent during 1981 and by about 310 per cent during 1982, reaching an annual rate of increase of 495 per cent in the second half of last year. 3. Notwithstanding heavy foreign borrowing, private and public investment stagnated during 1978-80 and dropped sharply in 1981-82 with the intensification of the economic recession. Gross fixed capital formation is estimated to have been only 17 per cent of GDP in 1982, compared with 25 per cent of GDP in the mid-1970s. Moreover, certain public investments in the last six years were in sectors yielding low, and in certain cases, negative rates of return. 4. The revival of the economy and the reduction of unemployment, therefore, have been the Government's priority economic objectives. The strategy has been divided into two stages: with the help of an emergency public works program, efforts were initially directed to reactivating activities that are heavily labor-intensive and make little use of imported inputs. Because of budget constraints, however, this program has been limited to the resumption of work on certain projects, the speeding up of others, and maintenance work. The second stage will involve increased capacity utilization (now at some 60 per cent on the average in "
 #> 
 #> $pages[[4]]
-#> [1] "c( -7-, 19. The public finances had been affected by the elimination of the, 15 percent wage bill tax for social security in 1981 and its replacement, by direct transfers to the social security system from general tax, revenue. As of the fourth quarter of 1984, the drain on general rev-, enues was reduced by one half owing to the restoration of an employer's, contribution equivalent to 7 l/2 percent of wages. In recent years the, social security system has had a deficit, over and above the transfers, just described; this deficit (equivalent to more than l/2 percent of, GDP in 1984) was covered by the Central Bank, either directly or by, allowing bank advances to the system to be counted as part of banks', required reserves. The reform of the financial system in April, (described below) necessitated a change in the financing arrangements, for the social security system, with the Treasury taking over the debt, of the system with banks. For the period ahead, the Government is, committed to the elimination of the system’s deficit. The Government, will seek to maintain the consistency of the monthly adjustments in, benefits with its wage policy, while ensuring the achievement of the, objective as regards the system's finances., 20. As regards the financial arrangements with the provinces, the, intention of the Government is to replace the system that expired at, the end of 1984, which allowed for direct transfers from the Treasury, in addition to the provinces' sharing in most federal taxes, by a, system in which federal funding would take the form of revenue sharing., The greater automaticity of the proposed arrangement would be expected, to enhance budgetary management in the provinces. It has not yet been, possible, however, to implement the new system, and for 1985 it has, been decided basically to maintain the previous one. The fiscal plan, for the current year has been prepared on the basis of federal funding, of the provinces under general revenue sharing and direct transfers,, taken together, equivalent to about 4 percent of GDP, a little less, than in 1984. However, the large increase in taxes that are partly, earmarked for investment purposes under special sharing arrangements, implies that the provinces would receive total funding from the National, Government about l/4 percent of GDP higher in 1985 than in the preceding, year. The projection of the provincial finances assumes that capital, outlays will increase on the basis of higher earmarked transfers, whereas, their current expenditure would decline in real terms, which would be, consistent with the provinces applying spending policies broadly in, line with those instituted in the National Administration., 21. The Central Bank's assumption in 1982 and 1983 of all public sector, debt, on which the public sector now pays virtually no interest, trans-, ferred to the Bank a sizable imbalance of a fiscal nature, and the, problem was compounded by the extension of interest subsidies to the, private sector. In the second half of 1984 the operating deficit of, the Central Bank rose to an estimated 2 l/2 percent of GDP, and is, expected to rise to about 5 percent of GDP in 1985 notwithstanding the, virtual elimination of interest subsidies; some 80 percent of these, losses correspond to the inflation adjustment component on the resources, the Central Bank borrows at market rates to finance the Government. The)"
+#> [1] " 11 ANNEX I 12. This said, it is recognized that the pattern for wage adjustments in the private sector will be set in large measure by the policy of.remuneration pursued in the public sector. The wage bill of the general government dropped from more than 10 per cent of GDP in 1979 and in 1980 to below 7.5 per cent of GDP in 1982, reflecting in part the freeze imposed on public sector remunerations during the first half of the year and the adoption of flat pesos increases in the third quarter. To the extent permitted by the need to compress sharply the borrowing requirements of the public sector, current budget plans for 1983 imply a real increase in the remunerations of public employees of 5 per cent. In addition, in order to retain qualified mediumand high-level civil servants,their salary scale will be partially restructured so as to correct the distortions in salary levels introduced by the flat peso increases of July-September 1982. Such selective increases will be quarterly commencing on April 1, will be kept during 1983 to one half of the full contemplated restructuring and will be subject to the availability of budgetary resources consistent with the fiscal program. The restructuring process will be completed in 1984. Altogether, the government wage bill would be held to no more than 7.5 per cent of GDP, a level significantly below that recorded in 1980 and 1981. Although wage developments in the public enterprises in principle follow the pattern of those in the private sector, the Government will monitor carefully the behavior of remunerations in the state enterprises and bring appropriate pressure to bear on these enterprises to ensure that the remunerations they pay remain in line with those for government employees. 13. There has been a marked deterioration in the public finances since 1977, particularly in the last two years. Pub1i.c sector expenditure rose to about 40 per cent of GDP, to a large extent because of mounting interest payments on the.internal and external debt and notwithstanding a drop in capital spending. Meanwhile, government revenues declined, affected as they were by rapidly changing economic conditions, modifications in the tax system and widespread tax evasion. Savings of the public sector fell sharply, from a high of 10-l/2 per cent of GDP in 1977 to around minus 3-l/2 per cent of GDP in 1981 and to minus 5 per cent of GD,P in 1982. The overall borrowing requirements of the public sector, which in 1977 had been compressed to 4-l/2 per cent of GDP, widened steadily thereafter to a high of 14-l/3 per cent of GDP in both 1981 and 1982. Consequently, the public sector not only preempted a growing share of domestic financial savings, but also borrowed heavily abroad. 14. The Government is committed to prudent financial management and thereby to strengthening the confidence of the private sector, where expectations are markedly influenced not only by the size of the public sector deficit but also by the magnitude and composition of public spending. There also is a need for relieving pressures on the domestic financial market in order to free savings for the revival of output in the private sector. "
 #> 
 #> $pages[[5]]
-#> [1] "c( -8-, losses of the Central Bank, together with the cash deficit of the non-, financial public sector (described above), would result in a combined pub-, lic sector deficit of no more than 6.2 percent of GDP in the second half, of 1985 and no more than 2.6 percent of GDP in the first quarter of 1986., 22. Consistent with the objectives of reducing the deficit of the pub-, lic sector and curbing public spending, the Government has set limits, in current pesos,, presented in Table 2, for the combined deficit of the, nonfinancial publlic sector and the Central Bank; a sublimit on the cash, deficit of the nonfinancial public sector; and a limit on treasury out-, Ilays (excluding interest payments). Following the normalization of, public sector payments to the private sector in recent months, the, Government will avoid the incurrence of new domestic arrears and buildup, of floating debt, and the limits on the fiscal deficit have been set on, this basis. The behavior of domestic arrears and floating debt will be, assessed during the October 1985 review of the program to evaluate, fiscal policy; this evaluation will be facilitated by the timely estab-, lishment of mechanisms to monitor these kinds of debt, both in the, National Administration and the public enterprises. In setting the, limits on treasury outlays, it: has been assumed that there will be no, significant changes in the present arrangements regarding the financing, Iof the rest of the public sector; if such arrangements were modified,, the effect of the changes would be taken into account in estimating, treasury outlays. Changes in outstanding treasury drafts (libramientos, impagos) are included in the definition of treasury outlays. The limit, on treasury outlays and the inflation adjustment component of interest, costs included in the central bank losses and in the nonfinancial public, sector deficit will be adjusted as explained in Table 2, if the actual, rate of inflation differs from the projected path., 23. The fiscal lprogram just described, in combination with the balance, of payments objectives set out below, should make it possible to slow, monetary growth without unduly squeezing the private sector. Following, a tightening of monetary policy in the latter part of 1984, the rates, of growth of the monetary aggregates increased in the early months of, 1985, while there was a further reduction in real money balances. The, decline in real balances is expected to continue in coming months, and, only when the anti-inflation program takes hold and inflationary ex-, pectations recede will money holdings show real growth. The growth of, Ml (defined as the sum of the monthly averages of currency in circulation, and total sight deposits) is estimated to have declined from a seasonally, adjusted monthly rate of 22 percent in the period February-April 1985, to about 19 l/2 percent in May and is projected to decline further to, 13 l/2 percent by September 1'985 and to below 10 percent in the first, quarter of 1986. In line with the monetary program for the period May, to September 1985 and the balance of payments objectives, limits have, been set on the net domestic assets of the Central Bank (defined as, currency issue less net foreign assets) through end-September 1985, (Table 3). The limit on the net domestic assets of the Central Bank, for the period through March 1986 will be set on the occasion of the, review of the program that is scheduled for October 1985, taking into, account the behavior of monetary aggregates in the intervening period.)"
+#> [1] " .13 ANNEX I will be partly, if not wholly, offset by the gradual recovery of production, imports, and sales and by a systematic effort at reducing tax evasion, now estimated at around 50 per cent in the case of the VAT alone. A growth of other government revenue is expected from the adoption of a tax moratorium and the impact of the ongoing adjustments in the domestic prices of petroleum derivatives and electricity. 18. The Government will observe austerity in its consumption spending through tight control over the growth of its wage bill and by keeping the increase in its outlays on goods'and services below that in domestic prices. Although no dismissal from government employment can be envisaged in current economic circumstances, no more than one half of the positions vacated by attrition will be filled. With such prudent management of current spending and the anticipated increase in revenue; government savings should rise from minus 1.8 per cent of GDP in. 1982 to 2-l/.? per cent of GDP in 1983. 19. Given the transitory nature of this Government, it would seem inappropriate to introduce major modifications in the size and overall priorities of the public investment program. Nonetheless, concern for economic reactivation dictates that in 1983 real public investment spending be raised by around 1 per cent of GDP from its level of 8.5 per cent of.GDP in 1982, and care has been taken in the 1983 budget to concentrate such spending on labor-intensive projects with a large income multiplier effect. Projects, with low economic returns and those of no immediate priority have been cancelled or postponed, except when breach of contracts involved higher costs than continuing with the project.. : 20. The financial system was substantially modified in July 1982 :. with the objective of alleviating the heavy domestic and foreign debt burden of enterprises resulting from large-scale borrowing during 1978-80. With these modifications, the real value of the private sector's debt to the financial system was reduced by 40 per cent from July through October. But the cost of this operation was high as the low level of real interest rates caused real domestic financial savings to fall sharply. Monetary policy therefore is being directed toward the reconstitution of real financial savings and the efficient allocation of financial resources. 21: A number of measures in this direction were taken in the latter part of 1982 as the interest rate structure established in July 1982 was gradually made more flexible. The maximum monthly interest rates payable on regulated deposits of 30 days were increased in steps from an initial level of 5 per cent per month in July to 7 per cent in September and to 8-112 per cent in November, and the rates on regulated deposits at longer terms were raised correspondingly. The rate of interest on the subsidized basic and additional loans was raised from the original 6 per cent a month in July to 8 per cent a month in September. That lending rate was raised further to 9 per cent a month in November, and new access to these loans was suspended from November 1, 1982. Also, regulations were issued in November 1982 to prevent maturing exchange guarantees granted during June-December 1981' from causing an undue Central Bank credit'expansion and a loss of foreign exchange reserves. "
 #> 
 #> $pages[[6]]
-#> [1] "c( - 12 -, is analyzing the existing tariff structure may lead to adjustments in, duty rates to correct anomalies in the tariff structure and to provide, some protection for products on which the quantitative restrictions, are to be lifted. It is recognized that exchange rate policy needs to, be consistent with import liberalization to limit import demand follow-, ing the removal of quantitative barriers. In addition, in a move aimed, primarily at strengthening fiscal revenue, the Government has just, introduced a surcharge equal to 10 percent of the value of most imports., Progress in the process of import liberalization will be analyzed on, the occasion of the review of the program scheduled for October 1985,, at which time understandings will be reached on additional steps to be, taken toward the above-mentioned liberalization objectives., 32. In line with the aim of a continuing strengthening of the country's, external position, the overall balance of payments deficit has been, targeted to narrow from USS1.74 billion in 1984 to USS1.65 billion in, 1985. The current account deficit is projected to decline from US$2 l/2, billion in 1984 to USS2 billion in 1985, with about one half this, improvement reflecting the sharp reduction in international interest, rates since September 1984. Also, following a deterioration in the early, months of 1985, the private capital account is expected to strengthen, in the second half of 1985 and into 1986. The exchange rate and credit, policies described above should encourage capital inflows and, in addi-, tion, the Government has taken steps to attract foreign direct invest-, ment in the petroleum sector and has established a scheme whereby foreign, creditors can convert outstanding loans into capital participation., Targets for net international reserves through December 1985 are set, forth in Table 4. The target for end-March 1986 will be agreed on the, occasion of the October review of the program., 33. To finance the overall balance of payments deficit and to provide, both for the elimination of external payments arrears and a needed, increase in the gross reserves of the Central Bank, the Government has, been arranging exceptional finance from official and private creditors., The Paris Club Agreed Minutes of January 1985 provide for the reschedul-, ing of USS2.1 billion in service payments on medium- and long-term debt, including USS1.4 billion that were in arrears at the end of 1984 and, USSO. billion that fall due in 1985; bilateral agreements are being, finalized with some official creditors and the Government is committed, to completing all these agreements as soon as possible. The Government, is near agreement with creditor banks on the rescheduling of USs14.5, billion of principal payments that have matured since April 1982 or will, mature through December 1985. The Government also is near agreement on, new financing of USS4.2 billion from creditor banks and has received, assurances from official creditors of US$l billion in additional trade, finance. A substantial portion of this exceptional finance is to be, used to repay arrears and other foreign obligations. The disbursement, of the new bank financing is to be timed to correspond to the drawings, from the Fund under the stand-by arrangement, and the elimination of, external arrears has been planned accordingly, as shown in Table 5., External payments arrears are to be eliminated by March 31, 1986 and no)"
+#> [1] " . 14 ANNEX I 1 22. With effect from January 1, 1983, the monetary authorities have adopted a policy whereby the key regulated deposit rates and the lending rate for loans financed from regulated deposits will be set at the beginning of each month on the basis of a three-month moving average of the wholesale price index-the observed increase in that index during the two preceding months and the projected increase for the current month. The lending rate will be set at least equal to that three-month moving average ; the 30-day deposit rate will be set within 1 percentage point below that average and the rates on deposits of more than 30 days will be set in line with the 30-day rate. Recognising that this formula is based on partially estimated data for the preceding month and projected data for the current month, the authorities are prepared during the course of each month to adjust minimum reserve requirements or to conduct their open market operations in such a way as to produce an interest rate on Central Bank absorption bills which will compensate for any significant underestimation of the current inflation rate resulting from the formula. 23. More generally, the authorities view the ultimate test of the appropriateness of interest rate policy to be the degree of success in .achieving the balance of payments objectives and the targeted real increase in the financial assets of the private sector; they are prepared to adapt the formula for setting regulated deposit and lending rates to the extent that is necessary to meet these goals. In the short run, the results of the regular bill auctions and the movements in the rates on unregulated deposits will be used as indicators of the appropriateness of that formula, and regulated rates will be set above the levels indicated by the price formula if this appears necessary. 24. A major obstacle to economic recovery since the second quarter of 1982 has been the foreign exchange shortage. Two major reasons for this shortage were adverse movements in the leads and lags of import payments and surrender of export receipts and the drying up of external sources of finance at a time of heavy external debt service payments. From July 1982, another reason has been the emergence of a large differ ential between the commercial exchange rate applicable to merchandise n transactions, the financial rate applicable to all other authorised .I 1 transactions, and the rate in the parallel market which emerged as exchange restrictions were tightened. As a consequence, underand over-invoicing became widespread, unrecorded border transactions increased, exporters withheld shipments, and a large portion of service receipts evaded official channels. 25. To avoid the continuation of these distortions in trade and payments flows the Government is determined to restore order in the foreign exchange market. While continuing with the daily depreciation. of the commercial rate initiated in July 1982, the unification between the financial and commercial exchange rates was accelerated in September and October by introducing, and subsequently increasing, the mix of the two rates for trade transactions. The exchange markets subsequently were unified on November 1, 1982, for a 13-l/2 per cent peso depreciation for "
 #> 
 #> $pages[[7]]
-#> [1] "c( - 13 -, new arrears will be incurred after that date. While arrears are being, eliminated, the Government is interested in maintaining an accurate, presentation by the private sector of requests for official exchange., To this end, the Government intends to institute a deposit scheme whereby, the peso counterpart of external payments arrears will be placed with, the Central Bank at the time of payments requests., 34. The total external debt, including obligations to the Fund and ex-, ternal arrears, increased by about USS1.8 billion in 1984 to USS47.8, billion, and is expected to rise by another USS2.4 billion in 1985., Consistent with this overall growth in debt, limits have been established, for the total and the short-term external debt of the public sector for, the remainder of the arrangement, as presented in Table 6., 35. The Government intends to simplify the exchange and trade system, and eliminate restrictions to the extent permitted by the availability, of foreign exchange. With a view to allocating scarce exchange at a, time of severe balance of payments difficulties, in September 1983, external payments and transfers were subjected to prior approval by the, Central Bank. It is the intention of the Government, pari passu with, the reduction of external payments arrears, to make foreign exchange, available for bona fide payments and transfers for current international, transactions; with respect to the private sector this will be done on, an automatic basis. In pursuing this objective, priority has been, attached to private sector import payments; since August 1984 all pri-, vate sector import payments, other than those expected to be rescheduled,, have been on a current basis and foreign exchange is now being, and will, continue to be, made available automatically for such payments. On the, basis of the expected improvement of the balance of payments and the, external financing to be obtained, the Central Bank intends to provide,, as soon as possible, foreign exchange for interest payments and for, transfers related to nonfinancial services, profits, dividends, and, royalties. In the meantime, the cancellation of obligations in respect, of profits, dividends, and royalties will continue to be permitted, through the delivery of marketable Government of Argentina bonds denomi-, nated in U.S. dollars (BONEX). Moreover, the regulations regarding the, restructuring of loans with exchange rate guarantees which mature in, 1985 will be announced before the end of July 1985., 36. As noted above, in April-May there were significant deposit with-, drawals from some banks, including especially large withdrawals of U.S., dollar deposits which are not guaranteed by the Central Bank. As a, matter of prudential concern, the Central Bank, on May 17, 1985, froze, outstanding dollar deposits in the banking system for 120 days. In, doing so, it provided that deposits maturing during the period of the, freeze could be converted, at the option of the depositor, into BONEX., The Government believes that a sudden withdrawal of U.S. dollar deposits, in present circumstances could compromise the soundness of the financial, system, but it intends to take steps as soon as possible to permit, holders of frozen deposits to use these resources to make external, payments.)"
+#> [1] "\\ 15 .ANNEX I trade related transactions, and since then the exchange rate has been adjusted about in line with the rate of domestic inflation. This policy will be applied with sufficient flexibility to meet the overall balance of payments objectives. 26. A parallel market will'remain in existence so long as complete freedom of exchange transactions has not been restored. Moreover, the benefits in terns of resource allocation of a unified exchange.rate are at least partly foregone by such payments restrictions as presently exist. Despite the drawbacks of exchange restrictions, the freeing of the capital account of the balance.of.payments has to be ruled out in Argentina's.present circumstances, but it is the intention of the Government to phase out gradually restrictions on payuents and transfers on current account; To this effect a program of gr,adual liberalization has been drawn up, which calls for a return to complete freedom for current payments by December 31, 1983,. e.xcept possibly for limits on certain invisi,ble payments to prevent disguised capital outflows. The 180-day minimum import financing requirement also will be reduced in steps and eventually .eliminated. 27'. Beginning in the second quarter of 1982 Argentina incurred large external payments arrears, of which USS2.5 billion remained outstanding at the end of December. The authorities are giving the ,highest priority to the total elimination of these arrears, in their determination to restore the normal flow of imports and Argentina's international creditworthiness. 28. The authorities have asked foreign banks to restructure Argentina's debt maturities. As already indicated, principal payments equivalent to about one half of the external debt of USS36 billion at the end of 1982 fall due in 1983. This debt amortization schedule obviously,is unrealistic for a country with Argentina's.level of income and-export earnings. The Government trusts that the private international'banking community will recognize this fact and respond positively to Argentina's request for debt relief. Should foreign banks be pre-. pared to go further and resume lending to Argentina, the Government will observe prudent limits on its total external borrowing, especially in the shorter maturity ranges. Government of the Republic of Argentina January 7, 1983 "
 #> 
 #> $pages[[8]]
-#> [1] "c( - 14 -, 37. Before the end of October 1985, the authorities will review with, the Fund the progress in implementing their economic program in order, to reach understandings, if necessary, on additional measures to ensure, achievement of the program's objectives. During the review, stock will, be taken of the external financing secured in support of the program, and the objectives with regard to the balance of payments, external, arrears, external debt, the exchange system, and import policy. Limits, for the variables defined in peso terms referred to in paragraphs 22, and 23 will be set for the remainder of the program period; the target, for the net international reserves for end-March 1986 also will be set, in the review., Yours sincerely,, IS/ /S/, J.J. Alfred0 Concepci& Juan Vital Sourrouille, President of the Central Bank Minister of Economy, of the Republic of Argentina)"
+#> [1] " 16 ANNEX 11 Buenos Aires, Argentina January 7, 1983 MEMORANDUM OF UNDERSTANDING 1. This Memorandum describes more concretely the key targets and policy undertakings of the accompanying Memorandum of the Government.of the Republic of Argentina on Certain Aspects of its Economic Policy. 2. The overall balance of payments target for 1983 and for the 15-month period through the first quarter of 1984 is a deficit of no more than US$500 million. The intermediate targets are a deficit of no more than US$400 million for the three-mon,th period through March 31, 1983; a deficit of no more than US$220 million for the six-month period through June 30, 1983; and a surplusof at least US$20 million for the nine-month period through September 30, 1983. For the purpose of these targets, the balance of payments performance will be measured by changes in the net international reserve positionof the Central Bank of the Republic of Argentina. The Central Bank's net international reserve position will be defined as the difference between (a) the sum of its holdings of gold, SDRs, reserve position in the IMF, and all claims on nonresidents except discounted export letters of credit and credit lines granted to nonresidents; and (b) the sum of any outstanding external payments arrears and all other obligations to nonresidents, regardless of their currency denomination, any outstanding foreign currency swaps with residents, any loans obtained by public sector entities the foreign currency proceeds of which were surrendered to the Central Bank without the borrowing entity receiving the peso counterpart, any other balance of payments support loans, the cumulative net issue of external bonds (BONEX) against pesos for settlement by the private sector of outstanding external obligations (but excluding external bonds issued in settlement of foreign loans carrying an exchange rate guarantee by the Central Bank) and any debt to the IMF and the BIS. For the purpose of this definition, all foreign assets and liabilities will be expressed in U.S. dollars. All foreign assets and liabilities in other foreign currencies will be converted into U.S. dollars at the market rates of the respective currencies; gold will be valued at a fixed accounting rate of US$42 per fine troy ounce; and the Central Bank's SDR holdings and Argentina's IMF position, be the latter positive or negative, will be valued in SDRs converted into U.S. dollars at the basket valuation of the Special Drawing Right. The Central Bank's net international reserve position as of September 30, 1982, so defined, is shown in attached Table 1. However, for purposes of measuring balance of payments'performance, the change in the net international reserve position will be adjusted for changes in the U.S. dollar value of assets and liabilities denominated in other foreign currencies. An adjustment factor will be calculated weekly as the difference between (a) the U.S. dollar value of such assets and liabilities as of the day before the end of each statistical week valued at market rates on that day and (b) that same stock of assets and liabilities valued at the market "
 #> 
 #> $pages[[9]]
-#> [1] "c( - 20 -, Table 6. Argentina: Limits on the External Debt of the, Public Sector During the Program Period, (In millions of U.S. dollars), Limit on the total outstanding, disbursed external debt of, the public sector L/ 39,700, Limit on cumulative net disbur-, sements of short-term debt of, of the public sector contracted, after September 30, 1984 -2/ 2,500, L/ The definition of total outstanding disbursed external debt of, the public sector includes all external obligations of the public, sector, including the Central Bank of the Republic of Argentina, and the official banks. However, this definition excludes bonds and, notes issued in lieu of providing foreign exchange to meet principal, payments falling due on private sector debt covered by exchange rate, guarantees, obligations deriving from the assumption by the public, sector of debt of private domestic borrowers after December 31, 1983,, and those categories of obligations not subject to the Central Bank's, debt registration system as of September 15, 1984. It includes loans, covered by swap arrangements undertaken by the Central Bank., 21 Includes cumulated disbursements, net of repayments, of debt, with a maturity up to one year, contracted by public sector entities, after September 30, 1984, other than obligations classified as reserve, liabilities.)"
+#> [1] "\\ 17 ANNEX II rates on the day before the end of the.preceding statistical week.. The cumulative value of these weekly adjustment factors will be subtracted from the change in net international reserves of the Central Bank as measured at current market rates. : 3. The cumulative global borrowing needs of the nonfinancial public sector will not exceed $a 105 trillion from January 1, 1983 until March 31, 1983; $a 218 trillion until June 30, 1983; $a 326 trillion until September 30, 1983; $a 445 trillion until December 31, 1983; and $a 559 trillion until March 31, 1984. These borrowing needs will be defined as the sum of the net increase above their respective stocks on December 31, 1982 in (a) the external debt of the nonfinancial public sector, including short-term debt, foreign currency denominated Treasury bills and bonds (BONEX) (excluding BONEX issued against pesos) converted into U.S. dollars if denominated in another foreign currency (and properly adjusted for exchange rate movements) and all U.S. dollar values converted into pesos at the average exchange rate of the U.S. dollar during the calendar quarter of the transaction; (b) external bonds in foreign currency issued against pesos in settlement of foreign obligations carrying an exchange rate guarantee by the Central Bank, valued in pesos at the amount actually received by the Treasury on the date of each such transaction; (c) th e net debt (credit minus deposits) of the nonfinancial public sector to the Central Bank of the Republic of Argentina (including external bonds issued against pesos other than those,referred to in (b) above) and the rest of the domestic financial system, excluding any valuation adjustments for alterations in the external value of the Argentine peso in the pertinent foreign currency denominated accounts; and (d) net placement of Treasury bills and bonds with.the nonfinancial private sector. For the purpose of these cumulative limits, the nonfinancial public sector will be defined as the Treasury, the Special Accounts, the decentralized agencies, the Social Security System, the provinces, the Municipality of Buenos Aires, and the public enterprises listed in attached Table 2. 4. The net domestic assets of the Central Bank of the Republic of Argentina will at no time during the first quarter of 1983 increase by more than the increase (or decrease by less than the decrease) in its banknote issue above (below) its base stock on December 31, 1982, plus $a 9.7 trillion, but in no event by more than 40 per cent of the base q'stock, plus $a 9.7 trillion; at no time during the second quarter of 1983 increase by more than the increase (or'decrease by less than the decrease) in its banknote issue above (below) its base stock, plus '$a 15.0 trillion, but in no event by more than 80 per cent of the base stock, plus $a 15.0 trillion; at no time during the third quarter of 1983 increase by more than the increase (or decrease by less than the ::decrease) in its banknote issue above (below) its base stock, plus '$a 4.9 trillion, but in no event by more than 130 per cent of the base stock, plus $a 4.9 trillion; at no time,during the last quarter of 1983 increase by more than the increase (or decrease by less than the decrease) in its banknote issue above (below) its base stock, plus $a 11.7 trillion; but in no event by more than 170 per cent of the "
+#> 
+#> $pages[[10]]
+#> [1] " 18 1 ANNEX II base stock, plus $a 11.7 trillion; i?nd at no time during the first quarter of 1984 increase by, more than the increase (or decrease by less than the decrease) in its banknote issue above (below) its base stock, plus $a 24.3 trillion, but in no event by more than 220 per _ cent of the base stack, plus Sa 24.3 trillion. For the purpose of this ceiling, the net domestic assets of the Central Bank will be defilled as the difference between (a) its banknote issue and (b) its net international reserve position, defined as in paragraph 2 above, with the U.S. dollar value converted at all times into Argentine pesos at the Central Bank's accounting rate on December 31, 1982. 5. The outstanding disbursed external debt of the public sector will at no time during the period of the arrangement exceed by more than USS2 billion the stock of such debt outstanding on December 31, 1982. Furthermore, the total maturities falling due within three years of the end of each calendar quarter, based on the stock of debt outstanding as of the end of that calendar quarter, will not exceed the total maturities falling due within three years of December 31,'1982, based'on the stock of debt outstanding as of that date, by more than US$600 million on March 31, 1983, by more than US$l.2 billion on June 30, 1983, by more than USS1.8 billion on September 30, 1983, by more than USS2.4 billion on December 31, 1983, and by more than US$3 billion on March 31, 1984. These limits on maturities falling due within three years of the end of each calendar quarter will be subject to a downward adjustment (even, if appropriate, to negative values) for (a) any net debt relief on maturities falling due within these periods obtained through multicreditor agreements involvirig a formal refinancing or rescheduling of the external debt of the public sector, and for (b) any increase in arrears on principal payments on public sector debt over and above the amount of such arrears outstanding on December 31, 1982. For purpose of these limits, the external debt of the public sector will be defined as all external obligations of the total public sector, including the official banks (the domestic offices of Banco de la Nation, the National Development Bank, the Mortgage Bank, the National Postal Savings Bank, and the provincial and municipal banks), but excluding any increase in the stock of Argentine government bonds denominated in foreign currency but issued against pesos; any increase in the external obligations of the public sector treated as international reserve liabilities of the Central Bank as per paragraph 2 above; and any increase in the external debt of the public sector as the result of default by the private sector on a publicly guaranteed debt. External debt in currencies other than the U.S. dollar will be converted into U.S. dollars at the exchange rates prevailing on December 31, 1982, 6. During 1983 and through April 1984, the Government will not impose any new or intensify any existing restriction on payments and transfers for current international transactions; conclude any bilateral payments agreement inconsistent with Article VIII of the Articles of Agreement, or impose any new or intensify any existing import restriction for balance of payments reasons. During the second quarter of 0 1983 the Government will undertake, in consultation with the Fund, a "
+#> 
+#> $pages[[11]]
+#> [1] "1 \\ <..19 ANNEX II comprehensive review.of the Argentine exchange and trade system and reach understandings with the Fund on a schedule for the elimination of existing multiple currency practices. and restrictions on payments and transfers for current international transactions and of the consequent distortions. The Government will terminate the system of special rebates for exports to new markets by February 28, 1983, although rebates authorized before that date will continue in effect until their pre-established expiration dates. The Government will reduce the minimum foreign financing requirement for private imports, now at 180 days, to no more than 150 days by March 31, 1983, to no more than 120 days by June 30, 1983, and to no more than 90 days by September 30, 1983, and it will eliminate this requirement entirely by December 31, 1983. 7. During 1983 and through April 1984, the Government will not introduce or modify any multiple currency practice with the following exceptions: (a) any uodification in a multiple currency practice which reduces the differential between the effective exchange rate applied for a given transaction and the official buying or selling rate for the peso in the unified exchange market; and (b) pending the completion of the review mentioned in paragraph 6 above, the continued operation of the existing system of export rebates within the existing range of rates, including the reclassification of exports within that'range of rates. 8. All external payments arrears will be eliminated as quickly as possible and, in any event, by June 30, 1983. Once eliminated, foreign exchange will be provided freely at the official exchange rate for all bona'fide current international payments. However, reasonable limits may be applied on the automatic allocation of foreign exchange for foreign travel and,remittances in order to prevent disguised capital outflows. ._. 9. ..The Government intends to. initiate shortly discussions with i its foreign creditors with a view to achieving a restructuring of Argen'.tina's external public and private debt that would produce an amortiza.tion profile attuned to Argentina's repayment capacity. Sincerely yours, Julio Gonzalez de1 Solar Jorge Wehbe President of the Central Bank Minister of Economy of the Republic of Argentina "
 ```
 
 Compute the document term frequency for all the files in the corpus for the category "Currency\_crisis"
 
+## TERM FREQUENCIES: compute the indexes
+
 ``` r
-
-tf_matrix=tf(corpus,"Sovereign_default")
-
-head(tf_matrix)
-#> # A tibble: 4 x 2
-#>   var[,1] file                           
-#>     <dbl> <chr>                          
-#> 1       0 ARG_1984-12-28_exchange system 
-#> 2      NA ARG_1984-12-28_purchase transac
-#> 3       0 ARG_1984-12-28_request         
-#> 4       0 ARG_1985-06-11_request
+tf_matrix=tf(corpus,"Severe_recession")
+tf_matrix
+#> # A tibble: 5 x 2
+#>   var[,1] file                          
+#>     <dbl> <chr>                         
+#> 1       0 ARG_1983-01-25_request        
+#> 2       0 ARG_1983-05-18_modification   
+#> 3      NA ARG_1983-05-27_modification   
+#> 4       0 ARG_1983-06-08_exchange system
+#> 5       0 ARG_1983-07-28_exchange system
 ```
 
-Compute the document term frequency for several categories "Currency\_crisis" and "Balance\_payment\_crisis"
+Compute the document term frequency for several categories "Currency\_crisis" and "Balance\_payment\_crisis". Each documents correspond to a row of the table and the different indexes in columns.
 
 ``` r
 
-# term frequency matrix for several categories of crisis
 mycategories=c('Currency_crisis',"Balance_payment_crisis","Sovereign_default")
-tf_matrix_with_several_categories=tf_vector(corpus,lexicon()[mycategories])
+
+tf_vector(corpus=corpus,keyword_list=lexicon()[mycategories]) %>% head()
 #> 
 #> (1/3) running: Currency_crisis
-#> Currency_crisis: 0.355 sec elapsed
+#> Currency_crisis: 0.632 sec elapsed
 #> 
 #>  Finished running: Currency_crisis
 #> 
 #> (2/3) running: Balance_payment_crisis
-#> Balance_payment_crisis: 0.247 sec elapsed
+#> Balance_payment_crisis: 0.711 sec elapsed
 #> 
 #>  Finished running: Balance_payment_crisis
 #> 
 #> (3/3) running: Sovereign_default
-#> Sovereign_default: 0.234 sec elapsed
+#> Sovereign_default: 0.607 sec elapsed
 #> 
 #>  Finished running: Sovereign_default
-
-head(tf_matrix_with_several_categories)
-#> # A tibble: 4 x 4
-#>   file             Currency_crisis[,… Balance_payment_cr… Sovereign_defaul…
-#>   <chr>                         <dbl>               <dbl>             <dbl>
-#> 1 ARG_1984-12-28_…                  0            0                 0       
-#> 2 ARG_1984-12-28_…                 NA           NA                NA       
-#> 3 ARG_1984-12-28_…                  0            0.000368          0.000368
-#> 4 ARG_1985-06-11_…                  0            0                 0.00617
+#> # A tibble: 5 x 4
+#>   file               Currency_crisis[,… Balance_payment_cris… Sovereign_default…
+#>   <chr>                           <dbl>                 <dbl>              <dbl>
+#> 1 ARG_1983-01-25_re…                  0                     0           0.00470 
+#> 2 ARG_1983-05-18_mo…                  0                     0           0.000642
+#> 3 ARG_1983-05-27_mo…                 NA                    NA          NA       
+#> 4 ARG_1983-06-08_ex…                  0                     0           0       
+#> 5 ARG_1983-07-28_ex…                  0                     0           0
 ```
 
-Wrapup function for tf
+Wrapup function for tf() . Given a corpus saved locally compute the term frequencies for different categories. In the following example we used mycorpus.RData and the categories Currency\_crisis and Balance\_payment\_crisis.
 
 ``` r
 
 #Run term frequency matrix
 
-wrapup_for_tf=run_tf(corpus_path = "mycorpus.RData",type_lexicon ="words",keyword_list = c("Currency_crisis","Balance_payment_crisis"),parrallel = F)
+wrapup_for_tf=run_tf(corpus_path = "mycorpus.RData",
+                     keyword_list = c("Currency_crisis","Balance_payment_crisis"),
+                     parrallel = F)
 #> Loading corpus from mycorpus.RData
 #> (1/2) running: Currency_crisis
-#> Currency_crisis: 0.159 sec elapsed
+#> Currency_crisis: 0.752 sec elapsed
 #> 
 #>  Finished running: Currency_crisis
 #> 
 #> (2/2) running: Balance_payment_crisis
-#> Balance_payment_crisis: 0.183 sec elapsed
+#> Balance_payment_crisis: 0.596 sec elapsed
 #> 
 #>  Finished running: Balance_payment_crisis
-#> 0.379 sec elapsed
+#> 1.386 sec elapsed
 #> [1] "export table in mycorpus.RData"
 
 head(wrapup_for_tf)
-#> # A tibble: 4 x 3
-#>   file                         Currency_crisis[,1] Balance_payment_crisis[…
-#>   <chr>                                      <dbl>                    <dbl>
-#> 1 ARG_1984-12-28_exchange sys…                   0                 0       
-#> 2 ARG_1984-12-28_purchase tra…                  NA                NA       
-#> 3 ARG_1984-12-28_request                         0                 0.000368
-#> 4 ARG_1985-06-11_request                         0                 0
+#> # A tibble: 5 x 3
+#>   file                           Currency_crisis[,1] Balance_payment_crisis[,1]
+#>   <chr>                                        <dbl>                      <dbl>
+#> 1 ARG_1983-01-25_request                           0                          0
+#> 2 ARG_1983-05-18_modification                      0                          0
+#> 3 ARG_1983-05-27_modification                     NA                         NA
+#> 4 ARG_1983-06-08_exchange system                   0                          0
+#> 5 ARG_1983-07-28_exchange system                   0                          0
 ```
 
-Wrapup function for run\_tf that allows directly download the files and run the text mining with a single function
+Wrapup function for run\_tf that allows directly download the files and run the text mining with a single function.
 
 ``` r
 run_tf_by_chunk(urls =url_links,keyword_list = c("Currency_crisis","Balance_payment_crisis"))
 #> Warning in dir.create(path): 'temp' already exists
 #> Warning in dir.create(path_corpus): 'temp/corpus' already exists
 #> Warning in dir.create(path_tf): 'temp/tf' already exists
-#> ARG_1984-12-28_exchange system: succesfully downloaded 
-#> ARG_1984-12-28_exchange system : 1/6: 2.399 sec elapsed
-#> ARG_1984-12-28_request: succesfully downloaded 
-#> ARG_1984-12-28_request : 2/6: 3.201 sec elapsed
-#> ARG_1984-12-28_purchase transac: succesfully downloaded 
-#> ARG_1984-12-28_purchase transac : 3/6: 2.532 sec elapsed
-#> ARG_1984-12-28_request: already downloaded, keep existing 
-#> ARG_1984-12-28_request : 4/6: 0.014 sec elapsed
-#> ARG_1984-12-28_request: already downloaded, keep existing 
-#> ARG_1984-12-28_request : 5/6: 0.011 sec elapsed
-#> ARG_1985-06-11_request: succesfully downloaded 
-#> ARG_1985-06-11_request : 6/6: 3.02 sec elapsed
+#> ARG_1983-01-25_request: succesfully downloaded 
+#> ARG_1983-01-25_request : 1/6: 2.696 sec elapsed
+#> ARG_1983-05-18_modification: succesfully downloaded 
+#> ARG_1983-05-18_modification : 2/6: 2.348 sec elapsed
+#> ARG_1983-05-27_modification: succesfully downloaded 
+#> ARG_1983-05-27_modification : 3/6: 1.89 sec elapsed
+#> ARG_1983-05-27_modification: already downloaded, keep existing 
+#> ARG_1983-05-27_modification : 4/6: 0.013 sec elapsed
+#> ARG_1983-06-08_exchange system: succesfully downloaded 
+#> ARG_1983-06-08_exchange system : 5/6: 2.028 sec elapsed
+#> ARG_1983-07-28_exchange system: succesfully downloaded 
+#> ARG_1983-07-28_exchange system : 6/6: 2.593 sec elapsed
 #> urls succesfully downloaded in 'temp/files
-#> '
-#> Warning in stri_replace_all_regex(string, pattern,
-#> fix_replacement(replacement), : argument is not an atomic vector; coercing
-#> [1] "temp/files/ARG_1984-12-28_exchange system.pdf"
-#> 1/4 ARG_1984-12-28_exchange system: 0.011 sec elapsed
-#> Warning in stri_replace_all_regex(string, pattern,
-#> fix_replacement(replacement), : argument is not an atomic vector; coercing
-#> [1] "temp/files/ARG_1984-12-28_purchase transac.pdf"
-#> 2/4 ARG_1984-12-28_purchase transac: 0.052 sec elapsed
-#> Warning in stri_replace_all_regex(string, pattern,
-#> fix_replacement(replacement), : argument is not an atomic vector; coercing
-#> [1] "temp/files/ARG_1984-12-28_request.pdf"
-#> 3/4 ARG_1984-12-28_request: 0.009 sec elapsed
-#> Warning in stri_replace_all_regex(string, pattern,
-#> fix_replacement(replacement), : argument is not an atomic vector; coercing
-#> [1] "temp/files/ARG_1985-06-11_request.pdf"
-#> 4/4 ARG_1985-06-11_request: 0.208 sec elapsed
+#> '[1] "temp/files/ARG_1983-01-25_request.pdf"
+#> 1/5 ARG_1983-01-25_request: 0.154 sec elapsed
+#> [1] "temp/files/ARG_1983-05-18_modification.pdf"
+#> 2/5 ARG_1983-05-18_modification: 0.048 sec elapsed
+#> [1] "temp/files/ARG_1983-05-27_modification.pdf"
+#> 3/5 ARG_1983-05-27_modification: 0.008 sec elapsed
+#> [1] "temp/files/ARG_1983-06-08_exchange system.pdf"
+#> 4/5 ARG_1983-06-08_exchange system: 0.014 sec elapsed
+#> [1] "temp/files/ARG_1983-07-28_exchange system.pdf"
+#> 5/5 ARG_1983-07-28_exchange system: 0.014 sec elapsed
 #> delete folder with pdf 
 #> Loading corpus from temp/corpus/corpus_1.RData
 #> (1/2) running: Currency_crisis
-#> Currency_crisis: 0.179 sec elapsed
+#> Currency_crisis: 1.045 sec elapsed
 #> 
 #>  Finished running: Currency_crisis
 #> 
 #> (2/2) running: Balance_payment_crisis
-#> Balance_payment_crisis: 0.237 sec elapsed
+#> Balance_payment_crisis: 1.05 sec elapsed
 #> 
 #>  Finished running: Balance_payment_crisis
-#> 0.452 sec elapsed
+#> 2.145 sec elapsed
 #> [1] "export table in temp/corpus/corpus_1.RData"
 #> [1] TRUE
 ```
@@ -512,25 +479,26 @@ updated_tf=run_tf_update(path_tf_to_update = "temp/tf/tf_crisis_words_1.RData",
                 export_path = "temp/tf/tf_crisis_words_1_new.RData")
 #> updating selected columnsLoading corpus from temp/corpus/corpus_1.RData
 #> (1/2) running: Fiscal_outcomes
-#> Fiscal_outcomes: 0.218 sec elapsed
+#> Fiscal_outcomes: 0.848 sec elapsed
 #> 
 #>  Finished running: Fiscal_outcomes
 #> 
 #> (2/2) running: Fiscal_consolidation
-#> Fiscal_consolidation: 0.2 sec elapsed
+#> Fiscal_consolidation: 1.046 sec elapsed
 #> 
 #>  Finished running: Fiscal_consolidation
-#> 0.453 sec elapsed
+#> 1.967 sec elapsed
 #> [1] "export table in temp/corpus/corpus_1.RData"
 #> [1] "Non updated columns:\n\n                 file, Currency_crisis, Balance_payment_crisis"
 #> [1] "Updated columns:\n\n                 Fiscal_outcomes, Fiscal_consolidation"
 
 head(updated_tf)
-#> # A tibble: 4 x 5
-#>   file  Currency_crisis… Balance_payment… Fiscal_outcomes… Fiscal_consolid…
-#>   <chr>            <dbl>            <dbl>            <dbl>            <dbl>
-#> 1 ARG_…                0                0          0                0      
-#> 2 ARG_…               NA               NA         NA               NA      
-#> 3 ARG_…                0                0          0                0      
-#> 4 ARG_…                0                0          0.00282          0.00121
+#> # A tibble: 5 x 5
+#>   file     Currency_crisis[… Balance_payment_… Fiscal_outcomes… Fiscal_consolid…
+#>   <chr>                <dbl>             <dbl>            <dbl>            <dbl>
+#> 1 ARG_198…                 0                 0          0.00381         0.000332
+#> 2 ARG_198…                 0                 0          0               0       
+#> 3 ARG_198…                 0                 0          0               0       
+#> 4 ARG_198…                 0                 0          0               0       
+#> 5 ARG_198…                 0                 0          0               0
 ```

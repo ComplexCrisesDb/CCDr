@@ -4,11 +4,16 @@
 \alias{run_tf_update}
 \title{Updates the tf-indexes without repeating full extraction}
 \usage{
-run_tf_update(path_tf_to_update = "tf_crisis_words.RData",
+run_tf_update(
+  path_tf_to_update = "tf_crisis_words.RData",
   corpus_path = "IMF_letofIntent_1960_2014_clean.RData",
-  type_lexicon = "words", keyword_list = NULL,
-  export_path = "tf_crisis_words.RData", parrallel = T,
-  store_old = F, store_old_path = NULL)
+  type_lexicon = "words",
+  keyword_list = NULL,
+  export_path = "tf_crisis_words.RData",
+  parrallel = T,
+  store_old = F,
+  store_old_path = NULL
+)
 }
 \arguments{
 \item{path_tf_to_update}{Path to old tf dataframe.}

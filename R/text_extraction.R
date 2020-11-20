@@ -117,7 +117,7 @@ pdf_page_count = function(files) {
   }
 }
 
-aggregate_corpus = function(path_files, ENGINE, only_files = F) {
+aggregate_corpus = function(path_files, only_files = F) {
   #' Aggregate pdf files into list of characters
   #'
   #' function that takes the path of the directory and load all
@@ -125,7 +125,6 @@ aggregate_corpus = function(path_files, ENGINE, only_files = F) {
   #' mining
   
   #' @param path_files the path of the directory with the files
-  #' @param ENGINE similar to engine argument in readPDF from 'tm' package. 
   #' Function to read pdf into environment, either pdf_text or pdf_ocr_text, depending on whether image or not.
   #' @param only_files T/F whether to include in the list only the content or also
   #' the metadata of the pdf file
@@ -146,7 +145,7 @@ aggregate_corpus = function(path_files, ENGINE, only_files = F) {
     path = paste0(path_files, "/", docs[x], ".pdf")
     file <- try({
       pdfinfo = pdftools::pdf_info(path)
-      ENGINE(path) 
+      pdftools::pdf_text(path) 
     }, silent = T)
     if ("try-error" %in% class(file)) {
       warning(paste(docs[[x]], ": Error in path file or in the pdf extraction engine \n", sep = ""))
@@ -295,7 +294,7 @@ log_norm_trans = function(tf_data) {
   #' @param tf_data a dataframe of term frequencies
   #' @return a tibble of tf with log norm transformation
   #' @author Manuel Betin
-  #' @export
+  
   log_norm_trans = function(x) {
     ifelse(x > 0, 1 + log(x), 0)
   }
@@ -314,7 +313,7 @@ binary_freq_trans = function(tf_data) {
   #' @author Manuel Betin
   #' @return a dataframe with binary frequencies 0 if the tf_idf is zero and 1
   #' if it is non zero
-  #' @export
+
   
   binary_trans = function(x) {
     ifelse(x > 0, 1, 0)
@@ -323,7 +322,6 @@ binary_freq_trans = function(tf_data) {
                                                       binary_trans)
   return(table_brut_frequency)
 }
-
 
 check_extract=function(path_urls="../Betin_Collodel/2. Text mining IMF_data/datasets/urls docs/urls_Requests_Reviews_articleIV.RData",
                        path_tf_idf="../Betin_Collodel/2. Text mining IMF_data/datasets/tagged docs/tf_idf.RData",
@@ -492,7 +490,6 @@ add_to_corpus <- function(old_corpus_path, files_updated_path, ENGINE){
   attr(final_corpus,"class") <- c("corpusTM","list")
   return(final_corpus)
 }
-
 
 
 check_diff_pdfs_urls <- function(path, urls_data){

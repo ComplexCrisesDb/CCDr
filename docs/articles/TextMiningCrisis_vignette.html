@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TextMiningCrisis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0</span>
       </span>
     </div>
 
@@ -72,7 +72,8 @@
 
       
 
-      </header><div class="row">
+      </header><link href="TextMiningCrisis_vignette_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="TextMiningCrisis_vignette_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to TextMiningCrisis: <br> an accessible framework for Natural Language Processing</h1>
@@ -89,7 +90,7 @@
     
 <p>Getting started with text analysis can be a daunting task for researchers/practioners. <br> There are different elements of confusion: mainly, the many steps to take before the selected documents can be actually analyzed as quantitative data and the variety of functions coming from different packages, each with its own trade-offs. <br> The purpose of the TextMiningCrisis package is to make Natural Language Processing tasks easier, hence more accessible and reproducible, consolidating the different steps into an unified framework.</p>
 <div class="figure">
-<img src="../../../../../2018-2021%20PSE/5.%20packages/Repositories/TextMiningCrisis/vignettes/TextMiningCrisis_process.png" alt="Stylized representation of normal steps into a NPL task"><p class="caption">Stylized representation of normal steps into a NPL task</p>
+<img src="../../../../../../2018-2021%20PSE/5.%20packages/Repositories/TextMiningCrisis_version_1.4/TextMiningCrisis/vignettes/TextMiningCrisis_process.png" alt="Stylized representation of normal steps into a NPL task"><p class="caption">Stylized representation of normal steps into a NPL task</p>
 </div>
 There are five families of functions in the package to help you thorugh the different stages:
 <ol>
@@ -113,7 +114,8 @@ Comparison and refine: check eventual mistakes and render updating easy.
 <h1 class="hasAnchor">
 <a href="#selection" class="anchor"></a>Selection</h1>
 <p>You can create your own dictionary of expressions for multiple categories.<br> In this case, we show the keywords we created for natural disasters and conflicts:</p>
-<div class="sourceCode"><html><body><pre class="r"><span class="kw pkg">TextMiningCrisis</span><span class="kw ns">::</span><span class="fu"><a href="../reference/lexicon.html">lexicon</a></span>() [<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Natural_disaster"</span>,<span class="st">"Wars"</span>)]</pre></body></html></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">TextMiningCrisis</span><span class="fu">::</span><span class="fu"><a href="../reference/lexicon.html">lexicon</a></span><span class="op">(</span><span class="op">)</span> <span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Natural_disaster"</span>,<span class="st">"Wars"</span><span class="op">)</span><span class="op">]</span></code></pre></div>
 </div>
 <div id="pre-processing" class="section level1">
 <h1 class="hasAnchor">
@@ -132,44 +134,48 @@ Comparison and refine: check eventual mistakes and render updating easy.
 <h2 class="hasAnchor">
 <a href="#aggregate-corpus" class="anchor"></a>Aggregate corpus</h2>
 <p>The function <code>aggregate_corpus</code> loads all the files present into a directory into a single list and cleans them.</p>
-<div class="sourceCode"><html><body><pre class="r">## Aggregate files in docs_example directory (IMF documents for Argentina 1980-1990):
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Aggregate files in docs_example directory (IMF documents for Argentina 1980-1990):</span>
 
-#corpus &lt;- TextMiningCrisis::aggregate_corpus("../data/docs_example", only_files = T)</pre></body></html></div>
-<div class="sourceCode"><html><body><pre class="r"><span class="co"># Show the second page of the first document:</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"IMF_corpus_example"</span>)
-<span class="no">corpus</span><span class="kw">=</span><span class="no">IMF_corpus_example</span>
-<span class="no">corpus</span><span class="kw">[[</span><span class="fl">1</span>]]<span class="kw">[[</span><span class="fl">2</span>]]</pre></body></html></div>
+<span class="co">#corpus &lt;- TextMiningCrisis::aggregate_corpus("../data/docs_example", only_files = T)</span></code></pre></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Show the second page of the first document:</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"IMF_corpus_example"</span><span class="op">)</span>
+<span class="va">corpus</span><span class="op">=</span><span class="va">IMF_corpus_example</span>
+<span class="va">corpus</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></code></pre></div>
 </div>
 </div>
 <div id="npl" class="section level1">
 <h1 class="hasAnchor">
 <a href="#npl" class="anchor"></a>NPL</h1>
 <p><code>run_tf</code> returns from the corpus of documents a term-frequency matrix. What is it? For each of the categories in the <code>lexicon</code> function, counts the occurence of the selected keywords in every document and divides it by the total number of characters.<br><br> In this example, we want to quantify the use of words related to currency crisis and wars in documents on Argentina published by the IMF. The period our corpus covers is 1970-1980:</p>
-<div class="sourceCode"><html><body><pre class="r"><span class="co"># Create a term-frequency matrix for previous corpus:</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"IMF_tf_example"</span>)
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Create a term-frequency matrix for previous corpus:</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"IMF_tf_example"</span><span class="op">)</span>
 
-<span class="no">tf</span> <span class="kw">&lt;-</span><span class="kw pkg">TextMiningCrisis</span><span class="kw ns">::</span><span class="fu"><a href="../reference/run_tf.html">run_tf</a></span>(<span class="st">"../data/corpus_example.RData"</span>,<span class="kw">keyword_list</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Currency_crisis_severe"</span>,<span class="st">"Wars"</span>))</pre></body></html></div>
+<span class="va">tf</span> <span class="op">&lt;-</span><span class="fu">TextMiningCrisis</span><span class="fu">::</span><span class="fu"><a href="../reference/run_tf.html">run_tf</a></span><span class="op">(</span><span class="st">"../data/corpus_example.RData"</span>,keyword_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Currency_crisis_severe"</span>,<span class="st">"Wars"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Let's plot the two indexes:</p>
-<div class="sourceCode"><html><body><pre class="r"><span class="co"># Extract year and iso3, average over documents by year:</span>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Extract year and iso3, average over documents by year:</span>
 
-<span class="no">tf_year</span> <span class="kw">&lt;-</span> <span class="no">tf</span> <span class="kw">%&gt;%</span>
-  <span class="fu">mutate</span>(<span class="kw">year</span> <span class="kw">=</span> <span class="fu">str_extract</span>(<span class="no">file</span>,<span class="st">"\\d{4}"</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu">mutate</span>(<span class="kw">iso3c</span> <span class="kw">=</span> <span class="fu">str_extract</span>(<span class="no">file</span>,<span class="st">"[A-Z]{3}"</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu">group_by</span>(<span class="no">iso3c</span>,<span class="no">year</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">summarize_at</span>(<span class="fu">vars</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Currency_crisis_severe"</span>,<span class="st">"Wars"</span>)), <span class="no">mean</span>, <span class="kw">na.rm</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">gather</span>(<span class="st">"tf_type"</span>,<span class="st">"tf_value"</span>,<span class="no">Currency_crisis_severe</span>:<span class="no">Wars</span>)
+<span class="va">tf_year</span> <span class="op">&lt;-</span> <span class="va">tf</span> <span class="op">%&gt;%</span> 
+  <span class="fu">mutate</span><span class="op">(</span>year <span class="op">=</span> <span class="fu">str_extract</span><span class="op">(</span><span class="va">file</span>,<span class="st">"\\d{4}"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>iso3c <span class="op">=</span> <span class="fu">str_extract</span><span class="op">(</span><span class="va">file</span>,<span class="st">"[A-Z]{3}"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">iso3c</span>,<span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarize_at</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Currency_crisis_severe"</span>,<span class="st">"Wars"</span><span class="op">)</span><span class="op">)</span>, <span class="va">mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">gather</span><span class="op">(</span><span class="st">"tf_type"</span>,<span class="st">"tf_value"</span>,<span class="va">Currency_crisis_severe</span><span class="op">:</span><span class="va">Wars</span><span class="op">)</span>
 
 <span class="co"># Plot:</span>
 
-<span class="no">tf_year</span> <span class="kw">%&gt;%</span>
-  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="no">year</span>,<span class="no">tf_value</span>*<span class="fl">100</span>,<span class="kw">col</span><span class="kw">=</span><span class="no">tf_type</span>,<span class="kw">group</span> <span class="kw">=</span> <span class="fl">1</span>)) +
-  <span class="fu">geom_line</span>() +
-  <span class="fu">facet_wrap</span>(~<span class="no">tf_type</span>) +
-  <span class="fu">theme_bw</span>() +
-  <span class="fu">ylab</span>(<span class="st">"%"</span>) +
-  <span class="fu">xlab</span>(<span class="st">""</span>) +
-  <span class="fu">theme</span>(<span class="kw">legend.position</span> <span class="kw">=</span> <span class="st">"none"</span>) +
-  <span class="fu">theme</span>(<span class="kw">axis.text.x</span> <span class="kw">=</span> <span class="fu">element_text</span>(<span class="kw">angle</span> <span class="kw">=</span> <span class="fl">90</span>, <span class="kw">hjust</span> <span class="kw">=</span> <span class="fl">1</span>))</pre></body></html></div>
+<span class="va">tf_year</span> <span class="op">%&gt;%</span> 
+  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">year</span>,<span class="va">tf_value</span><span class="op">*</span><span class="fl">100</span>,col<span class="op">=</span><span class="va">tf_type</span>,group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">tf_type</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ylab</span><span class="op">(</span><span class="st">"%"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">xlab</span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
 <p>There seems to be three different waves of currency crises, in 1981,1983-1985 and 1989. In the last year of the decade the tf reaches its maximumum: 0.01% of the documents' characters is on average devoted to currency crisis. For wars, instead, the index starts rising in 1983 and reaches its peak in 1985.</p>
 <div id="under-the-hood-important-add-ons" class="section level2">
 <h2 class="hasAnchor">
@@ -177,12 +183,14 @@ Comparison and refine: check eventual mistakes and render updating easy.
 <ol>
 <li>
 <p>Avoid problematic documents:<br> In the scraping process, we might end up with some URLs of problematic documents i.e. documents on which we do not want to conduct the tf extraction. In our example, we downloaded many working paper together with. If this kind of information is not present into the metadata, the next logical step to take would be the manually erase these documents: this, in turn, would be tedious and take a long time. <br><br> We incorporate an automated alternative to the best of our possibilities in the <code>run_tf</code> function. Given a set of keywords in our dictionary (included in the category Problematic_documents)</p>
-<div class="sourceCode"><html><body><pre class="r"><span class="kw pkg">TextMiningCrisis</span><span class="kw ns">::</span><span class="fu"><a href="../reference/lexicon.html">lexicon</a></span>()[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Problematic_documents"</span>)] <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>() <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="fu">str_detect</span>(<span class="no">Problematic_documents</span>, <span class="st">"working"</span>))</pre></body></html></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">TextMiningCrisis</span><span class="fu">::</span><span class="fu"><a href="../reference/lexicon.html">lexicon</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Problematic_documents"</span><span class="op">)</span><span class="op">]</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu">str_detect</span><span class="op">(</span><span class="va">Problematic_documents</span>, <span class="st">"working"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>the function checks if at least one of them appears in the first page of each document of the corpus: if the logical returns TRUE, the extraction is not performed and an NA is returned in the dataframe for the respective file.</p>
 </li>
 <li>
 <p>Confusing keywords: sometimes words included in a category may refer to another individual e.g. talking about currency crisis in other countries. <br><br> We offer the possibility to control for this issue for any category of interest in the lexicon. It is sufficient to create a category with same name, ending with "*_confusing". Here an example for currency crises:</p>
-<div class="sourceCode"><html><body><pre class="r"><span class="kw pkg">TextMiningCrisis</span><span class="kw ns">::</span><span class="fu"><a href="../reference/lexicon.html">lexicon</a></span>()[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Currency_crisis_confusing"</span>)] <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>()</pre></body></html></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">TextMiningCrisis</span><span class="fu">::</span><span class="fu"><a href="../reference/lexicon.html">lexicon</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Currency_crisis_confusing"</span><span class="op">)</span><span class="op">]</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="op">)</span> </code></pre></div>
 <p>The correction clearly will not run for the countries/individuals the confusing keywords refer to.</p>
 </li>
 </ol>
@@ -192,26 +200,29 @@ Comparison and refine: check eventual mistakes and render updating easy.
 <h1 class="hasAnchor">
 <a href="#comparison" class="anchor"></a>Comparison</h1>
 <p>Now, you are a bit surprised by the result, you did not know about any currency crisis for Argentina in 1989. Nevertheless, there it is the peak of your index. <br> Is it a colossal blunder or indeed the truth? What are the exact keywords that were detected? and in which context? <br> To check, we can use the <code>get_sentences</code> function.</p>
-<div class="sourceCode"><html><body><pre class="r"><span class="no">sentences_currency_crisis</span> <span class="kw">&lt;-</span> <span class="kw pkg">TextMiningCrisis</span><span class="kw ns">::</span><span class="fu"><a href="../reference/get_sentences.html">get_sentences</a></span>(<span class="no">corpus</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Currency_crisis_severe"</span>))
-<span class="no">sentences_currency_crisis</span><span class="kw">[[</span><span class="st">"ARG_1989-10-17_request"</span>]]</pre></body></html></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sentences_currency_crisis</span> <span class="op">&lt;-</span> <span class="fu">TextMiningCrisis</span><span class="fu">::</span><span class="fu"><a href="../reference/get_sentences.html">get_sentences</a></span><span class="op">(</span><span class="va">corpus</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Currency_crisis_severe"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">sentences_currency_crisis</span><span class="op">[[</span><span class="st">"ARG_1989-10-17_request"</span><span class="op">]</span><span class="op">]</span></code></pre></div>
 <p>Was the IMF really talking about currency crises in that year for Argentina or the lexicon we used has some issues that need to be addressed?<br></p>
-<div class="sourceCode"><html><body><pre class="r"><span class="co"># Extract the third sentence with keyword detected in a randomly chosen 1989 document:</span>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Extract the third sentence with keyword detected in a randomly chosen 1989 document:</span>
 
-<span class="no">sentences_currency_crisis</span><span class="kw">[[</span><span class="st">"ARG_1989-10-17_request"</span>]] <span class="kw">%&gt;%</span>
-  <span class="fu">select</span>(<span class="no">sentence</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">slice</span>(<span class="fl">3</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>()</pre></body></html></div>
+<span class="va">sentences_currency_crisis</span><span class="op">[[</span><span class="st">"ARG_1989-10-17_request"</span><span class="op">]</span><span class="op">]</span> <span class="op">%&gt;%</span> 
+  <span class="fu">select</span><span class="op">(</span><span class="va">sentence</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">slice</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>It is now clear that it was not a mistake and we even have additional information about the timing of the shock.</p>
 <div id="need-to-re-run" class="section level2">
 <h2 class="hasAnchor">
 <a href="#need-to-re-run" class="anchor"></a>Need to re-run</h2>
 <p>Assume there is a mistake in your extraction and you want to repeat it for a single category, that you want to compare your index adding or removing a keyword or that you simply want to add an index for a new category without changing the others. This can easily achieved with the <code>run_tf_update</code> function:</p>
-<div class="sourceCode"><html><body><pre class="r"><span class="co"># In this example we add an index for natural disasters events to the previous extraction:</span>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># In this example we add an index for natural disasters events to the previous extraction:</span>
 
-<span class="no">tf_path</span> <span class="kw">=</span> <span class="st">"../data/tf_crisis_words_example.RData"</span>
-<span class="no">corpus_path</span> <span class="kw">=</span> <span class="st">"../data/corpus_example.RData"</span>
+<span class="va">tf_path</span> <span class="op">=</span> <span class="st">"../data/tf_crisis_words_example.RData"</span>
+<span class="va">corpus_path</span> <span class="op">=</span> <span class="st">"../data/corpus_example.RData"</span>
 
-<span class="no">updated_tf</span> <span class="kw">&lt;-</span><span class="kw pkg">TextMiningCrisis</span><span class="kw ns">::</span><span class="fu"><a href="../reference/run_tf_update.html">run_tf_update</a></span>(<span class="kw">path_tf_to_update</span> <span class="kw">=</span> <span class="no">tf_path</span>, <span class="kw">corpus_path</span> <span class="kw">=</span> <span class="no">corpus_path</span>, <span class="kw">keyword_list</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Natural_disaster"</span>))</pre></body></html></div>
+<span class="va">updated_tf</span> <span class="op">&lt;-</span><span class="fu">TextMiningCrisis</span><span class="fu">::</span><span class="fu"><a href="../reference/run_tf_update.html">run_tf_update</a></span><span class="op">(</span>path_tf_to_update <span class="op">=</span> <span class="va">tf_path</span>, corpus_path <span class="op">=</span> <span class="va">corpus_path</span>, keyword_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Natural_disaster"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>If we average the index by year and plot as in the previous example:</p>
 <p>The index seems rather volatile for Argentina throughout the period, but there is a marked rising in 1985 that ends with a peak in 1988. Indeed, the function <code>get_sentence</code> confirms the result of the index.</p>
 </div>
@@ -224,6 +235,7 @@ Comparison and refine: check eventual mistakes and render updating easy.
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+
         <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
     </nav>
 </div>
@@ -237,7 +249,7 @@ Comparison and refine: check eventual mistakes and render updating easy.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

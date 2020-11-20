@@ -4,8 +4,10 @@
 \alias{check_gaps_pdfs}
 \title{check if there are gaps greater than one year in the documents}
 \usage{
-check_gaps_pdfs(general_path = "/Volumes/Elements/IMF documents/",
-  only_large = TRUE)
+check_gaps_pdfs(
+  general_path = "/Volumes/Elements/IMF documents/",
+  only_large = TRUE
+)
 }
 \arguments{
 \item{general_path}{path with one subdirectory per individual and for each of them a files subdirectory with pdfs}

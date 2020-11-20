@@ -6,10 +6,14 @@
 in each step of the process from the download, to the 
 text mining and finally to the merging with the rest of the variables}
 \usage{
-
-  check_extract(path_urls = "../Betin_Collodel/2. Text mining IMF_data/datasets/urls docs/urls_Requests_Reviews_articleIV.RData",
-  path_tf_idf = "../Betin_Collodel/2. Text mining IMF_data/datasets/tagged docs/tf_idf.RData",
-  path_final_tf_idf = "../Betin_Collodel/2. Text mining IMF_data/datasets/tagged docs/tf_idf_database.RData")
+check_extract(
+ 
+    path_urls = "../Betin_Collodel/2. Text mining IMF_data/datasets/urls docs/urls_Requests_Reviews_articleIV.RData",
+ 
+    path_tf_idf = "../Betin_Collodel/2. Text mining IMF_data/datasets/tagged docs/tf_idf.RData",
+ 
+    path_final_tf_idf = "../Betin_Collodel/2. Text mining IMF_data/datasets/tagged docs/tf_idf_database.RData"
+)
 }
 \arguments{
 \item{path_urls}{the path to locate the dataframe of urls (output of 1. Consolidate_urls.R)}
