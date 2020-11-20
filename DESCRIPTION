@@ -14,16 +14,15 @@ Depends:
     rvest,
     tidytext,
     tidyr,
-    rlang,
     stringr,
-    plotly,
     crayon,
-    ggplot2,
     rio,
     tictoc,
-    lubridate
+    lubridate,
+    purrr
 Suggests: 
     testthat,
     knitr
 VignetteBuilder:
     knitr
+License: AGPL-3
