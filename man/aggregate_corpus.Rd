@@ -4,12 +4,10 @@
 \alias{aggregate_corpus}
 \title{Aggregate pdf files into list of characters}
 \usage{
-aggregate_corpus(path_files, ENGINE, only_files = F)
+aggregate_corpus(path_files, only_files = F)
 }
 \arguments{
-\item{path_files}{the path of the directory with the files}
-
-\item{ENGINE}{similar to engine argument in readPDF from 'tm' package. 
+\item{path_files}{the path of the directory with the files
 Function to read pdf into environment, either pdf_text or pdf_ocr_text, depending on whether image or not.}
 
 \item{only_files}{T/F whether to include in the list only the content or also

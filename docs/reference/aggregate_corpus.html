@@ -8,11 +8,13 @@
 
 <title>Aggregate pdf files into list of characters — aggregate_corpus • TextMiningCrisis</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
@@ -36,12 +38,11 @@
 
 
 
-<meta property="og:title" content="Aggregate pdf files into list of characters — aggregate_corpus" />
 
+<meta property="og:title" content="Aggregate pdf files into list of characters — aggregate_corpus" />
 <meta property="og:description" content="function that takes the path of the directory and load all
 the pdfs of the directory into a list in order to further perform the text
 mining" />
-
 
 
 
@@ -73,7 +74,7 @@ mining" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TextMiningCrisis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0</span>
       </span>
     </div>
 
@@ -104,7 +105,6 @@ mining" />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -126,25 +126,19 @@ mining" />
     </div>
 
     <div class="ref-description">
-    
     <p>function that takes the path of the directory and load all
 the pdfs of the directory into a list in order to further perform the text
 mining</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>aggregate_corpus</span>(<span class='no'>path_files</span>, <span class='no'>ENGINE</span>, <span class='kw'>only_files</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>aggregate_corpus</span><span class='op'>(</span><span class='va'>path_files</span>, only_files <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path_files</th>
-      <td><p>the path of the directory with the files</p></td>
-    </tr>
-    <tr>
-      <th>ENGINE</th>
-      <td><p>similar to engine argument in readPDF from 'tm' package. 
+      <td><p>the path of the directory with the files
 Function to read pdf into environment, either pdf_text or pdf_ocr_text, depending on whether image or not.</p></td>
     </tr>
     <tr>
@@ -153,11 +147,13 @@ Function to read pdf into environment, either pdf_text or pdf_ocr_text, dependin
 the metadata of the pdf file</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list containing the content of each document</p>
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Manuel Betin</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -174,7 +170,7 @@ the metadata of the pdf file</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

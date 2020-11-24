@@ -122,3 +122,15 @@ TextMiningCrisis v1.3.1 (Release date: 2020-03-26)
 New function get_imf_country_report() that download the last imf country reports from the imf website.
 
 
+TextMiningCrisis v1.4.0 (Release date: 2020-11-20)
+==============
+
+Clean package to only keep relevant functions to construct the database of indexes, use Depends instate of Imports to ensure dependencies are correctly loaded.
+Include website for the package and update readme.
+
+
+
+ 
+
+
+

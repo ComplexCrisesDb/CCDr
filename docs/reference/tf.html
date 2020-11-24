@@ -12,11 +12,13 @@ occurence of the words in the vector of keywords and provide a table with
 the number of occurence, name of the file that is the name of each
 document in the corpus — tf • TextMiningCrisis</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
@@ -40,18 +42,17 @@ document in the corpus — tf • TextMiningCrisis</title>
 
 
 
+
 <meta property="og:title" content="Compute the term freqeuency matrix
 for each document in the corpus the function creates a table counting the
 occurence of the words in the vector of keywords and provide a table with
 the number of occurence, name of the file that is the name of each
 document in the corpus — tf" />
-
 <meta property="og:description" content="Compute the term freqeuency matrix
 for each document in the corpus the function creates a table counting the
 occurence of the words in the vector of keywords and provide a table with
 the number of occurence, name of the file that is the name of each
 document in the corpus" />
-
 
 
 
@@ -83,7 +84,7 @@ document in the corpus" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TextMiningCrisis</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0</span>
       </span>
     </div>
 
@@ -114,7 +115,6 @@ document in the corpus" />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -140,17 +140,15 @@ document in the corpus</h1>
     </div>
 
     <div class="ref-description">
-    
     <p>Compute the term freqeuency matrix
 for each document in the corpus the function creates a table counting the
 occurence of the words in the vector of keywords and provide a table with
 the number of occurence, name of the file that is the name of each
 document in the corpus</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>tf</span>(<span class='no'>corpus</span>, <span class='no'>keywords</span>, <span class='kw'>brute_freq</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>parrallel</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>tf</span><span class='op'>(</span><span class='va'>corpus</span>, <span class='va'>keywords</span>, brute_freq <span class='op'>=</span> <span class='cn'>F</span>, parrallel <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span></pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -174,12 +172,14 @@ otherwise it will only count the occurence</p></td>
       <td><p>T/F if T use mclapply from parrallel package</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a dataframe of term frequencies with documents in rows and categories
 in columns</p>
-    
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Manuel Betin</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -196,7 +196,7 @@ in columns</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

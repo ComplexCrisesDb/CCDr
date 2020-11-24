@@ -67,9 +67,9 @@ tf_vector = function(corpus, keyword_list, brute_freq = F, parrallel = T, centre
   #' @param parrallel T/F if T it will use mclapply from the parrallel package
   #' @param centre_countries Character string. Default is "USA". Netting of confusing
   #' keywords will not be performed countries in the vector.
-  #'  @author Manuel Betin
-  #'  @return a tibble with the term frequencies for the selected categories
-  #'  @export
+  #' @author Manuel Betin
+  #' @return a tibble with the term frequencies for the selected categories
+  #' @export
   
   progress = dplyr::progress_estimated(length(keyword_list))
   list_table_keyword_occurence = lapply(1:length(keyword_list), function(x) {
@@ -164,42 +164,6 @@ tf_vector = function(corpus, keyword_list, brute_freq = F, parrallel = T, centre
   }
 }
 
-tf_by_group = function(tf_data, weight_method = "brut_frequency", 
-                       mygroup = NULL) {
-  
-  #' Summarize the term frequency matrix by group
-  #' Summarize the tf matrix according to the grouping variable selected
-  
-  #' @param tf_data a tibble of term frequencies from tf(), run_tf(),
-  #'  run_tf_update() or run_tf_by_chunk()
-  #' @param  weight_method the method for countring "brut_frequency", "binary_frequency" 
-  #' @param mygroup the grouping variable to be used for the summary
-  #' @author Manuel Betin
-  #' @return a dataframe of term frequencies with documents in rows and categories
-  #' in columns
-  #' @export
-  #' 
-  if (is.null(mygroup)) {
-    avoid_colums = c(names(tf_data %>% dplyr::select_if(is.character)), 
-                     names(tf_data %>% dplyr::select_if(is.Date)))
-    dt_weights_years = tf_data %>% tidyr::gather("Crisis", value = "word_weight", 
-                                                 -c(avoid_colums))
-    dt_weights_years = dt_weights_years[-1, ]
-    dt_weights_years = dt_weights_years %>% dplyr::mutate(word_weight = as.numeric(word_weight))
-    return(dt_weights_years)
-  } else {
-    avoid_colums = c(names(tf_data %>% dplyr::select_if(is.character)), 
-                     names(tf_data %>% dplyr::select_if(is.Date)))
-    
-    dt_weights_years = tf_data %>% tidyr::gather("Crisis", value = "word_weight", 
-                                                 -c(avoid_colums))
-    dt_weights_years = dt_weights_years[-1, ]
-    dt_weights_years = dt_weights_years %>% group_by(get(mygroup)) %>% dplyr::mutate(word_weight = as.numeric(word_weight))
-    return(dt_weights_years)
-  }
-}
-
-
 run_tf = function(corpus_path = "IMF_letofIntent_1960_2014_clean.RData", 
                   type_lexicon = "words", 
                   keyword_list = c("Commodity_crisis", 
@@ -212,7 +176,6 @@ run_tf = function(corpus_path = "IMF_letofIntent_1960_2014_clean.RData",
   #' output is a matrix of tf with a row per document and a column for each
   #' element of the keyword list
   #' @param corpus_path the path to the RData file containing the corpus to analyze
-  #' @param type_lexicon "words" or "categories" for the type of lexicon to use
   #' @param keyword_list the categories on which computing the term frequency
   #' @param export_path the path were to export the tf
   #' @param parrallel T/F to use mclapply from the parrallel package
@@ -222,7 +185,6 @@ run_tf = function(corpus_path = "IMF_letofIntent_1960_2014_clean.RData",
   
   cat(crayon::bgBlue(paste0("Loading corpus from ", corpus_path)))
   corpus = rio::import(corpus_path)
-  if (type_lexicon == "words") {
     if (is.null(keyword_list)) {
       keyword_list = c("Commodity_crisis", "Balance_payment_crisis", "Inflation_crisis", 
                        "World_outcomes", "Floating_Exchange rate", "Fixed_Exchange rate", 
@@ -234,15 +196,6 @@ run_tf = function(corpus_path = "IMF_letofIntent_1960_2014_clean.RData",
       print(keyword_list)
     }
     keyword_list = lexicon()[keyword_list]
-  } else if (type_lexicon == "category") {
-    if (is.null(keyword_list)) {
-      keyword_list = c("Exogenous", "Manifestations", "Instruments")
-    }
-    keyword_list = key_words_categories()[keyword_list]
-  } else {
-    cat(crayon::red("Please provide a valid type_lexicon, either 'words' or 'category'"))
-    return(NULL)
-  }
   
   tictoc::tic()
   dt = tf_vector(corpus, keyword_list, parrallel = parrallel)
@@ -394,7 +347,7 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
   # download the files
   pdf_from_url(urls, path_pdf_files, overwrite = F)
   # transform pdf to character and store in list
-  corpus = aggregate_corpus(path_pdf_files,ENGINE=ENGINE,only_files=T)
+  corpus = aggregate_corpus(path_pdf_files,only_files=T)
   
   # remove documents with less than specified number of words
   if(rm_short_docs){
@@ -428,203 +381,4 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
                           ".RData"))
 }
 
-
-idf = function(tf_data, group = NULL) {
-  #' Compute the inverse document frequency
-  #' @description The idf is computed as the logarithm of the inverse of the proportion. 
-  #' it allows to give reduce weight of words with high
-  #' frequency in the corpus
-  #' @param tf_data a dataframe of term frequencies
-  #' @param group the grouping variable 
-  #' @return a tibble with the idf of each categories 
-  #' @author Manuel Betin
-  #' @export
-  
-  N.doc.corpus = dim(tf_data)[1]
-  idf_trans = function(x) {
-    if (x == 0) {
-      x
-    } else {
-      log(N.doc.corpus/sum(x))
-    }
-  }
-  
-  table_N_binary = binary_freq_trans(tf_data)
-  
-  if (!is.null(group)) {
-    inverse_doc_freq = table_N_binary %>% dplyr::group_by(get(group)) %>% 
-      dplyr::summarize_if(is.numeric, sum) %>% dplyr::mutate_if(is.numeric, 
-                                                                idf_trans) %>% gather("Crisis", value = "idf", -"get(group)")
-    colnames(inverse_doc_freq)[1] = group
-  } else {
-    inverse_doc_freq = table_N_binary %>% dplyr::summarize_if(is.numeric, 
-                                                              sum) %>% dplyr::mutate_if(is.numeric, idf_trans) %>% gather("Crisis", 
-                                                                                                                          value = "idf")
-  }
-  return(inverse_doc_freq)
-}
-
-tf_idf = function(tf_data, weight_method = "brut_frequency") {
-  #' Compute the tf-idf matrix
-  #' @description weight the term frequency (tf) of each category by the its idf to
-  #' improve the discriminatory power of the categories that are rare in
-  #' the corpus
-  
-  #' @param tf_data the tf matrix from tf()
-  #' @param  weight_method the method for the counting: "binary_frequency" or "brut_frequency"
-  #' @author Manuel Betin
-  #' @return a dataframe of tf-idf with documents in rows and categories
-  #' in columns
-  #' @export
-  #' 
-  #' 
-  dt_inv_doc_freq = try(idf(tf_data))
-  if ("try_error" %in% dt_inv_doc_freq) {
-    cat(crayon::red(paste0("Warning: error when using function dt_inv_doc_freq")))
-    return(NULL)
-  }
-  select_cols = names(tf_data %>% dplyr::select_if(is.numeric))
-  
-  if (weight_method == "brut_frequency") {
-    dt_words_weight = tf_data
-    for (var in select_cols) {
-      dt_words_weight[, var] = dt_words_weight[, var] * (dt_inv_doc_freq %>% 
-                                                           dplyr::filter(Crisis == var) %>% dplyr::select(idf))[[1]]
-    }
-    return(dt_words_weight)
-  } else if (weight_method == "binary_frequency") {
-    dt_words_weight = binary_freq_trans(tf_data)
-    for (var in select_cols) {
-      dt_words_weight[, var] = dt_words_weight[, var] * (dt_inv_doc_freq %>% 
-                                                           dplyr::filter(Crisis == var) %>% dplyr::select(idf))[[1]]
-    }
-    return(dt_words_weight)
-  } else if (weight_method == "log_norm_frequency") {
-    dt_words_weight = log_norm_trans(tf_data)
-    for (var in select_cols) {
-      dt_words_weight[, var] = dt_words_weight[, var] * (dt_inv_doc_freq %>% 
-                                                           dplyr::filter(Crisis == var) %>% dplyr::select(idf))[[1]]
-    }
-    return(dt_words_weight)
-  } else warning("please choose a proper method: brut_frequency,binary_frequency,log_norm_frequency")
-}
-
-
-
-tf_barplot = function(tf, vars_type = c("economic_shock", "non_economic_shock", 
-                                        "debt_outcomes", "debt_structure", 
-                                        "characteristics_program", "adustment_program"), 
-                      vars_nature = NULL) {
-  #' barplot of term frequencies
-  #' @description take as input the term frequency matrix and reshape it to plot the values
-  #' for all numeric columns and group them in two dimensions: the type of
-  #' variable and the nature of the shock (exogeneous or endogenous)
-  #' @param tf a term frequency matrix from tf()
-  #' @param vars_type the type of categories to include (see lexicon_typology()
-  #'  for more details)
-  #' @param vars_nature the nature of categories to include (see lexicon_typology()
-  #'  for more details)
-  #' @author Manuel Betin
-  #' @return a ggplot barplot
-  #' @export
-  
-  res = list()
-  avg_tf = tf %>% mutate_if(is.numeric, funs(ifelse(. == 0, NA, .))) %>% ungroup() %>% 
-    summarize_if(is.numeric, funs(mean(., na.rm = T) * 100)) %>% gather(key = "variable", 
-                                                                        value = "tf_idf")
-  
-  avg_tf = avg_tf %>% left_join(lexicon_typology(), by = c("variable"))
-  
-  res[["tf_table_avg"]] = avg_tf
-  
-  if (!is.null(vars_nature)) {
-    avg_tf = avg_tf %>% filter(type %in% vars_type & nature_shock %in% vars_nature)
-  } else {
-    avg_tf = avg_tf %>% filter(type %in% vars_type)
-  }
-  
-  avg_tf = avg_tf %>% mutate(variable = str_replace_all(variable, "_", " "))
-  prop_avg_tf = avg_tf %>% mutate(tf_idf = tf_idf/sum(tf_idf))
-  
-  if (!is.null(vars_nature)) {
-    res[["tf_fig_avg"]] = ggplot(avg_tf) + geom_bar(stat = "identity", aes(x = reorder(variable, 
-                                                                                       tf_idf), y = tf_idf, fill = type)) + geom_text(aes(x = reorder(variable, 
-                                                                                                                                                      tf_idf), y = tf_idf * 0.8, label = substr(nature_shock, 1, 3)), 
-                                                                                                                                      color = "white") + scale_fill_manual(values = c("darkred", "blue", 
-                                                                                                                                                                                      "darkgreen", "lightgrey", "orange", "brown")) + theme_bw() + labs(x = NULL, 
-                                                                                                                                                                                                                                                        y = "Term frequency (%)") + theme(legend.title = element_blank(), 
-                                                                                                                                                                                                                                                                                          legend.position = "bottom", axis.text.x = element_text(angle = 90, 
-                                                                                                                                                                                                                                                                                                                                                 hjust = 1), axis.text = element_text(size = 8))
-  } else {
-    res[["tf_fig_avg"]] = ggplot(avg_tf) + geom_bar(stat = "identity", aes(x = reorder(variable, 
-                                                                                       tf_idf), y = tf_idf, fill = nature_shock)) + scale_fill_manual(values = c("darkred", 
-                                                                                                                                                                 "blue", "darkgreen", "lightgrey", "orange", "brown")) + theme_bw() + 
-      
-      labs(x = NULL, y = "Term frequency (%)") + theme(legend.title = element_blank(), 
-                                                       legend.position = "bottom", axis.text.x = element_text(angle = 90, 
-                                                                                                              hjust = 1), axis.text = element_text(size = 8))
-  }
-  if (!is.null(vars_nature)) {
-    res[["tf_fig_avg_prop"]] = ggplot(prop_avg_tf) + geom_bar(stat = "identity", 
-                                                              aes(x = reorder(variable, tf_idf), y = tf_idf, fill = type)) + geom_text(aes(x = reorder(variable, 
-                                                                                                                                                       tf_idf), y = tf_idf * 0.8, label = substr(nature_shock, 1, 3)), 
-                                                                                                                                       color = "white") + scale_fill_manual(values = c("darkred", "blue", 
-                                                                                                                                                                                       "darkgreen", "lightgrey", "orange", "brown")) + theme_bw() + labs(x = NULL, 
-                                                                                                                                                                                                                                                         y = " % of total shock related words") + theme(legend.title = element_blank(), 
-                                                                                                                                                                                                                                                                                                        legend.position = "bottom", axis.text.x = element_text(angle = 90, 
-                                                                                                                                                                                                                                                                                                                                                               hjust = 1), axis.text = element_text(size = 10))
-  } else {
-    res[["tf_fig_avg_prop"]] = ggplot(prop_avg_tf) + geom_bar(stat = "identity", 
-                                                              aes(x = reorder(variable, tf_idf), y = tf_idf, fill = nature_shock)) + 
-      scale_fill_manual(values = c("darkred", "blue", "darkgreen", "lightgrey", 
-                                   "orange", "brown")) + theme_bw() + labs(x = NULL, y = " % of total shock related words") + 
-      theme(legend.title = element_blank(), legend.position = "bottom", 
-            axis.text.x = element_text(angle = 90, hjust = 1), axis.text = element_text(size = 10))
-  }
-  return(res)
-}
-
-idf_barplot = function(idf, vars_type = c("economic_shock", "non_economic_shock", 
-                                          "debt_outcomes", "debt_structure",
-                                          "characteristics_program", "adustment_program"), 
-                       vars_nature = NULL, idf_trans = F) {
-  
-  #' barplot for the idf
-  #' @description barplot displaying the idf of the categories
-  #' @param idf a tibble of idf as produced by idf()
-  #' @param vars_type a vector with the type of shocks to include (see lexicon_typology() for classification)
-  #' @param vars_nature a vector of the nature of shocks to include (see lexicon_typology() for classification)
-  #' @param idf_trans T use the term frequency transformation, F use the proportion
-  #' @author Manuel Betin
-  #' @return a ggplot barplot object 
-  #' @export
-  #'  
-
-  res = list()
-  
-  if (idf_trans == T) {
-    idf$idf = 1/exp(idf$idf)
-  }
-  idf = idf %>% rename(variable = Crisis)
-  
-  idf = idf %>% left_join(lexicon_typology(), by = c("variable"))
-  
-  res[["table"]] = idf
-  
-  if (!is.null(vars_nature)) {
-    idf = idf %>% filter(type %in% vars_type & nature_shock %in% vars_nature)
-  } else {
-    idf = idf %>% filter(type %in% vars_type)
-  }
-  
-  res[["fig"]] = ggplot(idf) + geom_bar(stat = "identity", aes(x = reorder(variable, 
-                                                                           idf), y = idf, fill = type)) + scale_fill_manual(values = c("darkred", 
-                                                                                                                                       "blue", "darkgreen", "lightgrey", "orange", "brown")) + theme_bw() + 
-    lims(y = c(0, 1)) + labs(title = "Probability of the events", x = NULL, 
-                             y = NULL) + theme(legend.title = element_blank(), legend.position = "bottom", 
-                                               axis.text.x = element_text(angle = 90, hjust = 1), axis.text = element_text(size = 8))
-  
-  return(res)
-  
-}
 

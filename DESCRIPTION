@@ -1,30 +1,28 @@
 Package: TextMiningCrisis
 Type: Package
-Title: Natural Language Processing (NPL) for economic crisis
-Version: 1.3.3
+Title: Natural Language Processing (NPL) on IMF reports
+Version: 1.4.0
 Date: 2020-01-23
 Author: Betin Manuel, Umberto Collodel
 Maintainer: <manubetin@gmail.com>
-Description: Perform a text analysis using a lexicon of economic crisis to observe the profile and intensity of economic crisis in a pdf documents.
-License: GPL-3
-RoxygenNote: 6.1.2
-Imports: 
+Description: Perform a text analysis using a lexicon of economic crisis on a corpus of IMF documents
+RoxygenNote: 7.1.1
+Depends: 
     dplyr,
     pdftools,
     xml2,
     rvest,
     tidytext,
     tidyr,
-    rlang,
     stringr,
-    plotly,
     crayon,
-    ggplot2,
     rio,
     tictoc,
-    lubridate
+    lubridate,
+    purrr
 Suggests: 
     testthat,
     knitr
 VignetteBuilder:
     knitr
+License: AGPL-3

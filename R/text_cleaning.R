@@ -3,7 +3,6 @@ remove_stop = function(word) {
   #' @description remove stop words
   #' @param word that as to be checked
   #' @author Manuel Betin
-  #' @export
   stop= ifelse(word %in% stop_words$word, "", word)
   return(stop)
 }
@@ -15,7 +14,6 @@ clean_text = function(file) {
   #' @param file a string of characters to clean
   #' @return a clean character string 
   #' @author Manuel Betin
-  #' @export
   
   # file=stringr::str_replace_all(file,'[^a-zA-Z\\s]', ' ')
   file = stringr::str_replace_all(file, "[\\s]+", " ")
