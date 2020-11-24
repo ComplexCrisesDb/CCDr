@@ -1,6 +1,0 @@
-"0","# Show the second page of the first document:"
-"0","data(""IMF_corpus_example"")"
-"2","data set ‘IMF_corpus_example’ not found"
-"0","corpus=IMF_corpus_example"
-"2","Error: object 'IMF_corpus_example' not found
-"

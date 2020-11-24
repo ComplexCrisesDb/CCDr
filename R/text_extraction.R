@@ -117,7 +117,7 @@ pdf_page_count = function(files) {
   }
 }
 
-aggregate_corpus = function(path_files, only_files = F) {
+aggregate_corpus = function(path_files, ENGINE=pdf_text,only_files = F) {
   #' Aggregate pdf files into list of characters
   #'
   #' function that takes the path of the directory and load all
@@ -126,6 +126,7 @@ aggregate_corpus = function(path_files, only_files = F) {
   
   #' @param path_files the path of the directory with the files
   #' Function to read pdf into environment, either pdf_text or pdf_ocr_text, depending on whether image or not.
+  #' @param ENGINE the engine for pdf extraction (pdf_text or pdf_ocr_text from pdftools) 
   #' @param only_files T/F whether to include in the list only the content or also
   #' the metadata of the pdf file
   #' @author Manuel Betin
@@ -145,7 +146,7 @@ aggregate_corpus = function(path_files, only_files = F) {
     path = paste0(path_files, "/", docs[x], ".pdf")
     file <- try({
       pdfinfo = pdftools::pdf_info(path)
-      pdftools::pdf_text(path) 
+      ENGINE(path) 
     }, silent = T)
     if ("try-error" %in% class(file)) {
       warning(paste(docs[[x]], ": Error in path file or in the pdf extraction engine \n", sep = ""))
