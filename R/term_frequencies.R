@@ -347,7 +347,7 @@ run_tf_by_chunk=function (urls = url_links, keyword_list = c("Fiscal outcomes",
   # download the files
   pdf_from_url(urls, path_pdf_files, overwrite = F)
   # transform pdf to character and store in list
-  corpus = aggregate_corpus(path_pdf_files,only_files=T)
+  corpus = aggregate_corpus(path_pdf_files,ENGINE=ENGINE,only_files=T)
   
   # remove documents with less than specified number of words
   if(rm_short_docs){
