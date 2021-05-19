@@ -288,6 +288,7 @@ lexicon <- function(){
     "unemployment rate jumped",
     "tightening labor market",
     "tight labor market",
+    "unemployment rate edge up",
     "unemployment rate rose",
     "slowing of labor force growth",
     "increased layoffs",
@@ -802,7 +803,19 @@ lexicon <- function(){
     "sizeable fall of interantional reserves",
     "substantial sales of foreign reserves"
   )
+  
+  key_words[["Exchange_intervention"]]=c(
+    "exchange market intervention",
+    "exchange market operation",
+    "intervention in foreign exchange",
+    "intervention sales",
+    "intervention purchases",
+    "swap arrangement",
+    "swap lines",
+    "swap obligation"
+  )
 
+  
   
   key_words[["Currency_crisis"]]=c(
     "currency weakness",
@@ -896,7 +909,17 @@ lexicon <- function(){
     "easing monetary policy",
     "monetary easing",
     "monetary policy stimulus",
-    "fiscal stimulus",
+    "monetary policy accomodation",
+    "monetary stimulus",
+    "policy stimulus",
+    "cut rate",
+    "cutting rate",
+    "accomodative stance",
+    "rates cute",
+    "easing",
+    "ease",
+    "accomodatative",
+    "macroeconomic support",
     "ease monetary policy",
     "easing of market interest rate",
     "discount rate was lowered",
@@ -907,8 +930,10 @@ lexicon <- function(){
     "authorities bought",
     "intervention purchases",
     "declining market interest rate",
+    "macroeconomic stimulus",
     "monetary expansion",
     "monetary stimulus",
+    "monetary accomodation",
     "monetary policy was accommodative",
     "monetary policy was broadly accommodative",
     "growth in monetary aggregates",
@@ -941,6 +966,7 @@ lexicon <- function(){
     "withdrawal of stimulus",
     "market interest rates rose sharply",
     "tightening of monetary policy",
+    "monetary policy exit",
     "demand policy needed to be tightened",
     "restrictive monetary stance",
     "tightening of the monetary stance",
@@ -974,6 +1000,7 @@ lexicon <- function(){
     "monetary policy to reduce inflation",
     "curb inflationary pressures",
     "restrictive monetary policy",
+    "restrictive monetary",
     "tightened the availability of bank reserves",
     "fund rate was raised",
     "control monetary aggregate",
@@ -1004,6 +1031,107 @@ lexicon <- function(){
     "tightening of monetary policy",
     "increase in interest rates"
   )
+  
+  
+  key_words[["Monetary_target"]]=c(
+    "monetary targeting",
+    "target path",
+    "policy rate target",
+    "inflation target"
+  )
+  
+  key_words[["Fund_rates"]]=c(
+    "funds rate",
+    "target rate",
+    "monery market rate",
+    "discount rate",
+    "official rate",
+    "policy interest rate",
+    "policy rate",
+    "term facilities"
+  )
+  
+  key_words[["Monetary_aggregates"]]=c(
+    "monetary aggregates",
+    "money growth target",
+    "monetary growth",
+    "credit aggregate",
+    #"aggregates",
+    "market interest rate",
+    "target growth range",
+    "target range"
+  )
+
+  key_words[["Openmarket_operations"]]=c(
+    "Open market operation"
+  )
+  
+  key_words[["Forward_guidance"]]=c(
+    "communication",
+    "transparency",
+    "communicated",
+    "communicating",
+    "commitment",
+    "policy intention",
+    "forward guidance",
+    "expectation channel",
+    "policy announcement",
+    "stance of monetary policy",
+    "anchor",
+    "credibility"
+  )
+  
+  
+  key_words[["Financial_stabilization"]]=c(
+    "stabilizing the financial system",
+    "bolster confidence",
+    "monitoring of financial",
+    "stabilization fund",
+    "financial stability",
+    "macroprudential policy",
+    "health of financial",
+    "regulatory framework",
+    "resolution framework",
+    "financial sector reform",
+    "financial superivison",
+    "strengthening the financial",
+    "financial regulation",
+    "steam stress in financial"
+  )
+  
+
+  
+  key_words[["Unconventional_Monetary_policy"]]=c(
+    "unconventional",
+    "unconventional easing",
+    "unconventional instruments",
+    "emergency facilities",
+    "asset purchase",
+    "repos",
+    "asset purchase program",
+    "extraordinary support",
+    "lending facilit"
+  )  
+  
+  key_words[["Coordinate_intervention"]]=c(
+    "concerted intervention",
+    "operations coordinated",
+    "coordinate",
+    "coordinated internationally",
+    "coordinated intervention",
+    "authorities interveened in coordination",
+    "louvre meeting",
+    "louvre accord",
+    "internationally coordinated",
+    "international stability",
+    "multilateral",
+    "international stability",
+    "swap arrangement",
+    "swap lines",
+    "swap obligation",
+    "coordinated rate cut"
+  )
+  
   
   
   
@@ -1237,8 +1365,16 @@ lexicon <- function(){
                                    "infrastructure spending",
                                    "intervention in financial market",
                                    "large fiscal deficits",
+                                   "macroeconomic support",
+                                   "spending increases",
+                                   "tax cuts",
+                                   "easing",
                                    "stimulus program",
                                    "fiscal deficit rose",
+                                   "massive policy response",
+                                   "decisive policy action",
+                                   "macroeconomic policy response",
+                                   "fiscal expansion",
                                    "tax reduction",
                                    "package of stimulative",
                                    "fiscal policy was quite expansionary",

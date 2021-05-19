@@ -57,6 +57,7 @@
 ~%2FDropbox%2FManuel%2FProfessionnel%2F2018-2021%20PSE%2F5.%20packages%2FRepositories%2FTextMiningCrisis%2Fman%2Ftf_by_group.Rd="A0418271"
 ~%2FDropbox%2FManuel%2FProfessionnel%2F2018-2021%20PSE%2F5.%20packages%2FRepositories%2FTextMiningCrisis%2Fman%2Ftf_idf.Rd="3A4D31EA"
 ~%2FDropbox%2FManuel%2FProfessionnel%2F2018-2021%20PSE%2F5.%20packages%2FRepositories%2FTextMiningCrisis%2Fversion_1.4%2FDESCRIPTION="71C1BB64"
+~%2FDropbox%2FManuel%2FProfessionnel%2F2018-2021%20PSE%2F5.%20packages%2FRepositories%2FTextMiningCrisis%2Fversion_1.4%2FR%2Flexicon.r="32B10BEE"
 ~%2FDropbox%2FManuel%2FProfessionnel%2F2018-2021%20PSE%2F5.%20packages%2FRepositories%2FTextMiningCrisis%2Fversion_1.4%2FR%2Fterm_frequencies.R="6E0119CC"
 ~%2FDropbox%2FManuel%2FProfessionnel%2F2018-2021%20PSE%2F5.%20packages%2FRepositories%2FTextMiningCrisis%2Fversion_1.4%2FR%2Ftext_extraction.R="1FAD1D3C"
 ~%2FDropbox%2FManuel%2FProfessionnel%2F2018-2021%20PSE%2F5.%20packages%2FRepositories%2FTextMiningCrisis%2Fvignettes%2FTextMiningCrisis_vignette.Rmd="F99129D6"
@@ -76,3 +77,4 @@
 ~%2FDropbox%2FManuel%2FProfessionnel%2F2018-2021%20PSE%2FEarly%20warning%20model%20of%20currency%20crisis%2F2.%20Text%20mining%20IMF_code%2F4.11.%20ANALYSIS_ARCHITECTURE_summary.R="C04E03F2"
 ~%2FDropbox%2FManuel%2FProfessionnel%2F2018-2021%20PSE%2FEarly%20warning%20model%20of%20currency%20crisis%2F2.%20Text%20mining%20IMF_code%2F4.9.%20ANALYSIS_SEVERITY_summary.R="307B2384"
 ~%2FDropbox%2FManuel%2FProfessionnel%2F2018-2021%20PSE%2FEarly%20warning%20model%20of%20currency%20crisis%2F2.%20Text%20mining%20IMF_code%2F6.1.%20Crisis_network_complexity.R="FCF7420A"
+~%2FDropbox%2FManuel%2FProfessionnel%2F2018-2021%20PSE%2FGovResponseComplexCrises%2FR%2F1.get_policy_indices.R="96EC72C9"
