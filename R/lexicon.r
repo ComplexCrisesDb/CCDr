@@ -8,7 +8,7 @@ lexicon <- function(){
   #' @example lexicon()
   
   key_words <- list()
-
+  
   
   #--------
   ## EXOGENEOUS SHOCKS: NON ECONOMIC
@@ -63,7 +63,7 @@ lexicon <- function(){
     "immigration"
   )
   
-
+  
   key_words[["Natural_disaster"]]=c(
     "flood",
     "drought",
@@ -804,17 +804,26 @@ lexicon <- function(){
     "substantial sales of foreign reserves"
   )
   
+  key_words[["Increase_reservers"]]=c(
+    "precautionary reserves"
+  )
+  
+  
   key_words[["Exchange_intervention"]]=c(
     "exchange market intervention",
     "exchange market operation",
     "intervention in foreign exchange",
     "intervention sales",
     "intervention purchases",
+    "sterilization",
+    "sterilizing",
+    "intervention band",
+    "foreign exchange market",
+    "exchange rate stability",
     "swap arrangement",
     "swap lines",
     "swap obligation"
   )
-
   
   
   key_words[["Currency_crisis"]]=c(
@@ -890,7 +899,12 @@ lexicon <- function(){
     "currency pegs",
     "exchange rate peg",
     "peg to the dollar",
+    "controlled exchange rate",
+    "dollar indexation",
+    "indexation",
+    "indexed",
     "fixed exchange rate",
+    "exchange rate band",
     "adjustable exchange rate bands",
     "crawling band exchange rate",
     "exchange rate peg  within a band",
@@ -916,10 +930,13 @@ lexicon <- function(){
     "cutting rate",
     "accomodative stance",
     "rates cute",
+    "expansion of liquidity",
     "easing",
     "ease",
     "accomodatative",
     "macroeconomic support",
+    "money market conditions ease",
+    "easier policy stance",
     "ease monetary policy",
     "easing of market interest rate",
     "discount rate was lowered",
@@ -949,7 +966,6 @@ lexicon <- function(){
     "discount rate was reduced",
     "decline in interest rate",
     "reacceleration in monetary growth",
-    "large scaled concerted intervention",
     "bring down interest rates",
     "unconventional monetary easing",
     "credit easing"
@@ -966,6 +982,7 @@ lexicon <- function(){
     "withdrawal of stimulus",
     "market interest rates rose sharply",
     "tightening of monetary policy",
+    "restrictive policy stance",
     "monetary policy exit",
     "demand policy needed to be tightened",
     "restrictive monetary stance",
@@ -1032,6 +1049,12 @@ lexicon <- function(){
     "increase in interest rates"
   )
   
+  key_words[["Financial_repression"]]=c(
+    "interest rate controls",
+    "controls",
+    "restrictions",
+    "control market"
+  )
   
   key_words[["Monetary_target"]]=c(
     "monetary targeting",
@@ -1045,6 +1068,7 @@ lexicon <- function(){
     "target rate",
     "monery market rate",
     "discount rate",
+    "treasury bills",
     "official rate",
     "policy interest rate",
     "policy rate",
@@ -1061,7 +1085,7 @@ lexicon <- function(){
     "target growth range",
     "target range"
   )
-
+  
   key_words[["Openmarket_operations"]]=c(
     "Open market operation"
   )
@@ -1070,8 +1094,15 @@ lexicon <- function(){
     "communication",
     "transparency",
     "communicated",
+    "preannouncing",
+    "preannounced",
+    "commitment",
+    "pronouncement",
     "communicating",
     "commitment",
+    "restore confidence",
+    "committed",
+    "publicly announce",
     "policy intention",
     "forward guidance",
     "expectation channel",
@@ -1099,7 +1130,7 @@ lexicon <- function(){
     "steam stress in financial"
   )
   
-
+  
   
   key_words[["Unconventional_Monetary_policy"]]=c(
     "unconventional",
@@ -1346,13 +1377,13 @@ lexicon <- function(){
   
   
   key_words[["Low_public_debt"]]=c("low level of public debt",
-                                  "low public debt",
-                                  "negligible public debt",
-                                  "strong fiscal position",
-                                  "low gross government debt",
-                                  "fiscal position is strong",
-                                  "outstanding record of fiscal policy",
-                                  'strong fiscal outcomes')
+                                   "low public debt",
+                                   "negligible public debt",
+                                   "strong fiscal position",
+                                   "low gross government debt",
+                                   "fiscal position is strong",
+                                   "outstanding record of fiscal policy",
+                                   'strong fiscal outcomes')
   
   
   key_words[["Fiscal_stimulus"]]=c("fiscal_stimulus",
@@ -1408,6 +1439,7 @@ lexicon <- function(){
     "contractionary fiscal",
     "balancing budget",
     "restraining federal outlays",
+    "fiscal policy has been tightened",
     "reducing budget deficit",
     "tightening of fiscal policy",
     "tight fiscal stance",
