@@ -1,5 +1,5 @@
-\name{IMF_docs_urls}
-\alias{IMF_docs_urls}
+\name{BetinCollodel_urls}
+\alias{BetinCollodel_urls}
 \docType{data}
 \title{
 dataset containing the urls of the documents extracted from IMF archives
@@ -7,9 +7,9 @@ dataset containing the urls of the documents extracted from IMF archives
 \description{
 The database containing the urls for IMF documents
 }
-\usage{data("IMF_docs_urls")}
+\usage{data("BetinCollodel_urls")}
 \format{
-  A data frame with 0 observations on the following 2 variables.
+  A data frame with 39491 observations on the following 17 variables.
   \describe{
     \item{\code{ID}}{ISO 3 code of the country}
     \item{\code{period}}{date of the release of the document in date format}
@@ -31,7 +31,7 @@ The database containing the urls for IMF documents
   }
 }
 \examples{
-data(IMF_docs_urls)
+data(BetinCollodel_urls)
 ## maybe str(IMF_docs_urls) ; plot(IMF_docs_urls) ...
 }
 \keyword{datasets}
