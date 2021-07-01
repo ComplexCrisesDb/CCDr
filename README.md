@@ -1,28 +1,22 @@
 
--   [TextMiningCrisis](#textminingcrisis)
--   [Description](#description)
--   [Author](#author)
--   [Current version:](#current-version)
--   [Installation](#installation)
--   [Usage](#usage)
-    -   [LEXICON: Browse lexicon of economic crisis](#lexicon-browse-lexicon-of-economic-crisis)
-    -   [CORPUS: Download IMF reports](#corpus-download-imf-reports)
-    -   [CORPUS: Aggregate the pdf files into a dataset in text format](#corpus-aggregate-the-pdf-files-into-a-dataset-in-text-format)
-    -   [CORPUS: Explore the reports](#corpus-explore-the-reports)
-    -   [TERM FREQUENCIES: compute the indexes](#term-frequencies-compute-the-indexes)
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # TextMiningCrisis
 
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
 
-last update: 30/01/2020
+last update: 2021-07-01
 
 # Description
 
-Perform a supervised text mining (Natural Language Processing) using an add hoc lexicon of economic crisis and a corpus of economic reports from the International Monetary Fund (IMF)
+Perform a supervised text mining (Natural Language Processing) using an
+add hoc lexicon of economic crisis and a corpus of economic reports from
+the International Monetary Fund (IMF).
+
+Download the database and raw text files from
+<https://doi.org/10.7910/DVN/CN0PR9>
 
 # Author
 
@@ -37,72 +31,22 @@ see NEWS.md for more details on new features
 
 # Installation
 
-The current version of the package is available on github and can be installed using the devtools package.
+The current version of the package is available on github and can be
+installed using the devtools package.
 
-    #> Loading required package: dplyr
-    #> 
-    #> Attaching package: 'dplyr'
-    #> The following objects are masked from 'package:stats':
-    #> 
-    #>     filter, lag
-    #> The following objects are masked from 'package:base':
-    #> 
-    #>     intersect, setdiff, setequal, union
-    #> Loading required package: pdftools
-    #> Using poppler version 0.73.0
-    #> Loading required package: xml2
-    #> Loading required package: rvest
-    #> Loading required package: tidytext
-    #> Loading required package: tidyr
-    #> Loading required package: rlang
-    #> 
-    #> Attaching package: 'rlang'
-    #> The following object is masked from 'package:xml2':
-    #> 
-    #>     as_list
-    #> Loading required package: stringr
-    #> Loading required package: plotly
-    #> Loading required package: ggplot2
-    #> 
-    #> Attaching package: 'plotly'
-    #> The following object is masked from 'package:ggplot2':
-    #> 
-    #>     last_plot
-    #> The following object is masked from 'package:stats':
-    #> 
-    #>     filter
-    #> The following object is masked from 'package:graphics':
-    #> 
-    #>     layout
-    #> Loading required package: crayon
-    #> 
-    #> Attaching package: 'crayon'
-    #> The following object is masked from 'package:plotly':
-    #> 
-    #>     style
-    #> The following object is masked from 'package:ggplot2':
-    #> 
-    #>     %+%
-    #> The following object is masked from 'package:rlang':
-    #> 
-    #>     chr
-    #> Loading required package: rio
-    #> 
-    #> Attaching package: 'rio'
-    #> The following object is masked from 'package:plotly':
-    #> 
-    #>     export
-    #> Loading required package: tictoc
-    #> Loading required package: lubridate
-    #> 
-    #> Attaching package: 'lubridate'
-    #> The following objects are masked from 'package:base':
-    #> 
-    #>     date, intersect, setdiff, union
+``` r
+#library(devtools)
+#devtools::install_github("manuelbetin/TextMiningCrisis")
+library(TextMiningCrisis)
+```
 
 # Usage
 
-The package provides several functions to compute term frequencies on the corpus of reports. Due to the different potential usages and for the necessity to handle large amounts of data several wrap up functions are provided to be able to perform the different steps one by one or sequentially. The packages is constructed in three different blocs:
+The package provides several functions to compute term frequencies on
+the corpus of reports. Due to the different potential usages and for the
+necessity to handle large amounts of data several wrap up functions are
+provided to be able to perform the different steps one by one or
+sequentially. The packages is constructed in three different blocs:
 
 -   Lexicon: define and prepare categories and keywords
 -   Corpus: download, explore and aggregate
@@ -113,44 +57,55 @@ The main functions are:
 -   **lexicon()**: provide the list of categories and keywords
 -   **pdf\_from\_url()**: download reports in pdf formats
 -   **aggregate\_corpus()**: transform pdf into a dataframe of text
--   **tf\_vector()**: run the term frequency on the corpus for several categories
+-   **tf\_vector()**: run the term frequency on the corpus for several
+    categories
 -   **run\_tf()**; run the term frequency on locally stored corpus
--   **run\_tf\_by\_chunk()** run the term frequency directly downloading the files
--   **run\_tf\_update()** update the term frequency matrix with new categories
+-   **run\_tf\_by\_chunk()** run the term frequency directly downloading
+    the files
+-   **run\_tf\_update()** update the term frequency matrix with new
+    categories
 
 ## LEXICON: Browse lexicon of economic crisis
 
-Access the names of the existing categories in the lexicon using the function lexicon()
+Access the names of the existing categories in the lexicon using the
+function lexicon()
 
 ``` r
 lexicon() %>% names()
-#>  [1] "Wars"                       "Wars_confusing"            
-#>  [3] "Migration"                  "Natural_disaster"          
-#>  [5] "Natural_disaster_confusing" "Epidemics"                 
-#>  [7] "Commodity_crisis"           "Political_crisis"          
-#>  [9] "Social_crisis"              "Labormarket_boom"          
-#> [11] "Labormarket_crisis"         "Nuclear_accident"          
-#> [13] "Cyber_attack"               "Credit_boom"               
-#> [15] "Housing_boom"               "Housing_crisis"            
-#> [17] "Banking_crisis"             "Banking_crisis_severe"     
-#> [19] "Financial_crisis"           "Inflation_crisis"          
-#> [21] "Trade_crisis"               "World_outcomes"            
-#> [23] "Contagion"                  "Positive_expectations"     
-#> [25] "Expectations"               "Balance_payment_crisis"    
-#> [27] "Reduction_reserves"         "Currency_crisis"           
-#> [29] "Currency_crisis_severe"     "Currency_crisis_confusing" 
-#> [31] "Floating_exchange_rate"     "Fixed_exchange_rate"       
-#> [33] "Losening_monetary_policy"   "Tightening_monetary_policy"
-#> [35] "Severe_recession"           "Soft_recession"            
-#> [37] "Expansion"                  "Poverty_crisis"            
-#> [39] "Fiscal_outcomes"            "Low_public_debt"           
-#> [41] "Fiscal_stimulus"            "Fiscal_consolidation"      
-#> [43] "Concessional_lending"       "Short_term_debt"           
-#> [45] "floating_rate_debt"         "foreign_debt"              
-#> [47] "Sovereign_default"          "Problematic_documents"
+#>  [1] "Wars"                           "Wars_confusing"                
+#>  [3] "Migration"                      "Natural_disaster"              
+#>  [5] "Natural_disaster_confusing"     "Epidemics"                     
+#>  [7] "Commodity_crisis"               "Political_crisis"              
+#>  [9] "Social_crisis"                  "Labormarket_boom"              
+#> [11] "Labormarket_crisis"             "Nuclear_accident"              
+#> [13] "Cyber_attack"                   "Credit_boom"                   
+#> [15] "Housing_boom"                   "Housing_crisis"                
+#> [17] "Banking_crisis"                 "Banking_crisis_severe"         
+#> [19] "Financial_crisis"               "Inflation_crisis"              
+#> [21] "Trade_crisis"                   "World_outcomes"                
+#> [23] "Contagion"                      "Positive_expectations"         
+#> [25] "Expectations"                   "Balance_payment_crisis"        
+#> [27] "Reduction_reserves"             "Increase_reservers"            
+#> [29] "Exchange_intervention"          "Currency_crisis"               
+#> [31] "Currency_crisis_severe"         "Currency_crisis_confusing"     
+#> [33] "Floating_exchange_rate"         "Fixed_exchange_rate"           
+#> [35] "Losening_monetary_policy"       "Tightening_monetary_policy"    
+#> [37] "Financial_repression"           "Monetary_target"               
+#> [39] "Fund_rates"                     "Monetary_aggregates"           
+#> [41] "Openmarket_operations"          "Forward_guidance"              
+#> [43] "Financial_stabilization"        "Unconventional_Monetary_policy"
+#> [45] "Coordinate_intervention"        "Severe_recession"              
+#> [47] "Soft_recession"                 "Expansion"                     
+#> [49] "Poverty_crisis"                 "Fiscal_outcomes"               
+#> [51] "Low_public_debt"                "Fiscal_stimulus"               
+#> [53] "Fiscal_consolidation"           "Concessional_lending"          
+#> [55] "Short_term_debt"                "floating_rate_debt"            
+#> [57] "foreign_debt"                   "Sovereign_default"             
+#> [59] "Problematic_documents"
 ```
 
-Browse the keywords associated to each category using lexicon\_details("nameofmycategory")
+Browse the keywords associated to each category using
+lexicon\_details(“nameofmycategory”)
 
 ``` r
 lexicon_details("Severe_recession")
@@ -191,7 +146,8 @@ lexicon_details("Severe_recession")
 #> [34] "deep economic downturn"
 ```
 
-Create your own lexicon by creating a named list with the set of keywords associated
+Create your own lexicon by creating a named list with the set of
+keywords associated
 
 ``` r
 my_new_lexicon=list(Recession=c("severe economic crisis",
@@ -201,7 +157,16 @@ my_new_lexicon=list(Recession=c("severe economic crisis",
 
 ## CORPUS: Download IMF reports
 
-Access urls of the IMF reports in the archives. The dataset "BetinCollodel\_urls" contains for document the relevant metadata including the name of the country, the date of publication, the url of the IMF archives where the documents can be downloaded and several other information extracted from the metadata of the documents. For instance the document corresponding to the request for Standby Arrangement of Argentina on the 25 of january of 1983 is accessible on the following link <https://imfbox.box.com/shared/static/fx9w2df3n8u4ya2ni4ulnbrgp42c3ait.pdf> .
+Access urls of the IMF reports in the archives. The dataset
+“BetinCollodel\_urls” contains for document the relevant metadata
+including the name of the country, the date of publication, the url of
+the IMF archives where the documents can be downloaded and several other
+information extracted from the metadata of the documents. For instance
+the document corresponding to the request for Standby Arrangement of
+Argentina on the 25 of january of 1983 is accessible on the following
+link
+<https://imfbox.box.com/shared/static/fx9w2df3n8u4ya2ni4ulnbrgp42c3ait.pdf>
+.
 
 ``` r
 #load dataset containing urls of documents 
@@ -224,42 +189,66 @@ url_links %>% head(.,3)
 #> #   type_hierarchy <chr>, name_file <chr>
 ```
 
-Download several reports in pdf format and store them locally in folter of your choice using the pdf\_from\_url() function. The following example downloads 5 reports corresponding to the 5 urls provided in the dataset url\_links. Note that to properly download the file, the argument urls must be a table containing at least two columns: name\_file (the name of the files downloaded) and pdf (the url need to access the files in the archives). The second argument *export\_path* corresponds to name of a folder where the downloaded files will be saved.
+Download several reports in pdf format and store them locally in folter
+of your choice using the pdf\_from\_url() function. The following
+example downloads 5 reports corresponding to the 5 urls provided in the
+dataset url\_links. Note that to properly download the file, the
+argument urls must be a table containing at least two columns:
+name\_file (the name of the files downloaded) and pdf (the url need to
+access the files in the archives). The second argument *export\_path*
+corresponds to name of a folder where the downloaded files will be
+saved.
 
 ``` r
-
-pdf_from_url(url_links[,1],"mydocs_for_textmining")
-#> Please provide a valid data.frame of with at least two columns: name_file (name of your file) and pdf (the url link)
+pdf_from_url(url_links,"mydocs_for_textmining")
+#> ARG_1983-01-25_request: succesfully downloadedARG_1983-01-25_request : 1/6: 3.529 sec elapsed
+#> ARG_1983-05-18_modification: succesfully downloadedARG_1983-05-18_modification : 2/6: 2.394 sec elapsed
+#> ARG_1983-05-27_modification: succesfully downloadedARG_1983-05-27_modification : 3/6: 1.926 sec elapsed
+#> ARG_1983-05-27_modification: succesfully downloadedARG_1983-05-27_modification : 4/6: 3.099 sec elapsed
+#> ARG_1983-06-08_exchange system: succesfully downloadedARG_1983-06-08_exchange system : 5/6: 1.978 sec elapsed
+#> ARG_1983-07-28_exchange system: succesfully downloadedARG_1983-07-28_exchange system : 6/6: 1.978 sec elapsed
+#> urls succesfully downloaded in 'mydocs_for_textmining
+#> '
 ```
 
-To access more recent reports from the current publications of the IMF website
+To access more recent reports from the current publications of the IMF
+website
 
 ## CORPUS: Aggregate the pdf files into a dataset in text format
 
-Documents in pdf format need to be properly transformed into text format to be able to perform the text analysis. The function aggregate\_corpus() aggregates all the files into a single list. In the following example the documents contained in the folder "mydocs\_to\_textmining" are aggregated. The argument only\_files=T ensure that only the text in the document are stored and not the information in the metadata.
+Documents in pdf format need to be properly transformed into text format
+to be able to perform the text analysis. The function
+aggregate\_corpus() aggregates all the files into a single list. In the
+following example the documents contained in the folder
+“mydocs\_to\_textmining” are aggregated. The argument only\_files=T
+ensure that only the text in the document are stored and not the
+information in the metadata.
 
 ``` r
 corpus=aggregate_corpus("mydocs_for_textmining",only_files = T)
 #> [1] "mydocs_for_textmining/ARG_1983-01-25_request.pdf"
-#> 1/5 ARG_1983-01-25_request: 0.151 sec elapsed
+#> 1/5 ARG_1983-01-25_request: 0.205 sec elapsed
 #> [1] "mydocs_for_textmining/ARG_1983-05-18_modification.pdf"
-#> 2/5 ARG_1983-05-18_modification: 0.049 sec elapsed
+#> 2/5 ARG_1983-05-18_modification: 0.046 sec elapsed
 #> [1] "mydocs_for_textmining/ARG_1983-05-27_modification.pdf"
 #> 3/5 ARG_1983-05-27_modification: 0.191 sec elapsed
 #> [1] "mydocs_for_textmining/ARG_1983-06-08_exchange system.pdf"
-#> 4/5 ARG_1983-06-08_exchange system: 0.014 sec elapsed
+#> 4/5 ARG_1983-06-08_exchange system: 0.013 sec elapsed
 #> [1] "mydocs_for_textmining/ARG_1983-07-28_exchange system.pdf"
-#> 5/5 ARG_1983-07-28_exchange system: 0.013 sec elapsed
+#> 5/5 ARG_1983-07-28_exchange system: 0.015 sec elapsed
 
 save(corpus,file="mycorpus.RData")
 ```
 
 ## CORPUS: Explore the reports
 
-To perform exploratory analysis on the reports, to extract specific paragraphs or to enrich your lexicon you can perform a keyword search in a specific document. In the following example the function locate all the occurrences of "debt" in the request for Standby Arrangement of Argentina in 1983.
+To perform exploratory analysis on the reports, to extract specific
+paragraphs or to enrich your lexicon you can perform a keyword search in
+a specific document. In the following example the function locate all
+the occurrences of “debt” in the request for Standby Arrangement of
+Argentina in 1983.
 
 ``` r
-
 pages_containing_word=get_pages(corpus$`ARG_1983-01-25_request`,"debt")
 pages_containing_word
 #> $target
@@ -341,7 +330,8 @@ pages_containing_word
 #> [1] "1 \\ <..19 ANNEX II comprehensive review.of the Argentine exchange and trade system and reach understandings with the Fund on a schedule for the elimination of existing multiple currency practices. and restrictions on payments and transfers for current international transactions and of the consequent distortions. The Government will terminate the system of special rebates for exports to new markets by February 28, 1983, although rebates authorized before that date will continue in effect until their pre-established expiration dates. The Government will reduce the minimum foreign financing requirement for private imports, now at 180 days, to no more than 150 days by March 31, 1983, to no more than 120 days by June 30, 1983, and to no more than 90 days by September 30, 1983, and it will eliminate this requirement entirely by December 31, 1983. 7. During 1983 and through April 1984, the Government will not introduce or modify any multiple currency practice with the following exceptions: (a) any uodification in a multiple currency practice which reduces the differential between the effective exchange rate applied for a given transaction and the official buying or selling rate for the peso in the unified exchange market; and (b) pending the completion of the review mentioned in paragraph 6 above, the continued operation of the existing system of export rebates within the existing range of rates, including the reclassification of exports within that'range of rates. 8. All external payments arrears will be eliminated as quickly as possible and, in any event, by June 30, 1983. Once eliminated, foreign exchange will be provided freely at the official exchange rate for all bona'fide current international payments. However, reasonable limits may be applied on the automatic allocation of foreign exchange for foreign travel and,remittances in order to prevent disguised capital outflows. ._. 9. ..The Government intends to. initiate shortly discussions with i its foreign creditors with a view to achieving a restructuring of Argen'.tina's external public and private debt that would produce an amortiza.tion profile attuned to Argentina's repayment capacity. Sincerely yours, Julio Gonzalez de1 Solar Jorge Wehbe President of the Central Bank Minister of Economy of the Republic of Argentina "
 ```
 
-Compute the document term frequency for all the files in the corpus for the category "Currency\_crisis"
+Compute the document term frequency for all the files in the corpus for
+the category “Currency\_crisis”
 
 ## TERM FREQUENCIES: compute the indexes
 
@@ -358,26 +348,27 @@ tf_matrix
 #> 5       0 ARG_1983-07-28_exchange system
 ```
 
-Compute the document term frequency for several categories "Currency\_crisis" and "Balance\_payment\_crisis". Each documents correspond to a row of the table and the different indexes in columns.
+Compute the document term frequency for several categories
+“Currency\_crisis” and “Balance\_payment\_crisis”. Each documents
+correspond to a row of the table and the different indexes in columns.
 
 ``` r
-
 mycategories=c('Currency_crisis',"Balance_payment_crisis","Sovereign_default")
 
 tf_vector(corpus=corpus,keyword_list=lexicon()[mycategories]) %>% head()
 #> 
 #> (1/3) running: Currency_crisis
-#> Currency_crisis: 0.632 sec elapsed
+#> Currency_crisis: 0.647 sec elapsed
 #> 
 #>  Finished running: Currency_crisis
 #> 
 #> (2/3) running: Balance_payment_crisis
-#> Balance_payment_crisis: 0.711 sec elapsed
+#> Balance_payment_crisis: 0.7 sec elapsed
 #> 
 #>  Finished running: Balance_payment_crisis
 #> 
 #> (3/3) running: Sovereign_default
-#> Sovereign_default: 0.607 sec elapsed
+#> Sovereign_default: 0.657 sec elapsed
 #> 
 #>  Finished running: Sovereign_default
 #> # A tibble: 5 x 4
@@ -390,10 +381,12 @@ tf_vector(corpus=corpus,keyword_list=lexicon()[mycategories]) %>% head()
 #> 5 ARG_1983-07-28_ex…                  0                     0           0
 ```
 
-Wrapup function for tf() . Given a corpus saved locally compute the term frequencies for different categories. In the following example we used mycorpus.RData and the categories Currency\_crisis and Balance\_payment\_crisis.
+Wrapup function for tf() . Given a corpus saved locally compute the term
+frequencies for different categories. In the following example we used
+mycorpus.RData and the categories Currency\_crisis and
+Balance\_payment\_crisis.
 
 ``` r
-
 #Run term frequency matrix
 
 wrapup_for_tf=run_tf(corpus_path = "mycorpus.RData",
@@ -401,15 +394,15 @@ wrapup_for_tf=run_tf(corpus_path = "mycorpus.RData",
                      parrallel = F)
 #> Loading corpus from mycorpus.RData
 #> (1/2) running: Currency_crisis
-#> Currency_crisis: 0.752 sec elapsed
+#> Currency_crisis: 0.67 sec elapsed
 #> 
 #>  Finished running: Currency_crisis
 #> 
 #> (2/2) running: Balance_payment_crisis
-#> Balance_payment_crisis: 0.596 sec elapsed
+#> Balance_payment_crisis: 0.613 sec elapsed
 #> 
 #>  Finished running: Balance_payment_crisis
-#> 1.386 sec elapsed
+#> 1.323 sec elapsed
 #> [1] "export table in mycorpus.RData"
 
 head(wrapup_for_tf)
@@ -423,71 +416,69 @@ head(wrapup_for_tf)
 #> 5 ARG_1983-07-28_exchange system                   0                          0
 ```
 
-Wrapup function for run\_tf that allows directly download the files and run the text mining with a single function.
+Wrapup function for run\_tf that allows directly download the files and
+run the text mining with a single function.
 
 ``` r
 run_tf_by_chunk(urls =url_links,keyword_list = c("Currency_crisis","Balance_payment_crisis"))
-#> Warning in dir.create(path): 'temp' already exists
-#> Warning in dir.create(path_corpus): 'temp/corpus' already exists
-#> Warning in dir.create(path_tf): 'temp/tf' already exists
 #> ARG_1983-01-25_request: succesfully downloaded 
-#> ARG_1983-01-25_request : 1/6: 2.696 sec elapsed
+#> ARG_1983-01-25_request : 1/6: 2.948 sec elapsed
 #> ARG_1983-05-18_modification: succesfully downloaded 
-#> ARG_1983-05-18_modification : 2/6: 2.348 sec elapsed
+#> ARG_1983-05-18_modification : 2/6: 2.506 sec elapsed
 #> ARG_1983-05-27_modification: succesfully downloaded 
-#> ARG_1983-05-27_modification : 3/6: 1.89 sec elapsed
+#> ARG_1983-05-27_modification : 3/6: 2.063 sec elapsed
 #> ARG_1983-05-27_modification: already downloaded, keep existing 
 #> ARG_1983-05-27_modification : 4/6: 0.013 sec elapsed
 #> ARG_1983-06-08_exchange system: succesfully downloaded 
-#> ARG_1983-06-08_exchange system : 5/6: 2.028 sec elapsed
+#> ARG_1983-06-08_exchange system : 5/6: 2.405 sec elapsed
 #> ARG_1983-07-28_exchange system: succesfully downloaded 
-#> ARG_1983-07-28_exchange system : 6/6: 2.593 sec elapsed
+#> ARG_1983-07-28_exchange system : 6/6: 2.087 sec elapsed
 #> urls succesfully downloaded in 'temp/files
 #> '[1] "temp/files/ARG_1983-01-25_request.pdf"
-#> 1/5 ARG_1983-01-25_request: 0.154 sec elapsed
+#> 1/5 ARG_1983-01-25_request: 0.167 sec elapsed
 #> [1] "temp/files/ARG_1983-05-18_modification.pdf"
-#> 2/5 ARG_1983-05-18_modification: 0.048 sec elapsed
+#> 2/5 ARG_1983-05-18_modification: 0.051 sec elapsed
 #> [1] "temp/files/ARG_1983-05-27_modification.pdf"
-#> 3/5 ARG_1983-05-27_modification: 0.008 sec elapsed
+#> 3/5 ARG_1983-05-27_modification: 0.01 sec elapsed
 #> [1] "temp/files/ARG_1983-06-08_exchange system.pdf"
-#> 4/5 ARG_1983-06-08_exchange system: 0.014 sec elapsed
+#> 4/5 ARG_1983-06-08_exchange system: 0.016 sec elapsed
 #> [1] "temp/files/ARG_1983-07-28_exchange system.pdf"
-#> 5/5 ARG_1983-07-28_exchange system: 0.014 sec elapsed
+#> 5/5 ARG_1983-07-28_exchange system: 0.018 sec elapsed
 #> delete folder with pdf 
 #> Loading corpus from temp/corpus/corpus_1.RData
 #> (1/2) running: Currency_crisis
-#> Currency_crisis: 1.045 sec elapsed
+#> Currency_crisis: 0.985 sec elapsed
 #> 
 #>  Finished running: Currency_crisis
 #> 
 #> (2/2) running: Balance_payment_crisis
-#> Balance_payment_crisis: 1.05 sec elapsed
+#> Balance_payment_crisis: 0.965 sec elapsed
 #> 
 #>  Finished running: Balance_payment_crisis
-#> 2.145 sec elapsed
+#> 1.996 sec elapsed
 #> [1] "export table in temp/corpus/corpus_1.RData"
 #> [1] TRUE
 ```
 
-Update the tf dataframe with additional columns with the new categories to compute
+Update the tf dataframe with additional columns with the new categories
+to compute
 
 ``` r
-
 updated_tf=run_tf_update(path_tf_to_update = "temp/tf/tf_crisis_words_1.RData",
                 corpus_path = "temp/corpus/corpus_1.RData",
                 keyword_list = c("Fiscal_outcomes","Fiscal_consolidation"),
                 export_path = "temp/tf/tf_crisis_words_1_new.RData")
 #> updating selected columnsLoading corpus from temp/corpus/corpus_1.RData
 #> (1/2) running: Fiscal_outcomes
-#> Fiscal_outcomes: 0.848 sec elapsed
+#> Fiscal_outcomes: 0.809 sec elapsed
 #> 
 #>  Finished running: Fiscal_outcomes
 #> 
 #> (2/2) running: Fiscal_consolidation
-#> Fiscal_consolidation: 1.046 sec elapsed
+#> Fiscal_consolidation: 0.865 sec elapsed
 #> 
 #>  Finished running: Fiscal_consolidation
-#> 1.967 sec elapsed
+#> 1.72 sec elapsed
 #> [1] "export table in temp/corpus/corpus_1.RData"
 #> [1] "Non updated columns:\n\n                 file, Currency_crisis, Balance_payment_crisis"
 #> [1] "Updated columns:\n\n                 Fiscal_outcomes, Fiscal_consolidation"

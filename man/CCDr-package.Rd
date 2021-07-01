@@ -1,24 +1,24 @@
-\name{TextMiningCrisis-package}
-\alias{TextMiningCrisis-package}
-\alias{TextMiningCrisis}
+\name{CCDr-package}
+\alias{CCDr-package}
+\alias{CCDr}
 \docType{package}
 \title{
-\packageTitle{TextMiningCrisis}
+\packageTitle{CCDr}
 }
 \description{
-\packageDescription{TextMiningCrisis}
+\packageDescription{CCDr}
 }
 \details{
 
 The DESCRIPTION file:
-\packageDESCRIPTION{TextMiningCrisis}
-\packageIndices{TextMiningCrisis}
+\packageDESCRIPTION{CCDr}
+\packageIndices{CCDr}
  
 }
 \author{
-\packageAuthor{TextMiningCrisis}
+\packageAuthor{CCDr}
 
-Maintainer: \packageMaintainer{TextMiningCrisis}
+Maintainer: \packageMaintainer{CCDr}
 }
 \references{
 ~~ Literature or other references for background information ~~

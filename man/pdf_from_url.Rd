@@ -2,7 +2,7 @@
 % Please edit documentation in R/text_extraction.R
 \name{pdf_from_url}
 \alias{pdf_from_url}
-\title{download pdf documents 
+\title{download pdf documents
 download from a a dataframe containing the url of the files
 the pdf of interest}
 \usage{
@@ -10,7 +10,7 @@ pdf_from_url(urls, export_path, overwrite = T)
 }
 \arguments{
 \item{urls}{a dataframe with a row by document and at least the following columns
-title, pdf, and name_file. title contains the title of the document, pdf the url 
+title, pdf, and name_file. title contains the title of the document, pdf the url
 where to download the files and name_file the name that will be given to the pdf}
 
 \item{export_path}{path where to store the downloaded pdfs}
@@ -21,7 +21,7 @@ where to download the files and name_file the name that will be given to the pdf
 creates a folder and store the pdf
 }
 \description{
-download pdf documents 
+download pdf documents
 download from a a dataframe containing the url of the files
 the pdf of interest
 }

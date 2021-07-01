@@ -24,16 +24,16 @@ downloaded and pdf that contains the url of the pdf}
 \item{keyword_list}{one of the element of the list provided by
 lexicon()}
 
-\item{extract_number}{a number that will be ued as a suffix for the name 
+\item{extract_number}{a number that will be ued as a suffix for the name
 of the corpus and the name of the tf matrix}
 
 \item{ENGINE}{function to read pdf into environment. Either pdf_text or pdf_ocr_text.}
 
-\item{delete_pdfs}{T/F, set to T it will delete the folder 
+\item{delete_pdfs}{T/F, set to T it will delete the folder
 containing the original pdf, usefull option when the number of pdf is very
 large and the size of the folder start to be very large}
 
-\item{rm_short_docs}{T/F T if you want to remove the documents under a 
+\item{rm_short_docs}{T/F T if you want to remove the documents under a
 certain number of words}
 
 \item{min_words}{the minimum word in the document necessary to perform

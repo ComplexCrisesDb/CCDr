@@ -1,11 +1,15 @@
-Package: TextMiningCrisis
+Package: CCDr
 Type: Package
-Title: Natural Language Processing (NPL) on IMF reports
+Title: Toolbox to extend the Complex Crises Database
 Version: 2.0.0
 Date: 2020-01-23
-Author: Betin Manuel, Umberto Collodel
-Maintainer: <manubetin@gmail.com>
-Description: Perform a text analysis using a lexicon of economic crisis on a corpus of IMF documents. Toolbox for the construction and extension of the Complex Crises Database (CCD) : https://doi.org/10.7910/DVN/CN0PR9
+Authors@R: c(
+    person("Manuel", "Betin", email = "manuel.betin@psemail.edu", role = c("cre","aut")),
+    person("Umberto", "Collodel", email = "umberto.collodel@psemail.edu", role = c("aut")))
+Description: Toolbox to extend the *Complex Crises Database* (CCD) the underlying data of the paper:
+    Manuel Bétin, Umberto Collodel. The Complex Crises Database: 70 Years of Macroeconomic Crises. 2021. 
+    https://halshs.archives-ouvertes.fr/halshs-03268889/
+    Find more info and download the database and raw text files from https://doi.org/10.7910/DVN/CN0PR9
 RoxygenNote: 7.1.1
 Depends: 
     dplyr,

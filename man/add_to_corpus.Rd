@@ -12,7 +12,7 @@ add_to_corpus(old_corpus_path, files_updated_path, ENGINE)
 
 \item{files_updated_path}{directory with some new pdfs.}
 
-\item{ENGINE}{similar to engine argument in readPDF from 'tm' package. 
+\item{ENGINE}{similar to engine argument in readPDF from 'tm' package.
 Function to read pdf into environment, either pdf_text or pdf_ocr_text, depending on whether image or not.}
 }
 \description{

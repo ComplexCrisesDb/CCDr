@@ -13,7 +13,7 @@ clean_text(file)
 a clean character string
 }
 \description{
-clean character string by removing special characters 
+clean character string by removing special characters
 and irrelevant strings
 }
 \author{

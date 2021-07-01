@@ -1,9 +1,14 @@
 ---
-output: github_document
-always_allow_html: yes
+title: "Introduction to CCDr: <br> a simple framework to update the Complex Crises Database"
+author: "Manuel Betin, Umberto Collodel"
+date: "3/20/2020"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to CCDr: <br> a simple framework to update the Complex Crises Database}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -13,33 +18,8 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
-# CCDr 
-
-***
-***
-
-last update: `r lubridate::today()`
-
-# Description
-
-Toolbox to extend the *Complex Crises Database* (CCD) the underlying data of the paper:
-Manuel Bétin, Umberto Collodel. The Complex Crises Database: 70 Years of Macroeconomic Crises. 2021. 
-https://halshs.archives-ouvertes.fr/halshs-03268889/
 
 
-Find more info and download the database and raw text files from https://doi.org/10.7910/DVN/CN0PR9
-
-# Author
-
-- Manuel Betin
-- Umberto Collodel
-
-# Current version:
-
- 2.0.0
- 
- see NEWS.md for more details on new features
- 
 # Installation 
 
 The current version of the package is available on github and can be installed using the devtools package.
@@ -47,7 +27,7 @@ The current version of the package is available on github and can be installed u
 ```{r,warning=F,message=F}
 #library(devtools)
 #devtools::install_github("manuelbetin/TextMiningCrisis")
-library(CCDr)
+library(TextMiningCrisis)
 ```
 
 # Usage
@@ -95,13 +75,13 @@ my_new_lexicon=list(Recession=c("severe economic crisis",
 
 ## CORPUS: Download IMF reports 
 
-Access urls of the IMF reports in the archives. The dataset "BetinCollodel_urls" contains for document the relevant metadata including the name of the country, the date of publication, the url of the IMF archives where the documents can be downloaded and several other information extracted from the metadata of the documents. For instance the document corresponding to the request for Standby Arrangement of Argentina on the 25 of january of 1983 is accessible on the following link https://imfbox.box.com/shared/static/fx9w2df3n8u4ya2ni4ulnbrgp42c3ait.pdf . 
+Access urls of the IMF reports in the archives. The dataset "ComplexCrisesDatabase_urls" contains for document the relevant metadata including the name of the country, the date of publication, the url of the IMF archives where the documents can be downloaded and several other information extracted from the metadata of the documents. For instance the document corresponding to the request for Standby Arrangement of Argentina on the 25 of january of 1983 is accessible on the following link https://imfbox.box.com/shared/static/fx9w2df3n8u4ya2ni4ulnbrgp42c3ait.pdf . 
 
 ```{r get links}
 #load dataset containing urls of documents 
-data("BetinCollodel_urls")
-
-url_links= BetinCollodel_urls %>% filter(ID=="ARG")
+#data("ComplexCrisesDatabase_urls")
+ComplexCrisesDatabase_urls=rio::import("../data/ComplexCrisesDatabase_urls.rda")
+url_links= ComplexCrisesDatabase_urls %>% filter(ID=="ARG")
 url_links=url_links[150:155,]
 
 url_links %>% head(.,3)
