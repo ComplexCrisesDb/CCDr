@@ -129,10 +129,12 @@ Clean package to only keep relevant functions to construct the database of index
 Include website for the package and update readme.
 
 
-TextMiningCrisis v2.0.0 (Release date: 2021-06-01)
+CCDr v2.0.0 (Release date: 2021-06-01)
 ==============
  
 Update names of databases with the new name (complex crises database) and add the link to the Harvard dataverse where the data is stored
+
+
 
 
 

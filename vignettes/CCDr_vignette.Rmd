@@ -20,17 +20,17 @@ knitr::opts_chunk$set(
 ```
 
 
-# Installation 
+## Installation 
 
 The current version of the package is available on github and can be installed using the devtools package.
 
 ```{r,warning=F,message=F}
 #library(devtools)
-#devtools::install_github("manuelbetin/TextMiningCrisis")
-library(TextMiningCrisis)
+#devtools::install_github("manuelbetin/CCDr")
+library(CCDr)
 ```
 
-# Usage
+## Usage
  
 The package provides several functions to compute term frequencies on the corpus of reports. Due to the different potential usages and for the necessity to handle large amounts of data several wrap up functions are provided to be able to perform the different steps one by one or sequentially.
 The packages is constructed in three different blocs:
@@ -49,7 +49,7 @@ The main functions are:
  - **run_tf_by_chunk()** run the term frequency directly downloading the files 
  - **run_tf_update()** update the term frequency matrix with new categories
 
-## LEXICON: Browse lexicon of economic crisis
+### LEXICON: Browse lexicon of economic crisis
 
 Access the names of the existing categories in the lexicon using the function lexicon()
 
@@ -73,7 +73,7 @@ my_new_lexicon=list(Recession=c("severe economic crisis",
 
 ```
 
-## CORPUS: Download IMF reports 
+### CORPUS: Download IMF reports 
 
 Access urls of the IMF reports in the archives. The dataset "ComplexCrisesDatabase_urls" contains for document the relevant metadata including the name of the country, the date of publication, the url of the IMF archives where the documents can be downloaded and several other information extracted from the metadata of the documents. For instance the document corresponding to the request for Standby Arrangement of Argentina on the 25 of january of 1983 is accessible on the following link https://imfbox.box.com/shared/static/fx9w2df3n8u4ya2ni4ulnbrgp42c3ait.pdf . 
 
@@ -99,7 +99,7 @@ pdf_from_url(url_links,"mydocs_for_textmining")
 To access more recent reports from the current publications of the IMF website
 
 
-## CORPUS: Aggregate the pdf files into a dataset in text format
+### CORPUS: Aggregate the pdf files into a dataset in text format
 
 Documents in pdf format need to be properly transformed into text format to be able to perform the text analysis. The function aggregate_corpus() aggregates all the files into a single list. In the following example the documents contained in the folder "mydocs_to_textmining" are aggregated. The argument only_files=T ensure that only the text in the document are stored and not the information in the metadata.
 
@@ -109,7 +109,7 @@ corpus=aggregate_corpus("mydocs_for_textmining",only_files = T)
 save(corpus,file="mycorpus.RData")
 ```
 
-## CORPUS: Explore the reports 
+### CORPUS: Explore the reports 
 
 To perform exploratory analysis on the reports, to extract specific paragraphs or to enrich your lexicon you can perform a keyword search in a specific document. In the following example the function locate all the occurrences of "debt" in the request for Standby Arrangement of Argentina in 1983.
 
@@ -121,7 +121,7 @@ pages_containing_word
 
 Compute the document term frequency for all the files in the corpus for the category "Currency_crisis"
 
-## TERM FREQUENCIES: compute the indexes
+### TERM FREQUENCIES: compute the indexes
 
 ```{r tf for a single category}
 tf_matrix=tf(corpus,"Severe_recession")
