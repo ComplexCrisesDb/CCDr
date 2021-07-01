@@ -1,11 +1,11 @@
 Package: TextMiningCrisis
 Type: Package
 Title: Natural Language Processing (NPL) on IMF reports
-Version: 1.4.0
+Version: 2.0.0
 Date: 2020-01-23
 Author: Betin Manuel, Umberto Collodel
 Maintainer: <manubetin@gmail.com>
-Description: Perform a text analysis using a lexicon of economic crisis on a corpus of IMF documents
+Description: Perform a text analysis using a lexicon of economic crisis on a corpus of IMF documents. Toolbox for the construction and extension of the Complex Crises Database (CCD) : https://doi.org/10.7910/DVN/CN0PR9
 RoxygenNote: 7.1.1
 Depends: 
     dplyr,
@@ -19,7 +19,8 @@ Depends:
     rio,
     tictoc,
     lubridate,
-    purrr
+    purrr,
+    R (>= 2.10)
 Suggests: 
     testthat,
     knitr

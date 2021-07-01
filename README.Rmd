@@ -22,7 +22,9 @@ last update: `r lubridate::today()`
 
 # Description
 
-Perform a supervised text mining (Natural Language Processing) using an add hoc lexicon of economic crisis and a corpus of economic reports from the International Monetary Fund (IMF)
+Perform a supervised text mining (Natural Language Processing) using an add hoc lexicon of economic crisis and a corpus of economic reports from the International Monetary Fund (IMF). 
+
+Download the database and raw text files from https://doi.org/10.7910/DVN/CN0PR9
 
 # Author
 
