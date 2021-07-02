@@ -4,7 +4,7 @@ print.corpusTM <- function(x, ...) {
   #' @param x object of class "corpus.TM"
   #' @param ... optional arguments to ```print```
   #' @author Manuel Betin, Umberto Collodel
-  #' @export
+  #' @noRd
   cat("\n")
   cat("Number of documents: ", length(x), "\n")
   cat("First document: ", names(x)[[1]], "\n")

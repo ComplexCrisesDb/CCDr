@@ -19,6 +19,8 @@ knitr::opts_chunk$set(
 last update: `r lubridate::today()`
 
 Toolbox to extend the *Complex Crises Database* (CCD) the underlying data of the paper:
+
+
 Manuel Bétin, Umberto Collodel. The Complex Crises Database: 70 Years of Macroeconomic Crises. 2021. 
 https://halshs.archives-ouvertes.fr/halshs-03268889/
 

@@ -103,8 +103,7 @@ pdf_page_count <- function(files) {
   #' @param files a list of character strings
   #' @return the number of pages in the document
   #' @author Manuel Betin
-  #' @export
-
+  #' @noRd
   error_no_metadata <- try(
     {
       files[[1]]$info
@@ -306,7 +305,6 @@ get_sentences <- function(corpus, keyword_list) {
   #'
   #' @author Manuel Betin, Umberto Collodel
   #'
-  #' @examples
   #'
   #'
   #' @export
@@ -325,7 +323,7 @@ log_norm_trans <- function(tf_data) {
   #' @param tf_data a dataframe of term frequencies
   #' @return a tibble of tf with log norm transformation
   #' @author Manuel Betin
-
+  #' @noRd
   log_norm_trans <- function(x) {
     ifelse(x > 0, 1 + log(x), 0)
   }
@@ -346,7 +344,7 @@ binary_freq_trans <- function(tf_data) {
   #' @author Manuel Betin
   #' @return a dataframe with binary frequencies 0 if the tf_idf is zero and 1
   #' if it is non zero
-
+  #' @noRd
 
   binary_trans <- function(x) {
     ifelse(x > 0, 1, 0)
@@ -375,8 +373,7 @@ check_extract <- function(path_urls = "../Betin_Collodel/2. Text mining IMF_data
   #' @return a list with a table given the proportion of the files that have not been properly computed by country
   #' the files that have an error and have not been downloaded and the files that have not been downloaded and
   #' merged
-  #'
-  #' @export
+  #' @noRd
 
   metadata <- rio::import(path_urls) %>%
     mutate(name_file = paste0(ID, "_", period, "_", type_doc_programs))
@@ -427,8 +424,7 @@ check_gaps_pdfs <- function(general_path = "/Volumes/Elements/IMF documents/", o
   #' @param only_large Logical. Consider only gaps greater than two years. Default is TRUE.
   #' @author Manuel Betin, Umberto Collodel
   #' @return a nested list: for every individual the number of gaps and a dataframe with the details.
-  #'
-  #' @export
+  #' @noRd
 
   # Names folders with pdfs by individual:
 
@@ -490,8 +486,7 @@ add_to_corpus <- function(old_corpus_path, files_updated_path, ENGINE) {
   #' @param ENGINE similar to engine argument in readPDF from 'tm' package.
   #' Function to read pdf into environment, either pdf_text or pdf_ocr_text, depending on whether image or not.
   #' @author Manuel Betin, Umberto Collodel
-  #' @export
-
+  #' @noRd
   old_corpus <- rio::import(old_corpus_path)
   stopifnot(is.list(old_corpus))
 
@@ -541,8 +536,7 @@ check_diff_pdfs_urls <- function(path, urls_data) {
   #' @param path path to all individual units subdirectories.
   #' @param urls_data dataframe. original urls, must have at least a column named "name_file".
   #' @author Manuel Betin, Umberto Collodel
-  #' @export
-
+  #' @noRd
   # List of pdfs downloaded:
 
   tot_list_pdfs <- list.files(path) %>%
