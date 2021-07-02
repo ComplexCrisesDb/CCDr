@@ -16,13 +16,13 @@ analysis}
 search and count for in the text}
 
 \item{brute_freq}{T if you only want the frequency count of the word,
-if F the output is the it provides the term frequency for the set of 
+if F the output is the it provides the term frequency for the set of
 targetwords provided}
 
 \item{parrallel}{if T the function use the mclapply function to use
 parrallele computing from the package "parrallele"
 @author Manuel Betin
-@return  return the number of occurence of the targetword for each file 
+@return  return the number of occurence of the targetword for each file
 @export}
 }
 \description{

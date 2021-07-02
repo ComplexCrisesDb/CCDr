@@ -18,10 +18,6 @@ Tibble with two columns: sentences containing keyword and respective keyword.
 \description{
 Function that simplifies checking validity indexes and potential problems in keywords
 }
-\examples{
-
-
-}
 \author{
 Manuel Betin, Umberto Collodel
 }

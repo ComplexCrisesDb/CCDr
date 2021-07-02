@@ -7,7 +7,7 @@
 lexicon_details(keyword)
 }
 \arguments{
-\item{keyword}{the name of the category of which you want to 
+\item{keyword}{the name of the category of which you want to
 know the lexicon}
 }
 \value{

@@ -1,0 +1,172 @@
+---
+title: "Introduction to CCDr: <br> a simple framework to update the Complex Crises Database"
+author: "Manuel Betin, Umberto Collodel"
+date: "3/20/2020"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to CCDr: <br> a simple framework to update the Complex Crises Database}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+
+## Installation 
+
+The current version of the package is available on github and can be installed using the devtools package.
+
+```{r,warning=F,message=F}
+#library(devtools)
+#devtools::install_github("manuelbetin/CCDr")
+library(CCDr)
+```
+
+## Usage
+ 
+The package provides several functions to compute term frequencies on the corpus of reports. Due to the different potential usages and for the necessity to handle large amounts of data several wrap up functions are provided to be able to perform the different steps one by one or sequentially.
+The packages is constructed in three different blocs:
+
+- Lexicon: define and prepare categories and keywords
+- Corpus: download, explore and aggregate
+- Term Frequencies: compute the indexes
+
+The main functions are: 
+ 
+ - **lexicon()**: provide the list of categories and keywords
+ - **pdf_from_url()**: download reports in pdf formats
+ - **aggregate_corpus()**: transform pdf into a dataframe of text
+ - **tf_vector()**: run the term frequency on the corpus for several categories
+ - **run_tf()**; run the term frequency on locally stored corpus
+ - **run_tf_by_chunk()** run the term frequency directly downloading the files 
+ - **run_tf_update()** update the term frequency matrix with new categories
+
+### LEXICON: Browse lexicon of economic crisis
+
+Access the names of the existing categories in the lexicon using the function lexicon()
+
+```{r}
+lexicon() %>% names()
+
+```
+
+Browse the keywords associated to each category using lexicon_details("nameofmycategory")
+
+```{r}
+lexicon_details("Severe_recession")
+```
+
+Create your own lexicon by creating a named list with the set of keywords associated 
+
+```{r}
+my_new_lexicon=list(Recession=c("severe economic crisis",
+                                "Severe recession",
+                                "severe crisis"))
+
+```
+
+### CORPUS: Download IMF reports 
+
+Access urls of the IMF reports in the archives. The dataset "ComplexCrisesDatabase_urls" contains for document the relevant metadata including the name of the country, the date of publication, the url of the IMF archives where the documents can be downloaded and several other information extracted from the metadata of the documents. For instance the document corresponding to the request for Standby Arrangement of Argentina on the 25 of january of 1983 is accessible on the following link https://imfbox.box.com/shared/static/fx9w2df3n8u4ya2ni4ulnbrgp42c3ait.pdf . 
+
+```{r get links}
+#load dataset containing urls of documents 
+#data("ComplexCrisesDatabase_urls")
+ComplexCrisesDatabase_urls=rio::import("../data/ComplexCrisesDatabase_urls.rda")
+url_links= ComplexCrisesDatabase_urls %>% filter(ID=="ARG")
+url_links=url_links[150:155,]
+
+url_links %>% head(.,3)
+```
+
+Download several reports in pdf format and store them locally in folter of your choice using the pdf_from_url() function. The following example downloads 5 reports corresponding to the 5 urls provided in the dataset url_links. Note that to properly download the file, the argument urls must be a table containing at least two columns: name_file (the name of the files downloaded) and pdf (the url need to access the files in the archives). The second argument *export_path* corresponds to name of a folder where the downloaded files will be saved.
+
+```{r download files}
+
+pdf_from_url(url_links,"mydocs_for_textmining")
+
+```
+
+
+To access more recent reports from the current publications of the IMF website
+
+
+### CORPUS: Aggregate the pdf files into a dataset in text format
+
+Documents in pdf format need to be properly transformed into text format to be able to perform the text analysis. The function aggregate_corpus() aggregates all the files into a single list. In the following example the documents contained in the folder "mydocs_to_textmining" are aggregated. The argument only_files=T ensure that only the text in the document are stored and not the information in the metadata.
+
+```{r aggregate corpus}
+corpus=aggregate_corpus("mydocs_for_textmining",only_files = T)
+
+save(corpus,file="mycorpus.RData")
+```
+
+### CORPUS: Explore the reports 
+
+To perform exploratory analysis on the reports, to extract specific paragraphs or to enrich your lexicon you can perform a keyword search in a specific document. In the following example the function locate all the occurrences of "debt" in the request for Standby Arrangement of Argentina in 1983.
+
+```{r explore document}
+
+pages_containing_word=get_pages(corpus$`ARG_1983-01-25_request`,"debt")
+pages_containing_word
+```
+
+Compute the document term frequency for all the files in the corpus for the category "Currency_crisis"
+
+### TERM FREQUENCIES: compute the indexes
+
+```{r tf for a single category}
+tf_matrix=tf(corpus,"Severe_recession")
+tf_matrix
+```
+
+Compute the document term frequency for several categories "Currency_crisis" and "Balance_payment_crisis". Each documents correspond to a row of the table and the different indexes in columns.
+
+```{r tf for several categories}
+
+mycategories=c('Currency_crisis',"Balance_payment_crisis","Sovereign_default")
+
+tf_vector(corpus=corpus,keyword_list=lexicon()[mycategories]) %>% head()
+
+```
+
+Wrapup function for tf() . Given a corpus saved locally compute the term frequencies for different categories. In the following example we used mycorpus.RData and the categories Currency_crisis and Balance_payment_crisis. 
+
+```{r tf from local corpus}
+
+#Run term frequency matrix
+
+wrapup_for_tf=run_tf(corpus_path = "mycorpus.RData",
+                     keyword_list = c("Currency_crisis","Balance_payment_crisis"),
+                     parrallel = F)
+
+head(wrapup_for_tf)
+```
+
+Wrapup function for run_tf that allows directly download the files and run the text mining with a single function.
+
+```{r direct download}
+run_tf_by_chunk(urls =url_links,keyword_list = c("Currency_crisis","Balance_payment_crisis"))
+```
+
+Update the tf dataframe with additional columns with the new categories to compute
+
+```{r update tf}
+
+updated_tf=run_tf_update(path_tf_to_update = "temp/tf/tf_crisis_words_1.RData",
+                corpus_path = "temp/corpus/corpus_1.RData",
+                keyword_list = c("Fiscal_outcomes","Fiscal_consolidation"),
+                export_path = "temp/tf/tf_crisis_words_1_new.RData")
+
+head(updated_tf)
+```
+
+
