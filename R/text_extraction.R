@@ -1,5 +1,136 @@
+ccdr.corpus <- function(path_files, ENGINE = pdf_text, only_files = F) {
+  #' Aggregate pdf files into list of characters
+  #'
+  #' function that takes the path of the directory and load all
+  #' the pdfs of the directory into a list in order to further perform the text
+  #' mining
+  
+  #' @param path_files the path of the directory with the files
+  #' Function to read pdf into environment, either pdf_text or pdf_ocr_text, depending on whether image or not.
+  #' @param ENGINE the engine for pdf extraction (pdf_text or pdf_ocr_text from pdftools)
+  #' @param only_files T/F whether to include in the list only the content or also
+  #' the metadata of the pdf file
+  #' @author Manuel Betin
+  #' @return A list containing the content of each document
+  #' @export
+  #'
+  docs <- list.files(path_files, pattern = ".pdf", ignore.case = T)
+  docs <- stringr::str_remove(docs, ".PDF")
+  docs <- stringr::str_remove(docs, ".pdf")
+  count <- 0
+  start <- 1
+  x <- 1
+  
+  corpus <- lapply(start:length(docs), function(x) {
+    count <<- count + 1
+    tictoc::tic(paste0(count, "/", length(docs), " ", docs[x]))
+    path <- paste0(path_files, "/", docs[x], ".pdf")
+    file <- try(
+      {
+        pdfinfo <- pdftools::pdf_info(path)
+        ENGINE(path)
+      },
+      silent = T
+    )
+    if ("try-error" %in% class(file)) {
+      warning(paste(docs[[x]], ": Error in path file or in the pdf extraction engine \n", sep = ""))
+      pdfinfo <- NA
+      file <- NA
+    } else {
+      file <- clean_text(file)
+    }
+    print(path)
+    tictoc::toc()
+    if (only_files == T) {
+      file
+    } else {
+      list(info = pdfinfo, file = file)
+    }
+  })
+  names(corpus) <- docs
+  attr(corpus, "class") <- c("corpusTM", "list")
+  return(corpus)
+}
 
-pdf_from_url <- function(urls, export_path, overwrite = T) {
+ccdr.pages <- function(files, targetword, brute_freq = F, parrallel = T) {
+  #' Look for the presence of the targetword into a character string
+  #' Provide list of files and return summary of counts of occurence of the
+  #' target world
+  #' @param files a character string correspond to the text to
+  #' analysis
+  #' @param targetword a vector of characters corresponding to word to
+  #' search and count for in the text
+  #' @param brute_freq T if you only want the frequency count of the word,
+  #' if F the output is the it provides the term frequency for the set of
+  #' targetwords provided
+  #' @param parrallel if T the function use the mclapply function to use
+  #'  parrallele computing from the package "parrallele"
+  #' @author Manuel Betin
+  #' @return  return the number of occurence of the targetword for each file
+  #' @export
+  
+  if (parrallel) {
+    metric <- parallel::mclapply(files, function(x) {
+      file <- get_pages(x, targetword)
+      if (brute_freq) {
+        file$Tot.occurence
+      } else {
+        file$Tot.occurence / file$N.chars
+      }
+    }, mc.cores = parallel::detectCores() - 1, mc.allow.recursive = TRUE)
+    N.Occurence <- do.call(rbind, metric)
+    if (length(targetword) == 1) {
+      colnames(N.Occurence) <- targetword
+    } else {
+      colnames(N.Occurence) <- "Occurence"
+    }
+  } else {
+    metric <- lapply(files, function(x) {
+      file <- get_pages(x, targetword)
+      if (brute_freq) {
+        file$Tot.occurence
+      } else {
+        file$Tot.occurence / file$N.chars
+      }
+    })
+    N.Occurence <- do.call(rbind, metric)
+    if (length(targetword) == 1) {
+      colnames(N.Occurence) <- targetword
+    } else {
+      colnames(N.Occurence) <- "Occurence"
+    }
+  }
+  
+  return(N.Occurence)
+}
+
+ccdr.sentences <- function(corpus, keyword_list) {
+  #' From a corpus (collection documents), returns the sentences where keyword detected
+  #' and respective keyword
+  #'
+  #' Function that simplifies checking validity indexes and potential problems in keywords
+  #'
+  #' @param corpus list with collection documents
+  #' @param keyword_list character vector with categories from key_words_crisis function
+  #'
+  #' @return Tibble with two columns: sentences containing keyword and respective keyword.
+  #'
+  #' @author Manuel Betin, Umberto Collodel
+  #'
+  #'
+  #'
+  #' @export
+  
+  corpus %>%
+    map(~ tibble(document = .x)) %>%
+    map(~ .x %>% tidytext::unnest_tokens(sentence, document, token = "sentences")) %>%
+    map(~ .x %>% filter(str_detect(sentence, paste(ccdr.lexicon()[[keyword_list]], collapse = "|")))) %>%
+    discard(~ nrow(.x) == 0) %>%
+    map(~ .x %>% mutate(keyword_detected = str_extract(sentence, paste(ccdr.lexicon()[[keyword_list]], collapse = "|"))))
+}
+
+
+scrap.ccdr.files <- function(urls, export_path, overwrite = T) {
   #' download pdf documents
   #' download from a a dataframe containing the url of the files
   #' the pdf of interest
@@ -111,7 +242,7 @@ pdf_page_count <- function(files) {
     silent = T
   )
   if ("try-error" %in% class(error_no_metadata)) {
-    cat(crayon::red("No metadata of document available, please run aggregate_corpus()
+    cat(crayon::red("No metadata of document available, please run ccdr.corpus()
                     setting the argument only_files=F \n"))
     # return(NULL)
   } else {
@@ -132,112 +263,6 @@ pdf_page_count <- function(files) {
   }
 }
 
-aggregate_corpus <- function(path_files, ENGINE = pdf_text, only_files = F) {
-  #' Aggregate pdf files into list of characters
-  #'
-  #' function that takes the path of the directory and load all
-  #' the pdfs of the directory into a list in order to further perform the text
-  #' mining
-
-  #' @param path_files the path of the directory with the files
-  #' Function to read pdf into environment, either pdf_text or pdf_ocr_text, depending on whether image or not.
-  #' @param ENGINE the engine for pdf extraction (pdf_text or pdf_ocr_text from pdftools)
-  #' @param only_files T/F whether to include in the list only the content or also
-  #' the metadata of the pdf file
-  #' @author Manuel Betin
-  #' @return A list containing the content of each document
-  #' @export
-  #'
-  docs <- list.files(path_files, pattern = ".pdf", ignore.case = T)
-  docs <- stringr::str_remove(docs, ".PDF")
-  docs <- stringr::str_remove(docs, ".pdf")
-  count <- 0
-  start <- 1
-  x <- 1
-
-  corpus <- lapply(start:length(docs), function(x) {
-    count <<- count + 1
-    tictoc::tic(paste0(count, "/", length(docs), " ", docs[x]))
-    path <- paste0(path_files, "/", docs[x], ".pdf")
-    file <- try(
-      {
-        pdfinfo <- pdftools::pdf_info(path)
-        ENGINE(path)
-      },
-      silent = T
-    )
-    if ("try-error" %in% class(file)) {
-      warning(paste(docs[[x]], ": Error in path file or in the pdf extraction engine \n", sep = ""))
-      pdfinfo <- NA
-      file <- NA
-    } else {
-      file <- clean_text(file)
-    }
-    print(path)
-    tictoc::toc()
-    if (only_files == T) {
-      file
-    } else {
-      list(info = pdfinfo, file = file)
-    }
-  })
-  names(corpus) <- docs
-  attr(corpus, "class") <- c("corpusTM", "list")
-  return(corpus)
-}
-
-eval_pages <- function(files, targetword, brute_freq = F, parrallel = T) {
-  #' Look for the presence of the targetword into a character string
-  #' Provide list of files and return summary of counts of occurence of the
-  #' target world
-  #' @param files a character string correspond to the text to
-  #' analysis
-  #' @param targetword a vector of characters corresponding to word to
-  #' search and count for in the text
-  #' @param brute_freq T if you only want the frequency count of the word,
-  #' if F the output is the it provides the term frequency for the set of
-  #' targetwords provided
-  #' @param parrallel if T the function use the mclapply function to use
-  #'  parrallele computing from the package "parrallele"
-  #'  @author Manuel Betin
-  #'  @return  return the number of occurence of the targetword for each file
-  #'  @export
-
-  if (parrallel) {
-    metric <- parallel::mclapply(files, function(x) {
-      file <- get_pages(x, targetword)
-      if (brute_freq) {
-        file$Tot.occurence
-      } else {
-        file$Tot.occurence / file$N.chars
-      }
-    }, mc.cores = parallel::detectCores() - 1, mc.allow.recursive = TRUE)
-    N.Occurence <- do.call(rbind, metric)
-    if (length(targetword) == 1) {
-      colnames(N.Occurence) <- targetword
-    } else {
-      colnames(N.Occurence) <- "Occurence"
-    }
-  } else {
-    metric <- lapply(files, function(x) {
-      file <- get_pages(x, targetword)
-      if (brute_freq) {
-        file$Tot.occurence
-      } else {
-        file$Tot.occurence / file$N.chars
-      }
-    })
-    N.Occurence <- do.call(rbind, metric)
-    if (length(targetword) == 1) {
-      colnames(N.Occurence) <- targetword
-    } else {
-      colnames(N.Occurence) <- "Occurence"
-    }
-  }
-
-  return(N.Occurence)
-}
-
 get_pages <- function(file, targetword) {
   #' Find the page where words a located
   #' Provide files either pdf of html and return the paragraphs matching the
@@ -248,7 +273,7 @@ get_pages <- function(file, targetword) {
   #' search and count for in the text
   #' @author Manuel Betin
   #' @return a list of strings of characters where words have been found.
-  #' @export
+  #' @noRd
   #'
   if (!is.null(file)) {
     page_locations <- list()
@@ -290,31 +315,6 @@ get_pages <- function(file, targetword) {
       pages = 0, error_message = "File is null no mining provided"
     ))
   }
-}
-
-get_sentences <- function(corpus, keyword_list) {
-  #' From a corpus (collection documents), returns the sentences where keyword detected
-  #' and respective keyword
-  #'
-  #' Function that simplifies checking validity indexes and potential problems in keywords
-  #'
-  #' @param corpus list with collection documents
-  #' @param keyword_list character vector with categories from key_words_crisis function
-  #'
-  #' @return Tibble with two columns: sentences containing keyword and respective keyword.
-  #'
-  #' @author Manuel Betin, Umberto Collodel
-  #'
-  #'
-  #'
-  #' @export
-
-  corpus %>%
-    map(~ tibble(document = .x)) %>%
-    map(~ .x %>% tidytext::unnest_tokens(sentence, document, token = "sentences")) %>%
-    map(~ .x %>% filter(str_detect(sentence, paste(lexicon()[[keyword_list]], collapse = "|")))) %>%
-    discard(~ nrow(.x) == 0) %>%
-    map(~ .x %>% mutate(keyword_detected = str_extract(sentence, paste(lexicon()[[keyword_list]], collapse = "|"))))
 }
 
 log_norm_trans <- function(tf_data) {

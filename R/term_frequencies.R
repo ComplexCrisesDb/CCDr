@@ -1,4 +1,4 @@
-tf <- function(corpus, keywords, brute_freq = F, parrallel = T) {
+ccdr.tf <- function(corpus, keywords, brute_freq = F, parrallel = T) {
   #' Compute the term freqeuency matrix
   #' for each document in the corpus the function creates a table counting the
   #' occurence of the words in the vector of keywords and provide a table with
@@ -24,13 +24,13 @@ tf <- function(corpus, keywords, brute_freq = F, parrallel = T) {
       # Check the first page of each document for bad keyword.
 
       valid_document <- tibble(first_page = tolower(x[[1]])) %>%
-        filter(!str_detect(first_page, paste(lexicon()[["Problematic_documents"]], collapse = "|"))) %>%
+        filter(!str_detect(first_page, paste(ccdr.lexicon()[["Problematic_documents"]], collapse = "|"))) %>%
         nrow()
 
       # If is a valid document, continue with tf-calculation. Else, return NA.
 
       if (valid_document == 1) {
-        output <- try(sum(eval_pages(x, keywords,
+        output <- try(sum(ccdr.pages(x, keywords,
           brute_freq = brute_freq,
           parrallel = parrallel
         )[, 1]))
@@ -55,7 +55,7 @@ tf <- function(corpus, keywords, brute_freq = F, parrallel = T) {
   }
 }
 
-tf_vector <- function(corpus, keyword_list, brute_freq = F, parrallel = T, centre_countries = "USA") {
+ccdr.tfs <- function(corpus, keyword_list, brute_freq = F, parrallel = T, centre_countries = "USA") {
   #' vectorize the function tf() to be able to pass a list of names of keywords
   #' keyword_list is a list containing the names of different groups of
   #' keywords that have a vector of words to look into.
@@ -88,7 +88,7 @@ tf_vector <- function(corpus, keyword_list, brute_freq = F, parrallel = T, centr
       dt
     } else {
       res <- try({
-        dt <- tf(corpus, keyword_list[[x]],
+        dt <- ccdr.tf(corpus, keyword_list[[x]],
           brute_freq = brute_freq,
           parrallel = parrallel
         )
@@ -145,7 +145,7 @@ tf_vector <- function(corpus, keyword_list, brute_freq = F, parrallel = T, centr
 
   # List of "confusing" categories on which the index could be computed:
 
-  list_net_keywords <- str_extract(names(lexicon()), ".+_confusing")[complete.cases(str_extract(names(lexicon()), ".+_confusing"))]
+  list_net_keywords <- str_extract(names(ccdr.lexicon()), ".+_confusing")[complete.cases(str_extract(names(ccdr.lexicon()), ".+_confusing"))]
 
   # Double check: check if we calculated some and check if country different from centre countries. If TRUE,
   # proceed to net. Otherwise return df.
@@ -177,8 +177,7 @@ tf_vector <- function(corpus, keyword_list, brute_freq = F, parrallel = T, centr
   }
 }
 
-run_tf <- function(corpus_path = "IMF_letofIntent_1960_2014_clean.RData",
-                   type_lexicon = "words",
+run.ccdr.tfs <- function(corpus_file,
                    keyword_list = c(
                      "Commodity_crisis",
                      "Balance_payment_crisis",
@@ -190,7 +189,7 @@ run_tf <- function(corpus_path = "IMF_letofIntent_1960_2014_clean.RData",
   #' @description the type of lexicon to use and the sublist of keywords associated The
   #' output is a matrix of tf with a row per document and a column for each
   #' element of the keyword list
-  #' @param corpus_path the path to the RData file containing the corpus to analyze
+  #' @param corpus_file the path to the RData file containing the corpus to analyze
   #' @param keyword_list the categories on which computing the term frequency
   #' @param export_path the path were to export the tf
   #' @param parrallel T/F to use mclapply from the parrallel package
@@ -198,8 +197,8 @@ run_tf <- function(corpus_path = "IMF_letofIntent_1960_2014_clean.RData",
   #' @author Manuel Betin
   #' @export
 
-  cat(crayon::bgBlue(paste0("Loading corpus from ", corpus_path)))
-  corpus <- rio::import(corpus_path)
+  cat(crayon::bgBlue(paste0("Loading corpus from ", corpus_file)))
+  corpus <- rio::import(corpus_file)
   if (is.null(keyword_list)) {
     keyword_list <- c(
       "Commodity_crisis", "Balance_payment_crisis", "Inflation_crisis",
@@ -212,13 +211,13 @@ run_tf <- function(corpus_path = "IMF_letofIntent_1960_2014_clean.RData",
     )
     print(keyword_list)
   }
-  keyword_list <- lexicon()[keyword_list]
+  keyword_list <- ccdr.lexicon()[keyword_list]
 
   tictoc::tic()
-  dt <- tf_vector(corpus, keyword_list, parrallel = parrallel)
+  dt <- ccdr.tfs(corpus, keyword_list, parrallel = parrallel)
   tictoc::toc()
-  destination <- paste0(export_path, "/tf_crisis_", type_lexicon, ".RData")
-  print(paste0("export table in ", corpus_path))
+  destination <- paste0(export_path, "/ccd_tf.RData")
+  print(paste0("export table in ", corpus_file))
   if (!is.null(export_path)) {
     rio::export(dt, destination)
   }
@@ -226,22 +225,20 @@ run_tf <- function(corpus_path = "IMF_letofIntent_1960_2014_clean.RData",
 }
 
 
-
-run_tf_update <- function(path_tf_to_update = "tf_crisis_words.RData",
-                          corpus_path = "IMF_letofIntent_1960_2014_clean.RData",
-                          type_lexicon = "words", keyword_list = NULL,
-                          export_path = "tf_crisis_words.RData",
+ccdr.tfs.update <- function(file_tf_to_update = "tf_crisis_words.RData",
+                          corpus_file,
+                           keyword_list = NULL,
+                           export_file = "tf_crisis_words.RData",
                           parrallel = T, store_old = F, store_old_path = NULL) {
   #' Updates the tf-indexes without repeating full extraction
   #'
   #' @description Combine probability of shocks, intensity and complexity of relations to construct
   #' .a mesure of severity of crisis
   #'
-  #' @param path_tf_to_update Path to old tf dataframe.
-  #' @param corpus_path Path to corpus from which perform the extraction.
-  #' @param type_lexicon Character: "words" or "category"
+  #' @param file_tf_to_update Path to old tf dataframe.
+  #' @param corpus_file Path to corpus from which perform the extraction.
   #' @param keyword_list Character vector: names of character vectors to use for extraction.
-  #' @param export_path Path to export the file.
+  #' @param export_file Path to export the file.
   #' @param parrallel Logical. If TRUE, parallel computation for each category.
   #' @param store_old Logical. If TRUE, store old extractions in a directory.
   #' @param store_old_path Path to move old extractions in.
@@ -257,9 +254,9 @@ run_tf_update <- function(path_tf_to_update = "tf_crisis_words.RData",
 
   if (is.null(keyword_list)) {
     print("Updating all columns")
-    new_tf <- run_tf(
-      corpus_path = corpus_path, type_lexicon = type_lexicon,
-      keyword_list = lexicon(), export_path = paste0(
+    new_tf <- run.ccdr.tfs(
+      corpus_file = corpus_file,
+      keyword_list = ccdr.lexicon(), export_file = paste0(
         root_path,
         "/3. Data/IMF Letters of Intents/tf_crisis_words.RData"
       ), parrallel = parrallel
@@ -267,7 +264,7 @@ run_tf_update <- function(path_tf_to_update = "tf_crisis_words.RData",
     return(new_tf)
   } else {
     cat(crayon::green("updating selected columns"))
-    tf_to_update <- rio::import(path_tf_to_update)
+    tf_to_update <- rio::import(file_tf_to_update)
     dim_tf_to_update <- dim(tf_to_update)
     existing_cols <- names(tf_to_update)
 
@@ -277,10 +274,10 @@ run_tf_update <- function(path_tf_to_update = "tf_crisis_words.RData",
       tf_to_update <- tf_to_update %>% dplyr::select(-existing_keyword_list)
     }
 
-    corpus <- rio::import(corpus_path)
+    corpus <- rio::import(corpus_file)
 
-    new_tf <- run_tf(
-      corpus_path = corpus_path, type_lexicon = type_lexicon,
+    new_tf <- run.ccdr.tfs(
+      corpus_file = corpus_file, 
       keyword_list = keyword_list, parrallel = parrallel
     )
 
@@ -301,17 +298,18 @@ run_tf_update <- function(path_tf_to_update = "tf_crisis_words.RData",
         dir.create(store_old_path)
       }
       # Move old files:
-      file.move(path_tf_to_update, store_old_path, overwrite = TRUE)
+      file.move(file_tf_to_update, store_old_path, overwrite = TRUE)
     }
 
-    rio::export(tf_to_update, export_path)
+    rio::export(tf_to_update, export_file)
 
     return(tf_to_update)
   }
 }
 
 
-run_tf_by_chunk <- function(urls = url_links, keyword_list = c(
+scrap.ccdr.tfs <- function(urls = url_links,
+                            keyword_list = c(
                               "Fiscal outcomes",
                               "Currency_crisis"
                             ),
@@ -368,9 +366,9 @@ run_tf_by_chunk <- function(urls = url_links, keyword_list = c(
   dir.create(path_tf)
 
   # download the files
-  pdf_from_url(urls, path_pdf_files, overwrite = F)
+  scrap.ccdr.files(urls, path_pdf_files, overwrite = F)
   # transform pdf to character and store in list
-  corpus <- aggregate_corpus(path_pdf_files, ENGINE = ENGINE, only_files = T)
+  corpus <- ccdr.corpus(path_pdf_files, ENGINE = ENGINE, only_files = T)
 
   # remove documents with less than specified number of words
   if (rm_short_docs) {
@@ -397,18 +395,18 @@ run_tf_by_chunk <- function(urls = url_links, keyword_list = c(
     unlink(path_pdf_files, recursive = T)
   }
   # run the term frequency matrix
-  dt <- run_tf(
-    corpus_path = paste0(
+  dt <- run.ccdr.tfs(
+    corpus_file = paste0(
       path_corpus, "/corpus_",
       extract_number, ".RData"
-    ), type_lexicon = "words", keyword_list = keyword_list,
+    ), keyword_list = keyword_list,
     export_path = path_tf, parrallel = parrallel
   )
 
   file.rename(
-    from = paste0(path_tf, "/tf_crisis_words.RData"),
+    from = paste0(path_tf, "/ccd_tf.RData"),
     to = paste0(
-      path_tf, "/tf_crisis_words_", extract_number,
+      path_tf, "/ccd_tf_", extract_number,
       ".RData"
     )
   )

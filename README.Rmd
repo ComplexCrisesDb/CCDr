@@ -53,11 +53,11 @@ The packages is constructed in three different blocs:
 
 The main functions are: 
  
- - **lexicon()**: provide the list of categories and keywords
- - **pdf_from_url()**: download reports in pdf formats
- - **aggregate_corpus()**: transform pdf into a dataframe of text
- - **tf_vector()**: run the term frequency on the corpus for several categories
- - **run_tf()**; run the term frequency on locally stored corpus
- - **run_tf_by_chunk()** run the term frequency directly downloading the files 
- - **run_tf_update()** update the term frequency matrix with new categories
+ - **ccdr.lexicon()**: provide the list of categories and keywords
+ - **scrap.ccdr.files()**: download reports in pdf formats
+ - **ccdr.corpus()**: transform pdf into a dataframe of text
+ - **ccdr.tfs()**: run the term frequency on the corpus for several categories
+ - **run.ccdr.tf()**; run the term frequency on locally stored corpus
+ - **scrap.ccdr.tfs()** run the term frequency directly downloading the files 
+ - **update.ccdr.tfs()** update the term frequency matrix with new categories
 

@@ -21,7 +21,11 @@ The DESCRIPTION file:
 Maintainer: \packageMaintainer{CCDr}
 }
 \references{
-~~ Literature or other references for background information ~~
+- Manuel Bétin, Umberto Collodel. The Complex Crises Database: 70 Years of Macroeconomic Crises. 2021. https://halshs.archives-ouvertes.fr/halshs-03268889/
+
+- Link to the database: 10.7910/DVN/Y8CN0A
+
+
 }
 %~~ Optionally other standard keywords, one per line, from file ~~
 %~~ KEYWORDS in the R documentation directory ~~
