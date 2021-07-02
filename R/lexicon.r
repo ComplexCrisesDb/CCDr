@@ -1,4 +1,4 @@
-lexicon <- function() {
+ccdr.lexicon <- function() {
 
   #' Lexicon of economic crisis
   #' @description Provide the lexicon of economic crisis
@@ -1327,7 +1327,7 @@ lexicon <- function() {
   key_words
 }
 
-lexicon_details <- function(keyword) {
+ccdr.lexicon_details <- function(keyword) {
   #' Provide the keywords associate to the name of the category
   #' @description usefull know what are the words behind each category
   #' @param keyword the name of the category of which you want to
@@ -1336,10 +1336,10 @@ lexicon_details <- function(keyword) {
   #' @return a vector of words
   #' @example lexicon_details("Severe_recession")
   #' @export
-  detect <- names(lexicon())[stringr::str_detect(
-    tolower(names(lexicon())),
+  detect <- names(ccdr.lexicon())[stringr::str_detect(
+    tolower(names(ccdr.lexicon())),
     tolower(keyword)
   )]
 
-  return(lexicon()[detect])
+  return(ccdr.lexicon()[detect])
 }

@@ -1,0 +1,74 @@
+---
+title: "The CCDr package and the Covid19"
+author: "Manuel Betin"
+date: "3/20/2020"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Overview  CCDr data}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/CCDr_Desriptive-",
+  out.width = "100%"
+)
+
+#knitr::include_graphics()
+
+```
+
+## Installation 
+
+The current version of the package is available on github and can be installed using the devtools package.
+
+```{r,warning=F,message=F}
+#library(devtools)
+#devtools::install_github("manuelbetin/CCDr")
+library(CCDr)
+library(ggplot2)
+```
+
+
+```{r}
+data("ComplexCrisesDatabase")
+```
+
+
+## Probability of Epidemics across years
+
+```{r Probability of epidemics across years}
+ComplexCrisesDatabase %>% group_by(year) %>% filter(year>1960) %>%
+  summarize(p.Epidemics=mean(ifelse(Epidemics>0,1,0),na.rm=T),
+            p.ComplexEpidemics=mean(ifelse(Epidemics>0 & Expectations>0,1,0),na.rm=T)) %>%
+  ggplot()+
+  geom_bar(stat="identity",aes(x=year,y=p.Epidemics))+
+  #geom_bar(stat="identity",aes(x=year,y=ComplexEpidemics),fill="red")+
+  lims(y=c(0,1))+
+  theme_bw()
+```
+
+
+## Evaluate recent Covid19 occurrence
+
+```{r test for france and israel}
+
+mynewurls=data.frame(ID=c("FRA","ISR"),
+                     name_file=c("FRA_article_IV",
+                                 "ISR_article_IV"),
+                     pdf=c("https://www.imf.org/-/media/Files/Publications/CR/2021/English/1FRAEA2021001.ashx","https://www.imf.org/-/media/Files/Publications/CR/2021/English/1ISREA2021001.ashx"))
+
+mylexicon=append(ccdr.lexicon()[c("Epidemics","Expectations","Severe_recession","Political_crisis")],
+                 list(Covid19=c("Lockdown","closing","sanitary measures","containment measures","global pandemic")))
+
+dt=scrap.ccdr.tfs(urls =mynewurls,lexicon=mylexicon)
+
+dt=rio::import("temp/tf/ccd_tf_1.RData")
+
+t(dt)
+
+```
+

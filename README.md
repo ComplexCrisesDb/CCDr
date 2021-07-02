@@ -3,11 +3,13 @@
 
 # *CCDr* a R package to extend the Complex Crises database (CDD)
 
-last update: 2021-07-01
+last update: 2021-07-02
 
 Toolbox to extend the *Complex Crises Database* (CCD) the underlying
-data of the paper: Manuel Bétin, Umberto Collodel. The Complex Crises
-Database: 70 Years of Macroeconomic Crises. 2021.
+data of the paper:
+
+Manuel Bétin, Umberto Collodel. The Complex Crises Database: 70 Years of
+Macroeconomic Crises. 2021.
 <https://halshs.archives-ouvertes.fr/halshs-03268889/>
 
 Find more info and download the database and raw text files from
@@ -41,13 +43,13 @@ sequentially. The packages is constructed in three different blocs:
 
 The main functions are:
 
--   **lexicon()**: provide the list of categories and keywords
--   **pdf\_from\_url()**: download reports in pdf formats
--   **aggregate\_corpus()**: transform pdf into a dataframe of text
--   **tf\_vector()**: run the term frequency on the corpus for several
+-   **ccdr.lexicon()**: provide the list of categories and keywords
+-   **scrap.ccdr.files()**: download reports in pdf formats
+-   **ccdr.corpus()**: transform pdf into a dataframe of text
+-   **ccdr.tfs()**: run the term frequency on the corpus for several
     categories
--   **run\_tf()**; run the term frequency on locally stored corpus
--   **run\_tf\_by\_chunk()** run the term frequency directly downloading
-    the files
--   **run\_tf\_update()** update the term frequency matrix with new
+-   **run.ccdr.tf()**; run the term frequency on locally stored corpus
+-   **scrap.ccdr.tfs()** run the term frequency directly downloading the
+    files
+-   **update.ccdr.tfs()** update the term frequency matrix with new
     categories
