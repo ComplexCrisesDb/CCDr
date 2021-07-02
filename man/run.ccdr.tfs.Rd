@@ -4,17 +4,13 @@
 \alias{run.ccdr.tfs}
 \title{Compute the tf matrix for a corpus given in a list format,}
 \usage{
-run.ccdr.tfs(
-  corpus_file,
-  keyword_list = c("Commodity_crisis", "Balance_payment_crisis", "Inflation_crisis"),
-  export_path = NULL,
-  parrallel = T
-)
+run.ccdr.tfs(corpus_file, lexicon, export_path = NULL, parrallel = T)
 }
 \arguments{
 \item{corpus_file}{the path to the RData file containing the corpus to analyze}
 
-\item{keyword_list}{the categories on which computing the term frequency}
+\item{lexicon}{a lexicon in the form of a list containing a vector of keywords, 
+the list is named with the name of the category of interest}
 
 \item{export_path}{the path were to export the tf}
 

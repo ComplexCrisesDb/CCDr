@@ -5,10 +5,10 @@
 \title{Updates the tf-indexes without repeating full extraction}
 \usage{
 ccdr.tfs.update(
-  file_tf_to_update = "tf_crisis_words.RData",
+  file_tf_to_update,
   corpus_file,
-  keyword_list = NULL,
-  export_file = "tf_crisis_words.RData",
+  lexicon = NULL,
+  export_file,
   parrallel = T,
   store_old = F,
   store_old_path = NULL
@@ -19,7 +19,7 @@ ccdr.tfs.update(
 
 \item{corpus_file}{Path to corpus from which perform the extraction.}
 
-\item{keyword_list}{Character vector: names of character vectors to use for extraction.}
+\item{lexicon}{new lexicon of categories}
 
 \item{export_file}{Path to export the file.}
 

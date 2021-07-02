@@ -8,7 +8,7 @@ keywords that have a vector of words to look into.}
 \usage{
 ccdr.tfs(
   corpus,
-  keyword_list,
+  lexicon,
   brute_freq = F,
   parrallel = T,
   centre_countries = "USA"
@@ -18,8 +18,8 @@ ccdr.tfs(
 \item{corpus}{a list of texts from pdf_text() with different names
 for each element}
 
-\item{keyword_list}{the names of the items in lexicon to
-include in the computation}
+\item{lexicon}{a lexicon in the form of a list containing a vector of keywords, 
+the list is named with the name of the category of interest}
 
 \item{brute_freq}{T/F if T it will just count the occurence, otherwise
 it will compute the term frequency}

@@ -29,4 +29,4 @@ Maintainer: \packageMaintainer{CCDr}
 }
 %~~ Optionally other standard keywords, one per line, from file ~~
 %~~ KEYWORDS in the R documentation directory ~~
-\keyword{ Text Mining, Economic crisis, Natural lenguage processing}
+\keyword{ Text Mining, Economic crisis, Natural language processing, NLP, Macroeconomics}

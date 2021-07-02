@@ -6,7 +6,7 @@
 \usage{
 scrap.ccdr.tfs(
   urls = url_links,
-  keyword_list = c("Fiscal outcomes", "Currency_crisis"),
+  lexicon,
   extract_number = 1,
   ENGINE = pdf_text,
   delete_pdfs = T,
@@ -21,7 +21,7 @@ scrap.ccdr.tfs(
 that respectively provid the name that will be given to the file
 downloaded and pdf that contains the url of the pdf}
 
-\item{keyword_list}{one of the element of the list provided by
+\item{lexicon}{one of the element of the list provided by
 lexicon()}
 
 \item{extract_number}{a number that will be ued as a suffix for the name
