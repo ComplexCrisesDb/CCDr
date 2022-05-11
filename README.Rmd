@@ -14,7 +14,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-# *CCDr* a R package to extend the Complex Crises database (CDD) 
+# *CCDr* a R package to extend the Complex Crises database (CCDB) 
+
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 last update: `r lubridate::today()`
 
