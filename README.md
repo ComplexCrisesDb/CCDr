@@ -1,9 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# *CCDr* a R package to extend the Complex Crises database (CDD)
+# *CCDr* a R package to extend the Complex Crises database (CCDB)
 
-last update: 2021-07-02
+<!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+
+last update: 2022-05-11
 
 Toolbox to extend the *Complex Crises Database* (CCD) the underlying
 data of the paper:
