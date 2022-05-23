@@ -171,8 +171,7 @@ ccdr.tfs <- function(corpus, lexicon, brute_freq = F, parrallel = T, centre_coun
         else {
           .x
         })
-      
-      
+    
       dt %>% # Bind net indexes with file list.
         purrr::reduce(cbind) %>%
         select(file, everything())
@@ -180,7 +179,7 @@ ccdr.tfs <- function(corpus, lexicon, brute_freq = F, parrallel = T, centre_coun
       dt
     }
   },
-  error=funtion(e){
+  error=function(e){
     cat(crayon::red("index could not be net from confusing lexicon, raw indexes are returned by default\n"))
     cat(crayon::red(e))
     return(dt)
