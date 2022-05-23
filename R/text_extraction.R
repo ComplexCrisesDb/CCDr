@@ -129,7 +129,6 @@ ccdr.sentences <- function(corpus, keyword_list) {
     map(~ .x %>% mutate(keyword_detected = str_extract(sentence, paste(ccdr.lexicon()[[keyword_list]], collapse = "|"))))
 }
 
-
 scrap.ccdr.files <- function(urls, export_path, overwrite = T) {
   #' download pdf documents
   #' download from a a dataframe containing the url of the files

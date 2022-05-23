@@ -153,32 +153,39 @@ ccdr.tfs <- function(corpus, lexicon, brute_freq = F, parrallel = T, centre_coun
   
   # Double check: check if we calculated some and check if country different from centre countries. If TRUE,
   # proceed to net. Otherwise return df.
-  
-  if (any(list_net_keywords %in% names(dt)) & unique(str_extract(dt$file, "[A-Z]{3}") != centre_countries)) {
-    dt <- split.default(dt, str_remove(names(dt), "_.+")) # split into list according to the first word of column name, removing the rest.
-    
-    dt <- dt %>%
-      purrr::map(~ if (any(names(.x) != "file")) {
-        if (any(str_detect(names(.x), "confusing"))) { # if column name with "confusing" within same category
-          colnames(.x)[grepl("confusing", colnames(.x))] <- "confusing" # subtract from other indexes.
-          .x %>%
-            mutate_all(funs(. - confusing)) %>%
-            select(-confusing)
-        } else {
-          .x
+  tryCatch({
+    if (any(list_net_keywords %in% names(dt)) & unique(str_extract(dt$file, "[A-Z]{3}") != centre_countries)) {
+      dt <- split.default(dt, str_remove(names(dt), "_.+")) # split into list according to the first word of column name, removing the rest.
+      
+      dt <- dt %>%
+        purrr::map(~ if (any(names(.x) != "file")) {
+          if (any(str_detect(names(.x), "confusing"))) { # if column name with "confusing" within same category
+            colnames(.x)[grepl("confusing", colnames(.x))] <- "confusing" # subtract from other indexes.
+            .x %>%
+              mutate_all(funs(. - confusing)) %>%
+              select(-confusing)
+          } else {
+            .x
+          }
         }
-      }
-      else {
-        .x
-      })
-    
-    
-    dt %>% # Bind net indexes with file list.
-      purrr::reduce(cbind) %>%
-      select(file, everything())
-  } else {
-    dt
-  }
+        else {
+          .x
+        })
+      
+      
+      dt %>% # Bind net indexes with file list.
+        purrr::reduce(cbind) %>%
+        select(file, everything())
+    } else {
+      dt
+    }
+  },
+  error=funtion(e){
+    cat(crayon::red("index could not be net from confusing lexicon, raw indexes are returned by default\n"))
+    cat(crayon::red(e))
+    return(dt)
+  })
+ 
 }
 
 run.ccdr.tfs <- function(corpus_file,
