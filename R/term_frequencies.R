@@ -153,32 +153,38 @@ ccdr.tfs <- function(corpus, lexicon, brute_freq = F, parrallel = T, centre_coun
   
   # Double check: check if we calculated some and check if country different from centre countries. If TRUE,
   # proceed to net. Otherwise return df.
-  
-  if (any(list_net_keywords %in% names(dt)) & unique(str_extract(dt$file, "[A-Z]{3}") != centre_countries)) {
-    dt <- split.default(dt, str_remove(names(dt), "_.+")) # split into list according to the first word of column name, removing the rest.
-    
-    dt <- dt %>%
-      purrr::map(~ if (any(names(.x) != "file")) {
-        if (any(str_detect(names(.x), "confusing"))) { # if column name with "confusing" within same category
-          colnames(.x)[grepl("confusing", colnames(.x))] <- "confusing" # subtract from other indexes.
-          .x %>%
-            mutate_all(funs(. - confusing)) %>%
-            select(-confusing)
-        } else {
-          .x
+  tryCatch({
+    if (any(list_net_keywords %in% names(dt)) & unique(str_extract(dt$file, "[A-Z]{3}") != centre_countries)) {
+      dt <- split.default(dt, str_remove(names(dt), "_.+")) # split into list according to the first word of column name, removing the rest.
+      
+      dt <- dt %>%
+        purrr::map(~ if (any(names(.x) != "file")) {
+          if (any(str_detect(names(.x), "confusing"))) { # if column name with "confusing" within same category
+            colnames(.x)[grepl("confusing", colnames(.x))] <- "confusing" # subtract from other indexes.
+            .x %>%
+              mutate_all(funs(. - confusing)) %>%
+              select(-confusing)
+          } else {
+            .x
+          }
         }
-      }
-      else {
-        .x
-      })
+        else {
+          .x
+        })
     
-    
-    dt %>% # Bind net indexes with file list.
-      purrr::reduce(cbind) %>%
-      select(file, everything())
-  } else {
-    dt
-  }
+      dt %>% # Bind net indexes with file list.
+        purrr::reduce(cbind) %>%
+        select(file, everything())
+    } else {
+      dt
+    }
+  },
+  error=function(e){
+    cat(crayon::red("index could not be net from confusing lexicon, raw indexes are returned by default\n"))
+    cat(crayon::red(e))
+    return(dt)
+  })
+ 
 }
 
 run.ccdr.tfs <- function(corpus_file,
@@ -395,4 +401,262 @@ scrap.ccdr.tfs <- function(urls = url_links,
     )
   )
 }
+
+
+ccdr.transcripts.collect=function(mycorpus,keyword_list){
+  #' collect transcripts identified as belonging to a specific category
+  #' @description the function extract the paragraphs around the keywords that
+  #' correspond to the categories of interest selected in key_word_list
+  #' @param mycorpus a list of documents containing the reports of interest
+  #' @param keyword_list a vector with the names of the categories to search for
+  #' see ccdr.lexicon() %>% names() for details about available categories
+  #' @return tibble() with the transcripts, the keyword detected, the category of
+  #' crisis and the identifier of the document.
+  #' @export
+  #' @author Manuel Betin
+  
+  transcripts_all=lapply(keyword_list,function(x){
+    #get transcripts for one category
+    mytranscripts=ccdr.sentences(mycorpus,x)
+    
+    #append data for all countries
+    transcripts_all=lapply(names(mytranscripts),function(y){
+      mytranscripts[[y]]$doc_id=y
+      mytranscripts[[y]] #%>% rename(text=sentence)
+    })
+    transcripts_all=do.call(rbind,transcripts_all)
+    transcripts_all %>% dplyr::mutate(category=x)
+  })
+  #append for all categories
+  transcripts_all=do.call(rbind,transcripts_all)
+  return(transcripts_all)
+}
+
+ccdr.transcripts.get_nearby_words=function(word_dt,myword,n_min=10){
+  #' check the frequency of nearby words
+  #' @description provide a table with the frequencies of nearby words
+  #' @export
+  nearby_global <- word_dt %>% mutate(position = row_number()) %>%
+    filter(word == myword) %>%
+    select(focus_term = word, focus_position = position) %>%
+    difference_inner_join(word_dt %>% tibble()  %>%
+                            mutate(position = row_number()), by = c(focus_position = "position"), max_dist = 15) %>%
+    mutate(distance = abs(focus_position - position))
+  
+  nearby_global <- nearby_global %>%
+    group_by(word) %>%
+    summarize(number = n(),
+              maximum_distance = max(distance),
+              minimum_distance = min(distance),
+              average_distance = mean(distance)) %>%
+    arrange(desc(number))
+  
+  nearby_global=nearby_global[-1,] %>% filter(number>n_min) %>% mutate(perc=number/sum(number))
+  
+  return(nearby_global)
+  
+}
+
+ccdr.tfs.updateyears=function(old_vintage,updated_years){
+  #' append old vintage and new vintage updated for new data
+  #' @description update the old vintage of the database with the the new dataset
+  #' for the updated years
+  #' @param old_vintage data.frame of the old vintage of the database for which new years are available
+  #' @param updated_years data.frame of the new variables updated.
+  #' @author Manuel Betin
+  #' @export
+  
+  if(!(any(names(old_vintage)%in%c("iso3")) & any(names(old_vintage)%in%c("year")))){
+    cat(crayon::red("Please provide a valid historical vintage, identifiers 'year' and 'iso3' are necessary"))
+    return(NULL)
+  }
+  myoldvars=setdiff(names(old_vintage),c("iso3","year"))
+  
+  mynewvars=setdiff(names(updated_years),c("iso3","year"))
+  
+  vars_inold_notinnew=setdiff(myoldvars,mynewvars)
+  if(length(vars_inold_notinnew)>0){
+    cat(crayon::blue(length(vars_inold_notinnew),"variable of the old vintage is not available in new vintage :\n" , paste0("- ",vars_inold_notinnew),'\n',collapse=" "),"\n")
+  }
+  
+  vars_innew_notinold=setdiff(mynewvars,myoldvars)
+  if(length(vars_innew_notinold)>0){
+    cat(crayon::blue(length(vars_innew_notinold),"variable of the new vintage is not available in the old vintage :\n" , paste0("- ",vars_innew_notinold),'\n',collapse=" "),"\n")
+  }
+  varsready=myoldvars[myoldvars%in%mynewvars]
+  cat(crayon::green(length(varsready),"variables ready for update \n",paste0("- ",varsready,'\n',collapse=" ")))
+  
+  old_vintage=old_vintage%>%mutate(vintage_status="old")
+  updated_years=updated_years%>%mutate(vintage_status=paste0("updated ",Sys.Date()))
+  
+  old_vintage=old_vintage%>%dplyr::select("iso3","year",varsready,"vintage_status")
+  updated_years=updated_years %>%dplyr::select("iso3","year",varsready,"vintage_status")
+  
+  tryCatch({res=rbind(old_vintage,updated_years)
+  res %>% tibble()},
+  error=function(e){
+    warning("Unable to merge the two dataset\n")
+    warning(e)
+    res=NULL
+    return(res)
+  })
+  res %>% group_by(year)%>%summarize(n=n())%>%tail()%>%print()
+  return(res)
+}
+
+ccdr.tfs.normalize=function(mydata,var2normalize){
+  #' nomarlize term frequencies
+  #'@description normalize the variable of interest by removing the
+  #' country specific means and dividing by the standard deviations
+  #' when all serie is zero then the value is set to zero.
+  #' @param mydata a vintage of the CCDB dataset
+  #' @param var2normalize a vector of column names for which the normalisation is
+  #' performed.
+  #' @author Manuel Betin
+  #' @export
+  #' 
+  for(var in var2normalize){
+    crisis_threshold=mydata %>% filter(get(var)>0) %>%group_by(iso3) %>%
+      dplyr::select(iso3,var) %>%
+      summarize(!!paste0(var,"_t",0.05):=quantile(get(var),0.05,na.rm=T)[[1]],
+                !!paste0(var,"_t",0.25):=quantile(get(var),0.25,na.rm=T)[[1]],
+                !!paste0(var,"_t",0.5):=quantile(get(var),0.5,na.rm=T)[[1]],
+                !!paste0(var,"_t",0.8):=quantile(get(var),0.8,na.rm=T)[[1]],
+                !!paste0(var,"_mean"):=mean(get(var),na.rm=T)[[1]],
+                !!paste0(var,"_sd"):=sd(get(var),na.rm=T)[[1]],
+                !!paste0(var,"_sd"):=ifelse(is.na(paste0(var,"_sd")),0,get(paste0(var,"_sd"))))
+    
+    mydata=mydata %>%
+      left_join(crisis_threshold,by="iso3") %>%
+      mutate(!!paste0(var,"_p",0.05):=ifelse(get(var)>get(paste0(var,"_t",0.05)),get(var),0),
+             !!paste0(var,"_p",0.25):=ifelse(get(var)>get(paste0(var,"_t",0.25)),get(var),0),
+             !!paste0(var,"_p",0.5):=ifelse(get(var)>get(paste0(var,"_t",0.5)),get(var),0),
+             !!paste0(var,"_p",0.8):=ifelse(get(var)>get(paste0(var,"_t",0.8)),get(var),0),
+             !!paste0(var,"_norm"):=ifelse(!is.na(get(paste0(var,'_sd'))),(get(var)-get(paste0(var,'_mean')))/get(paste0(var,'_sd')),0))
+    
+  }
+  return(mydata)
+}
+
+ccdr.tfs.typologycrisis=function(mydata){
+  #' compute typology of crisis
+  #' @description compute the typology of crisis in the spirit of Betin 2022
+  #' that discriminate FGS and SGS crisis
+  #' @param mydata a vintage of the CCDB database
+  #' @author Manuel Betin
+  #' @export
+  
+  mydata=mydata %>% mutate(ComplexCrises=ifelse(Sovereign_default_p0.25>0 &
+                                                  Expectations_p0.25>0 #& (polici>0 |fiscal>0 |monetari>0)
+                                                ,1,0),
+                           SimpleCrises=ifelse(Sovereign_default_p0.25>0 &
+                                                 Expectations_p0.25==0 #&(polici==0 |fiscal==0 |monetari==0)#&
+                                               ,1,0),
+                           SimpleRecession=ifelse(Severe_recession>0 &
+                                                    Sovereign_default_p0.25==0 &
+                                                    Expectations_p0.25==0 #& (polici==0 |fiscal==0 |monetari==0)#&
+                                                  ,1,0),
+                           NormalTimes=ifelse(Severe_recession==0 &
+                                                Expectations_p0.25==0 &# (polici==0 |fiscal==0 |monetari==0) &
+                                                Sovereign_default_p0.25==0 &
+                                                Soft_recession_p0.25==0
+                                              ,1,0),
+                           Expansion=ifelse(Expansion_p0.25>0 &# (polici==0 |fiscal==0 |monetari==0)&
+                                              NormalTimes==0 &
+                                              SimpleRecession==0 &
+                                              SimpleCrises==0 &
+                                              ComplexCrises==0
+                                            ,1,0)) %>%
+    mutate(`Crises`=ifelse(ComplexCrises==1,"Complex",
+                           ifelse(SimpleCrises==1 & ComplexCrises==0,"Simple",
+                                  ifelse(SimpleCrises==0 & ComplexCrises==0 & SimpleRecession==1,"Recession",
+                                         ifelse(Expansion==1 & ComplexCrises==0 & SimpleCrises==0 & SimpleRecession==0,"Expansion","Normal"))))) %>%
+    mutate(SimpleCrises=ifelse(Crises=="Simple",1,0),
+           ComplexCrises=ifelse(Crises=="Complex",1,0),
+           SimpleRecession=ifelse(Crises=="Recession",1,0),
+           Expansion=ifelse(Crises=="Expansion",1,0)) %>%
+    mutate(Institutional_crisis=ifelse(Political_crisis_p0.25>0|Social_crisis_p0.25>0,1,0))
+  return(mydata)
+}
+
+ccdr.tfs.fig.radiography=function(CCDB_y,iso3c="all",vars,years_crisis,window){
+  #' produce radiography of crisis
+  #' @description figure that create the radiography of crisis for the selected 
+  #' variables and period window
+  #' @param CCDB_y a vintage of the CCDB database
+  #' @param iso3c a iso3 code of country
+  #' @param vars a vector of crisis names available in the CCDB_y dataset
+  #' @param years_crisis a vector of crisis dates
+  #' @param window a vector of number of years before and after the crisis to display
+  #' @author Manuel Betin
+  #' @export
+  
+  events= lapply(years_crisis,function(x){
+    window_vec=(x+min(window)):(x+max(window))
+    CCDB_y%>%filter(iso3==iso3c & year%in%window_vec) %>%dplyr::select(iso3,year,vars)%>%
+      mutate(h=as.numeric(year)-x)%>%
+      gather(key="variable",value="value",-c(iso3,year,h))%>%
+      mutate(crisis=as.character(x))
+  } )
+  res=do.call(rbind,events)
+  
+  fig= res%>%
+    ggplot()+
+    geom_point(aes(x=h,y=value,color=crisis,group=crisis))+
+    geom_line(aes(x=h,y=value,color=crisis,group=crisis))+
+    facet_wrap(~variable,scale="free",ncol=2)+
+    scale_x_continuous(breaks=min(window):max(window))+
+    theme_ipsum()+
+    theme(legend.position="bottom")+
+    labs(y=NULL,x=NULL)
+  
+  return(fig)
+}
+
+ccdr.tf.fig.plotIndex=function(CCDB_y,myvar,type="mean",year_window=c(1950,2022)){
+  #' produce the time serie for the selected crisis
+  #' @description figure that plot the time serie of the crisis of interest
+  #' @param CCDB_y a vintage of the CCDB database
+  #' @param myvar the name of the crisis of interest 
+  #' @param type the type of statistics, N=Number of countries with a positive term frequency
+  #' , mean=average term frequency, perc=percentage of countries with a positive term frequency
+  #' @param years_window a vector with first and last date to plot.
+  #' @author Manuel Betin
+  #' @export
+  
+  if(type=="mean"){
+    CCDB_y %>% group_by(year) %>% filter(year%in% min(year_window):max(year_window))%>%
+      summarize(index=mean(get(myvar),na.rm=T),
+                n=sum(ifelse(get(myvar)>0,1,0),na.rm=T))%>%
+      ggplot()+
+      geom_bar(stat="identity",aes(x=as.numeric(year),y=index,group=iso3))+
+      theme_ipsum()+
+      labs(y=myvar,x=NULL)+
+      theme(axis.text.x = element_text(angle=90))+
+      scale_x_continuous(limits = year_window, breaks=seq(min(year_window),max(year_window),5))
+  }else if(type=="N"){
+    CCDB_y %>% group_by(year) %>% filter(year%in% min(year_window):max(year_window))%>%
+      summarize(index=mean(get(myvar),na.rm=T),
+                n=sum(ifelse(get(myvar)>0,1,0),na.rm=T))%>%
+      ggplot()+
+      geom_bar(stat="identity",aes(x=as.numeric(year),y=n,group=iso3))+
+      theme_ipsum()+
+      labs(y=myvar,x=NULL)+
+      theme(axis.text.x = element_text(angle=90))+
+      scale_x_continuous(limits = year_window, breaks=seq(min(year_window),max(year_window),5))
+  }else if(type=="perc"){
+    CCDB_y %>% group_by(year) %>% filter(year%in% min(year_window):max(year_window))%>%
+      summarize(index=mean(get(myvar),na.rm=T),
+                n=sum(ifelse(get(myvar)>0,1,0),na.rm=T))%>%ungroup()%>%
+      mutate(perc=100*n/sum(n))%>%
+      ggplot()+
+      geom_bar(stat="identity",aes(x=as.numeric(year),y=perc,group=iso3))+
+      theme_ipsum()+
+      labs(y=myvar,x=NULL)+
+      theme(axis.text.x = element_text(angle=90))+
+      scale_x_continuous(limits = year_window, breaks=seq(min(year_window),max(year_window),5))
+  }
+  
+}
+
 

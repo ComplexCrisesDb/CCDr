@@ -36,10 +36,6 @@ A dataframe with file name, old indexes not specified in keyword_list and update
 Combine probability of shocks, intensity and complexity of relations to construct
 .a mesure of severity of crisis
 }
-\examples{
-
-
-}
 \author{
 Manuel Betin, Umberto Collodel
 }
