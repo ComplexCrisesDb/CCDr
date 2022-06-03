@@ -20,32 +20,31 @@ ccdr.corpus <- function(path_files, ENGINE = pdf_text, only_files = F) {
   count <- 0
   start <- 1
   x <- 1
-  
+  x=1
   corpus <- lapply(start:length(docs), function(x) {
     count <<- count + 1
     tictoc::tic(paste0(count, "/", length(docs), " ", docs[x]))
     path <- paste0(path_files, "/", docs[x], ".pdf")
-    file <- try(
-      {
-        pdfinfo <- pdftools::pdf_info(path)
-        ENGINE(path)
-      },
-      silent = T
-    )
-    if ("try-error" %in% class(file)) {
+    file=tryCatch({
+      pdfinfo <- pdftools::pdf_info(path)
+      ENGINE(path)
+    },
+    error=function(e){
       warning(paste(docs[[x]], ": Error in path file or in the pdf extraction engine \n", sep = ""))
+      warning(e)
       pdfinfo <- NA
       file <- NA
-    } else {
-      file <- clean_text(file)
-    }
-    print(path)
+    },
+    finally=function(){
+      file <- clean_text(file)  
+    },silent=T)
+    
     tictoc::toc()
-    if (only_files == T) {
-      file
-    } else {
-      list(info = pdfinfo, file = file)
-    }
+    # if (only_files == T) {
+    file
+    #} else {
+    #  list(info = pdfinfo, file = file)
+    #}
   })
   names(corpus) <- docs
   attr(corpus, "class") <- c("corpusTM", "list")
@@ -560,3 +559,8 @@ check_diff_pdfs_urls <- function(path, urls_data) {
 
   setdiff(tot_list_urls, tot_list_pdfs)
 }
+
+
+
+
+

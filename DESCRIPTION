@@ -10,7 +10,7 @@ Description: Toolbox to extend the *Complex Crises Database* (CCD) the underlyin
     Manuel Bétin, Umberto Collodel. The Complex Crises Database: 70 Years of Macroeconomic Crises. 2021. 
     https://halshs.archives-ouvertes.fr/halshs-03268889/
     Find more info and download the database and raw text files from https://doi.org/10.7910/DVN/CN0PR9
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.0
 Depends: 
     dplyr,
     pdftools,
@@ -24,6 +24,8 @@ Depends:
     tictoc,
     lubridate,
     purrr,
+    hrbrthemes,
+    ggplot2,
     R (>= 2.10)
 Suggests: 
     testthat,
