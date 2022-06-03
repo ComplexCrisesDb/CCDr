@@ -559,3 +559,8 @@ check_diff_pdfs_urls <- function(path, urls_data) {
 
   setdiff(tot_list_urls, tot_list_pdfs)
 }
+
+
+
+
+
