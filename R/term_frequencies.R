@@ -625,7 +625,7 @@ ccdr.tfs.fig.radiography=function (CCDB_y, classif = "all", vars, years_crisis, 
       summarize(value=mean(value,na.rm=T))%>%
       mutate(myalpha=ifelse(crisis==2020,1,0))
   }else if(classif=="Lower middle income"){
-    fig = res %>% filter(income_group==classif)%>%
+    res = res %>% filter(income_group==classif)%>%
       group_by(year,crisis,h,variable)%>%
       summarize(value=mean(value,na.rm=T))%>%
       mutate(myalpha=ifelse(crisis==2020,1,0))
