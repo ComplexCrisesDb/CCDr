@@ -2,24 +2,24 @@
 % Please edit documentation in R/term_frequencies.R
 \name{ccdr.tfs.fig.radiography}
 \alias{ccdr.tfs.fig.radiography}
-\title{produce radiography of crisis}
+\title{plor the variations of indices around crisis by income group}
 \usage{
-ccdr.tfs.fig.radiography(CCDB_y, iso3c = "all", vars, years_crisis, window)
+ccdr.tfs.fig.radiography(CCDB_y, classif = "all", vars, years_crisis, window)
 }
 \arguments{
-\item{CCDB_y}{a vintage of the CCDB database}
+\item{CCDB_y}{a vintage of the CCDB dabaset}
 
-\item{iso3c}{a iso3 code of country}
+\item{classif}{all/income_group/region}
 
-\item{vars}{a vector of crisis names available in the CCDB_y dataset}
+\item{vars}{a vector with the names of the categories of interest}
 
-\item{years_crisis}{a vector of crisis dates}
+\item{years_crisis}{a vector of dates for the crisis of interest}
 
-\item{window}{a vector of number of years before and after the crisis to display}
+\item{window}{a vector with the range of periods around the crisis event}
 }
 \description{
-figure that create the radiography of crisis for the selected 
-variables and period window
+plot the selected indicators in a window around crisis period for the 
+selected time span and the income group of interest
 }
 \author{
 Manuel Betin
