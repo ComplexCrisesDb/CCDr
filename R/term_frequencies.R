@@ -579,84 +579,142 @@ ccdr.tfs.typologycrisis=function(mydata){
   return(mydata)
 }
 
-ccdr.tfs.fig.radiography=function(CCDB_y,iso3c="all",vars,years_crisis,window){
-  #' produce radiography of crisis
-  #' @description figure that create the radiography of crisis for the selected 
-  #' variables and period window
-  #' @param CCDB_y a vintage of the CCDB database
-  #' @param iso3c a iso3 code of country
-  #' @param vars a vector of crisis names available in the CCDB_y dataset
-  #' @param years_crisis a vector of crisis dates
-  #' @param window a vector of number of years before and after the crisis to display
+ccdr.tfs.fig.radiography=function (CCDB_y, classif = "all", vars, years_crisis, window) {
+  #' plor the variations of indices around crisis by income group
+  #' @description plot the selected indicators in a window around crisis period for the 
+  #' selected time span and the income group of interest
+  #' @param CCDB_y a vintage of the CCDB dabaset
+  #' @param classif all/income_group/region
+  #' @param vars a vector with the names of the categories of interest
+  #' @param years_crisis a vector of dates for the crisis of interest
+  #' @param window a vector with the range of periods around the crisis event
   #' @author Manuel Betin
   #' @export
+  #' 
+  ncol=3
+  events = lapply(years_crisis, function(x) {
+    window_vec = (x + min(window)):(x + max(window))
+    CCDB_y %>% filter(year %in% window_vec) %>% 
+      dplyr::select(iso3,income_group,region, year, vars) %>% 
+      mutate(h = as.numeric(year) - x) %>%
+      gather(key = "variable", value = "value",-c(iso3, income_group,region,year, h)) %>%
+      mutate(crisis = as.character(x))
+  })
+  res = do.call(rbind, events)%>%
+    mutate(variable=str_replace_all(variable,"_"," "),
+           variable=str_replace_all(variable,"severe",""),
+           variable=str_replace_all(variable,"crisis",""))
   
-  events= lapply(years_crisis,function(x){
-    window_vec=(x+min(window)):(x+max(window))
-    CCDB_y%>%filter(iso3==iso3c & year%in%window_vec) %>%dplyr::select(iso3,year,vars)%>%
-      mutate(h=as.numeric(year)-x)%>%
-      gather(key="variable",value="value",-c(iso3,year,h))%>%
-      mutate(crisis=as.character(x))
-  } )
-  res=do.call(rbind,events)
+  if(classif=="all"){
+    res = res %>% group_by(year,crisis,h,variable)%>%
+      summarize(value=mean(value,na.rm=T))%>%
+      mutate(myalpha=ifelse(crisis==2020,1,0))
+  }else if(classif=="High income"){
+    res = res %>% filter(income_group==classif)%>%
+      group_by(year,crisis,h,variable)%>%
+      summarize(value=mean(value,na.rm=T))%>%
+      mutate(myalpha=ifelse(crisis==2020,1,0))
+  }else if(classif=="Low income"){
+    res = res %>% filter(income_group==classif)%>%
+      group_by(year,crisis,h,variable)%>%
+      summarize(value=mean(value,na.rm=T))%>%
+      mutate(myalpha=ifelse(crisis==2020,1,0))
+  }else if(classif=="Upper middle income"){
+    res = res %>% filter(income_group==classif)%>%
+      group_by(year,crisis,h,variable)%>%
+      summarize(value=mean(value,na.rm=T))%>%
+      mutate(myalpha=ifelse(crisis==2020,1,0))
+  }else if(classif=="Lower middle income"){
+    fig = res %>% filter(income_group==classif)%>%
+      group_by(year,crisis,h,variable)%>%
+      summarize(value=mean(value,na.rm=T))%>%
+      mutate(myalpha=ifelse(crisis==2020,1,0))
+  }
   
-  fig= res%>%
-    ggplot()+
-    geom_point(aes(x=h,y=value,color=crisis,group=crisis))+
-    geom_line(aes(x=h,y=value,color=crisis,group=crisis))+
-    facet_wrap(~variable,scale="free",ncol=2)+
-    scale_x_continuous(breaks=min(window):max(window))+
-    theme_ipsum()+
-    theme(legend.position="bottom")+
-    labs(y=NULL,x=NULL)
+  fig=res%>%
+    ggplot() +
+    geom_point(aes(x = h, y = value,color = crisis, group = crisis,alpha=myalpha)) +
+    geom_line(aes(x = h,y = value, color = crisis, group = crisis,alpha=myalpha)) +
+    facet_wrap(~variable,scale = "free", ncol = ncol) +
+    scale_x_continuous(breaks = min(window):max(window)) + 
+    scale_alpha(guide = 'none',range=c(0.4,1))+
+    theme_ipsum() +
+    theme(legend.position = "bottom",
+          legend.title = element_blank()) + 
+    labs(y = classif, x = NULL)  
   
   return(fig)
 }
 
-ccdr.tf.fig.plotIndex=function(CCDB_y,myvar,type="mean",year_window=c(1950,2022)){
-  #' produce the time serie for the selected crisis
-  #' @description figure that plot the time serie of the crisis of interest
-  #' @param CCDB_y a vintage of the CCDB database
-  #' @param myvar the name of the crisis of interest 
-  #' @param type the type of statistics, N=Number of countries with a positive term frequency
-  #' , mean=average term frequency, perc=percentage of countries with a positive term frequency
-  #' @param years_window a vector with first and last date to plot.
+ccdr.tfs.fig.tsfreq=function(CCDB_y,myvar,type="perc", year_window = c(1950,2022)){
+  #' plot the time serie of the index for the selected statistic
+  #' @description plot the total number of countries (N), the percentage (perc),
+  #' or the average term frequency (mean) for the select indicators by income 
+  #' group.
+  #' @param CCDB_y a vintage of the CCDB dabaset
+  #' @param myvars the names of the category of interest
+  #' @param type N/mean/perc
+  #' @param year_window a vector with the range of periods around the crisis event
+  #' @author Manuel Betin
+  #' @export
+  #' 
+  res=CCDB_y %>% 
+    filter(!is.na(income_group))%>%
+    filter(year %in% min(year_window):max(year_window)) %>% 
+    group_by(income_group,year) %>% 
+    summarize(n=sum(ifelse(get(myvar)>0,1,0),na.rm=T),
+              tot=sum(ifelse(!is.na(get(myvar)),1,0),na.rm=T),
+              mean=mean(get(myvar),na.rm=T))%>%
+    mutate(perc=n/tot)
+  
+  if(type=="perc"){
+    res = res %>% ggplot(aes(x=as.numeric(year),y=perc))+
+      lims(y=c(0,1))
+  }else if(type=="N"){
+    res = res %>% ggplot(aes(x=as.numeric(year),y=n))
+  }else if(type == "mean"){
+    res = res %>%  ggplot(aes(x=as.numeric(year),y=mean))
+  }
+  
+  res=res+
+    geom_bar(stat="identity",color="white")+
+    scale_x_continuous(breaks=seq(CCDB_y$year%>%min()%>%as.numeric(),CCDB_y$year%>%max()%>%as.numeric(),5))+
+    labs(x=NULL,
+         y=myvar)+
+    theme_ipsum() +
+    scale_fill_viridis_d()+
+    facet_wrap(~income_group)+
+    theme(legend.title = element_blank(),
+          axis.text.x=element_text(angle=90),
+          legend.position = "top",
+          panel.grid.major.x  = element_line(color="#c8c8c8", size = 0.2))
+  return(res)
+}
+
+ccdr.tfs.fig.ctrycoverage=function(CCDB_y,type_classif="income_group",year_window = c(1950,2022),const_sample_since=2022){
+  #' plot the number of countries in the sample by year
+  #' @description time series with the number of country in the sample by income_group or region
+  #' according to the world bank classification
+  #' @param CCDB_y a vintage of the CCDB dataset
+  #' @param type_classif the type of country classification for the grouping variable
+  #' @param year_window a vector with the first and last year of interest
+  #' @param const_sample_since the date before which only members countries are available in 
+  #' the sample
   #' @author Manuel Betin
   #' @export
   
-  if(type=="mean"){
-    CCDB_y %>% group_by(year) %>% filter(year%in% min(year_window):max(year_window))%>%
-      summarize(index=mean(get(myvar),na.rm=T),
-                n=sum(ifelse(get(myvar)>0,1,0),na.rm=T))%>%
-      ggplot()+
-      geom_bar(stat="identity",aes(x=as.numeric(year),y=index,group=iso3))+
-      theme_ipsum()+
-      labs(y=myvar,x=NULL)+
-      theme(axis.text.x = element_text(angle=90))+
-      scale_x_continuous(limits = year_window, breaks=seq(min(year_window),max(year_window),5))
-  }else if(type=="N"){
-    CCDB_y %>% group_by(year) %>% filter(year%in% min(year_window):max(year_window))%>%
-      summarize(index=mean(get(myvar),na.rm=T),
-                n=sum(ifelse(get(myvar)>0,1,0),na.rm=T))%>%
-      ggplot()+
-      geom_bar(stat="identity",aes(x=as.numeric(year),y=n,group=iso3))+
-      theme_ipsum()+
-      labs(y=myvar,x=NULL)+
-      theme(axis.text.x = element_text(angle=90))+
-      scale_x_continuous(limits = year_window, breaks=seq(min(year_window),max(year_window),5))
-  }else if(type=="perc"){
-    CCDB_y %>% group_by(year) %>% filter(year%in% min(year_window):max(year_window))%>%
-      summarize(index=mean(get(myvar),na.rm=T),
-                n=sum(ifelse(get(myvar)>0,1,0),na.rm=T))%>%ungroup()%>%
-      mutate(perc=100*n/sum(n))%>%
-      ggplot()+
-      geom_bar(stat="identity",aes(x=as.numeric(year),y=perc,group=iso3))+
-      theme_ipsum()+
-      labs(y=myvar,x=NULL)+
-      theme(axis.text.x = element_text(angle=90))+
-      scale_x_continuous(limits = year_window, breaks=seq(min(year_window),max(year_window),5))
-  }
+  myisobef1960=CCDB_y%>%filter(year<const_sample_since)%>%pull(iso3)%>%unique()
   
+  CCDB_y %>% filter(iso3%in%myisobef1960)%>% group_by(get(type_classif),year,vintage_status)%>%filter(between(year,year_window[1],year_window[2]))%>%
+    summarize(ccdb.ctries=n())%>%
+    rename(!!type_classif:=`get(type_classif)`)%>%
+    filter(!is.na(get(type_classif)))%>%
+    ggplot()+
+    geom_bar(stat="identity",aes(x=year,y=ccdb.ctries,fill=get(type_classif)),color="white")+
+    theme_ipsum()+
+    labs(x=NULL)+
+    theme(legend.position = 'bottom',
+          legend.title = element_blank())
 }
 
 
