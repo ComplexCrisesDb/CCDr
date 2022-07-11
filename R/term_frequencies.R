@@ -187,9 +187,7 @@ ccdr.tfs <- function(corpus, lexicon, brute_freq = F, parrallel = T, centre_coun
  
 }
 
-run.ccdr.tfs <- function(corpus_file,
-                         lexicon,
-                         export_path = NULL, parrallel = T) {
+run.ccdr.tfs <- function(corpus_file,lexicon,export_path = NULL, parrallel = T) {
   
   #' Compute the tf matrix for a corpus given in a list format,
   #' @description the type of lexicon to use and the sublist of keywords associated The
@@ -225,11 +223,7 @@ run.ccdr.tfs <- function(corpus_file,
 }
 
 
-
-ccdr.tfs.update <- function(file_tf_to_update,
-                            corpus_file,
-                            lexicon = NULL,
-                            export_file,
+ccdr.tfs.update <- function(file_tf_to_update,corpus_file,lexicon = NULL,export_file,
                             parrallel = T, store_old = F, store_old_path = NULL) {
   #' Updates the tf-indexes without repeating full extraction
   #'
@@ -301,15 +295,9 @@ ccdr.tfs.update <- function(file_tf_to_update,
   }
 }
 
-scrap.ccdr.tfs <- function(urls = url_links,
-                           lexicon,
-                           extract_number = 1,
-                           ENGINE = pdf_text,
-                           delete_pdfs = T,
-                           rm_short_docs = F,
-                           min_words = 100,
-                           parrallel = T,
-                           loc_temp = NULL) {
+scrap.ccdr.tfs <- function(urls = url_links, lexicon, extract_number = 1,
+                           ENGINE = pdf_text,delete_pdfs = T,rm_short_docs = F,
+                           min_words = 100,parrallel = T, loc_temp = NULL) {
   
   #' run the term frequency matrix on the list of urls provided as parameter.
   #' @description The function download the pdf, create the corpus and generate the term
@@ -402,61 +390,7 @@ scrap.ccdr.tfs <- function(urls = url_links,
   )
 }
 
-
-ccdr.transcripts.collect=function(mycorpus,keyword_list){
-  #' collect transcripts identified as belonging to a specific category
-  #' @description the function extract the paragraphs around the keywords that
-  #' correspond to the categories of interest selected in key_word_list
-  #' @param mycorpus a list of documents containing the reports of interest
-  #' @param keyword_list a vector with the names of the categories to search for
-  #' see ccdr.lexicon() %>% names() for details about available categories
-  #' @return tibble() with the transcripts, the keyword detected, the category of
-  #' crisis and the identifier of the document.
-  #' @export
-  #' @author Manuel Betin
-  
-  transcripts_all=lapply(keyword_list,function(x){
-    #get transcripts for one category
-    mytranscripts=ccdr.sentences(mycorpus,x)
-    
-    #append data for all countries
-    transcripts_all=lapply(names(mytranscripts),function(y){
-      mytranscripts[[y]]$doc_id=y
-      mytranscripts[[y]] #%>% rename(text=sentence)
-    })
-    transcripts_all=do.call(rbind,transcripts_all)
-    transcripts_all %>% dplyr::mutate(category=x)
-  })
-  #append for all categories
-  transcripts_all=do.call(rbind,transcripts_all)
-  return(transcripts_all)
-}
-
-ccdr.transcripts.get_nearby_words=function(word_dt,myword,n_min=10){
-  #' check the frequency of nearby words
-  #' @description provide a table with the frequencies of nearby words
-  #' @export
-  nearby_global <- word_dt %>% mutate(position = row_number()) %>%
-    filter(word == myword) %>%
-    select(focus_term = word, focus_position = position) %>%
-    difference_inner_join(word_dt %>% tibble()  %>%
-                            mutate(position = row_number()), by = c(focus_position = "position"), max_dist = 15) %>%
-    mutate(distance = abs(focus_position - position))
-  
-  nearby_global <- nearby_global %>%
-    group_by(word) %>%
-    summarize(number = n(),
-              maximum_distance = max(distance),
-              minimum_distance = min(distance),
-              average_distance = mean(distance)) %>%
-    arrange(desc(number))
-  
-  nearby_global=nearby_global[-1,] %>% filter(number>n_min) %>% mutate(perc=number/sum(number))
-  
-  return(nearby_global)
-  
-}
-
+# append old and new vintages of term frequencies
 ccdr.tfs.updateyears=function(old_vintage,updated_years){
   #' append old vintage and new vintage updated for new data
   #' @description update the old vintage of the database with the the new dataset
@@ -504,6 +438,7 @@ ccdr.tfs.updateyears=function(old_vintage,updated_years){
   return(res)
 }
 
+# Transformations on term frequencies
 ccdr.tfs.normalize=function(mydata,var2normalize){
   #' nomarlize term frequencies
   #'@description normalize the variable of interest by removing the
@@ -578,6 +513,9 @@ ccdr.tfs.typologycrisis=function(mydata){
     mutate(Institutional_crisis=ifelse(Political_crisis_p0.25>0|Social_crisis_p0.25>0,1,0))
   return(mydata)
 }
+
+
+## Figures 
 
 ccdr.tfs.fig.radiography=function (CCDB_y, classif = "all", vars, years_crisis, window) {
   #' plor the variations of indices around crisis by income group
@@ -716,5 +654,120 @@ ccdr.tfs.fig.ctrycoverage=function(CCDB_y,type_classif="income_group",year_windo
     theme(legend.position = 'bottom',
           legend.title = element_blank())
 }
+
+ccdr.tfs.fig.eventstudy=function(CCDB_y,iso3c,myvar){
+  #' plot the crisis index for the selected country
+  #' @description plot the selected indicators for the country of interest
+  #' @param CCDB_y a vintage of the CCDB dabaset
+  #' @param iso3c the iso3 code of the country of interest
+  #' @param myvar the name of the indicator to plot
+  #' @author Manuel Betin
+  #' @export
+  CCDB_y %>% filter(iso3==iso3c) %>% 
+    mutate(year=as.numeric(year))%>%
+    ggplot(aes(x=year,group=iso3))+
+    geom_line(aes(y=get(myvar)),color="red")+
+    scale_x_continuous(breaks=seq(CCDB_y$year%>%min()%>%as.numeric(),CCDB_y$year%>%max()%>%as.numeric(),5))+
+    scale_y_continuous(labels = scales::percent_format(accuracy = 0.1))+
+    labs(x=NULL,
+         y="Term frequency")+
+    theme_ipsum() +
+    theme(legend.title = element_blank(),
+          axis.text.x=element_text(angle=90),
+          legend.position = "top",
+          panel.grid.major.x  = element_line(color="#c8c8c8", size = 0.2)
+    )
+  
+}
+
+ccdr.tfs.fig.network=function(CCDB_y,min_year=2018,max_year=2022,min_corr=0.2){
+  
+  #' plot the network of crisis
+  #' @description plot the network of the correlations matrix of crisis for the 
+  #' specific window of periods. 
+  #' @param CCDB_y a vintage of the CCDB dataset
+  #' @param min_year the first year of the window
+  #' @param max_year the last year of the window
+  #' @param min_corr the minimum correlation to draw the edges in the network
+  #' @author Manuel Betin
+  #' @export
+  #' 
+  #function that set the correlation to 0 under a specific threshold
+  degree_threshold = function(x) {
+    ifelse(x > min_corr, x, 0)
+  }
+  
+  # create correlation matrix
+  corr_matrix = CCDB_y %>% 
+    ungroup()%>% 
+    filter(year > min_year & year < max_year) %>% 
+    dplyr::select(myshocks) %>% 
+    cor() %>% 
+    data.frame() %>% 
+    mutate_all(degree_threshold)
+  
+  # adjust matrix to network format
+  myadjmatrix=graph_from_adjacency_matrix(as.matrix(corr_matrix), mode = "undirected", diag = F, weighted = T)
+  
+  mynetworkdata=toVisNetworkData(myadjmatrix)
+  
+  # Set the parameters for the visualisation of the network
+  mynodes=mynetworkdata$nodes
+  myedges=mynetworkdata$edges%>%
+    mutate(color = case_when(weight >= 0.4 ~ "darkred",
+                             weight <= 0.4 & weight >= 0.2 ~ "darkorange",
+                             TRUE ~ "gold")) %>%
+    mutate(width = case_when(weight >= 0.4 ~ 6,
+                             weight <= 0.4 & weight >= 0.2 ~ 3,
+                             TRUE ~ 1))
+  
+  # plot the network
+  mynetwork=visNetwork(nodes = mynodes,
+                       edges=myedges,
+                       ledges = data.frame(color = c("darkred","darkorange","gold"), label = c("> 0.4","0.4 - 0.2","< 0.2"), arrows = c("undirected"),
+                                           width = c(6,3,1), font.align = "top"))%>%
+    visNodes(color = list(background = "gray", border = "black")) %>% 
+    visPhysics(solver = "forceAtlas2Based",forceAtlas2Based = list(gravitationalConstant = -50)) %>%
+    visLegend(addEdges = mynetworkdata$ledges, position = "right") %>% 
+    visLayout(randomSeed = 346)
+  
+  return(mynetwork)
+}
+
+ccdr.tfs.fig.eventstudyYES=function(CCDB_y,iso3c){
+  
+  #' plot the number of in crisis by typology
+  #' @description plot the time series of SGS,FGS and risk free crisis for the 
+  #' selected country
+  #'  SGS crisis corresponds to sovereign crisis with expectation regime
+  #' shift, FGS to sovereign crisis without expectation regime shifts and risk free 
+  #' recessions crisis without sovereign debt concerns.
+  #' 
+  #' @param CCDB_y a vintage of the CCDB dataset
+  #' @param iso3c the iso3 code of the country of interest
+  #' @author Manuel Betin
+  #' @export
+  #' 
+  #' 
+  CCDB_y %>% filter(iso3==iso3c) %>% 
+    mutate(year=as.numeric(year))%>%
+    ggplot(aes(x=year,group=iso3))+
+    geom_line(aes(y=Sovereign_default_p0.25,color="Sovereign (S)"))+
+    geom_line(aes(y=Expectations_p0.25,color="Expectations (E)"))+
+    geom_line(aes(y=Severe_recession_p0.25,color="Recession (Y)"))+
+    scale_color_manual(values=c("orange","red","darkgreen"))+
+    scale_x_continuous(breaks=seq(CCDB_y$year%>%min()%>%as.numeric(),CCDB_y$year%>%max()%>%as.numeric(),5))+
+    scale_y_continuous(labels = scales::percent_format(accuracy = 0.1))+
+    labs(x=NULL,
+         y="Term frequency")+
+    theme_ipsum() +
+    theme(legend.title = element_blank(),
+          axis.text.x=element_text(angle=90),
+          legend.position = "top",
+          panel.grid.major.x  = element_line(color="#c8c8c8", size = 0.2)
+    )
+  
+}
+
 
 

@@ -128,6 +128,61 @@ ccdr.sentences <- function(corpus, keyword_list) {
     map(~ .x %>% mutate(keyword_detected = str_extract(sentence, paste(ccdr.lexicon()[[keyword_list]], collapse = "|"))))
 }
 
+
+ccdr.transcripts.collect=function(mycorpus,keyword_list){
+  #' collect transcripts identified as belonging to a specific category
+  #' @description the function extract the paragraphs around the keywords that
+  #' correspond to the categories of interest selected in key_word_list
+  #' @param mycorpus a list of documents containing the reports of interest
+  #' @param keyword_list a vector with the names of the categories to search for
+  #' see ccdr.lexicon() %>% names() for details about available categories
+  #' @return tibble() with the transcripts, the keyword detected, the category of
+  #' crisis and the identifier of the document.
+  #' @export
+  #' @author Manuel Betin
+  
+  transcripts_all=lapply(keyword_list,function(x){
+    #get transcripts for one category
+    mytranscripts=ccdr.sentences(mycorpus,x)
+    
+    #append data for all countries
+    transcripts_all=lapply(names(mytranscripts),function(y){
+      mytranscripts[[y]]$doc_id=y
+      mytranscripts[[y]] #%>% rename(text=sentence)
+    })
+    transcripts_all=do.call(rbind,transcripts_all)
+    transcripts_all %>% dplyr::mutate(category=x)
+  })
+  #append for all categories
+  transcripts_all=do.call(rbind,transcripts_all)
+  return(transcripts_all)
+}
+
+ccdr.transcripts.get_nearby_words=function(word_dt,myword,n_min=10){
+  #' check the frequency of nearby words
+  #' @description provide a table with the frequencies of nearby words
+  #' @export
+  nearby_global <- word_dt %>% mutate(position = row_number()) %>%
+    filter(word == myword) %>%
+    select(focus_term = word, focus_position = position) %>%
+    difference_inner_join(word_dt %>% tibble()  %>%
+                            mutate(position = row_number()), by = c(focus_position = "position"), max_dist = 15) %>%
+    mutate(distance = abs(focus_position - position))
+  
+  nearby_global <- nearby_global %>%
+    group_by(word) %>%
+    summarize(number = n(),
+              maximum_distance = max(distance),
+              minimum_distance = min(distance),
+              average_distance = mean(distance)) %>%
+    arrange(desc(number))
+  
+  nearby_global=nearby_global[-1,] %>% filter(number>n_min) %>% mutate(perc=number/sum(number))
+  
+  return(nearby_global)
+  
+}
+
 scrap.ccdr.files <- function(urls, export_path, overwrite = T) {
   #' download pdf documents
   #' download from a a dataframe containing the url of the files
