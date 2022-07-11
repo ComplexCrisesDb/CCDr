@@ -128,6 +128,34 @@ ccdr.sentences <- function(corpus, keyword_list) {
     map(~ .x %>% mutate(keyword_detected = str_extract(sentence, paste(ccdr.lexicon()[[keyword_list]], collapse = "|"))))
 }
 
+ccdr.corpus.countryupdate=function(iso3,historical_vintage,new_vintage){
+  #'update corpus for a specific country
+  #'@description update corpus for a specific country
+  #'@param iso3 the iso3 code of the country of interest
+  #'@param historical_vintage object of class corpusTM to update 
+  #'@param new_vintage object of class corpusTM with the corpus of the new update 
+  #'@author Manuel
+  #'@export
+  
+  if(any(class(historical_vintage)%in%"corpusTM") & any(class(new_vintage)%in%"corpusTM") ){
+    
+    tryCatch({
+      ctrycorpus=new_vintage[str_detect(names(mycorpus),iso3)]
+      res=append(historical_vintage,ctrycorpus)
+      cat(crayon::green("Succesful update, ",ctrycorpus %>% length(), "files have been included in the corpus of ", iso3,"\n"))
+    },
+    error=function(e){
+      res=NULL
+      warning(paste0("Error when updated the corpus of ",iso3,"\n"))
+      warning(e)
+      return(NULL)
+    })  
+  }else{
+    warning("please provide a valid arguments for historical_vintage and new_vintage\n objects of class corpusTM are required\n")
+  }
+  
+  return(res)
+}
 
 ccdr.transcripts.collect=function(mycorpus,keyword_list){
   #' collect transcripts identified as belonging to a specific category

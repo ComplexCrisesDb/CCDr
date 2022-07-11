@@ -1343,3 +1343,25 @@ ccdr.lexicon_details <- function(keyword) {
 
   return(ccdr.lexicon()[detect])
 }
+
+ccdr.lexicon.exportcsv=function(myvars=NULL,path){
+  #'export dictionary of words in csv
+  #'@description export the dictionary 
+  #'@param myvars a vector with the names of the categories to export
+  #'@param path the path to the folder where the dicitonary is exported
+  #'@author Manuel Betin
+  #'@export
+  if(is.null(myvars)){
+    myvars=ccdr.lexicon()%>%names()
+  }
+  
+  results=lapply(myvars,function(x){
+    res=cbind(myvar,ccdr.lexicon_details("Sovereign_default")[[1]])
+    colnames(res)=c("category","keywords")
+    res
+  })
+  results=do.call(rbind,results) %>% data.frame()%>%tibble()
+  
+  rio::export(results,paste0(path,"/ccdr.lexicon_",Sys.Date(),".csv"))
+  return(results)
+}
