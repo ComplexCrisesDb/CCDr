@@ -128,6 +128,34 @@ ccdr.sentences <- function(corpus, keyword_list) {
     map(~ .x %>% mutate(keyword_detected = str_extract(sentence, paste(ccdr.lexicon()[[keyword_list]], collapse = "|"))))
 }
 
+ccdr.corpus.countryupdate=function(iso3,historical_vintage,new_vintage){
+  #'update corpus for a specific country
+  #'@description update corpus for a specific country
+  #'@param iso3 the iso3 code of the country of interest
+  #'@param historical_vintage object of class corpusTM to update 
+  #'@param new_vintage object of class corpusTM with the corpus of the new update 
+  #'@author Manuel
+  #'@export
+  
+  if(any(class(historical_vintage)%in%"corpusTM") & any(class(new_vintage)%in%"corpusTM") ){
+    
+    tryCatch({
+      ctrycorpus=new_vintage[str_detect(names(mycorpus),iso3)]
+      res=append(historical_vintage,ctrycorpus)
+      cat(crayon::green("Succesful update, ",ctrycorpus %>% length(), "files have been included in the corpus of ", iso3,"\n"))
+    },
+    error=function(e){
+      res=NULL
+      warning(paste0("Error when updated the corpus of ",iso3,"\n"))
+      warning(e)
+      return(NULL)
+    })  
+  }else{
+    warning("please provide a valid arguments for historical_vintage and new_vintage\n objects of class corpusTM are required\n")
+  }
+  
+  return(res)
+}
 
 ccdr.transcripts.collect=function(mycorpus,keyword_list){
   #' collect transcripts identified as belonging to a specific category
@@ -181,6 +209,248 @@ ccdr.transcripts.get_nearby_words=function(word_dt,myword,n_min=10){
   
   return(nearby_global)
   
+}
+
+
+ccdr.transcripts.tokenize=function(mytranscriptsdt){
+  #' tokenize and analyze transcripts with tidyr
+  #'@description tokenize the transcripts and remove the stop words
+  #'@author Manuel Betin 
+  #' @export 
+  
+  word_freq=mytranscriptsdt %>%
+    unnest_tokens(word, sentence)%>% #tokenize
+    filter(str_detect(word, "[a-z]"))%>% #keep only strings
+    anti_join(stop_words) %>% #remove stop words
+    mutate(word= wordStem(word),
+           year=substr(doc_id,5,8),
+           iso3=substr(doc_id,1,3)) %>%
+    filter(year>1945)#stem words to put together close words
+}
+
+ccdr.transcripts.preprocess.Keywordsfreq=function(mytokens,myvar){
+  #' tokenize and analyze transcripts with tidyr
+  #'@description tokenize the transcripts and remove the stop words
+  #'@author Manuel Betin 
+  #'@export 
+  #' 
+
+  if(myvar=="Expectation"){
+    mytopkeywords=mytokens %>% group_by(iso3,keyword_detected,year)%>%
+      summarize(n=n())%>%arrange(-n)%>%#pull(keyword_detected)
+      mutate(keywords=case_when(keyword_detected%in%c("downside risks","potential risks","upward risk","increase the risks",
+                                                      "high risk","major risks","high level of risk","heightened risk aversion",
+                                                      "heightening risks","increase in global risk aversion","crisis risks","risk of crisis")~"risks",
+                                keyword_detected%in%c("speculative attack","self-fulfilling","speculative capital movements",
+                                                      "shifts in investor sentiment")~"speculative attack",
+                                keyword_detected%in%c("market confidence","bolster confidence","restore market confidence","confidence crisis",
+                                                      "crisis of confidence","restoring market confidence","undermining confidence",
+                                                      "bolstering market confidence","weakening of investor confidence","pressures on confidence",
+                                                      "weakening of market confidence","slump in confidence","pressure on confidence","change in expectations")~"loss. confidence",
+                                keyword_detected%in%c("vulnerable to abrupt swings in market sentiment","vulnerable to changes in the international investment climate","change in investors sentiment",
+                                                      "shifts in investor sentiment","deterioration in market sentiment","market reversal","panic","economic sentiment remains poor")~"adv. market sentiment",
+                                keyword_detected%in%c("general uncertainty","reduce market uncertainty",
+                                                      "uncertainty in international capital markets",
+                                                      "uncertainty among market participant","signals to markets",
+                                                      "a time of heightened global uncertainty")~"uncertainty",
+                                T~keyword_detected))%>%
+      group_by(iso3,keywords,year)%>%
+      summarize(n=sum(n))%>%arrange(-n)%>%
+      mutate(year=as.numeric(year))
+    
+  }else if(myvar=="Sovereign_default"){
+    mytopkeywords=mytokens %>% group_by(iso3,keyword_detected,year)%>%
+      summarize(n=n())%>%arrange(-n)%>%#pull(keyword_detected)
+      mutate(keywords=case_when(str_detect(keyword_detected,"restruct") | str_detect(keyword_detected,"exchange") | str_detect(keyword_detected,"reschedu") | str_detect(keyword_detected,"debt swap") |
+                                  str_detect(keyword_detected,"reprofil")| str_detect(keyword_detected,"external creditors") |
+                                  str_detect(keyword_detected,"default") | str_detect(keyword_detected,"suspension")~"default/restructuring",
+                                str_detect(keyword_detected,"arrears")~"arrears",
+                                str_detect(keyword_detected,"rolling over") | str_detect(keyword_detected,"roll over") | str_detect(keyword_detected,"servic") | str_detect(keyword_detected,"debt crisis") | 
+                                  str_detect(keyword_detected,"fiscal crisis")  | str_detect(keyword_detected,"default risk")~"rollover",
+                                str_detect(keyword_detected,"external payment") ~"external payments",
+                                str_detect(keyword_detected,"debt relief") ~"debt relief",
+                                T~keyword_detected))%>%
+      group_by(iso3,keywords,year)%>%
+      summarize(n=sum(n))%>%arrange(-n)%>%
+      mutate(year=as.numeric(year))
+    
+  } else if(myvar=="Financial_crisis"){
+    mytopkeywords=mytokens %>% group_by(iso3,keyword_detected,year)%>%
+      summarize(n=n())%>%arrange(-n)%>%#pull(keyword_detected)
+      mutate(keywords=case_when(str_detect(keyword_detected,"financial risk") | str_detect(keyword_detected,"volatility in financial markets") | str_detect(keyword_detected,"restore")~"Financial risk",
+                                str_detect(keyword_detected,"Financial contagion")~"Financial contagion",
+                                str_detect(keyword_detected,"financial crisis") | str_detect(keyword_detected,"collapse of equity prices") | str_detect(keyword_detected,"crisis in financial market") | str_detect(keyword_detected,"turmoil in financial markets") | 
+                                  str_detect(keyword_detected,"unfolding financial crisis")  | str_detect(keyword_detected,"financial shock")| str_detect(keyword_detected,"global market sell-off")~"Financial crisis",
+                                str_detect(keyword_detected,"global financial") | str_detect(keyword_detected,"international") ~"International financial crisis",
+                                str_detect(keyword_detected,"contagion") ~"Financial contagion",
+                                T~keyword_detected))%>%
+      group_by(iso3,keywords,year)%>%
+      summarize(n=sum(n))%>%arrange(-n)%>%
+      mutate(year=as.numeric(year))
+  } else if(myvar=="Fiscal_outcomes"){
+    mytopkeywords=mytokens %>% group_by(iso3,keyword_detected,year)%>%
+      summarize(n=n())%>%arrange(-n)%>%
+      mutate(keywords=case_when(str_detect(keyword_detected,"deficit") | str_detect(keyword_detected,"financing gap")| 
+                                  str_detect(keyword_detected,"borrowing needs")| str_detect(keyword_detected,"financing needs") |
+                                  str_detect(keyword_detected,"imbalances") | str_detect(keyword_detected,"short-term financing need") |
+                                  str_detect(keyword_detected,"fiscal position") | str_detect(keyword_detected,"new borrowing") |
+                                  str_detect(keyword_detected,"budgetary") | str_detect(keyword_detected,"borrowing increased") |
+                                  str_detect(keyword_detected,"public sector position deteriorate") | str_detect(keyword_detected,"budgetary gap") |
+                                  str_detect(keyword_detected,"weakening of the public finance") | str_detect(keyword_detected,"pressure on public finance") |
+                                  str_detect(keyword_detected,"deterioration in the fiscal situation")~"deficits",
+                                str_detect(keyword_detected,"external debt") | str_detect(keyword_detected,"external financing needs") ~"external debt",
+                                str_detect(keyword_detected,"domestic debt") ~"domestic debt",
+                                str_detect(keyword_detected,"contigent") ~"contigent liability",
+                                str_detect(keyword_detected,"stimulus") ~"policy stimulus",
+                                str_detect(keyword_detected,"unsustainable") | str_detect(keyword_detected,"sustainability") | str_detect(keyword_detected,"indebtedness") |
+                                  str_detect(keyword_detected,"fiscal framework")|str_detect(keyword_detected,"fiscal instability")~"unsustainable debt",
+                                str_detect(keyword_detected,"expenditure") | str_detect(keyword_detected,"spending") ~"expenditure",
+                                str_detect(keyword_detected,"revenue")  ~"revenue",
+                                str_detect(keyword_detected,"service") | str_detect(keyword_detected,"interest payments") | str_detect(keyword_detected,"servicing") ~"debt service",
+                                T~keyword_detected))%>%
+      group_by(iso3,keywords,year)%>%
+      summarize(n=sum(n))%>%arrange(-n)%>%
+      mutate(year=as.numeric(year))
+  } else {
+    mytopkeywords=mytokens %>% rename(keywords=keyword_detected)%>% group_by(iso3,keywords,year)%>%
+      summarize(n=n())%>%arrange(-n)%>%
+      arrange(-n)%>%
+      mutate(year=as.numeric(year))
+  }
+  
+  
+  return(mytopkeywords)
+}
+
+ccdr.transcripts.preprocess.ExpectationWordsfreq=function(mytokens){
+  #' preprocess the category Expectations
+  #'@description group similar words to make sure that the frequency of words
+  #'take into account the different expressions   
+  #'@author Manuel Betin 
+  #'@export 
+  #' 
+  mydummies=mytokens %>% mutate(word=case_when(word%in%c("financi","financ","market","bank")~"financial",
+                                               #word%in%c("fiscal","author","public","debt")~"fiscal intervention",
+                                               word%in%c("exchang","currenc","reserv")~"currency",
+                                               word%in%c("inflat","inflationari")~"inflation",
+                                               word%in%c("growth","outlook","econom","macroeconom")~"growth",
+                                               TRUE~word))%>%
+    group_by(word)%>%summarize(n=n())%>%arrange(-n)%>%
+    filter(word%in%c("risk","confid",'uncertainti','avers',"panic","distress",
+                     "crisi","expect","stress","sentiment","covid",
+                     "polici","growth","monetari","currency",
+                     "financial","inflation","oil",
+                     "commod","rate","debt","global","domest"))%>%
+    arrange(-n)%>%pull(word)
+  
+  all_year=data.frame(1960:2022)
+  colnames(all_year)="year"
+  
+  E_word_dummies_dt=mytokens  %>% filter(year>1945) %>% mutate(year=as.numeric(year))%>%
+    right_join(all_year,by="year") %>%
+    filter(word%in%mydummies) %>%
+    group_by(iso3,year,word) %>% summarize(n=n())
+  
+  return(E_word_dummies_dt)
+}
+
+ccdr.transcripts.preprocess.SovDefaultWordsfreq=function(mytokens){
+  #' preprocess the category sovereign default
+  #'@description group similar words to make sure that the frequency of words
+  #'take into account the different expressions   
+  #'@author Manuel Betin 
+  #'@export 
+  #' 
+  mydummies=mytokens %>% mutate(word=case_when(word%in%c("relief","reschedul","restructur","reduc","reduct","settlement",
+                                                         "agreement","adjust","suspens","suspend")~"restructuring",
+                                               word%in%c("program","moratorium","memorandum","moratoria")~"program",
+                                               word%in%c("exclud","access","exclus","accessto")~"exclusion",
+                                               word%in%c("bond","eurobond","bondhold","oblig")~"bond",
+                                               word%in%c("credit","commerci","oblig")~"credit",
+                                               word%in%c("foreign","extern")~"external",
+                                               word%in%c("debt","liabil","borrow")~"debt",
+                                               TRUE~word))%>%
+    group_by(word)%>%summarize(n=n())%>%arrange(-n)%>%
+    filter(word%in%c("restructuring","program","exclusion","bond","credit","external","intern",
+                     "arrear","debt","govern","bank","privat","public","fiscal","deficit","hipc","liquid",
+                     "revenu","tax","payment","servic","matur","rate","bilater","multilater",
+                     "club","tax"))%>%
+    arrange(-n)%>%pull(word)
+  
+  all_year=data.frame(1960:2022)
+  colnames(all_year)="year"
+  
+  E_word_dummies_dt=mytokens  %>% filter(year>1945) %>% mutate(year=as.numeric(year))%>%
+    right_join(all_year,by="year") %>%
+    filter(word%in%mydummies) %>%
+    group_by(iso3,year,word) %>% summarize(n=n())
+  
+  return(E_word_dummies_dt)
+}
+
+ccdr.transcripts.preprocess.FinCrisisWordsfreq=function(mytokens){
+  #' preprocess the category financial crisis
+  #'@description group similar words to make sure that the frequency of words
+  #'take into account the different expressions   
+  #'@author Manuel Betin 
+  #'@export 
+  #' 
+  
+  mydummies=mytokens %>% mutate(word=case_when(word%in%c("financi","market")~"financial",
+                                               word%in%c("crisi","shock")~"crisis",
+                                               word%in%c("global","foreign","world")~"global",
+                                               word%in%c("intern","domest")~"domestic",
+                                               word%in%c("exchang","currenc")~"currency",
+                                               word%in%c("risk")~"risk",
+                                               word%in%c("bank")~"bank",
+                                               word%in%c("debt")~"debt",
+                                               word%in%c("rate")~"rate",
+                                               word%in%c("growth","econom","economi","macroeconom")~"economy",
+                                               word%in%c("bank")~"bank",
+                                               TRUE~word))%>%
+    group_by(word)%>%summarize(n=n())%>%arrange(-n)%>%
+    filter(word%in%c("financial","crisis","global","domestic","currency","risk","bank",
+                     "debt","rate","economy","bank"))%>%
+    arrange(-n)%>%pull(word)
+  
+  all_year=data.frame(1960:2022)
+  colnames(all_year)="year"
+  
+  E_word_dummies_dt=mytokens  %>% filter(year>1945) %>% mutate(year=as.numeric(year))%>%
+    right_join(all_year,by="year") %>%
+    filter(word%in%mydummies) %>%
+    group_by(iso3,year,word) %>% summarize(n=n())
+  
+  return(E_word_dummies_dt)
+}
+
+ccdr.transcripts.plot.KeywordsFreq=function(mytopkeywords,mywords){
+  #' plot the keyword frequency
+  #'@description 
+  #'@author Manuel Betin 
+  #'@export 
+  #' 
+  
+  res=mytopkeywords%>%
+    left_join(incomegroup,by=c("iso3"))%>%
+    group_by(year,keywords,income_group)%>%filter(year>1960)%>%
+    summarize(n=sum(n,na.rm=T))%>%
+    filter(keywords%in%mywords) %>%
+    group_by(income_group,keywords)%>%
+    mutate(n.norm=n/max(n))
+  
+  fig=res%>%
+    ggplot(aes(x=as.numeric(year),y=n.norm,group=keywords,fill=keywords))+
+    geom_bar(stat="identity")+
+    scale_x_continuous(breaks=c(1960,1965,1970,1975,1980,1985,1990,1995,2000,2005,2010,2015,2020))+
+    facet_wrap(~income_group)+
+    theme_ipsum()+
+    labs(x=NULL)+
+    theme(legend.title = element_blank(),
+          axis.text.x=element_text(angle=90),
+          legend.position = "bottom",
+          panel.grid.major.x  = element_line(color="#c8c8c8", size = 0.2))
+  return(fig)
 }
 
 scrap.ccdr.files <- function(urls, export_path, overwrite = T) {

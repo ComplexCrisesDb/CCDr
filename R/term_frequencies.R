@@ -222,7 +222,6 @@ run.ccdr.tfs <- function(corpus_file,lexicon,export_path = NULL, parrallel = T) 
   return(dt)
 }
 
-
 ccdr.tfs.update <- function(file_tf_to_update,corpus_file,lexicon = NULL,export_file,
                             parrallel = T, store_old = F, store_old_path = NULL) {
   #' Updates the tf-indexes without repeating full extraction
