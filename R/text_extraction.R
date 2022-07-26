@@ -211,7 +211,6 @@ ccdr.transcripts.get_nearby_words=function(word_dt,myword,n_min=10){
   
 }
 
-
 ccdr.transcripts.tokenize=function(mytranscriptsdt){
   #' tokenize and analyze transcripts with tidyr
   #'@description tokenize the transcripts and remove the stop words
@@ -234,7 +233,7 @@ ccdr.transcripts.preprocess.Keywordsfreq=function(mytokens,myvar){
   #'@author Manuel Betin 
   #'@export 
   #' 
-
+  
   if(myvar=="Expectation"){
     mytopkeywords=mytokens %>% group_by(iso3,keyword_detected,year)%>%
       summarize(n=n())%>%arrange(-n)%>%#pull(keyword_detected)
@@ -311,7 +310,29 @@ ccdr.transcripts.preprocess.Keywordsfreq=function(mytokens,myvar){
       group_by(iso3,keywords,year)%>%
       summarize(n=sum(n))%>%arrange(-n)%>%
       mutate(year=as.numeric(year))
-  } else {
+  } else if(myvar=="Inflation_crisis"){
+    mytopkeywords=mytokens %>% group_by(iso3,keyword_detected,year)%>%
+      summarize(n=n())%>%arrange(-n)%>%
+      mutate(keywords=case_when(str_detect(keyword_detected,"pressure") | str_detect(keyword_detected,"acceler") ~"inflation pressure",
+                                str_detect(keyword_detected,"hyper") | str_detect(keyword_detected,"unprecedented") ~"hyper inflation",
+                                str_detect(keyword_detected,"target") | str_detect(keyword_detected,"objective") ~"inflation target",
+                                str_detect(keyword_detected,"core") ~"core inflation",
+                                str_detect(keyword_detected,"wage") ~"wage inflation",
+                                str_detect(keyword_detected,"food") ~"food inflation",
+                                str_detect(keyword_detected,"price") ~"price inflation",
+                                str_detect(keyword_detected,"expect")  | str_detect(keyword_detected,"outlook")  | str_detect(keyword_detected,"future") |
+                                  str_detect(keyword_detected,"forecast") | str_detect(keyword_detected,"risk")  ~"inflation expectations",
+                                str_detect(keyword_detected,"lower") |str_detect(keyword_detected,"anti-inflation") |
+                                  str_detect(keyword_detected,"non-inflation") |str_detect(keyword_detected,"noninflation") |
+                                  str_detect(keyword_detected,"halting") |str_detect(keyword_detected,"containment") | 
+                                  str_detect(keyword_detected,"combat") | str_detect(keyword_detected,"control") |
+                                  str_detect(keyword_detected,"down quickly") | str_detect(keyword_detected,"curb") | str_detect(keyword_detected,"reduction")| str_detect(keyword_detected,"strategy") | str_detect(keyword_detected,"effort") ~"combat inflation",
+                                str_detect(keyword_detected,"high") | str_detect(keyword_detected,"severe") | str_detect(keyword_detected,"problem") | str_detect(keyword_detected,"large") ~"high inflation",
+                                T~"inflation"))%>%
+      group_by(iso3,keywords,year)%>%
+      summarize(n=sum(n))%>%arrange(-n)%>%
+      mutate(year=as.numeric(year))
+  }else{
     mytopkeywords=mytokens %>% rename(keywords=keyword_detected)%>% group_by(iso3,keywords,year)%>%
       summarize(n=n())%>%arrange(-n)%>%
       arrange(-n)%>%
