@@ -516,7 +516,8 @@ ccdr.tfs.typologycrisis=function(mydata){
 
 ## Figures 
 
-ccdr.tfs.fig.radiography=function (CCDB_y, classif = "all", vars, years_crisis, window) {
+
+ccdr.tfs.fig.radiography=function (CCDB_y, classif = "all", vars, years_crisis, window,my_var_to_highligh=NULL) {
   #' plor the variations of indices around crisis by income group
   #' @description plot the selected indicators in a window around crisis period for the 
   #' selected time span and the income group of interest
@@ -545,43 +546,57 @@ ccdr.tfs.fig.radiography=function (CCDB_y, classif = "all", vars, years_crisis, 
   if(classif=="all"){
     res = res %>% group_by(year,crisis,h,variable)%>%
       summarize(value=mean(value,na.rm=T))%>%
-      mutate(myalpha=ifelse(crisis==2020,1,0))
+      mutate(myalpha=ifelse(crisis==2020,1,0),
+             mylinetype=ifelse(crisis==2020,"1","0"))
+    
+    
   }else if(classif=="High income"){
     res = res %>% filter(income_group==classif)%>%
       group_by(year,crisis,h,variable)%>%
       summarize(value=mean(value,na.rm=T))%>%
-      mutate(myalpha=ifelse(crisis==2020,1,0))
+      mutate(myalpha=ifelse(crisis==2020,1,0),
+             mylinetype=ifelse(crisis==2020,"1","0"))
   }else if(classif=="Low income"){
     res = res %>% filter(income_group==classif)%>%
       group_by(year,crisis,h,variable)%>%
       summarize(value=mean(value,na.rm=T))%>%
-      mutate(myalpha=ifelse(crisis==2020,1,0))
+      mutate(myalpha=ifelse(crisis==2020,1,0),
+             mylinetype=ifelse(crisis==2020,"1","0"))
   }else if(classif=="Upper middle income"){
     res = res %>% filter(income_group==classif)%>%
       group_by(year,crisis,h,variable)%>%
       summarize(value=mean(value,na.rm=T))%>%
-      mutate(myalpha=ifelse(crisis==2020,1,0))
+      mutate(myalpha=ifelse(crisis==2020,1,0),
+             mylinetype=ifelse(crisis==2020,"1","0"))
   }else if(classif=="Lower middle income"){
     res = res %>% filter(income_group==classif)%>%
       group_by(year,crisis,h,variable)%>%
       summarize(value=mean(value,na.rm=T))%>%
-      mutate(myalpha=ifelse(crisis==2020,1,0))
+      mutate(myalpha=ifelse(crisis==2020,1,0),
+             mylinetype=ifelse(crisis==2020,"1","0"))
   }
   
-  fig=res%>%
+  
+  fig=res%>%mutate(value=value*1000)%>%
     ggplot() +
     geom_point(aes(x = h, y = value,color = crisis, group = crisis,alpha=myalpha)) +
-    geom_line(aes(x = h,y = value, color = crisis, group = crisis,alpha=myalpha)) +
+    geom_line(aes(x = h,y = value, color = crisis, group = crisis,alpha=myalpha,linetype=mylinetype)) +
+    geom_rect(data = subset(res, variable %in% my_var_to_highligh), 
+              fill = NA, colour = "red", xmin = -Inf,xmax = Inf,
+              ymin = -Inf,ymax = Inf,size=1.5)+
     facet_wrap(~variable,scale = "free", ncol = ncol) +
     scale_x_continuous(breaks = min(window):max(window)) + 
-    scale_alpha(guide = 'none',range=c(0.4,1))+
+    scale_alpha(guide = 'none',range=c(1,1))+
+    scale_color_manual(values=c("grey","black"))+
     theme_ipsum() +
+    guides(linetype="none")+
     theme(legend.position = "bottom",
           legend.title = element_blank()) + 
-    labs(y = classif, x = NULL)  
-  
+    labs(y = "Term freq. (‰)", x = NULL)  
   return(fig)
 }
+
+
 
 ccdr.tfs.fig.tsfreq=function(CCDB_y,myvar,type="perc", year_window = c(1950,2022)){
   #' plot the time serie of the index for the selected statistic
@@ -679,6 +694,7 @@ ccdr.tfs.fig.eventstudy=function(CCDB_y,iso3c,myvar){
   
 }
 
+
 ccdr.tfs.fig.network=function(CCDB_y,min_year=2018,max_year=2022,min_corr=0.2){
   
   #' plot the network of crisis
@@ -696,6 +712,7 @@ ccdr.tfs.fig.network=function(CCDB_y,min_year=2018,max_year=2022,min_corr=0.2){
     ifelse(x > min_corr, x, 0)
   }
   
+  set.seed(12345)
   # create correlation matrix
   corr_matrix = CCDB_y %>% 
     ungroup()%>% 
@@ -711,27 +728,46 @@ ccdr.tfs.fig.network=function(CCDB_y,min_year=2018,max_year=2022,min_corr=0.2){
   mynetworkdata=toVisNetworkData(myadjmatrix)
   
   # Set the parameters for the visualisation of the network
+  
   mynodes=mynetworkdata$nodes
+  mynodes=mynodes%>%mutate(size=25,
+                           font.size=35,
+                           color="lightgrey",
+                           shadow=T,
+                           value=10,
+                           shape='circle')
+  
+  mynodes$label=c("Sov.","Bank","Fin.","Wars","Pol.","Nat.","Mig.","Infl.",
+                  "Cont.","Com.","World","Curr.","Exp.","Rec.","Bop","Soc.",
+                  "Epid.","Hous.")
+  
   myedges=mynetworkdata$edges%>%
-    mutate(color = case_when(weight >= 0.4 ~ "darkred",
-                             weight <= 0.4 & weight >= 0.2 ~ "darkorange",
+    mutate(color = case_when(weight >= 0.5 ~ "darkred",
+                             weight < 0.5 & weight >= 0.3 ~ "darkorange",
                              TRUE ~ "gold")) %>%
-    mutate(width = case_when(weight >= 0.4 ~ 6,
-                             weight <= 0.4 & weight >= 0.2 ~ 3,
-                             TRUE ~ 1))
+    mutate(width = case_when(weight >= 0.5 ~ 10,
+                             weight < 0.5 & weight >= 0.3 ~ 8,
+                             TRUE ~ 3))%>%
+    mutate(lty=case_when(weight >= 0.5 ~ 0,
+                         weight < 0.5 & weight >= 0.3 ~ 1,
+                         TRUE ~ 2))
   
   # plot the network
+  
   mynetwork=visNetwork(nodes = mynodes,
                        edges=myedges,
                        ledges = data.frame(color = c("darkred","darkorange","gold"), label = c("> 0.4","0.4 - 0.2","< 0.2"), arrows = c("undirected"),
                                            width = c(6,3,1), font.align = "top"))%>%
     visNodes(color = list(background = "gray", border = "black")) %>% 
-    visPhysics(solver = "forceAtlas2Based",forceAtlas2Based = list(gravitationalConstant = -50)) %>%
+    visPhysics(solver = "forceAtlas2Based",forceAtlas2Based = list(gravitationalConstant = -100)) %>%
     visLegend(addEdges = mynetworkdata$ledges, position = "right") %>% 
-    visLayout(randomSeed = 346)
-  
+    visLayout(randomSeed = 346)%>%
+    visInteraction(dragNodes = FALSE, 
+                   dragView = FALSE, 
+                   zoomView = T) 
   return(mynetwork)
 }
+
 
 ccdr.tfs.fig.eventstudyYES=function(CCDB_y,iso3c){
   

@@ -211,7 +211,6 @@ ccdr.transcripts.get_nearby_words=function(word_dt,myword,n_min=10){
   
 }
 
-
 ccdr.transcripts.tokenize=function(mytranscriptsdt){
   #' tokenize and analyze transcripts with tidyr
   #'@description tokenize the transcripts and remove the stop words
@@ -234,7 +233,7 @@ ccdr.transcripts.preprocess.Keywordsfreq=function(mytokens,myvar){
   #'@author Manuel Betin 
   #'@export 
   #' 
-
+  
   if(myvar=="Expectation"){
     mytopkeywords=mytokens %>% group_by(iso3,keyword_detected,year)%>%
       summarize(n=n())%>%arrange(-n)%>%#pull(keyword_detected)
@@ -311,7 +310,29 @@ ccdr.transcripts.preprocess.Keywordsfreq=function(mytokens,myvar){
       group_by(iso3,keywords,year)%>%
       summarize(n=sum(n))%>%arrange(-n)%>%
       mutate(year=as.numeric(year))
-  } else {
+  } else if(myvar=="Inflation_crisis"){
+    mytopkeywords=mytokens %>% group_by(iso3,keyword_detected,year)%>%
+      summarize(n=n())%>%arrange(-n)%>%
+      mutate(keywords=case_when(str_detect(keyword_detected,"pressure") | str_detect(keyword_detected,"acceler") ~"inflation pressure",
+                                str_detect(keyword_detected,"hyper") | str_detect(keyword_detected,"unprecedented") ~"hyper inflation",
+                                str_detect(keyword_detected,"target") | str_detect(keyword_detected,"objective") ~"inflation target",
+                                str_detect(keyword_detected,"core") ~"core inflation",
+                                str_detect(keyword_detected,"wage") ~"wage inflation",
+                                str_detect(keyword_detected,"food") ~"food inflation",
+                                str_detect(keyword_detected,"price") ~"price inflation",
+                                str_detect(keyword_detected,"expect")  | str_detect(keyword_detected,"outlook")  | str_detect(keyword_detected,"future") |
+                                  str_detect(keyword_detected,"forecast") | str_detect(keyword_detected,"risk")  ~"inflation expectations",
+                                str_detect(keyword_detected,"lower") |str_detect(keyword_detected,"anti-inflation") |
+                                  str_detect(keyword_detected,"non-inflation") |str_detect(keyword_detected,"noninflation") |
+                                  str_detect(keyword_detected,"halting") |str_detect(keyword_detected,"containment") | 
+                                  str_detect(keyword_detected,"combat") | str_detect(keyword_detected,"control") |
+                                  str_detect(keyword_detected,"down quickly") | str_detect(keyword_detected,"curb") | str_detect(keyword_detected,"reduction")| str_detect(keyword_detected,"strategy") | str_detect(keyword_detected,"effort") ~"combat inflation",
+                                str_detect(keyword_detected,"high") | str_detect(keyword_detected,"severe") | str_detect(keyword_detected,"problem") | str_detect(keyword_detected,"large") ~"high inflation",
+                                T~"inflation"))%>%
+      group_by(iso3,keywords,year)%>%
+      summarize(n=sum(n))%>%arrange(-n)%>%
+      mutate(year=as.numeric(year))
+  }else{
     mytopkeywords=mytokens %>% rename(keywords=keyword_detected)%>% group_by(iso3,keywords,year)%>%
       summarize(n=n())%>%arrange(-n)%>%
       arrange(-n)%>%
@@ -432,6 +453,7 @@ ccdr.transcripts.plot.KeywordsFreq=function(mytopkeywords,mywords){
   #' 
   
   res=mytopkeywords%>%
+    filter(year>1990)%>%
     left_join(incomegroup,by=c("iso3"))%>%
     group_by(year,keywords,income_group)%>%filter(year>1960)%>%
     summarize(n=sum(n,na.rm=T))%>%
@@ -440,16 +462,21 @@ ccdr.transcripts.plot.KeywordsFreq=function(mytopkeywords,mywords){
     mutate(n.norm=n/max(n))
   
   fig=res%>%
-    ggplot(aes(x=as.numeric(year),y=n.norm,group=keywords,fill=keywords))+
-    geom_bar(stat="identity")+
-    scale_x_continuous(breaks=c(1960,1965,1970,1975,1980,1985,1990,1995,2000,2005,2010,2015,2020))+
-    facet_wrap(~income_group)+
+    ggplot(aes(x=as.numeric(year),y=n.norm,group=keywords,fill=keywords,color=keywords,linetype=keywords))+
+    geom_rect(aes(ymin=-Inf,ymax=Inf,xmin=2020,xmax=2022,),
+              fill="lightgrey",color="lightgrey",alpha=0.05,
+              show.legend = F)+
+    geom_point(stat="identity",size=0.5)+
+    geom_line(stat="identity")+
+    scale_x_continuous(breaks=c(seq(1990,2020,5),2022))+
+    facet_wrap(~income_group,scale="free_x")+
     theme_ipsum()+
-    labs(x=NULL)+
+    labs(x=NULL,y="norm tf")+
     theme(legend.title = element_blank(),
           axis.text.x=element_text(angle=90),
           legend.position = "bottom",
           panel.grid.major.x  = element_line(color="#c8c8c8", size = 0.2))
+  fig
   return(fig)
 }
 
