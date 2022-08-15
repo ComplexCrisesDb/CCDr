@@ -453,6 +453,7 @@ ccdr.transcripts.plot.KeywordsFreq=function(mytopkeywords,mywords){
   #' 
   
   res=mytopkeywords%>%
+    filter(year>1990)%>%
     left_join(incomegroup,by=c("iso3"))%>%
     group_by(year,keywords,income_group)%>%filter(year>1960)%>%
     summarize(n=sum(n,na.rm=T))%>%
@@ -461,16 +462,21 @@ ccdr.transcripts.plot.KeywordsFreq=function(mytopkeywords,mywords){
     mutate(n.norm=n/max(n))
   
   fig=res%>%
-    ggplot(aes(x=as.numeric(year),y=n.norm,group=keywords,fill=keywords))+
-    geom_bar(stat="identity")+
-    scale_x_continuous(breaks=c(1960,1965,1970,1975,1980,1985,1990,1995,2000,2005,2010,2015,2020))+
-    facet_wrap(~income_group)+
+    ggplot(aes(x=as.numeric(year),y=n.norm,group=keywords,fill=keywords,color=keywords,linetype=keywords))+
+    geom_rect(aes(ymin=-Inf,ymax=Inf,xmin=2020,xmax=2022,),
+              fill="lightgrey",color="lightgrey",alpha=0.05,
+              show.legend = F)+
+    geom_point(stat="identity",size=0.5)+
+    geom_line(stat="identity")+
+    scale_x_continuous(breaks=c(seq(1990,2020,5),2022))+
+    facet_wrap(~income_group,scale="free_x")+
     theme_ipsum()+
-    labs(x=NULL)+
+    labs(x=NULL,y="norm tf")+
     theme(legend.title = element_blank(),
           axis.text.x=element_text(angle=90),
           legend.position = "bottom",
           panel.grid.major.x  = element_line(color="#c8c8c8", size = 0.2))
+  fig
   return(fig)
 }
 
