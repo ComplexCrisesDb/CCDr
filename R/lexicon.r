@@ -92,7 +92,6 @@ ccdr.lexicon <- function() {
     "pandemia",
     "pandemic",
     "virus",
-    "infection",
     "\\sflu\\s",
     "relapsing fever",
     "typhoid fever",
@@ -455,8 +454,6 @@ ccdr.lexicon <- function() {
   )
 
   key_words[["Inflation_crisis"]] <- c(
-    "inflation pressure",
-    "inflationary pressure", # with pressure (plurals taken into account)
     "high.{0,10}inflation",
     "high rate of inflation",
     "severe.{0,10}inflation",
@@ -469,20 +466,29 @@ ccdr.lexicon <- function() {
     # (quantifier 10 for domestic)
     "inflation.*critical",
     "inflation.*unprecedented levels", # inflation + has reached +... special character to control for different patterns
-    "despite the acceleration of inflation",
     "the rate of inflation accelerated sharply", # acceleration - find pattern for this
     "inflation crisis",
     "hyperinflation", # extreme
-    "large monetary creation", # involving monetary creation (also here to find pattern)
+    "large monetary creation" # involving monetary creation (also here to find pattern)
+  )
+  
+  key_words[["Inflation_pressure"]] <- c(
+    "inflation pressure",
+    "inflationary pressure", # with pressure (plurals taken into account)
+     # inflation + has reached +... special character to control for different patterns
+    "acceleration of inflation",
+    "price pressures",
+    "pressure on domestic price",
+    "pressure on price",
     "combat inflation", # measures to correct
     "halting inflation",
     "halt to inflation",
     "efforts against inflation",
     "quick reduction.*inflation",
-    "inflation down quickly",
     "lowering the rate of inflation",
     "entrenchment of inflationary behavior"
   )
+  
 
 
   key_words[["Trade_crisis"]] <- c(
@@ -1299,7 +1305,68 @@ ccdr.lexicon <- function() {
   #---------
   ## PROBLEMATIC DOCUMENTS TAG
   #---------
-
+  
+  key_words[["IMF_verbose"]] <- c(
+    "document",
+    "international monetary fund",
+    "public agenda",
+    "confidential",
+    "information",
+    "executive board secretary",
+    "consultations"
+    "consideration",
+    "executive board staff report consultations",
+    "recommendations ",
+    "staff",
+    "pages",
+    "background",
+    "information",
+    "memorandum",
+    "staff report",
+    "representatives consultations",
+    "committee",
+    "article xiv",
+    "consultations",
+    "staff mission", 
+    "discussions", 
+    "membership",
+    "minutes",
+    "executive board meeting",
+    "executive board attendance",
+    "article iv consultation",
+    "review",
+    "extended arrangement",
+    "article iv consultation",
+    "enhanced structural adjustment facility", 
+    "arrangement",
+    "review",
+    "waiver",
+    "performance criteria",
+    "structural adjustment arrangement",
+    "minutes of executive board meeting", # Minutes of meeting
+    "minutes of executive board minutes",
+    "executive board attendance",
+    "final minutes of executive board meeting",
+    "this is a working paper", # Working Papers
+    "working paper",
+    "a working paper of the international monetary fund",
+    "background paper", # Background papers: similar to working papers
+    "provides background to the paper",
+    "attached paper provides background information",
+    "background documentation for",
+    "draft issues paper", # Issue papers: similar to working paper
+    "(?<!the documents listed below have been or will be separately released. )selected issues", # Selected issues
+    "(?<!the documents listed below have been or will be separately released. selected issues )financial system stability assessment", # Similar to selected issues for financial system
+    "poverty reduction strategy paper", # Similar to selected issues for poverty
+    "individual economy assessments", # Assessments on multiple countries for a single issue
+    "global financial stability report", # found looking through epidemics India
+    "debt sustainability analysis", # ?
+    "triennial surveillance review", # Documents on internal IMF functioning
+    "interim surveillance review",
+    "report on the observance of standard and codes"
+  )
+  
+  
   # Informational annexes still included because part of recent articles IV.
   key_words[["Problematic_documents"]] <- c(
     "minutes of executive board meeting", # Minutes of meeting
