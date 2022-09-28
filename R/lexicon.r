@@ -1313,7 +1313,7 @@ ccdr.lexicon <- function() {
     "confidential",
     "information",
     "executive board secretary",
-    "consultations"
+    "consultations",
     "consideration",
     "executive board staff report consultations",
     "recommendations ",
@@ -1365,7 +1365,6 @@ ccdr.lexicon <- function() {
     "interim surveillance review",
     "report on the observance of standard and codes"
   )
-  
   
   # Informational annexes still included because part of recent articles IV.
   key_words[["Problematic_documents"]] <- c(
