@@ -1422,7 +1422,7 @@ ccdr.lexicon.exportcsv=function(myvars=NULL,path){
   }
   
   results=lapply(myvars,function(x){
-    res=cbind(myvar,ccdr.lexicon_details("Sovereign_default")[[1]])
+    res=cbind(x,ccdr.lexicon_details(x)[[1]])
     colnames(res)=c("category","keywords")
     res
   })
