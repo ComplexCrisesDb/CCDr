@@ -592,7 +592,8 @@ ccdr.tfs.fig.radiography=function (CCDB_y, classif = "all", vars, years_crisis, 
     guides(linetype="none")+
     theme(legend.position = "bottom",
           legend.title = element_blank()) + 
-    labs(y = "Term freq. (‰)", x = NULL)  
+    labs(y = "Term freq. (percent)", x = NULL)  
+  
   return(fig)
 }
 

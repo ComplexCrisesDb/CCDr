@@ -4,7 +4,14 @@
 \alias{ccdr.tfs.fig.radiography}
 \title{plor the variations of indices around crisis by income group}
 \usage{
-ccdr.tfs.fig.radiography(CCDB_y, classif = "all", vars, years_crisis, window)
+ccdr.tfs.fig.radiography(
+  CCDB_y,
+  classif = "all",
+  vars,
+  years_crisis,
+  window,
+  my_var_to_highligh = NULL
+)
 }
 \arguments{
 \item{CCDB_y}{a vintage of the CCDB dabaset}

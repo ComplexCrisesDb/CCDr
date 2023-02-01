@@ -135,6 +135,11 @@ CCDr v2.0.0 (Release date: 2021-06-01)
 Update names of databases with the new name (complex crises database) and add the link to the Harvard dataverse where the data is stored
 
 
+CCDr v2.0.1 (Release date: 2021-06-01)
+==============
+ 
+include function ccdr.transcripts.compile() that creates a dataset with selected sentences classified by category
+
 
 
 
