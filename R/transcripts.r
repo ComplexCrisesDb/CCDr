@@ -70,15 +70,22 @@ ccdr.transcripts.fasttextsample=function(path_transcripts,training_size=0.7,min_
       mutate(n.char=nchar(sentence),
              n.word=str_count(sentence, '\\w+'))%>%
       filter(n.char>min_char,
-             n.word>min_word)%>%
-      mutate(sentence=paste0("__label__",gsub("_","",category),", ",sentence))%>%
-      dplyr::select(sentence)
+             n.word>min_word)
     
     
     dt$sentence.id=1:dim(dt)[1]    
     # remove numbers from the sentence
     dt$sentence=str_replace_all(dt$sentence,"\\d","")
+    # remove punctuation from the sentences
+    dt$sentence=str_replace_all(dt$sentence, "[[:punct:]]", "") 
     
+    dt$sentence=str_squish(dt$sentence)
+    
+    # remove non alpha numeric characters
+    #dt$sentence=str_replace_all(dt$sentence, "[^[:alnum:]]", "")    # Delete non-alphanumeric
+    
+    dt=dt%>%mutate(sentence=paste0("__label__",gsub("_","",category),", ",sentence))%>%
+      dplyr::select(sentence,sentence.id)
     # remove sentences that have less than 15 words and 30 characters
     dt=dt%>%
       mutate(n.char=nchar(sentence),
@@ -91,8 +98,8 @@ ccdr.transcripts.fasttextsample=function(path_transcripts,training_size=0.7,min_
     if(rm_stop_words){
       dt=dt%>%
         tidytext::unnest_tokens(words,sentence,token="words")%>%
-        filter(!words %in% stop_words$word)
-      
+        filter(!words %in% stop_words$word)%>%
+        filter(nchar(words)>2)
     }else{
       dt=dt%>%
         tidytext::unnest_tokens(words,sentence,token="words")
