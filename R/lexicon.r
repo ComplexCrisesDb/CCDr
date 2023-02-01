@@ -309,7 +309,6 @@ ccdr.lexicon <- function() {
     "home-price overvaluation",
     "real house prices declining",
     "cooled the property market",
-    "foreclosures",
     "house price inflation",
     "house-price inflation",
     "foreclosures",
@@ -564,7 +563,6 @@ ccdr.lexicon <- function() {
     "crisis spillover",
     "regional economic situation turned adverse",
     "contagion from the crisis in neightboring",
-    "external shocks",
     "external shock",
     "adverse exogenous events",
     "external vulnerability",
@@ -574,64 +572,44 @@ ccdr.lexicon <- function() {
     "spillovers",
     # "systemic spillovers",
     "vulnerability to international",
-    "Russian debt crisis",
-    "asian currency crisis",
-    "crisis in southeast asia",
-    "southeast asia crisis",
-    "crisis in russia",
-    "crisis in libya",
-    "libya crisis",
-    "regional currency crisis",
-    "kosovo crisis",
-    "cyprus crisis",
-    "crisis in ukraine",
+    "regional.{0,10} crisis",
     "regional dimension of the crisis",
-    "mexican exchange crisis",
-    "gulf crisis",
-    "middle east crisis",
-    "Mexican crisis",
-    "crisis in Argentina",
-    "crisis in Russia",
-    "argentine crisis",
-    "crisis in mexico",
-    "the crisis of 1994",
-    "the 1997 crisis",
-    "the crisis in 2002",
-    "2002 crisis",
-    "euro area crisis",
-    "eurozone contagion",
-    "eurozone crisis",
-    "crisis in europe",
-    "world financial crisis",
-    "Greek crisis",
-    "brazil crisis",
-    "asian and russian crisis",
-    "asia crisis",
-    "crisis in turkey",
-    "Argentinan crisis",
-    "crisis in argentina",
-    "crisis in greece",
-    "asian crisis",
-    "global economic crisis",
-    "global financial shock",
-    "international systemic spillover",
-    # "risk of system insolvency",
-    # "global crisis",
-    # "global economic crisis",
-    "crisis in Brazil",
     "linkage with the US",
-    "contagion effects of the Thai crisis"
+    "contagion effects"
   )
 
-
+  key_words[['risks']]=c("downside risks","potential risks","upward risk","increase the risks",
+                         "high risk","major risks","high level of risk","heightened risk aversion",
+                         "heightening risks","increase in global risk aversion","crisis risks","risk of crisis")
+  
+  key_words[['speculative_attacks']]=c("speculative attack","self-fulfilling","speculative capital movements",
+                                       "shifts in investor sentiment","coordination failure")
+  
+  key_words[['loss_confidence']]=c("market confidence","bolster confidence","restore market confidence","confidence crisis",
+                                   "crisis of confidence","restoring market confidence","undermining confidence", "reassure the markets",
+                                   "bolstering market confidence","weakening of investor confidence","pressures on confidence",
+                                   "weakening of market confidence","slump in confidence","pressure on confidence","change in expectations")
+  
+  key_words[['adv_market_sentiment']]=c("vulnerable to abrupt swings in market sentiment","vulnerable to changes in the international investment climate","change in investors sentiment",
+                                        "shifts in investor sentiment","deterioration in market sentiment","market reversal","panic","economic sentiment remains poor",
+                                        "economic credibility")
+  
+  key_words[['uncertainty']]=c("general uncertainty","reduce market uncertainty",
+                               "uncertainty in international capital markets",
+                               "uncertainty among market participant","signals to markets",
+                               "a time of heightened global uncertainty","uncertainty",
+                               "uncertainty")
+  
+  key_words[['financial_risk']]=c("financial risk","risks on financial", "volatility in financial markets", 
+                                  "restore the strength of the financial sector","financial market risk")
+  
   key_words[["Positive_expectations"]] <- c(
     "positive expectations",
     "vibrant business environment",
     "favorable investment climate",
     "high level of market confidence"
   )
-
-
+  
   key_words[["Expectations"]] <- c(
     "crisis risks",
     "market reversal",
@@ -1301,6 +1279,64 @@ ccdr.lexicon <- function() {
     "debt exchange" #
   )
 
+  key_words[['financial_crisis']]=c("Financial crisis","financial crisis",  "collapse of equity prices",
+                                    "crisis in financial market", "turmoil in financial markets",
+                                    "unfolding financial crisis", "financial shock", "global market sell-off")
+  
+  key_words[['international_financial_crisis']]=c("global financial shock", "global financial turbulence",
+                                                  "turmoil in international financial markets","international monetary crisis")
+  
+  key_words[['gov_deficit']]=c("financing gap", "deficits", "large external financing needs", "short-term financing need",
+                               "weaken the fiscal position", "extremely difficult budgetary situation",
+                               "pressure on public finance", "government deficit widened", "growing deficits",
+                               "limit new borrowing", "weakening of the public finances", "budgetary imbalances",
+                               "difficult budgetary situation", "severe deterioration in the fiscal situation", 
+                               "large borrowing needs", "severe fiscal imbalances", "public sector position deteriorate", 
+                               "accrued deficit", "large budgetary gap", "borrowing increased substantially")
+  
+  key_words[['gov_stimulus']]=c("policy stimulus","fiscal stimulus")
+  
+  key_words[['gov_contingent_liability']]=c("contingent fiscal liability")
+  
+  
+  key_words[['gov_unsustainable_debt']]=c("unsustainable debt","indebtedness of the public sector",
+                                          "concerns about debt sustainability","unsustainable public debt",
+                                          "fiscal instability","fragile fiscal framework", "stock of external debt increased",
+                                          "stock of domestic debt increased","external debt",
+                                          "market concerns about debt sustainability","unsustainable financial position")
+  
+  key_words[['gov_spending']]=c("expenditure restraint", "shortfall in expenditure",
+                                "increase in government spending")
+  
+  key_words[['gov_revenue']]=c("shortfall of revenue", "drop in revenue", 
+                               "decline in government revenues", "adverse effect on government revenue",
+                               "weakened fiscal revenue")
+  
+  key_words[['debt_service']]=c("debt service obligations", "high debt service", "debt service burden",
+                                "increase in interest payments", "heavy debt service burden",
+                                "servicing external debt", "large debt service obligation", 
+                                "high external debt service payments", "large debt servicing burden")
+  
+  key_words[["gov_default_restructuring"]]=c("debt restructuring",  "restructuring agreements",  "restructuring of debt",  "restructuring of its external debt", 
+                                             "debt restructuring program",  "debt exchange",  "debt rescheduling",
+                                             "rescheduling of external debt", "rescheduled debt",  "rescheduling agreement",  
+                                             "rescheduling of arrears",  "rescheduling of the debt", "debt swap", 
+                                             "debt reprofiling",  "relation with external creditors",  "default risks",
+                                             "suspension of payments")
+  
+  key_words[["gov_arrears"]]=c("arrears","external payment arrears")
+  
+  key_words[["gov_rollover"]]=c("failure to roll over debt", "difficult time in rolling over its debt",
+                                "debt service reduction", "no debt service payments", 
+                                "difficulties in servicing its external debt", "fiscal crisis",
+                                "sovereign debt crisis", "public debt crisis", "external payment's crisis", 
+                                "default risk","external payments crisis")
+  
+  key_words[["gov_debt_relief"]]=c("debt relief","debt service suspension initiative","DSSI","relief on debt service",
+                                   "debt service relief")
+  
+  
+  
 
   #---------
   ## PROBLEMATIC DOCUMENTS TAG
