@@ -223,6 +223,7 @@ ccdr.fasttext.predict=function(mycorpus,
   #' @author Manuel Betin
   #' @export
   
+  
   mydts=lapply(names(mycorpus),function(x){
     
     tryCatch({
@@ -236,8 +237,8 @@ ccdr.fasttext.predict=function(mycorpus,
         writeLines(myfile[,1]$sentence,con=paste0(path_rawtext,"/",x,"_text.txt"))
         
         list_params = list(command = 'predict-prob',
-                           test_data = paste0(path_rawtext,"/",x,"_text.txt"),
                            model = model,
+                           test_data = paste0(path_rawtext,"/",x,"_text.txt"),
                            k = k,
                            th = th)
         
