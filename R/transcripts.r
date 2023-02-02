@@ -225,13 +225,14 @@ ccdr.fasttext.predict=function(mycorpus,
   
   
   mydts=lapply(names(mycorpus),function(x){
-    
+    cat("predicting;",x)
     tryCatch({
       myfile=mycorpus[[x]] %>% data.frame()
       colnames(myfile)="paragraph"
       myfile=ccdr.fasttext.dataforprediction.clean(myfile)
       
       if(length(myfile$sentence)<min_sentence_lengh){
+        cat(crayon::red("failure, invalid file\n"))
         NULL
       }else{
         writeLines(myfile[,1]$sentence,con=paste0(path_rawtext,"/",x,"_text.txt"))
@@ -245,19 +246,41 @@ ccdr.fasttext.predict=function(mycorpus,
         res = fasttext_interface(list_params, 
                                  path_output = paste0(path_output,"/","predict_valid_prob_",x,".txt"))
         
-        pred=rio::import(paste0(path_output,"/","predict_valid_prob_",x,".txt"))
+        if(k>1){
+          pred=readLines(con=paste0(path_output,"/","predict_valid_prob_",x,".txt"))
+          pred=pred%>%data.frame()
+          colnames(pred)="V1"
+          mycols=as.vector(outer(c("label","proba_label"), 1:k, paste, sep="_"))
+          pred=pred%>%separate(col="V1",into=mycols,sep = " ")
+          #pred=rio::import(paste0(path_output,"/","predict_valid_prob_",x,".txt"))
+          
+          # pred=pred%>%group_by(all_of(mycols))%>%
+          #   mutate(V1=ifelse(V2<th,"__label__Nonclassified",V1))%>%
+          #   summarize(n=n()/dim(pred)[1])%>%
+          #   mutate(file=x)
+          cat(crayon::blue(" ok\n"))
+          pred  
+        }else{
+          pred=readLines(con=paste0(path_output,"/","predict_valid_prob_",x,".txt"))
+          pred=pred%>%data.frame()
+          colnames(pred)="V1"
+          pred=pred%>%separate(col="V1",into=c("label","proba_label"),sep = " ")
+          
+          pred=pred%>%group_by(label)%>%
+            summarize(prop=n()/dim(pred)[1])%>%
+            mutate(file=x)
+          
+          cat(crayon::blue(" ok\n"))
+          pred  
+        }
         
-        pred=pred%>%group_by(V1)%>%
-          mutate(V1=ifelse(V2<th,"__label__Nonclassified",V1))%>%
-          summarize(n=n()/dim(pred)[1])%>%
-          mutate(file=x)
-        pred
       }
     },
     error=function(e){
       print(e)
       return(NULL)
     })
+    
   })
   mydts=do.call(rbind,mydts)
   return(mydts)
