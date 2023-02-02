@@ -170,3 +170,95 @@ ccdr.transcripts.fasttextsample=function(path_transcripts,training_size=0.7,min_
     return(list(train=train,test=test,sentiment=fasttextsample_sentiment))  
   }
 }
+
+
+ccdr.fasttext.dataforprediction.clean=function(myfile){
+  
+  #' preprocess the sentences and prepare for prediction
+  #' @description clean the sentences by removing numbers,
+  #' short sentences, irrelevant sentences and stopwords
+  #' @param myfile 
+  #' @author manuel betin
+  #' @export
+  #' 
+  myfile=myfile%>%tidytext::unnest_tokens(sentence, paragraph, token = "sentences")
+  myfile$sentence.id=1:dim(myfile)[1]    
+  # remove numbers from the sentence
+  myfile$sentence=str_replace_all(myfile$sentence,"\\d","")
+  
+  # remove sentences that have less than 15 words and 30 characters
+  myfile=myfile%>%
+    mutate(n.char=nchar(sentence),
+           n.word=str_count(sentence, '\\w+'))%>%
+    filter(n.char>30,
+           n.word>10)%>%
+    dplyr::select(sentence.id,sentence)
+  
+  #remove stopwords
+  myfile=myfile%>%
+    tidytext::unnest_tokens(words,sentence,token="words")%>%
+    filter(!words %in% stop_words$word)%>%
+    group_by(sentence.id)%>%
+    summarize(sentence=paste0(words,collapse=" "))%>%
+    dplyr::select(sentence) 
+  myfile
+}
+
+ccdr.fasttext.predict=function(mycorpus,
+                               path_rawtext="../../inst/rawdata/rawtext",
+                               path_output="../../inst/results",
+                               min_sentence_lengh=20,
+                               model,k,th){
+  
+  #' predict the label foreach sentences in the corpus
+  #' @description Predict the label of each sentences from a corpus of $
+  #' documents provided   
+  #' @param mycorpus A list containg the text to be analyzed (output of ccdr.corpus() 
+  #' from the CCRr package)
+  #' @param path_rawtext Path to the folder that contains the text tokenized in sentences
+  #' @param path_output Path where to store the predictions
+  #' @param min_sentence_length The threshold for the minimum number of words for a sentence
+  #' to be considered
+  #' @param ... Arguments to the fasttext_interface (model, k, th) from the package fastText 
+  #' @author Manuel Betin
+  #' @export
+  
+  mydts=lapply(names(mycorpus),function(x){
+    
+    tryCatch({
+      myfile=mycorpus[[x]] %>% data.frame()
+      colnames(myfile)="paragraph"
+      myfile=ccdr.fasttext.dataforprediction.clean(myfile)
+      
+      if(length(myfile$sentence)<min_sentence_lengh){
+        NULL
+      }else{
+        writeLines(myfile[,1]$sentence,con=paste0(path_rawtext,"/",x,"_text.txt"))
+        
+        list_params = list(command = 'predict-prob',
+                           test_data = paste0(path_rawtext,"/",x,"_text.txt"),
+                           model = model,
+                           k = k,
+                           th = th)
+        
+        res = fasttext_interface(list_params, 
+                                 path_output = paste0(path_output,"/","predict_valid_prob_",x,".txt"))
+        
+        pred=rio::import(paste0(path_output,"/","predict_valid_prob_",x,".txt"))
+        
+        pred=pred%>%group_by(V1)%>%
+          mutate(V1=ifelse(V2<th,"__label__Nonclassified",V1))%>%
+          summarize(n=n()/dim(pred)[1])%>%
+          mutate(file=x)
+        pred
+      }
+    },
+    error=function(e){
+      print(e)
+      return(NULL)
+    })
+  })
+  mydts=do.call(rbind,mydts)
+  return(mydts)
+  
+}
