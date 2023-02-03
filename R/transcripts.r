@@ -286,3 +286,17 @@ ccdr.fasttext.predict=function(mycorpus,
   return(mydts)
   
 }
+
+
+
+ccdr.fasttext.prediction.spline=function(mypredictions){
+  #' correct the missing years in the sample
+  #' @description  interpolate missing years with linear 
+  #' approximation
+  mypredictions=mypredictions%>%
+    group_by(iso3,label)%>%
+    tidyr::complete(year=1950:2022%>%as.character())%>%
+    group_by(iso3,label)%>%
+    mutate(prop=na.approx(prop,na.rm=F))
+  return(mypredictions)
+}
