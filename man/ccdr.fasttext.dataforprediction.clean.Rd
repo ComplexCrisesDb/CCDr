@@ -4,10 +4,12 @@
 \alias{ccdr.fasttext.dataforprediction.clean}
 \title{preprocess the sentences and prepare for prediction}
 \usage{
-ccdr.fasttext.dataforprediction.clean(myfile)
+ccdr.fasttext.dataforprediction.clean(myfile, rm_stopwords = T)
 }
 \arguments{
 \item{myfile}{}
+
+\item{rm_stopwords}{T/F whether remove stopwords and numbers in the predictions}
 }
 \description{
 clean the sentences by removing numbers,

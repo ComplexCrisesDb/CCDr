@@ -35,8 +35,6 @@ ccdr.transcripts.compile=function(myvar,ctries,path_corpus,path_export){
   return(mytranscriptsdt)
 }
 
-
-
 ccdr.transcripts.fasttextsample=function(path_transcripts,training_size=0.7,min_char=30,min_word=15,sentiment_threshold=5,neutral_sentiment=c(-0.25,0.25),
                                          multi_label=T,
                                          rm_stop_words=T,
@@ -172,20 +170,22 @@ ccdr.transcripts.fasttextsample=function(path_transcripts,training_size=0.7,min_
 }
 
 
-ccdr.fasttext.dataforprediction.clean=function(myfile){
+ccdr.fasttext.dataforprediction.clean=function(myfile,rm_stopwords=T){
   
   #' preprocess the sentences and prepare for prediction
   #' @description clean the sentences by removing numbers,
   #' short sentences, irrelevant sentences and stopwords
   #' @param myfile 
+  #' @param rm_stopwords T/F whether remove stopwords and numbers in the predictions
   #' @author manuel betin
   #' @export
   #' 
   myfile=myfile%>%tidytext::unnest_tokens(sentence, paragraph, token = "sentences")
   myfile$sentence.id=1:dim(myfile)[1]    
   # remove numbers from the sentence
-  myfile$sentence=str_replace_all(myfile$sentence,"\\d","")
-  
+  if(rm_stopwords){
+    myfile$sentence=str_replace_all(myfile$sentence,"\\d","")  
+  }
   # remove sentences that have less than 15 words and 30 characters
   myfile=myfile%>%
     mutate(n.char=nchar(sentence),
@@ -195,9 +195,18 @@ ccdr.fasttext.dataforprediction.clean=function(myfile){
     dplyr::select(sentence.id,sentence)
   
   #remove stopwords
+  
+  if(rm_stopwords){
+    myfile=myfile%>%
+      tidytext::unnest_tokens(words,sentence,token="words")%>%
+      filter(!words %in% stop_words$word)
+    
+  }else{
+    myfile=myfile%>%
+      tidytext::unnest_tokens(words,sentence,token="words")
+  }
+  
   myfile=myfile%>%
-    tidytext::unnest_tokens(words,sentence,token="words")%>%
-    filter(!words %in% stop_words$word)%>%
     group_by(sentence.id)%>%
     summarize(sentence=paste0(words,collapse=" "))%>%
     dplyr::select(sentence) 
@@ -208,6 +217,7 @@ ccdr.fasttext.predict=function(mycorpus,
                                path_rawtext="../../inst/rawdata/rawtext",
                                path_output="../../inst/results",
                                min_sentence_lengh=20,
+                               rm_stopwords=T,
                                model,k,th){
   
   #' predict the label foreach sentences in the corpus
@@ -219,17 +229,19 @@ ccdr.fasttext.predict=function(mycorpus,
   #' @param path_output Path where to store the predictions
   #' @param min_sentence_length The threshold for the minimum number of words for a sentence
   #' to be considered
+  #' @param rm_stopwords T/F specified whether you want to remove digits and stopwords in
+  #' the text for prediction. 
   #' @param ... Arguments to the fasttext_interface (model, k, th) from the package fastText 
   #' @author Manuel Betin
   #' @export
   
-  
+  myfile%>%tibble()
   mydts=lapply(names(mycorpus),function(x){
     cat("predicting;",x)
     tryCatch({
       myfile=mycorpus[[x]] %>% data.frame()
       colnames(myfile)="paragraph"
-      myfile=ccdr.fasttext.dataforprediction.clean(myfile)
+     myfile=ccdr.fasttext.dataforprediction.clean(myfile,rm_stopwords=rm_stopwords)  
       
       if(length(myfile$sentence)<min_sentence_lengh){
         cat(crayon::red("failure, invalid file\n"))
@@ -286,7 +298,6 @@ ccdr.fasttext.predict=function(mycorpus,
   return(mydts)
   
 }
-
 
 
 ccdr.fasttext.prediction.spline=function(mypredictions){

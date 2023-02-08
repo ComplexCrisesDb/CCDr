@@ -9,6 +9,7 @@ ccdr.fasttext.predict(
   path_rawtext = "../../inst/rawdata/rawtext",
   path_output = "../../inst/results",
   min_sentence_lengh = 20,
+  rm_stopwords = T,
   model,
   k,
   th
@@ -21,6 +22,9 @@ from the CCRr package)}
 \item{path_rawtext}{Path to the folder that contains the text tokenized in sentences}
 
 \item{path_output}{Path where to store the predictions}
+
+\item{rm_stopwords}{T/F specified whether you want to remove digits and stopwords in
+the text for prediction.}
 
 \item{min_sentence_length}{The threshold for the minimum number of words for a sentence
 to be considered}
