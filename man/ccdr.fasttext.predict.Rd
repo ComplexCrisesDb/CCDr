@@ -10,6 +10,8 @@ ccdr.fasttext.predict(
   path_output = "../../inst/results",
   min_sentence_lengh = 20,
   rm_stopwords = T,
+  sentiment_corpus = NULL,
+  sentiment_threshold = 0,
   model,
   k,
   th

@@ -173,7 +173,8 @@ ccdr.lexicon <- function() {
     "drop in world coffee price",
     "oil price increase",
     "fluctuations in oil prices",
-    "increase in petroleum price"
+    "increase in petroleum price",
+    "elevated energy prices"
   )
 
   key_words[["Political_crisis"]] <- c(
@@ -353,6 +354,7 @@ ccdr.lexicon <- function() {
     "fragility of the banking sector",
     "fragile banking sector",
     "banking crisis",
+    "banking crises",
     "banking system restructuring",
     "insolvent banks",
     "insovlvent banking sector",
@@ -578,9 +580,9 @@ ccdr.lexicon <- function() {
     "contagion effects"
   )
 
-  key_words[['risks']]=c("downside risks","potential risks","upward risk","increase the risks",
-                         "high risk","major risks","high level of risk","heightened risk aversion",
-                         "heightening risks","increase in global risk aversion","crisis risks","risk of crisis")
+  key_words[['risks']]=c("downside risks","potential risks","positive risk","upward risk","increase the risks",
+                         "high risk","major risks","high level of risk","heightened risk aversion","large risks",
+                         "tilted", "heightening risks","increase in global risk aversion","crisis risks","risk of crisis")
   
   key_words[['speculative_attacks']]=c("speculative attack","self-fulfilling","speculative capital movements",
                                        "shifts in investor sentiment","coordination failure")
@@ -594,11 +596,7 @@ ccdr.lexicon <- function() {
                                         "shifts in investor sentiment","deterioration in market sentiment","market reversal","panic","economic sentiment remains poor",
                                         "economic credibility")
   
-  key_words[['uncertainty']]=c("general uncertainty","reduce market uncertainty",
-                               "uncertainty in international capital markets",
-                               "uncertainty among market participant","signals to markets",
-                               "a time of heightened global uncertainty","uncertainty",
-                               "uncertainty")
+  key_words[['uncertainty']]=c("uncertainty","uncertainties", "uncertain", "uncertainty")
   
   key_words[['financial_risk']]=c("financial risk","risks on financial", "volatility in financial markets", 
                                   "restore the strength of the financial sector","financial market risk")
@@ -1279,7 +1277,7 @@ ccdr.lexicon <- function() {
     "debt exchange" #
   )
 
-  key_words[['financial_crisis']]=c("Financial crisis","financial crisis",  "collapse of equity prices",
+  key_words[['financial_crisis']]=c("Financial crisis","financial crisis", "financial crises","collapse of equity prices",
                                     "crisis in financial market", "turmoil in financial markets",
                                     "unfolding financial crisis", "financial shock", "global market sell-off")
   

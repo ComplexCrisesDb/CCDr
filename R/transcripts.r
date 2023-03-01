@@ -213,11 +213,35 @@ ccdr.fasttext.dataforprediction.clean=function(myfile,rm_stopwords=T){
   myfile
 }
 
+
+ccdr.fasttext.dataforprediction.sentiment=function(myfile,sentiment_corpus,sentiment_threshold=0){
+  
+  myfile$sentence.id=1:dim(myfile)[1]    
+  myfile=myfile%>%
+    tidytext::unnest_tokens(words,sentence,token="words")
+  
+  NS_dt=sentiment_corpus
+  NS_dt=NS_dt%>%rename(words=word)
+  
+  myfile=myfile%>%left_join(NS_dt,by="words")
+  
+  myfile=myfile%>%group_by(sentence.id)%>%
+    summarize(sentence=paste0(words,collapse=" "),
+              sentence.sentiment=mean(sentiment,na.rm=T))%>%
+    dplyr::select(sentence,sentence.sentiment)
+  
+  myfile=myfile%>%filter(sentence.sentiment<sentiment_threshold)%>%
+    dplyr::select(sentence,sentence.sentiment)
+  return(myfile)
+}
+
 ccdr.fasttext.predict=function(mycorpus,
                                path_rawtext="../../inst/rawdata/rawtext",
                                path_output="../../inst/results",
                                min_sentence_lengh=20,
                                rm_stopwords=T,
+                               sentiment_corpus=NULL,
+                               sentiment_threshold=0,
                                model,k,th){
   
   #' predict the label foreach sentences in the corpus
@@ -235,14 +259,16 @@ ccdr.fasttext.predict=function(mycorpus,
   #' @author Manuel Betin
   #' @export
   
-  myfile%>%tibble()
+ 
   mydts=lapply(names(mycorpus),function(x){
     cat("predicting;",x)
     tryCatch({
       myfile=mycorpus[[x]] %>% data.frame()
       colnames(myfile)="paragraph"
      myfile=ccdr.fasttext.dataforprediction.clean(myfile,rm_stopwords=rm_stopwords)  
-      
+      if(!is.null(sentiment_corpus)){
+        myfile=ccdr.fasttext.dataforprediction.sentiment(myfile,sentiment_corpus,sentiment_threshold)   
+      }
       if(length(myfile$sentence)<min_sentence_lengh){
         cat(crayon::red("failure, invalid file\n"))
         NULL
@@ -259,12 +285,15 @@ ccdr.fasttext.predict=function(mycorpus,
                                  path_output = paste0(path_output,"/","predict_valid_prob_",x,".txt"))
         
         if(k>1){
+          #cat(red(paste0("Warning the code is incomplete and the output not reliable\n")))
           pred=readLines(con=paste0(path_output,"/","predict_valid_prob_",x,".txt"))
           pred=pred%>%data.frame()
           colnames(pred)="V1"
           mycols=as.vector(outer(c("label","proba_label"), 1:k, paste, sep="_"))
           pred=pred%>%separate(col="V1",into=mycols,sep = " ")
           #pred=rio::import(paste0(path_output,"/","predict_valid_prob_",x,".txt"))
+          
+          pred=pred%>%mutate(file=x)
           
           # pred=pred%>%group_by(all_of(mycols))%>%
           #   mutate(V1=ifelse(V2<th,"__label__Nonclassified",V1))%>%
